@@ -1,0 +1,13 @@
+25/04/2020 14:41:05> Tipo advertencia (Publico): Login sem sucesso para CPF 043.630.636-02<br/>
+25/04/2020 14:42:14> Tipo advertencia (Publico): Login sem sucesso para CPF 043.630.636-02<br/>
+25/04/2020 14:43:11> Tipo advertencia (Publico): Login sem sucesso para CPF 043.630.636-02<br/>
+25/04/2020 14:45:00> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+25/04/2020 14:46:37> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+25/04/2020 14:46:51> Tipo sucesso (Publico): Usuário 2760 logado com sucesso.<br/>
+25/04/2020 14:52:35> Tipo sucesso (Candidaturas/create): Candidatura 3290 criado com sucesso.<br/>
+25/04/2020 15:27:45> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 3290 salva com sucesso.<br/>
+25/04/2020 15:31:50> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 3290 salva com sucesso.<br/>
+25/04/2020 15:35:51> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 3290 salva com sucesso.<br/>
+25/04/2020 16:00:58> Tipo sucesso (Interna): Usuário 2760 deslogado com sucesso.<br/>
+25/04/2020 16:01:10> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+25/04/2020 16:03:12> Tipo erro (Usuarios/novaSenha): Erro de envio de e-mail com senha de cadastro para o e-mail weiderson.mendes@gmail.com do usuário 29<br/>

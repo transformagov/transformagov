@@ -1,0 +1,277 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Questoes_model extends CI_Model {
+        function __construct() {
+                parent::__construct();
+        }
+        public function get_questoes($id='', $grupo='', $etapa='', $not_grupo='', $vigentes=true, $tipo=''){
+                if(strlen($id) > 0){
+                        $this -> db -> where('q.pr_questao', $id);
+                }
+                if(strlen($grupo) > 0){
+                        $this -> db -> join('rl_gruposvagas_questoes r', 'q.pr_questao=r.es_questao');
+                        $this -> db -> where('r.es_grupovaga', $grupo);
+                }
+                else if(strlen($not_grupo) > 0){
+                        $this -> db -> where("q.pr_questao not in (select es_questao from rl_gruposvagas_questoes where es_grupovaga={$not_grupo})");
+                }
+                if(strlen($etapa) > 0){
+                        $this -> db -> where('q.es_etapa', $etapa);
+                }
+				if(strlen($tipo) > 0){
+                        $this -> db -> where('q.in_tipo', $tipo);
+                }
+                if($vigentes){
+                        $this -> db -> where('q.bl_removido', '0');
+                }
+                $this -> db -> join('tb_etapas e', 'q.es_etapa=e.pr_etapa');                
+                $this -> db -> select ('q.*, e.vc_etapa');
+                $this -> db -> from('tb_questoes q');
+                if(strlen($grupo) > 0){
+                        $this -> db -> order_by('r.in_ordem ASC, q.es_etapa ASC, q.pr_questao ASC');
+                }
+                else{
+                        $this -> db -> order_by('q.es_etapa ASC, q.pr_questao ASC');
+                }
+                $query = $this -> db -> get();
+                if($query -> num_rows() > 0){                        
+                        $resultado = $query -> result();
+                        foreach ($resultado as $linha){                                
+                                $this -> db -> from('tb_respostas');
+                                $this -> db -> where('es_questao', $linha -> pr_questao);
+                                $linha -> cont_respostas = $this -> db -> count_all_results();
+                                $retorno[] = $linha;
+                        }
+                        return $retorno;
+                }
+                else{
+                        return NULL;
+                }
+        }
+        public function get_respostas($id='', $candidatura='', $questao='', $avaliador = '',$etapa = ''){
+                if(strlen($id) > 0){
+                        $this -> db -> where('pr_resposta', $id);
+                }
+                if(strlen($candidatura) > 0){
+                        $this -> db -> where('es_candidatura', $candidatura);
+                }
+                if(strlen($questao) > 0){
+                        $this -> db -> where('es_questao', $questao);
+                }
+                if(strlen($avaliador) > 0){
+                        $this -> db -> where('es_avaliador', $avaliador);
+                }
+                if(strlen($etapa) > 0){
+                        $this -> db -> where("es_questao IN (select pr_questao from tb_questoes where es_etapa={$etapa})", NULL, FALSE);
+                }
+                $this -> db -> where('bl_removido', '0');
+                $this -> db -> select ('*');
+                $this -> db -> from('tb_respostas');
+                $query = $this -> db -> get();
+                //echo $this -> db ->last_query();
+                if($query -> num_rows() > 0){
+                        return $query -> result();
+                }
+                else{
+                        return NULL;
+                }
+        }
+		
+		function delete_resposta($primaria){
+				if(strlen($primaria)==0){
+                        return FALSE;
+                }
+                $this -> db -> where('pr_resposta', $primaria);
+                $this -> db -> delete ('tb_respostas');
+                return $this -> db -> affected_rows();
+		}
+        public function get_opcoes($id='', $questao='', $vaga=''){
+                if(strlen($id) > 0){
+                        $this -> db -> where('o.pr_opcao', $id);
+                }
+                if(strlen($questao) > 0){
+                        $this -> db -> where('o.es_questao', $questao);
+                }
+                if(strlen($vaga) > 0){
+                        $this -> db -> join('tb_questoes q', 'q.pr_questao=o.es_questao');
+                        $this -> db -> join('rl_gruposvagas_questoes r', 'q.pr_questao=r.es_questao');
+                        $this -> db -> join('tb_vagas v', 'v.es_grupoVaga=r.es_grupovaga');
+                        $this -> db -> where('v.pr_vaga', $vaga);
+                        $this -> db -> order_by ('o.es_questao, o.in_valor');
+                }
+                $this -> db -> where('o.bl_removido', '0');
+                $this -> db -> select ('*');
+                $this -> db -> from('tb_opcoes o');
+                $this -> db -> order_by('o.in_valor');
+                $query = $this -> db -> get();
+                
+                if($query -> num_rows() > 0){
+                        return $query -> result();
+                }
+                else{
+                        return NULL;
+                }
+        }
+
+
+        /*
+        A variável questão é para excluir das questoões não respondidas, não funcionando isoladamente
+        */
+        public function get_etapas($grupo_vaga='',$questao='') {
+                $etapas = array();
+                $this -> db -> select ('pr_etapa, vc_etapa');
+                $this -> db -> from ('tb_etapas');
+                if(strlen($grupo_vaga) > 0){
+                        if(strlen($questao) > 0){
+                                $this -> db -> where('pr_etapa not IN (select es_etapa from tb_questoes where pr_questao in (select es_questao from rl_gruposvagas_questoes where es_grupovaga='.$grupo_vaga.' and es_questao <> '.$questao.') and  pr_questao in (select es_questao from tb_respostas where es_questao<>'.$questao.'))',null,FALSE);
+                        }
+                        else{
+                                $this -> db -> where('pr_etapa not IN (select es_etapa from tb_questoes where pr_questao in (select es_questao from rl_gruposvagas_questoes where es_grupovaga='.$grupo_vaga.') and  pr_questao in (select es_questao from tb_respostas))',null,FALSE);
+                        }
+                        
+                }
+                $this -> db -> order_by ('in_ordem', 'ASC');
+                $query = $this -> db -> get();
+                if ($query -> num_rows() > 0) {
+                        $results = $query -> result_array();
+                        $etapas = array_column($results, 'vc_etapa', 'pr_etapa');
+                }
+                //$Estados[]=array(0=>'');
+                return $etapas;
+        }
+        
+        public function get_competencias(){
+                $competencias = array();
+                $this -> db -> select ('pr_competencia, vc_competencia');
+                $this -> db -> from ('tb_competencias');
+                $this -> db -> order_by ('vc_competencia', 'ASC');
+                $query = $this -> db -> get();
+                if ($query -> num_rows() > 0) {
+                        $results = $query -> result_array();
+                        $competencias = array_column($results, 'vc_competencia', 'pr_competencia');
+                }
+                //$Estados[]=array(0=>'');
+                return $competencias;
+        }
+        
+        public function create_questao($dados){
+                if(isset($dados['competencia']) && strlen($dados['competencia'])>0 && $dados['competencia']!= '0'){
+                        if(isset($dados['peso']) && strlen($dados['peso'])>0){
+                                $data=array(
+                                        'es_etapa' => $dados['etapa'],
+                                        'es_competencia' => $dados['competencia'],
+                                        'tx_questao' => $dados['descricao'],
+                                        'vc_respostaAceita' => $dados['respostaaceita'],
+                                        'in_peso' => $dados['peso'],
+                                        'in_tipo' => $dados['tipo'],
+                                        'bl_eliminatoria' => $dados['eliminatoria'],
+                                        'bl_obrigatorio' => $dados['obrigatorio'],
+                                        'es_usuarioCadastro' => $this -> session -> uid,
+                                        'dt_cadastro' => date('Y-m-d H:i:s')
+                                );
+                        }
+                        else{
+                                $data=array(
+                                        'es_etapa' => $dados['etapa'],
+                                        'es_competencia' => $dados['competencia'],
+                                        'tx_questao' => $dados['descricao'],
+                                        'vc_respostaAceita' => $dados['respostaaceita'],
+                                        
+                                        'in_tipo' => $dados['tipo'],
+                                        'bl_eliminatoria' => $dados['eliminatoria'],
+                                        'bl_obrigatorio' => $dados['obrigatorio'],
+                                        'es_usuarioCadastro' => $this -> session -> uid,
+                                        'dt_cadastro' => date('Y-m-d H:i:s')
+                                );
+                        }
+                }
+                else{
+                        if(isset($dados['peso']) && strlen($dados['peso'])>0){
+                                $data=array(
+                                        'es_etapa' => $dados['etapa'],
+                                        'tx_questao' => $dados['descricao'],
+                                        'vc_respostaAceita' => $dados['respostaaceita'],
+                                        'in_peso' => $dados['peso'],
+                                        'in_tipo' => $dados['tipo'],
+                                        'bl_eliminatoria' => $dados['eliminatoria'],
+                                        'bl_obrigatorio' => $dados['obrigatorio'],
+                                        'es_usuarioCadastro' => $this -> session -> uid,
+                                        'dt_cadastro' => date('Y-m-d H:i:s')
+                                );
+                        }
+                        else{
+                                $data=array(
+                                        'es_etapa' => $dados['etapa'],
+                                        'tx_questao' => $dados['descricao'],
+                                        'vc_respostaAceita' => $dados['respostaaceita'],
+                                        
+                                        'in_tipo' => $dados['tipo'],
+                                        'bl_eliminatoria' => $dados['eliminatoria'],
+                                        'bl_obrigatorio' => $dados['obrigatorio'],
+                                        'es_usuarioCadastro' => $this -> session -> uid,
+                                        'dt_cadastro' => date('Y-m-d H:i:s')
+                                );
+                        }
+                }
+                $this -> db -> insert ('tb_questoes', $data);
+                $retorno = $this -> db -> insert_id();
+                if($retorno > 0){
+                        if(!isset($data['ordem'])){
+                                $data['ordem'] = '0';
+                        }
+                        $data=array(
+                                'es_grupovaga' => $dados['grupo'],
+                                'es_questao' => $retorno,
+                                'in_ordem' => $data['ordem']
+                        );
+                        $this -> db -> insert ('rl_gruposvagas_questoes', $data);
+                }
+                //echo $this->db->last_query();
+                return $retorno;
+        }
+        public function update_questao($campo, $valor, $primaria){
+                if(strlen($primaria)==0){
+                        return FALSE;
+                }
+                if(strlen($campo)==0){
+                        return FALSE;
+                }
+                $this -> db -> set ($campo, $valor);
+                $this -> db -> set ('es_usuarioAlteracao', $this -> session -> uid);
+                $this -> db -> set ('dt_alteracao', date('Y-m-d H:i:s'));
+                $this -> db -> where('pr_questao', $primaria);
+                $this -> db -> update ('tb_questoes');
+                return $this -> db -> affected_rows();
+        }
+        public function create_opcoes($dados){
+                $data=array(
+                        'es_questao' => $dados['questao'],
+                        'tx_opcao' => $dados['texto'],
+                        'in_valor' => $dados['valor']
+                );
+                $this -> db -> insert ('tb_opcoes', $data);
+                return $this -> db -> insert_id();
+        }
+        public function update_opcao($campo, $valor, $primaria){
+                if(strlen($primaria)==0){
+                        return FALSE;
+                }
+                if(strlen($campo)==0){
+                        return FALSE;
+                }
+                $this -> db -> set ($campo, $valor);
+                $this -> db -> where('pr_opcao', $primaria);
+                $this -> db -> update ('tb_opcoes');
+                return $this -> db -> affected_rows();
+        }
+        public function delete_opcao($primaria){
+                //echo "delete: $primaria<br>";
+                if(strlen($primaria)==0){
+                        return FALSE;
+                }
+                $this -> db -> where('pr_opcao', $primaria);
+                $this -> db -> delete ('tb_opcoes');
+                return $this -> db -> affected_rows();
+        }
+}

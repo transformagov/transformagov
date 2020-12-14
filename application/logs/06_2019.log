@@ -1,0 +1,283 @@
+20/06/2019 17:43:13> Tipo sucesso (Publico): Usuário 2672 logado com sucesso.<br/>http://localhost/sugesp/selecao2/Publico
+20/06/2019 19:04:08> Tipo sucesso (Publico): Usuário 2672 deslogado com sucesso.<br/>http://localhost/sugesp/selecao2/Candidaturas/create
+20/06/2019 19:13:28> Tipo sucesso (Publico): Usuário 2672 logado com sucesso.<br/>http://localhost/sugesp/selecao2/Publico
+20/06/2019 20:55:35> Tipo sucesso (Publico): Usuário 2672 deslogado com sucesso.<br/>http://localhost/sugesp/selecao2/Candidaturas/index
+20/06/2019 21:00:30> Tipo sucesso (Publico): Usuário 2672 logado com sucesso.<br/>http://localhost/sugesp/selecao2/Publico
+20/06/2019 21:00:49> Tipo sucesso (Candidaturas/create): Candidatura 2822 criado mas sem pré-requisitos mínimos.<br/>http://localhost/sugesp/selecao2/Candidaturas/create
+20/06/2019 21:10:07> Tipo sucesso (Candidaturas/create): Candidatura 2823 criado mas sem pré-requisitos mínimos.<br/>http://localhost/sugesp/selecao2/Candidaturas/create
+20/06/2019 22:33:27> Tipo sucesso (Publico): Usuário 2672 deslogado com sucesso.<br/>http://localhost/sugesp/selecao2/Candidaturas/Prova
+20/06/2019 22:42:40> Tipo sucesso (Publico): Usuário 2672 logado com sucesso.<br/>http://localhost/sugesp/selecao2/Publico
+20/06/2019 22:59:22> Tipo erro (Candidaturas/Prova): Candidato 2773 não conseguiu fazer a prova para a vaga 6: Array<br/>http://localhost/sugesp/selecao2/Candidaturas/Prova/6
+20/06/2019 23:08:07> Tipo sucesso (Candidaturas/Prova): Prova da candidatura Array respondida com sucesso.<br/>http://localhost/sugesp/selecao2/Candidaturas/Prova/6
+20/06/2019 23:11:47> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 2823 respondida com sucesso.<br/>http://localhost/sugesp/selecao2/Candidaturas/Prova/6
+20/06/2019 23:14:28> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 2823 respondida com sucesso.<br/>http://localhost/sugesp/selecao2/Candidaturas/Prova/6
+20/06/2019 23:14:55> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 2823 respondida com sucesso.<br/>
+20/06/2019 23:19:08> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 2823 respondida com sucesso.<br/>
+20/06/2019 23:19:16> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 2823 respondida com sucesso.<br/>
+20/06/2019 23:30:37> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 2823 respondida com sucesso.<br/>
+20/06/2019 23:32:29> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 2823 respondida com sucesso.<br/>
+20/06/2019 23:33:50> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 2823 respondida com sucesso.<br/>
+20/06/2019 23:55:54> Tipo sucesso (Publico): Usuário 2672 deslogado com sucesso.<br/>
+22/06/2019 15:10:43> Tipo sucesso (Publico): Usuário 2672 logado com sucesso.<br/>
+22/06/2019 16:30:03> Tipo sucesso (Publico): Usuário 2672 deslogado com sucesso.<br/>
+22/06/2019 19:34:00> Tipo sucesso (Publico): Usuário 2672 logado com sucesso.<br/>
+22/06/2019 20:05:42> Tipo sucesso (Publico): Usuário 2672 deslogado com sucesso.<br/>
+22/06/2019 20:07:32> Tipo sucesso (Publico): Usuário 2672 logado com sucesso.<br/>
+22/06/2019 20:16:15> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 2823 respondida com sucesso.<br/>
+22/06/2019 20:16:55> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 2823 respondida com sucesso.<br/>
+22/06/2019 21:18:02> Tipo sucesso (Candidaturas/Questionario): Questionário da candidatura 2823 respondida com sucesso.<br/>
+22/06/2019 21:53:22> Tipo sucesso (Publico): Usuário 2672 deslogado com sucesso.<br/>
+22/06/2019 22:08:42> Tipo sucesso (Publico): Usuário 2672 logado com sucesso.<br/>
+22/06/2019 23:01:44> Tipo sucesso (Publico): Usuário 2672 deslogado com sucesso.<br/>
+23/06/2019 00:29:54> Tipo sucesso (Publico): Usuário 2672 logado com sucesso.<br/>
+23/06/2019 00:34:30> Tipo sucesso (Candidaturas/Questionario): Documentação para a candidatura  enviada com sucesso.<br/>
+23/06/2019 00:55:37> Tipo sucesso (Publico): Usuário 2672 deslogado com sucesso.<br/>
+23/06/2019 00:58:55> Tipo sucesso (Publico): Usuário 2672 logado com sucesso.<br/>
+23/06/2019 01:40:38> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da  fora do prazo.<br/>
+23/06/2019 01:40:52> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da  fora do prazo.<br/>
+23/06/2019 01:41:43> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da  fora do prazo.<br/>
+23/06/2019 01:41:48> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da  fora do prazo.<br/>
+23/06/2019 01:42:18> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da Array fora do prazo.<br/>
+23/06/2019 01:42:45> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 01:43:16> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 01:44:52> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 01:45:01> Tipo sucesso (Candidaturas/Prova): Prova da candidatura 2823 respondida com sucesso.<br/>
+23/06/2019 01:47:27> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 01:47:35> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 01:47:59> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 01:48:06> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 01:48:25> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 01:50:35> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 01:50:40> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 01:53:32> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 01:55:07> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 01:58:10> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:00:10> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:02:32> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:04:59> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:05:53> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:06:18> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:06:25> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:06:48> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:07:17> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:07:44> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:08:39> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:08:58> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:09:40> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:09:49> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:09:54> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:11:09> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:11:23> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 2823 fora do prazo.<br/>
+23/06/2019 02:12:42> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da  fora do prazo.<br/>
+23/06/2019 02:23:35> Tipo sucesso (Publico): Usuário 2672 deslogado com sucesso.<br/>
+23/06/2019 12:09:46> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+23/06/2019 12:12:45> Tipo sucesso (Publico): Usuário 2610 deslogado com sucesso.<br/>
+23/06/2019 12:12:53> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+23/06/2019 12:30:20> Tipo sucesso (Publico): Usuário 2610 deslogado com sucesso.<br/>
+23/06/2019 12:49:29> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+23/06/2019 13:31:20> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+23/06/2019 13:33:15> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+23/06/2019 14:51:02> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+23/06/2019 15:26:51> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+23/06/2019 16:14:06> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+23/06/2019 18:58:30> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+23/06/2019 19:33:07> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+23/06/2019 20:01:28> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+23/06/2019 21:34:51> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+23/06/2019 21:46:26> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+23/06/2019 22:59:10> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+23/06/2019 23:06:36> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+23/06/2019 23:38:25> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+24/06/2019 00:50:11> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+24/06/2019 01:40:53> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+24/06/2019 01:41:15> Tipo sucesso (Publico): Usuário 2672 logado com sucesso.<br/>
+24/06/2019 01:41:24> Tipo sucesso (Interna): Usuário 2672 deslogado com sucesso.<br/>
+24/06/2019 01:54:11> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+24/06/2019 02:52:32> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+24/06/2019 12:46:55> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+24/06/2019 12:47:02> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+24/06/2019 13:16:46> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+24/06/2019 16:46:52> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+24/06/2019 17:29:10> Tipo erro (Usuarios/create): Erro de envio de e-mail com senha de cadastro para o e-mail teste@teste.com do usuário 2673.<br/>
+24/06/2019 17:29:11> Tipo sucesso (Usuarios/create): Usuário 2673 criado com sucesso.<br/>
+24/06/2019 17:29:38> Tipo erro (Usuarios/create): Erro de envio de e-mail com senha de cadastro para o e-mail teste@teste.com do usuário 2674.<br/>
+24/06/2019 17:29:38> Tipo sucesso (Usuarios/create): Usuário 2674 criado com sucesso.<br/>
+24/06/2019 17:39:43> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+24/06/2019 17:42:43> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+24/06/2019 18:43:54> Tipo erro (Usuarios/create): Erro de criação de usuário. Erro: Array<br/>
+24/06/2019 18:45:26> Tipo erro (Usuarios/create): Erro de envio de e-mail com senha de cadastro para o e-mail  do usuário .<br/>
+24/06/2019 18:45:26> Tipo sucesso (Usuarios/create): Usuário  criado com sucesso.<br/>
+24/06/2019 18:54:36> Tipo erro (Usuarios/delete): Usuário 29 desativado pelo usuário 2610<br/>
+24/06/2019 18:54:52> Tipo erro (Usuarios/delete): Usuário 29 desativado pelo usuário 2610<br/>
+24/06/2019 18:55:22> Tipo sucesso (Usuarios/delete): Usuário 29 desativado pelo usuário 2610<br/>
+24/06/2019 19:13:58> Tipo  (Usuarios/create): Erro de envio de e-mail com senha de cadastro para o e-mail  do usuário .<br/>
+24/06/2019 19:13:58> Tipo  (Usuarios/novaSenha): Usuário  criado com sucesso.<br/>
+24/06/2019 19:14:03> Tipo  (Usuarios/create): Erro de envio de e-mail com senha de cadastro para o e-mail  do usuário .<br/>
+24/06/2019 19:14:03> Tipo  (Usuarios/novaSenha): Usuário  criado com sucesso.<br/>
+24/06/2019 19:28:35> Tipo  (Usuarios/create): Erro de envio de e-mail com senha de cadastro para o e-mail  do usuário .<br/>
+24/06/2019 19:28:35> Tipo  (Usuarios/novaSenha): Usuário  criado com sucesso.<br/>
+24/06/2019 19:28:42> Tipo  (Usuarios/create): Erro de envio de e-mail com senha de cadastro para o e-mail  do usuário .<br/>
+24/06/2019 19:28:42> Tipo  (Usuarios/novaSenha): Usuário  criado com sucesso.<br/>
+24/06/2019 19:28:54> Tipo  (Usuarios/create): Erro de envio de e-mail com senha de cadastro para o e-mail adriana.cabral@saude.mg.gov.br do usuário 2629<br/>
+24/06/2019 19:29:18> Tipo  (Usuarios/create): Erro de envio de e-mail com senha de cadastro para o e-mail adriana.cabral@saude.mg.gov.br do usuário 2629<br/>
+24/06/2019 19:30:17> Tipo  (Usuarios/create): Erro de envio de e-mail com senha de cadastro para o e-mail adriana.cabral@saude.mg.gov.br do usuário 2629<br/>
+24/06/2019 19:31:48> Tipo  (Usuarios/create): Erro de envio de e-mail com senha de cadastro para o e-mail adriana.cabral@saude.mg.gov.br do usuário 2629<br/>
+24/06/2019 19:32:29> Tipo erro (Usuarios/create): Erro de envio de e-mail com senha de cadastro para o e-mail adriana.cabral@saude.mg.gov.br do usuário 2629<br/>
+24/06/2019 19:36:43> Tipo erro (Usuarios/reactivate): Erro de envio de e-mail com senha de cadastro para o e-mail weiderson.mendes@gmail.com do usuário 29<br/>
+24/06/2019 19:37:14> Tipo sucesso (Usuarios/edit): Usuário 29 editado com sucesso pelo usuário 2610<br/>
+24/06/2019 19:37:25> Tipo sucesso (Usuarios/edit): Usuário 29 editado com sucesso pelo usuário 2610<br/>
+24/06/2019 19:38:41> Tipo sucesso (Usuarios/edit): Usuário 29 editado com sucesso pelo usuário 2610<br/>
+24/06/2019 19:38:44> Tipo sucesso (Usuarios/edit): Usuário 29 editado com sucesso pelo usuário 2610<br/>
+24/06/2019 19:39:38> Tipo sucesso (Usuarios/edit): Usuário 29 editado com sucesso pelo usuário 2610<br/>
+24/06/2019 19:54:15> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+25/06/2019 10:45:17> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+25/06/2019 11:16:44> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+25/06/2019 11:18:25> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+25/06/2019 11:49:50> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+25/06/2019 11:55:16> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+25/06/2019 12:20:45> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+25/06/2019 12:30:00> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+25/06/2019 12:48:52> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+25/06/2019 13:39:26> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+25/06/2019 14:31:46> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+25/06/2019 14:33:18> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+25/06/2019 14:35:40> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+27/06/2019 18:29:09> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+27/06/2019 18:46:46> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+28/06/2019 12:54:49> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+28/06/2019 12:59:22> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+28/06/2019 13:50:29> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+28/06/2019 14:07:44> Tipo erro (Candidatos/novaSenha): Erro de envio de e-mail com senha de cadastro para o e-mail maria92sb@hotmail.com do usuário 1508<br/>
+28/06/2019 14:07:55> Tipo erro (Candidatos/novaSenha): Erro de envio de e-mail com senha de cadastro para o e-mail maria92sb@hotmail.com do usuário 1508<br/>
+28/06/2019 14:08:36> Tipo erro (Candidatos/novaSenha): Erro de envio de e-mail com senha de cadastro para o e-mail maria92sb@hotmail.com do usuário 1508<br/>
+28/06/2019 14:12:15> Tipo erro (Candidatos/novaSenha): Erro de envio de e-mail com senha de cadastro para o e-mail maria92sb@hotmail.com do usuário 1508<br/>
+28/06/2019 14:12:32> Tipo erro (Candidatos/novaSenha): Erro de envio de e-mail com senha de cadastro para o e-mail maria92sb@hotmail.com do usuário 1508<br/>
+28/06/2019 14:13:13> Tipo erro (Candidatos/novaSenha): Erro de envio de e-mail com senha de cadastro para o e-mail maria92sb@hotmail.com do usuário 1508<br/>
+28/06/2019 14:13:29> Tipo erro (Candidatos/novaSenha): Erro de envio de e-mail com senha de cadastro para o e-mail maria92sb@hotmail.com do usuário 1508<br/>
+28/06/2019 14:14:08> Tipo sucesso (Candidatos/delete): Usuário 1508 desativado pelo usuário 2610<br/>
+28/06/2019 14:14:40> Tipo sucesso (Candidatos/delete): Usuário 1508 desativado pelo usuário 2610<br/>
+28/06/2019 14:15:10> Tipo sucesso (Candidatos/delete): Usuário 1508 desativado pelo usuário 2610<br/>
+28/06/2019 14:16:43> Tipo sucesso (Candidatos/delete): Usuário 1508 desativado pelo usuário 2610<br/>
+28/06/2019 14:24:42> Tipo sucesso (Candidatos/delete): Usuário 1353 desativado pelo usuário 2610<br/>
+28/06/2019 14:33:45> Tipo sucesso (Candidatos/delete): Usuário 1353 desativado pelo usuário 2610<br/>
+28/06/2019 14:33:50> Tipo sucesso (Candidatos/delete): Usuário 1353 desativado pelo usuário 2610<br/>
+28/06/2019 14:34:44> Tipo sucesso (Candidatos/delete): Usuário 1353 desativado pelo usuário 2610<br/>
+28/06/2019 14:35:26> Tipo sucesso (Candidatos/delete): Usuário 1353 desativado pelo usuário 2610<br/>
+28/06/2019 14:35:39> Tipo sucesso (Candidatos/delete): Usuário 1353 desativado pelo usuário 2610<br/>
+28/06/2019 14:41:13> Tipo erro (Candidatos/reactivate): Erro de envio de e-mail com senha de cadastro para o e-mail eng.adalbertoteodoro@gmail.com do usuário 1353<br/>
+28/06/2019 14:41:17> Tipo erro (Candidatos/reactivate): Erro de envio de e-mail com senha de cadastro para o e-mail eng.adalbertoteodoro@gmail.com do usuário 1353<br/>
+28/06/2019 14:42:28> Tipo erro (Candidatos/reactivate): Erro na recuperação dos dados do usuário . Erro: Array<br/>
+28/06/2019 14:42:32> Tipo erro (Candidatos/reactivate): Erro na recuperação dos dados do usuário . Erro: Array<br/>
+28/06/2019 14:47:45> Tipo erro (Candidatos/reactivate): Erro na recuperação dos dados do usuário . Erro: Array<br/>
+28/06/2019 14:48:52> Tipo erro (Candidatos/reactivate): Erro na recuperação dos dados do usuário . Erro: Array<br/>
+28/06/2019 14:49:33> Tipo erro (Candidatos/reactivate): Erro na recuperação dos dados do usuário . Erro: Array<br/>
+28/06/2019 14:51:51> Tipo erro (Candidatos/reactivate): Erro de envio de e-mail com senha de cadastro para o e-mail eng.adalbertoteodoro@gmail.com do usuário 1353<br/>
+28/06/2019 14:51:57> Tipo erro (Candidatos/reactivate): Erro de envio de e-mail com senha de cadastro para o e-mail eng.adalbertoteodoro@gmail.com do usuário 1353<br/>
+28/06/2019 15:09:50> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+28/06/2019 16:01:19> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+28/06/2019 16:26:25> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+28/06/2019 16:30:18> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+28/06/2019 17:15:31> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+28/06/2019 23:50:29> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+29/06/2019 01:29:57> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+29/06/2019 11:53:05> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+29/06/2019 12:10:50> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+29/06/2019 12:18:49> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+29/06/2019 12:25:34> Tipo sucesso (Vagas/create): Vaga 68 criada com sucesso.<br/>
+29/06/2019 12:43:10> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+29/06/2019 12:49:31> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+29/06/2019 13:35:02> Tipo sucesso (Vagas/edit): Usuário  editado com sucesso pelo usuário 2610<br/>
+29/06/2019 13:35:11> Tipo sucesso (Vagas/edit): Usuário  editado com sucesso pelo usuário 2610<br/>
+29/06/2019 13:36:09> Tipo sucesso (Vagas/edit): Vaga 68 editada com sucesso pelo usuário 2610<br/>
+29/06/2019 13:36:37> Tipo sucesso (Vagas/edit): Vaga 68 editada com sucesso pelo usuário 2610<br/>
+29/06/2019 13:38:02> Tipo sucesso (Vagas/edit): Vaga 68 editada com sucesso pelo usuário 2610<br/>
+29/06/2019 13:56:12> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+29/06/2019 13:59:51> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+29/06/2019 14:12:37> Tipo sucesso (Vagas/delete): Vaga 68 desativada pelo usuário 2610<br/>
+29/06/2019 14:12:40> Tipo sucesso (Vagas/delete): Vaga 68 desativada pelo usuário 2610<br/>
+29/06/2019 14:13:32> Tipo sucesso (Vagas/delete): Vaga 68 desativada pelo usuário 2610<br/>
+29/06/2019 14:14:25> Tipo sucesso (Vagas/delete): Vaga 68 desativada pelo usuário 2610<br/>
+29/06/2019 14:31:55> Tipo sucesso (Vagas/reactivate): Vaga 68 reaativada pelo usuário 2610<br/>
+29/06/2019 14:49:28> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+29/06/2019 14:49:58> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+29/06/2019 16:54:07> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+29/06/2019 16:58:48> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+29/06/2019 17:40:04> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+29/06/2019 23:38:17> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+30/06/2019 00:11:18> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+30/06/2019 00:24:39> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+30/06/2019 01:08:51> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+30/06/2019 02:22:04> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura  editada com sucesso pelo usuário 2610<br/>
+30/06/2019 02:22:15> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura  editada com sucesso pelo usuário 2610<br/>
+30/06/2019 02:23:13> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura  editada com sucesso pelo usuário 2610<br/>
+30/06/2019 02:30:07> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 02:30:12> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 02:40:07> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 02:40:11> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 02:40:27> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 02:40:44> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 02:46:49> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 02:58:41> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 02:58:50> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 03:16:06> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail cristiano.barros@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:16:07> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail ana.botelho@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:16:07> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 03:16:13> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail cristiano.barros@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:16:14> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail ana.botelho@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:16:14> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 03:20:55> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail cristiano.barros@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:20:56> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail ana.botelho@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:20:57> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail ana.botelho@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:20:57> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 03:21:08> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail cristiano.barros@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:21:09> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail ana.botelho@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:21:10> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail ana.botelho@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:21:10> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 03:21:48> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail cristiano.barros@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:21:49> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail ana.botelho@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:21:50> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail ana.botelho@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:21:50> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 03:22:20> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail ana.botelho@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:22:20> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 03:23:03> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail ana.botelho@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:23:03> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 03:24:24> Tipo erro (Usuarios/create): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail ana.botelho@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:24:24> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 03:25:26> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 03:26:06> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 03:29:40> Tipo erro (Candidaturas/AgendamentoEntrevista): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail ana.botelho@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:29:41> Tipo erro (Candidaturas/AgendamentoEntrevista): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail ana.botelho@planejamento.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 03:29:41> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 03:31:46> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+30/06/2019 11:08:32> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+30/06/2019 11:15:53> Tipo erro (Candidaturas/AgendamentoEntrevista): Erro de envio de e-mail de alteração de agendamento de entrevista para o e-mail cristina.siacara@saude.mg.gov.br pelo usuário 2610<br/>
+30/06/2019 11:15:53> Tipo sucesso (Candidaturas/AgendamentoEntrevista): Entrevista para a candidatura 1472 editada com sucesso pelo usuário 2610<br/>
+30/06/2019 11:16:37> Tipo sucesso (Interna): Usuário 2610 deslogado com sucesso.<br/>
+30/06/2019 11:16:42> Tipo sucesso (Publico): Usuário 2610 logado com sucesso.<br/>
+30/06/2019 12:33:36> Tipo sucesso (Interna): UsuÃ¡rio 2610 deslogado com sucesso.<br/>
+30/06/2019 15:43:41> Tipo sucesso (Publico): UsuÃ¡rio 2610 logado com sucesso.<br/>
+30/06/2019 16:11:21> Tipo sucesso (Publico): UsuÃ¡rio 2610 logado com sucesso.<br/>
+30/06/2019 16:55:30> Tipo sucesso (Interna): UsuÃ¡rio 2610 deslogado com sucesso.<br/>
+30/06/2019 17:01:28> Tipo sucesso (Publico): UsuÃ¡rio 2610 logado com sucesso.<br/>
+30/06/2019 17:01:35> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 1472 fora do prazo.<br/>
+30/06/2019 17:01:40> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 1472 fora do prazo.<br/>
+30/06/2019 17:02:33> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 1472 fora do prazo.<br/>
+30/06/2019 17:02:47> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 1472 fora do prazo.<br/>
+30/06/2019 17:03:06> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 1472 fora do prazo.<br/>
+30/06/2019 17:03:20> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 1472 fora do prazo.<br/>
+30/06/2019 17:03:24> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 1472 fora do prazo.<br/>
+30/06/2019 17:04:36> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 1472 fora do prazo.<br/>
+30/06/2019 17:05:02> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 1472 fora do prazo.<br/>
+30/06/2019 17:06:17> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 1472 fora do prazo.<br/>
+30/06/2019 17:06:51> Tipo seguranca (Candidaturas/Prova): Tentativa de preenchimento de prova da 1472 fora do prazo.<br/>
+30/06/2019 17:12:05> Tipo sucesso (Interna): UsuÃ¡rio 2610 deslogado com sucesso.<br/>
+30/06/2019 17:22:07> Tipo sucesso (Publico): UsuÃ¡rio 2610 logado com sucesso.<br/>
+30/06/2019 17:41:27> Tipo sucesso (Interna): UsuÃ¡rio 2610 deslogado com sucesso.<br/>
+30/06/2019 19:59:51> Tipo advertencia (Publico): Login sem sucesso para CPF 234.118.280-13<br/>
+30/06/2019 20:06:57> Tipo sucesso (Publico): UsuÃ¡rio 2610 logado com sucesso.<br/>
+30/06/2019 20:11:04> Tipo sucesso (Interna): UsuÃ¡rio 2610 deslogado com sucesso.<br/>
+30/06/2019 20:11:09> Tipo sucesso (Publico): UsuÃ¡rio 2672 logado com sucesso.<br/>
+30/06/2019 20:11:47> Tipo sucesso (Interna): UsuÃ¡rio 2672 deslogado com sucesso.<br/>
+30/06/2019 20:12:34> Tipo sucesso (Publico): UsuÃ¡rio 2672 logado com sucesso.<br/>
+30/06/2019 20:14:49> Tipo sucesso (Candidaturas/create): Candidatura 2817 criado com sucesso.<br/>
+30/06/2019 21:21:21> Tipo sucesso (Interna): UsuÃ¡rio 2672 deslogado com sucesso.<br/>
