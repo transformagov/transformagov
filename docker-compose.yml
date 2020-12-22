@@ -1,0 +1,20 @@
+version: "3.3"
+
+services:
+  server:
+    build:
+      context: ./
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/transforma-minas/
+    entrypoint: tail -f /dev/null
+  db:
+    image: mariadb:10.3
+    volumes:
+      - transforma-db:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=transforma
+      - MYSQL_ROOT_PASSWORD=root
+volumes:
+  transforma-db:
