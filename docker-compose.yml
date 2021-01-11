@@ -8,7 +8,8 @@ services:
       - "8080:80"
     volumes:
       - ./:/transforma-minas/
-    entrypoint: service php7.3-fpm start && sleep 5 && service nginx restart && tail -f /dev/null
+    entrypoint: /tmp/run.sh
+    #entrypoint: tail -f /dev/null
   db:
     image: mariadb:10.3
     volumes:
