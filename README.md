@@ -12,8 +12,11 @@ Este comando irá realizar as seguintes operações:
 
 - Subir um container chamado `transforma-minas_server`, utilizando a imagem do debian:stable.  
 Esse container irá atuar como o servidor, e via nginx irá responder às requisições HTTP e servir os
-arquivos estáticos (js, css, imagens).
+arquivos estáticos (js, css, imagens). Além de servir os arquivos estáticos, o nginx também será 
+responsável por servir os scripts PHP.
 - Subir um container chamado `transforma-minas_db`, utilizando a imagem mariadb:latest.  
 Esse container será o banco de dados da aplicação.
 
-Para visualizar a plataforma, acesse `http://localhost:8080`
+3. Restaure o banco utilizando o comando `make restore`;
+
+4. Para visualizar a plataforma, acesse `http://localhost:8080`;
