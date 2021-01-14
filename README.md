@@ -20,3 +20,18 @@ Esse container será o banco de dados da aplicação.
 3. Restaure o banco utilizando o comando `make restore`;
 
 4. Para visualizar a plataforma, acesse `http://localhost:8080`;
+
+
+## SMTP
+
+Tanto o cadastro de usuário, quanto a recuperação de senha dependem de disparos de email.
+O sistema está utilizando o smtp do [Mailgun](https://www.mailgun.com/) para realizar o envio de email. Como isso é uma parte
+central do sistema, o desenvolvedor deve alterar as credenciais utilizadas para um servidor na qual
+ele tenha controle. Não há garantia que as credenciais desse repositório irão funcionar permanentemente.
+
+
+## Criptografia das senhas no banco
+
+O CodeIgniter, framework utilizado na construção do sistema, utiliza uma biblioteca própria para criptografar
+e descriptografar as senhas. O desenvolvedor pode alterar a chave de criptografia utilizada no processo alterando
+a configuração `encryption_key`, no arquivo `application/config/config.php`.
