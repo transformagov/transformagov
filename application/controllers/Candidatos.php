@@ -1076,15 +1076,16 @@ class Candidatos extends CI_Controller {
                                                 $pr_usuario = $this -> Usuarios_model -> create_usuario($dados_form);
                                                 if($pr_usuario > 0){
                                                         $config['protocol'] = 'smpt';
-														$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-														$config['smtp_port'] = 25;
-														$config['smtp_user'] = 'pontodigital';
-														$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-														$config['charset'] = 'UTF-8';
-
-														$config['wordwrap'] = TRUE;
-
-														$config['mailtype'] = 'html';
+                                $config['charset'] = 'UTF-8';
+                                $config['wordwrap'] = TRUE;
+                                $config['mailtype'] = 'html';
+                                $config['smtp_host'] = 'smtp.mailgun.org';
+                                $config['smtp_port'] = 587;
+                                $config['smtp_user'] = 'transformaminas@pencillabs.com.br';
+                                $config['smtp_pass'] = '2d657985dbf03eb123040b63bcfb255f-28d78af2-3dbbfc4c';
+                                $config['protocol'] = 'smtp';
+                                $config['smtp_auth'] = TRUE;
+                                $config['smtp_crypto'] = 'tls';
 
 														$this->email->initialize($config);
                                                         $this -> email -> from($this -> config -> item('email'), $this -> config -> item('nome'));
@@ -1628,11 +1629,11 @@ class Candidatos extends CI_Controller {
 						$this -> Usuarios_model -> update_usuario('in_erros', '0', $usuario);
 						$this -> Usuarios_model -> update_usuario('bl_trocasenha', '1', $usuario);
 						$config['protocol'] = 'smpt';
-						$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-						$config['smtp_port'] = 25;
-						$config['smtp_user'] = 'pontodigital';
-						$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-						$config['charset'] = 'UTF-8';
+        $config['smtp_host'] = 'smtp.gmail.com';
+        $config['smtp_port'] = 587;
+        $config['smtp_user'] = 'transformaminashomolog@gmail.com';
+        $config['smtp_pass'] = '"|D_Wj&[jS6%|K?&l9i#';
+        $config['charset'] = 'UTF-8';
 
 						$config['wordwrap'] = TRUE;
 
