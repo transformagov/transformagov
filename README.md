@@ -10,11 +10,11 @@ alguns dos passos e dependências utilizadas.
 
 Este comando irá realizar as seguintes operações:
 
-- Subir um container chamado `transforma-minas_server`, utilizando a imagem do debian:stable.  
+- Subir um container chamado `transforma-minas_server_1`, utilizando a imagem do debian:stable.  
 Esse container irá atuar como o servidor, e via nginx irá responder às requisições HTTP e servir os
 arquivos estáticos (js, css, imagens). Além de servir os arquivos estáticos, o nginx também será 
 responsável por servir os scripts PHP.
-- Subir um container chamado `transforma-minas_db`, utilizando a imagem mariadb:latest.  
+- Subir um container chamado `transforma-minas_db_1`, utilizando a imagem mariadb:latest.  
 Esse container será o banco de dados da aplicação.
 
 3. Restaure o banco utilizando o comando `make restore`;
@@ -35,3 +35,16 @@ ele tenha controle. Não há garantia que as credenciais desse repositório irã
 O CodeIgniter, framework utilizado na construção do sistema, utiliza uma biblioteca própria para criptografar
 e descriptografar as senhas. O desenvolvedor pode alterar a chave de criptografia utilizada no processo alterando
 a configuração `encryption_key`, no arquivo `application/config/config.php`.
+
+## Usuário administrador
+
+Para alterar um usuário para administrador, o desenvolvedor pode fazer isso via sql.
+
+1. acesse o banco
+
+				docker exec -it transforma-minas_db_1 bash
+				mysql --password=root --user=root transforma
+
+2. execute o script que altera um usuário para administrador
+
+				update tb_usuarios set en_perfil='administrador' where pr_usuario=<id_do_usuario_aqui>;
