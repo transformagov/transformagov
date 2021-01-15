@@ -83,7 +83,9 @@ o nginx encontre os arquivos estáticos e scripts do php no ambiente.
 O desenvolvedor pode subir o banco mariadb, ou postgres/mysql, e apontar o servidor php para ele.
 Essa configuração é feita no arquivo `application/config/database.php`. O restore dos arquivos sql
 deve funcionar tanto para o postgresql, mysql e mariadb. Os arquivos sql com o schema do banco e
-os dados iniciais estão na pasta `db`.
+os dados iniciais estão na pasta `db`. Vale ressaltar que o php depende de um conector, para conseguir
+acessar o banco. No caso do mariadb estamos usando a dependência `php7.3-mysql`. Para outros bancos esse
+conector deverá ser adaptado.
 
 ### Executando o php
 
