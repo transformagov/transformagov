@@ -73,15 +73,17 @@ O servidor utiliza as seguintes dependências:
 
 ### Nginx
 
-Dentro do servidor existe uma instância do nginx, que serve tanto arquivos estáticos quanto
-os scripts php. O desenvolvedor precisa move-lo para `/etc/nginx/conf.d/`. O caminho para o
-código da plataforma deverá ser adaptado, de acordo com o ambiente em que o sistema irá subir.
+A instância do nginx que rodará no servidor é controlada pelo arquivo `transforma.conf`.
+O desenvolvedor precisa move-lo para `/etc/nginx/conf.d/`. Esse arquivo aponta para diretórios
+que provavelmente não irão existir no ambiente, logo, adaptações terão que ser feitas para que
+o nginx encontre os arquivos estáticos e scripts do php no ambiente.
 
 ### Banco de dados
 
 O desenvolvedor pode subir o banco mariadb, ou postgres/mysql, e apontar o servidor php para ele.
 Essa configuração é feita no arquivo `application/config/database.php`. O restore dos arquivos sql
-deve funcionar tanto para o postgresql, mysql e mariadb.
+deve funcionar tanto para o postgresql, mysql e mariadb. Os arquivos sql com o schema do banco e
+os dados iniciais estão na pasta `db`.
 
 ### Executando o php
 
