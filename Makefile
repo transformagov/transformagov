@@ -4,6 +4,8 @@ build:
 up:
 	docker-compose up
 
+run: build up
+
 restore:
 	docker cp db/transforma.sql  transforma-minas_db_1:/tmp
 	docker cp db/transforma2.sql  transforma-minas_db_1:/tmp
