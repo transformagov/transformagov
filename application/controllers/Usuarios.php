@@ -532,6 +532,7 @@ class Usuarios extends CI_Controller {
                         $dados['erro'] =  'Você não tem acesso a esta página. Esta tentativa foi registrada para fins de auditoria.';
                         $this -> Usuarios_model -> log('seguranca', 'Usuarios/novaSenha', 'Tentativa de acesso por perfil inadequado, usuário '.$this -> session -> uid);
                         $dados['menu2']='';
+                        echo "<script type=\"text/javascript\">alert('Você não tem acesso a esta página. Esta tentativa foi registrada para fins de auditoria.');window.location='".base_url('Usuarios/index')."';</script>";
                 }
                 else{
                         $usuario = $this -> uri -> segment(3);
@@ -897,12 +898,14 @@ class Usuarios extends CI_Controller {
                                 if(!$this -> email -> send()){
                                         $dados['sucesso'] = '';
                                         $dados['erro'] =  'Erro no envio do e-mail com a nova senha. Os responsáveis já foram avisados.';
-                                        $this -> Usuarios_model -> log('erro', 'Usuarios/novaSenha', 'Erro de envio de e-mail com senha de cadastro para o e-mail '.$dados['usuario'] -> vc_email.' do usuário '.$dados['usuario'] -> pr_usuario, 'tb_usuarios', $usuario);
+                                        $this -> Usuarios_model -> log('erro', 'Usuarios/novaSenha', 'Erro de envio de e-mail com senha de cadastro para o e-mail '.$dados['usuario'] -> vc_email.' do usuário '.$dados['usuario'] -> pr_usuario.' feita pelo usuário '.$this -> session -> uid, 'tb_usuarios', $usuario);
+                                        echo "<script type=\"text/javascript\">alert('Erro no envio do e-mail com a nova senha. Os responsáveis já foram avisados.');window.location='".base_url('Usuarios/index')."';</script>";
                                 }
                                 else{
                                         $dados['sucesso'] = 'Nova senha enviada com sucesso. A nova senha é '.$senha.'.<br/><br/><a href="'.base_url('Usuarios/index').'" class="btn btn-light">Voltar</a>';
                                         $dados['erro'] =  NULL;
-                                        $this -> Usuarios_model -> log('sucesso', 'Usuarios/novaSenha', "Nova senha para Usuário {$usuario} enviada com sucesso.", 'tb_usuarios', $usuario);
+                                        $this -> Usuarios_model -> log('sucesso', 'Usuarios/novaSenha', "Nova senha para Usuário {$usuario} enviada com sucesso pelo usuário ".$this -> session -> uid.".", 'tb_usuarios', $usuario);
+                                        echo "<script type=\"text/javascript\">alert('Nova senha enviada com sucesso. A nova senha é ".$senha.".');window.location='".base_url('Usuarios/index')."';</script>";
                                 }
                         }
                         else{
@@ -910,10 +913,11 @@ class Usuarios extends CI_Controller {
                                 $dados['sucesso'] = '';
                                 $dados['erro'] =  'Erro na recuperação dos dados do usuário. Os responsáveis já foram avisados.';
                                 $this -> Usuarios_model -> log('erro', 'Usuarios/novaSenha', "Erro na recuperação dos dados do usuário {$usuario}. Erro: ".$erro['message']);
+                                echo "<script type=\"text/javascript\">alert('Erro na recuperação dos dados do usuário. Os responsáveis já foram avisados.');window.location='".base_url('Usuarios/index')."';</script>";
                         }
                 }
 
-                $this -> load -> view('usuarios', $dados);
+                //$this -> load -> view('usuarios', $dados);
         }
 	public function delete(){
                 $this -> load -> library('email');
@@ -932,6 +936,7 @@ class Usuarios extends CI_Controller {
                         $dados['erro'] =  'Você não tem acesso a esta página. Esta tentativa foi registrada para fins de auditoria.';
                         $this -> Usuarios_model -> log('seguranca', 'Usuarios/index', 'Tentativa de acesso por perfil inadequado, usuário '.$this -> session -> uid);
                         $dados['menu2']='';
+                        echo "<script type=\"text/javascript\">alert('Você não tem acesso a esta página. Esta tentativa foi registrada para fins de auditoria.');window.location='".base_url('Usuarios/index')."';</script>";
                 }
                 else{
                         $usuario = $this -> uri -> segment(3);
@@ -944,6 +949,7 @@ class Usuarios extends CI_Controller {
                                 $dados['sucesso'] = '';
                                 $dados['erro'] = 'Você não pode desativar seu próprio acesso por essa funcionalidade. Essa tentativa foi registrada para fins de auditoria.';
                                 $this -> Usuarios_model -> log('seguranca', 'Usuarios/delete', "Usuário {$usuario} tentou se desativar.", 'tb_usuarios', $usuario);
+                                echo "<script type=\"text/javascript\">alert('Você não pode desativar seu próprio acesso por essa funcionalidade. Essa tentativa foi registrada para fins de auditoria.');window.location='".base_url('Usuarios/index')."';</script>";
                         }
                         else{
                                 $this -> Usuarios_model -> update_usuario('bl_removido', '1', $usuario);
@@ -952,10 +958,11 @@ class Usuarios extends CI_Controller {
                                 $dados['sucesso'] = 'O usuário \''.$dados_usuario -> vc_nome.'\' foi desativado com sucesso.<br/><br/><a href="'.base_url('Usuarios/index').'" class="btn btn-light">Voltar</a>';
                                 $dados['erro'] = '';
                                 $this -> Usuarios_model -> log('sucesso', 'Usuarios/delete', "Usuário {$usuario} desativado pelo usuário ".$this -> session -> uid, 'tb_usuarios', $usuario);
+                                echo "<script type=\"text/javascript\">alert('O usuário \'".$dados_usuario -> vc_nome."\' foi desativado com sucesso.');window.location='".base_url('Usuarios/index')."';</script>";
                         }
                 }
                 
-                $this -> load -> view('usuarios', $dados);
+                //$this -> load -> view('usuarios', $dados);
         }
 	public function reactivate(){
                 $this -> load -> library('email');
@@ -975,6 +982,7 @@ class Usuarios extends CI_Controller {
                         $dados['erro'] =  'Você não tem acesso a esta página. Esta tentativa foi registrada para fins de auditoria.';
                         $this -> Usuarios_model -> log('seguranca', 'Usuarios/index', 'Tentativa de acesso por perfil inadequado, usuário '.$this -> session -> uid);
                         $dados['menu2']='';
+                        echo "<script type=\"text/javascript\">alert('Você não tem acesso a esta página. Esta tentativa foi registrada para fins de auditoria.');window.location='".base_url('Usuarios/index')."';</script>";
                 }
                 else{
                         $usuario = $this -> uri -> segment(3);
@@ -987,17 +995,17 @@ class Usuarios extends CI_Controller {
                                 $this -> Usuarios_model -> update_usuario('dt_alteracao', date('Y-m-d H:i:s'), $usuario);
 
                                 $config['protocol'] = 'smpt';
-								$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-								$config['smtp_port'] = 25;
-								$config['smtp_user'] = 'pontodigital';
-								$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-								$config['charset'] = 'UTF-8';
+                                $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
+                                $config['smtp_port'] = 25;
+                                $config['smtp_user'] = 'pontodigital';
+                                $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
+                                $config['charset'] = 'UTF-8';
 
-								$config['wordwrap'] = TRUE;
+                                $config['wordwrap'] = TRUE;
 
-								$config['mailtype'] = 'html';
+                                $config['mailtype'] = 'html';
 
-								$this->email->initialize($config);
+                                $this->email->initialize($config);
                                 
                                 $this -> email -> from($this -> config -> item('email'), $this -> config -> item('nome'));
                                 $this -> email -> to($dados['usuario'] -> vc_email);
@@ -1012,15 +1020,17 @@ class Usuarios extends CI_Controller {
                                 }
                                 $dados['sucesso'] = 'Usuário reativado com sucesso.<br/><br/><a href="'.base_url('Usuarios/index').'" class="btn btn-light">Voltar</a>';
                                 $dados['erro'] =  NULL;
+                                echo "<script type=\"text/javascript\">alert('Usuário reativado com sucesso.');window.location='".base_url('Usuarios/index')."';</script>";
                         }
                         else{
                                 $erro = $this -> db -> error();
                                 $dados['sucesso'] = '';
                                 $dados['erro'] =  'Erro na recuperação dos dados do usuário. Os responsáveis já foram avisados.';
                                 $this -> Usuarios_model -> log('erro', 'Usuarios/reactivate', "Erro na recuperação dos dados do usuário {$usuario}. Erro: ".$erro['message']);
+                                echo "<script type=\"text/javascript\">alert('Erro na recuperação dos dados do usuário. Os responsáveis já foram avisados.');window.location='".base_url('Usuarios/index')."';</script>";
                         }
                 }
 
-                $this -> load -> view('usuarios', $dados);
+                //$this -> load -> view('usuarios', $dados);
         }
 }

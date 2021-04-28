@@ -53,7 +53,7 @@ class Questoes extends CI_Controller {
                 $pagina['icone']='fa fa-check-square-o';
 
                 $dados=$pagina;
-                $dados['adicionais'] = array('rangeslider' => true, 'wnumb' => true);
+                $dados['adicionais'] = array('rangeslider' => true, 'wnumb' => true);//,'wysiwyg'=>true
                 $grupo = $this -> uri -> segment(3);
                 
                 
@@ -119,7 +119,7 @@ class Questoes extends CI_Controller {
                 $pagina['icone']='fa fa-check-square-o';
 
                 $dados=$pagina;
-                $dados['adicionais'] = array('nouislidder' => true, 'wnumb' => true);
+                $dados['adicionais'] = array('nouislidder' => true, 'wnumb' => true);//,'wysiwyg'=>true
                 $dados_form = $this -> input -> post(null,true);
                 $questao = $this -> uri -> segment(3);
                 if(isset($dados_form['codigo']) && $dados_form['codigo'] > 0){
@@ -244,7 +244,7 @@ class Questoes extends CI_Controller {
                 $this -> load -> view('questoes', $dados);
         }
 		
-		public function delete(){
+	public function delete(){
                 $this -> load -> model('Usuarios_model');
 
                 $pagina['menu1']='Questoes';
@@ -262,8 +262,8 @@ class Questoes extends CI_Controller {
                 $dados['sucesso'] = "A questão foi desativada com sucesso.<br/><br/><a href=\"".base_url('Questoes/index/'.$grupo).'" class="btn btn-light">Voltar</a>';
                 $dados['erro'] = '';
                 $this -> Usuarios_model -> log('sucesso', 'Vagas/delete', "Questão {$questao} desativada pelo usuário ".$this -> session -> uid, 'tb_questoes', $questao);
-
-                $this -> load -> view('questoes', $dados);
+                echo "<script type=\"text/javascript\">alert('A questão foi desativada com sucesso.');window.location='".base_url('Questoes/index/'.$grupo)."';</script>";
+                //$this -> load -> view('questoes', $dados);
         }
 	public function reactivate(){
                 $this -> load -> model('Usuarios_model');
@@ -284,7 +284,8 @@ class Questoes extends CI_Controller {
                 $dados['erro'] = '';
                 $this -> Usuarios_model -> log('sucesso', 'Vagas/reactivate', "Questão {$questao} reaativada pelo usuário ".$this -> session -> uid, 'tb_questoes', $questao);
 
-                $this -> load -> view('questoes', $dados);
+                echo "<script type=\"text/javascript\">alert('A questão foi reativada com sucesso.');window.location='".base_url('Questoes/index/'.$grupo)."';</script>";
+                //$this -> load -> view('questoes', $dados);
         }
         public function valida_respostas(){ //callback de validação customizada do formulário de cadastro
                 $dados_form = $this -> input -> post(null,true);
@@ -327,10 +328,10 @@ class Questoes extends CI_Controller {
                         return FALSE;
                 }
 
-                else if ($etapa == '2' && $obrigatorio == '1'){
+                /*else if ($etapa == '2' && $obrigatorio == '1'){
                         $this->form_validation->set_message('valida_obrigatorio', "O campo 'Obrigatória?' deve ser 'Não' na 'Etapa 2 - Req. desejáveis'.");
                         return FALSE;
-                }
+                }*/
                 else if ($etapa == '2' && $eliminatoria == '1'){
                         $this->form_validation->set_message('valida_obrigatorio', "O campo 'Eliminatória?' deve ser 'Não' na 'Etapa 2 - Req. desejáveis'.");
                         return FALSE;
@@ -341,9 +342,7 @@ class Questoes extends CI_Controller {
                         return TRUE;
                 }
         }
-        
-        
-        
+                        
         public function valida_eliminatoria(){ //callback de validação customizada do formulário de cadastro
                 $eliminatoria = $this -> input -> post('eliminatoria');
                 $etapa = $this -> input -> post('etapa');

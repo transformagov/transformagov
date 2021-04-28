@@ -179,7 +179,7 @@ class Vagas extends CI_Controller {
                 $this -> form_validation -> set_rules('instituicao', "'Instituição'", 'required|maior_que_zero', array('maior_que_zero' => 'O campo \'Instituição\' é obrigatório.'));
                 $this -> form_validation -> set_rules('grupo', "'Grupo da vaga'", 'required|maior_que_zero', array('maior_que_zero' => 'O campo \'Grupo da vaga\' é obrigatório.'));
                 $this -> form_validation -> set_rules('inicio', "'Início das inscrições'", 'required|valida_data|callback_data_maior', array('required' => 'O campo \'Início das inscrições\' é obrigatório.', 'valida_data' => 'A data \'Início das inscrições\' inserida é inválida.'));
-                $this -> form_validation -> set_rules('fim', "'Término das inscrições'", 'required|valida_data', array('required' => 'O campo \'Término das inscrições\' é obrigatório.', 'valida_data' => 'A data \'Término das inscrições\' inserida é inválida.'));
+                $this -> form_validation -> set_rules('fim', "'Término das inscrições'", 'required|valida_data|callback_data_fim', array('required' => 'O campo \'Término das inscrições\' é obrigatório.', 'valida_data' => 'A data \'Término das inscrições\' inserida é inválida.'));
                 //$this -> form_validation -> set_rules('brumadinho', "'Tipo de vaga'", 'required');
 				
                 $dados['usuarios'] = $this -> Usuarios_model -> get_usuarios ('', '', 2,'',true);
@@ -264,6 +264,49 @@ class Vagas extends CI_Controller {
 
 
                 $dados['entrevistas'] = array();
+
+                $notas_totais = $this -> Candidaturas_model -> get_nota_total('',$vaga);
+                if(!isset($notas_totais)){
+                        $this ->calcula_nota($vaga,2);
+                        $this ->calcula_nota($vaga,3);
+                        $this ->calcula_nota($vaga,4);
+                        $this ->calcula_nota($vaga,5);
+                        $this ->calcula_nota($vaga,6);
+                        $this ->calcula_nota($vaga,7);
+                        $notas_totais = $this -> Candidaturas_model -> get_nota_total('',$vaga);
+                }
+
+
+                $dados['total2'] = 0;
+                $dados['total3'] = 0;
+                $dados['total4'] = 0;
+                $dados['total5'] = 0;
+                $dados['total6'] = 0;
+                $dados['total7'] = 0;
+               
+                foreach($notas_totais as $nota_total){
+                        if($nota_total -> es_etapa == '2'){
+                                $dados['total2'] = $nota_total->in_nota_total;
+                        }
+                        if($nota_total -> es_etapa == '3'){
+                                $dados['total3'] = $nota_total->in_nota_total;
+                        }
+                        if($nota_total -> es_etapa == '4'){
+                                $dados['total4'] = $nota_total->in_nota_total;
+                        }
+                        if($nota_total -> es_etapa == '5'){
+                                $dados['total5'] = $nota_total->in_nota_total;
+                        }
+                        if($nota_total -> es_etapa == '6'){
+                                $dados['total6'] = $nota_total->in_nota_total;
+                        }
+                        if($nota_total -> es_etapa == '7'){
+                                $dados['total7'] = $nota_total->in_nota_total;
+                        }
+                }
+                
+                
+
                 if($candidaturas){
                         $candidatura_anterior = -1;
                         foreach($candidaturas as $candidatura){
@@ -297,6 +340,9 @@ class Vagas extends CI_Controller {
                                                 }
                                                 if($nota -> es_etapa == '6'){
                                                         $candidatura -> in_nota6 = $nota -> in_nota;
+                                                }
+                                                if($nota -> es_etapa == '7'){
+                                                        $candidatura -> in_nota7 = $nota -> in_nota;
                                                 }
                                         }
                                 }
@@ -445,8 +491,8 @@ class Vagas extends CI_Controller {
                 $dados['sucesso'] = "A vaga foi desativada com sucesso.\n\n<a href=\"".base_url('Vagas/index').'" class="btn btn-light">Voltar</a>';
                 $dados['erro'] = '';
                 $this -> Usuarios_model -> log('sucesso', 'Vagas/delete', "Vaga {$vaga} desativada pelo usuário ".$this -> session -> uid, 'tb_vagas', $vaga);
-
-                $this -> load -> view('vagas', $dados);
+                echo "<script type=\"text/javascript\">alert('A vaga foi desativada com sucesso.');window.location='".base_url('Vagas/index')."';</script>";
+                //$this -> load -> view('vagas', $dados);
         }
 	public function reactivate(){
                 if($this -> session -> perfil != 'sugesp' && $this -> session -> perfil != 'orgaos' && $this -> session -> perfil != 'administrador'){
@@ -467,8 +513,8 @@ class Vagas extends CI_Controller {
                 $dados['sucesso'] = "A vaga foi reaativada com sucesso.\n\n<a href=\"".base_url('Vagas/index').'" class="btn btn-light">Voltar</a>';
                 $dados['erro'] = '';
                 $this -> Usuarios_model -> log('sucesso', 'Vagas/reactivate', "Vaga {$vaga} reaativada pelo usuário ".$this -> session -> uid, 'tb_vagas', $vaga);
-
-                $this -> load -> view('vagas', $dados);
+                echo "<script type=\"text/javascript\">alert('A vaga foi reativada com sucesso.');window.location='".base_url('Vagas/index')."';</script>";
+                //$this -> load -> view('vagas', $dados);
         }
         
         
@@ -506,6 +552,8 @@ class Vagas extends CI_Controller {
                         $vaga = $this -> Vagas_model -> get_vagas($dados_candidatura[0]->es_vaga, false);
 
                         $questoes2 = $this -> Questoes_model -> get_questoes('', $vaga[0]->es_grupoVaga, 5);
+                        $questoes3 = $this -> Questoes_model -> get_questoes('', $vaga[0]->es_grupoVaga, 7);
+
                         $dados['questoes2'] = $questoes2;
 
 						if($tipo_entrevista=='competencia'){
@@ -672,22 +720,31 @@ class Vagas extends CI_Controller {
                                         $this -> Candidaturas_model -> update_candidatura('es_status', 10,  $candidatura);
 										
                                 }
-                                if($tipo_entrevista == 'competencia'){
-                                        //echo $dados_form['data2'];
-                                        
-                                }
+                                
 								
                                 //teste de aderencia
 								if(isset($questoes2) && $dados_candidatura[0] -> en_aderencia != '2' && $tipo_entrevista == 'competencia' && strtotime(show_sql_date($dados_form['data2'],true)) != strtotime($dados_candidatura[0] -> dt_aderencia)){
                                         //echo $dados_candidatura[0] -> dt_aderencia.show_sql_date($dados_form['data2'],true);
                                         $this -> Candidaturas_model -> update_candidatura('dt_aderencia', show_sql_date($dados_form['data2'], true),  $candidatura);
-										$this -> Candidaturas_model -> update_candidatura('en_aderencia', '1',  $candidatura);
+                                        $this -> Candidaturas_model -> update_candidatura('en_aderencia', '1',  $candidatura);
+                                        if($dados_candidatura[0] -> en_hbdi != '2' && $dados_candidatura[0] -> en_hbdi != '1'){
+                                            $this -> Candidaturas_model -> update_candidatura('en_hbdi', '1',  $candidatura);
+                                                
+                                        }
+                                        if(isset($questoes3) && $dados_candidatura[0] -> en_motivacao != '2' && $dados_candidatura[0] -> en_motivacao != '1'){
+                                            $this -> Candidaturas_model -> update_candidatura('en_motivacao', '1',  $candidatura);
+                                        }
 										$config['protocol'] = 'smpt';
 										$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
 										$config['smtp_port'] = 25;
 										$config['smtp_user'] = 'pontodigital';
 										$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-										$config['charset'] = 'UTF-8';
+                                        $config['charset'] = 'UTF-8';
+                                        
+
+                                        $partes = explode(" ",$dados_form['data2']);
+                                        $data = $partes[0];
+                                        $hora = $partes[1];
 
 										$config['wordwrap'] = TRUE;
 
@@ -704,348 +761,360 @@ class Vagas extends CI_Controller {
 										//$msg='Olá '.$dados_candidato->vc_nome.',<br/><br/>O teste de aderência deve ser preenchido.<br/><br/>Em caso de dúvidas, verifique no sistema do '.$this -> config -> item('nome').' a situação deste agendamento. Acesse o sistema por meio do link: '.base_url();
 										$msg = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional //EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
 
-<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:v=\"urn:schemas-microsoft-com:vml\">
-<head>
-<!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
-<meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\"/>
-<meta content=\"width=device-width\" name=\"viewport\"/>
-<!--[if !mso]><!-->
-<meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>
-<!--<![endif]-->
-<title></title>
-<!--[if !mso]><!-->
-<link href=\"https://fonts.googleapis.com/css?family=Open+Sans\" rel=\"stylesheet\" type=\"text/css\"/>
-<link href=\"https://fonts.googleapis.com/css?family=Open+Sans\" rel=\"stylesheet\" type=\"text/css\"/>
-<!--<![endif]-->
-<style type=\"text/css\">
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        table,
-        td,
-        tr {
-            vertical-align: top;
-            border-collapse: collapse;
-        }
-
-        * {
-            line-height: inherit;
-        }
-        
-        .botao:hover{
-            background-color: #53A69D !important;
-        }
-        
-        .aqui:hover{
-            color: #DF2935 !important;
-        }
-
-        a[x-apple-data-detectors=true] {
-            color: inherit !important;
-            text-decoration: none !important;
-        }
-    </style>
-<style id=\"media-query\" type=\"text/css\">
-        @media (max-width: 620px) {
-
-            .block-grid,
-            .col {
-                min-width: 320px !important;
-                max-width: 100% !important;
-                display: block !important;
-            }
-
-            .block-grid {
-                width: 100% !important;
-            }
-
-            .col {
-                width: 100% !important;
-            }
-
-            .col>div {
-                margin: 0 auto;
-            }
-
-            img.fullwidth,
-            img.fullwidthOnMobile {
-                max-width: 100% !important;
-            }
-
-            .no-stack .col {
-                min-width: 0 !important;
-                display: table-cell !important;
-            }
-
-            .no-stack.two-up .col {
-                width: 50% !important;
-            }
-
-            .no-stack .col.num4 {
-                width: 33% !important;
-            }
-
-            .no-stack .col.num8 {
-                width: 66% !important;
-            }
-
-            .no-stack .col.num4 {
-                width: 33% !important;
-            }
-
-            .no-stack .col.num3 {
-                width: 25% !important;
-            }
-
-            .no-stack .col.num6 {
-                width: 50% !important;
-            }
-
-            .no-stack .col.num9 {
-                width: 75% !important;
-            }
-
-            .video-block {
-                max-width: none !important;
-            }
-
-            .mobile_hide {
-                min-height: 0px;
-                max-height: 0px;
-                max-width: 0px;
-                display: none;
-                overflow: hidden;
-                font-size: 0px;
-            }
-
-            .desktop_hide {
-                display: block !important;
-                max-height: none !important;
-            }
-        }
-    </style>
-</head>
-<body class=\"clean-body\" style=\"margin: 0; padding: 0; -webkit-text-size-adjust: 100%; background-color: #ffffff;\">
-<!--[if IE]><div class=\"ie-browser\"><![endif]-->
-<table bgcolor=\"#ffffff\" cellpadding=\"0\" cellspacing=\"0\" class=\"nl-container\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; min-width: 320px; Margin: 0 auto; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; width: 100%;\" valign=\"top\" width=\"100%\">
-<tbody>
-<tr style=\"vertical-align: top;\" valign=\"top\">
-<td style=\"word-break: break-word; vertical-align: top;\" valign=\"top\">
-<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td align=\"center\" style=\"background-color:#ffffff\"><![endif]-->
-<div style=\"background-color:transparent;\">
-<div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
-<div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
-<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
-<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
-<div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
-<div style=\"width:100% !important;\">
-<!--[if (!mso)&(!IE)]><!-->
-<div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
-<!--<![endif]-->
-<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 0px; padding-bottom: 10px; font-family: Arial, sans-serif\"><![endif]-->
-<div style=\"color:#1C8C81;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:1.5;padding-top:0px;padding-right:10px;padding-bottom:10px;padding-left:10px;\">
-<div style=\"font-size: 14px; line-height: 1.5; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1C8C81; mso-line-height-alt: 21px;\">
-<p style=\"font-size: 46px; line-height: 1.5; text-align: center; word-break: break-word; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 69px; margin: 0;\"><span style=\"color: #1C8C81; font-size: 46px;\"><strong>Transforma Minas</strong></span></p>
-<p style=\"font-size: 20px; line-height: 1.5; text-align: center; word-break: break-word; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 30px; margin: 0;\"><span style=\"font-size: 20px; color: #1C8C81;\"><strong>Programa de Gestão de Pessoas por Mérito e Competência</strong></span></p>
-</div>
-</div>
-<!--[if mso]></td></tr></table><![endif]-->
-<!--[if (!mso)&(!IE)]><!-->
-</div>
-<!--<![endif]-->
-</div>
-</div>
-<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-<!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-</div>
-</div>
-</div>
-<div style=\"background-color:transparent;\">
-<div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
-<div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
-<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
-<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
-<div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
-<div style=\"width:100% !important;\">
-<!--[if (!mso)&(!IE)]><!-->
-<div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
-<!--<![endif]-->
-<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"divider\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\" valign=\"top\" width=\"100%\">
-<tbody>
-<tr style=\"vertical-align: top;\" valign=\"top\">
-<td class=\"divider_inner\" style=\"word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;\" valign=\"top\">
-<table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"divider_content\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 1px dotted #BBBBBB; width: 100%;\" valign=\"top\" width=\"100%\">
-<tbody>
-<tr style=\"vertical-align: top;\" valign=\"top\">
-<td style=\"word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\" valign=\"top\"><span></span></td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-<!--[if (!mso)&(!IE)]><!-->
-</div>
-<!--<![endif]-->
-</div>
-</div>
-<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-<!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-</div>
-</div>
-</div>
-<div style=\"background-color:transparent;\">
-<div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
-<div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
-<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
-<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
-<div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
-<div style=\"width:100% !important;\">
-<!--[if (!mso)&(!IE)]><!-->
-<div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
-<!--<![endif]-->
-<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px; font-family: Arial, sans-serif\"><![endif]-->
-<div style=\"color:#555555;font-family:Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.8;padding-top:5px;padding-right:10px;padding-bottom:5px;padding-left:10px;\">
-<div style=\"line-height: 1.8; font-size: 12px; color: #555555; font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif; mso-line-height-alt: 22px;\">
-<p style=\"font-size: 24px; line-height: 1.8; word-break: break-word; mso-line-height-alt: 43px; margin: 0;\"><span style=\"font-size: 24px; color: #000000;\"><strong>Teste de Aderência</strong></span></p>
-<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><br/><span style=\"color: #000000; font-size: 17px; mso-ansi-font-size: 18px;\">".($dados_candidato -> in_genero == 2? "Cara":"Caro")." <strong>{$dados_candidato -> vc_nome}</strong>, foi solicitado o preenchimento do Teste de Aderência para a vaga <strong>{$vaga[0] -> vc_vaga}, que deve ser preenchido até {$dados_form['data2']}</strong>!</span></p>
-<p style=\"font-size: 17px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 31px; mso-ansi-font-size: 18px; margin: 0;\"><span style=\"font-size: 17px; color: #000000; mso-ansi-font-size: 18px;\"> </span><span style=\"color: #000000;\"></span></p>
-<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">Para preenchê-lo basta acessar o sistema, clicar no menu \"Suas Candidaturas\" e, em seguida, no botão amarelo na coluna \"Ações\".</span></span></p>
-<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
-<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">O Teste de Aderência é mais um instrumento utilizado no processo seletivo para o cargo da vaga em questão. Nessa ferramenta, não há respostas certas ou erradas. É importante que você assinale as questões que mais se aproximam da sua maneira de pensar.</span></span></p>
-<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
-<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">Ao final, depois de responder a todas as questões, não se esqueça de clicar em CONCLUIR.</span></span></p>
-<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
-<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">Cordialmente,</span></span></p>
-<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">Equipe Transforma Minas</span></span></p>
-<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
-<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">Dúvidas sobre as etapas do processo de seleção do Transforma Minas?<br/>Clique <a class=\"aqui\"  href=\"https://www.mg.gov.br/conteudo/transforma-minas/etapas-do-processo\" rel=\"noopener\" style=\"text-decoration: underline; color: #0068A5;\" target=\"_blank\" title=\"Etapas\">aqui</a>.</span></span></p>
-<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
-<p style=\"font-size: 17px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 31px; mso-ansi-font-size: 18px; margin: 0;\"><span style=\"color: #000000; font-size: 17px; mso-ansi-font-size: 18px;\">Para acessar o sistema clique no botão abaixo:</span></p>
-<p style=\"line-height: 1.8; word-break: break-word; mso-line-height-alt: NaNpx; margin: 0;\"> </p>
-</div>
-</div>
-<!--[if mso]></td></tr></table><![endif]-->
-<!--[if (!mso)&(!IE)]><!-->
-</div>
-<!--<![endif]-->
-</div>
-</div>
-<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-<!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-</div>
-</div>
-</div>
-<div style=\"background-color:transparent;\">
-<div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
-<div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
-<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
-<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
-<div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
-<div style=\"width:100% !important;\">
-<!--[if (!mso)&(!IE)]><!-->
-<div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
-<!--<![endif]-->
-<div align=\"left\" class=\"button-container\" style=\"padding-top:5px;padding-right:10px;padding-bottom:5px;padding-left:10px;\">
-<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;\"><tr><td style=\"padding-top: 5px; padding-right: 10px; padding-bottom: 5px; padding-left: 10px\" align=\"left\"><v:roundrect xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"urn:schemas-microsoft-com:office:word\" href=\"https://www.selecaotransformaminas.mg.gov.br/\" style=\"height:39pt; width:465pt; v-text-anchor:middle;\" arcsize=\"0%\" stroke=\"false\" fillcolor=\"#1C8C81\"><w:anchorlock/><v:textbox inset=\"0,0,0,0\"><center style=\"color:#ffffff; font-family:Arial, sans-serif; font-size:16px\"><![endif]--><a class=\"botao\" href=\"https://www.selecaotransformaminas.mg.gov.br/\" style=\"-webkit-text-size-adjust: none; text-decoration: none; display: block; color: #ffffff; background-color: #1C8C81; border-radius: 0px; -webkit-border-radius: 0px; -moz-border-radius: 0px; width: 100%; width: calc(100% - 2px); border-top: 1px solid #1C8C81; border-right: 1px solid #1C8C81; border-bottom: 1px solid #1C8C81; border-left: 1px solid #1C8C81; padding-top: 10px; padding-bottom: 10px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;\" target=\"_blank\"><span style=\"padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;\"><span style=\"font-size: 16px; line-height: 2; word-break: break-word; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 32px;\"><strong>Acessar o sistema</strong></span></span></a>
-<!--[if mso]></center></v:textbox></v:roundrect></td></tr></table><![endif]-->
-</div>
-<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"divider\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\" valign=\"top\" width=\"100%\">
-<tbody>
-<tr style=\"vertical-align: top;\" valign=\"top\">
-<td class=\"divider_inner\" style=\"word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;\" valign=\"top\">
-<table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"divider_content\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 1px dotted #BBBBBB; width: 100%;\" valign=\"top\" width=\"100%\">
-<tbody>
-<tr style=\"vertical-align: top;\" valign=\"top\">
-<td style=\"word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\" valign=\"top\"><span></span></td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-<!--[if (!mso)&(!IE)]><!-->
-</div>
-<!--<![endif]-->
-</div>
-</div>
-<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-<!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-</div>
-</div>
-</div>
-<div style=\"background-color:transparent;\">
-<div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
-<div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
-<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
-<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
-<div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
-<div style=\"width:100% !important;\">
-<!--[if (!mso)&(!IE)]><!-->
-<div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
-<!--<![endif]-->
-<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px; font-family: Arial, sans-serif\"><![endif]-->
-<div style=\"color:#555555;font-family:Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.8;padding-top:5px;padding-right:10px;padding-bottom:5px;padding-left:10px;\">
-<div style=\"font-size: 14px; line-height: 1.8; color: #555555; font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif; mso-line-height-alt: 25px;\">
-<p style=\"font-size: 17px; line-height: 1.8; word-break: break-word; mso-line-height-alt: 31px; mso-ansi-font-size: 18px; margin: 0;\"><span style=\"font-size: 17px; color: #000000; mso-ansi-font-size: 18px;\">Não consegue acessar o sistema?</span><br/><span style=\"font-size: 17px; color: #000000; mso-ansi-font-size: 18px;\">Entre em contato <a class=\"aqui\" href=\"https://www.mg.gov.br/transforma-minas/fale-conosco\" rel=\"noopener\" style=\"text-decoration: underline; color: #0068A5;\" target=\"_blank\" title=\"Fale conosco\">aqui</a>.</span></p>
-</div>
-</div>
-<!--[if mso]></td></tr></table><![endif]-->
-<!--[if (!mso)&(!IE)]><!-->
-</div>
-<!--<![endif]-->
-</div>
-</div>
-<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-<!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-</div>
-</div>
-</div>
-<div style=\"background-color:transparent;\">
-<div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #312f2f;\">
-<div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#312f2f;\">
-<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#312f2f\"><![endif]-->
-<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#312f2f;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
-<div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
-<div style=\"width:100% !important;\">
-<!--[if (!mso)&(!IE)]><!-->
-<div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
-<!--<![endif]-->
-<div align=\"center\" class=\"img-container center autowidth\" style=\"padding-right: 0px;padding-left: 0px;\">
-<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr style=\"line-height:0px\"><td style=\"padding-right: 0px;padding-left: 0px;\" align=\"center\"><![endif]--><img align=\"center\" alt=\"Governo do Estado de Minas Gerais\" border=\"0\" class=\"center autowidth\" src=\"http://planejamento.mg.gov.br/sites/default/files/Logo_Seplag2019-01.png\" style=\"text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 304px; display: block;\" title=\"Governo do Estado de Minas Gerais\" width=\"304\"/>
-<div style=\"font-size:1px;line-height:10px\"> </div>
-<!--[if mso]></td></tr></table><![endif]-->
-</div>
-<!--[if (!mso)&(!IE)]><!-->
-</div>
-<!--<![endif]-->
-</div>
-</div>
-<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-<!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-</div>
-</div>
-</div>
-<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-</td>
-</tr>
-</tbody>
-</table>
-<!--[if (IE)]></div><![endif]-->
-</body>
-</html>";
+                                        <html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:v=\"urn:schemas-microsoft-com:vml\">
+                                        <head>
+                                        <!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
+                                        <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\"/>
+                                        <meta content=\"width=device-width\" name=\"viewport\"/>
+                                        <!--[if !mso]><!-->
+                                        <meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>
+                                        <!--<![endif]-->
+                                        <title></title>
+                                        <!--[if !mso]><!-->
+                                        <link href=\"https://fonts.googleapis.com/css?family=Open+Sans\" rel=\"stylesheet\" type=\"text/css\"/>
+                                        <link href=\"https://fonts.googleapis.com/css?family=Open+Sans\" rel=\"stylesheet\" type=\"text/css\"/>
+                                        <!--<![endif]-->
+                                        <style type=\"text/css\">
+                                                body {
+                                                    margin: 0;
+                                                    padding: 0;
+                                                }
+                                        
+                                                table,
+                                                td,
+                                                tr {
+                                                    vertical-align: top;
+                                                    border-collapse: collapse;
+                                                }
+                                        
+                                                * {
+                                                    line-height: inherit;
+                                                }
+                                                
+                                                .botao:hover{
+                                                    background-color: #53A69D !important;
+                                                }
+                                                
+                                                .aqui:hover{
+                                                    color: #DF2935 !important;
+                                                }
+                                        
+                                                a[x-apple-data-detectors=true] {
+                                                    color: inherit !important;
+                                                    text-decoration: none !important;
+                                                }
+                                            </style>
+                                        <style id=\"media-query\" type=\"text/css\">
+                                                @media (max-width: 620px) {
+                                        
+                                                    .block-grid,
+                                                    .col {
+                                                        min-width: 320px !important;
+                                                        max-width: 100% !important;
+                                                        display: block !important;
+                                                    }
+                                        
+                                                    .block-grid {
+                                                        width: 100% !important;
+                                                    }
+                                        
+                                                    .col {
+                                                        width: 100% !important;
+                                                    }
+                                        
+                                                    .col>div {
+                                                        margin: 0 auto;
+                                                    }
+                                        
+                                                    img.fullwidth,
+                                                    img.fullwidthOnMobile {
+                                                        max-width: 100% !important;
+                                                    }
+                                        
+                                                    .no-stack .col {
+                                                        min-width: 0 !important;
+                                                        display: table-cell !important;
+                                                    }
+                                        
+                                                    .no-stack.two-up .col {
+                                                        width: 50% !important;
+                                                    }
+                                        
+                                                    .no-stack .col.num4 {
+                                                        width: 33% !important;
+                                                    }
+                                        
+                                                    .no-stack .col.num8 {
+                                                        width: 66% !important;
+                                                    }
+                                        
+                                                    .no-stack .col.num4 {
+                                                        width: 33% !important;
+                                                    }
+                                        
+                                                    .no-stack .col.num3 {
+                                                        width: 25% !important;
+                                                    }
+                                        
+                                                    .no-stack .col.num6 {
+                                                        width: 50% !important;
+                                                    }
+                                        
+                                                    .no-stack .col.num9 {
+                                                        width: 75% !important;
+                                                    }
+                                        
+                                                    .video-block {
+                                                        max-width: none !important;
+                                                    }
+                                        
+                                                    .mobile_hide {
+                                                        min-height: 0px;
+                                                        max-height: 0px;
+                                                        max-width: 0px;
+                                                        display: none;
+                                                        overflow: hidden;
+                                                        font-size: 0px;
+                                                    }
+                                        
+                                                    .desktop_hide {
+                                                        display: block !important;
+                                                        max-height: none !important;
+                                                    }
+                                                }
+                                            </style>
+                                        </head>
+                                        <body class=\"clean-body\" style=\"margin: 0; padding: 0; -webkit-text-size-adjust: 100%; background-color: #ffffff;\">
+                                        <!--[if IE]><div class=\"ie-browser\"><![endif]-->
+                                        <table bgcolor=\"#ffffff\" cellpadding=\"0\" cellspacing=\"0\" class=\"nl-container\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; min-width: 320px; Margin: 0 auto; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; width: 100%;\" valign=\"top\" width=\"100%\">
+                                        <tbody>
+                                        <tr style=\"vertical-align: top;\" valign=\"top\">
+                                        <td style=\"word-break: break-word; vertical-align: top;\" valign=\"top\">
+                                        <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td align=\"center\" style=\"background-color:#ffffff\"><![endif]-->
+                                        <div style=\"background-color:transparent;\">
+                                        <div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
+                                        <div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
+                                        <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
+                                        <!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
+                                        <div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
+                                        <div style=\"width:100% !important;\">
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        <div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
+                                        <!--<![endif]-->
+                                        <!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 0px; padding-bottom: 10px; font-family: Arial, sans-serif\"><![endif]-->
+                                        <div style=\"color:#1C8C81;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:1.5;padding-top:0px;padding-right:10px;padding-bottom:10px;padding-left:10px;\">
+                                        <div style=\"font-size: 14px; line-height: 1.5; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1C8C81; mso-line-height-alt: 21px;\">
+                                        <p style=\"font-size: 46px; line-height: 1.5; text-align: center; word-break: break-word; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 69px; margin: 0;\"><span style=\"color: #1C8C81; font-size: 46px;\"><strong>Transforma Minas</strong></span></p>
+                                        <p style=\"font-size: 20px; line-height: 1.5; text-align: center; word-break: break-word; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 30px; margin: 0;\"><span style=\"font-size: 20px; color: #1C8C81;\"><strong>Programa de Gestão de Pessoas por Mérito e Competência</strong></span></p>
+                                        </div>
+                                        </div>
+                                        <!--[if mso]></td></tr></table><![endif]-->
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        </div>
+                                        <!--<![endif]-->
+                                        </div>
+                                        </div>
+                                        <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+                                        <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+                                        </div>
+                                        </div>
+                                        </div>
+                                        <div style=\"background-color:transparent;\">
+                                        <div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
+                                        <div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
+                                        <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
+                                        <!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
+                                        <div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
+                                        <div style=\"width:100% !important;\">
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        <div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
+                                        <!--<![endif]-->
+                                        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"divider\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\" valign=\"top\" width=\"100%\">
+                                        <tbody>
+                                        <tr style=\"vertical-align: top;\" valign=\"top\">
+                                        <td class=\"divider_inner\" style=\"word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;\" valign=\"top\">
+                                        <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"divider_content\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 1px dotted #BBBBBB; width: 100%;\" valign=\"top\" width=\"100%\">
+                                        <tbody>
+                                        <tr style=\"vertical-align: top;\" valign=\"top\">
+                                        <td style=\"word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\" valign=\"top\"><span></span></td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                        </td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        </div>
+                                        <!--<![endif]-->
+                                        </div>
+                                        </div>
+                                        <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+                                        <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+                                        </div>
+                                        </div>
+                                        </div>
+                                        <div style=\"background-color:transparent;\">
+                                        <div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
+                                        <div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
+                                        <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
+                                        <!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
+                                        <div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
+                                        <div style=\"width:100% !important;\">
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        <div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
+                                        <!--<![endif]-->
+                                        <!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px; font-family: Arial, sans-serif\"><![endif]-->
+                                        <div style=\"color:#555555;font-family:Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.8;padding-top:5px;padding-right:10px;padding-bottom:5px;padding-left:10px;\">
+                                        <div style=\"line-height: 1.8; font-size: 12px; color: #555555; font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif; mso-line-height-alt: 22px;\">
+                                        <p style=\"font-size: 24px; line-height: 1.8; word-break: break-word; mso-line-height-alt: 43px; margin: 0;\"><span style=\"font-size: 24px; color: #000000;\"><strong>Teste de Aderência, Teste de Perfil HBDI e Teste de Motivação de Serviço Público </strong></span></p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><br/><span style=\"color: #000000; font-size: 17px; mso-ansi-font-size: 18px;\">".($dados_candidato -> in_genero == 2? "Cara":"Caro")." <strong>".$dados_candidato -> vc_nome."</strong>, Foi solicitado o preenchimento do Teste de Aderência, do Teste de Perfil HBDI e do Teste de Motivação de Serviço Público (Public Service Motivation – PSM) para a vaga <strong>".$vaga[0] -> vc_vaga."</strong>, que devem ser preenchidos até <strong>".$data."</strong>, às <strong>".$hora."</strong>.</span></p>
+                                        <p style=\"font-size: 17px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 31px; mso-ansi-font-size: 18px; margin: 0;\"><span style=\"font-size: 17px; color: #000000; mso-ansi-font-size: 18px;\"> </span><span style=\"color: #000000;\"></span></p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">Para preenchê-lo basta acessar o sistema, clicar no menu \"Suas Candidaturas\" e, em seguida, no botão amarelo na coluna \"Ações\".</span></span></p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">O Teste de Aderência é mais um instrumento utilizado no processo seletivo para o cargo da vaga em questão. Nessa ferramenta, não há respostas certas ou erradas. É importante que você assinale as questões que mais se aproximam da sua maneira de pensar.</span></span></p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">O Teste de Perfil classifica os estilos de pensamento em relação ao lado do cérebro dominante. Sua aplicação tem o objetivo de permitir que as habilidades de cada um sejam aproveitadas na função correta e em um ambiente de trabalho propício para alcançar seus melhores resultados.</span></span></p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">O Teste de Motivação de Serviço Público (Public Service Motivation – PSM), por sua vez, é um construto multidimensional baseado na teoria da administração pública, que busca medir a motivação para servir aos outros e melhorar o bem-estar da sociedade de forma ampla.</span></span></p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">Todos os testes são de preenchimento obrigatório, em que não existem respostas certas ou erradas, visto que todos os perfis têm os seus valores. É extremamente importante que você responda de forma pessoal e sincera, da maneira que mais se aproxima do seu modo de pensar.</span></span></p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">Ao final, depois de responder a todas as questões, não se esqueça de clicar em CONCLUIR.</span></span></p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">Cordialmente,</span></span></p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">Equipe Transforma Minas</span></span></p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">Dúvidas sobre as etapas do processo de seleção do Transforma Minas?<br/>Clique <a class=\"aqui\"  href=\"https://www.mg.gov.br/conteudo/transforma-minas/etapas-do-processo\" rel=\"noopener\" style=\"text-decoration: underline; color: #0068A5;\" target=\"_blank\" title=\"Etapas\">aqui</a>.</span></span></p>
+                                        <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
+                                        <p style=\"font-size: 17px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 31px; mso-ansi-font-size: 18px; margin: 0;\"><span style=\"color: #000000; font-size: 17px; mso-ansi-font-size: 18px;\">Para acessar o sistema clique no botão abaixo:</span></p>
+                                        <p style=\"line-height: 1.8; word-break: break-word; mso-line-height-alt: NaNpx; margin: 0;\"> </p>
+                                        </div>
+                                        </div>
+                                        <!--[if mso]></td></tr></table><![endif]-->
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        </div>
+                                        <!--<![endif]-->
+                                        </div>
+                                        </div>
+                                        <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+                                        <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+                                        </div>
+                                        </div>
+                                        </div>
+                                        <div style=\"background-color:transparent;\">
+                                        <div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
+                                        <div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
+                                        <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
+                                        <!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
+                                        <div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
+                                        <div style=\"width:100% !important;\">
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        <div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
+                                        <!--<![endif]-->
+                                        <div align=\"left\" class=\"button-container\" style=\"padding-top:5px;padding-right:10px;padding-bottom:5px;padding-left:10px;\">
+                                        <!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;\"><tr><td style=\"padding-top: 5px; padding-right: 10px; padding-bottom: 5px; padding-left: 10px\" align=\"left\"><v:roundrect xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"urn:schemas-microsoft-com:office:word\" href=\"https://www.selecaotransformaminas.mg.gov.br\" style=\"height:39pt; width:465pt; v-text-anchor:middle;\" arcsize=\"0%\" stroke=\"false\" fillcolor=\"#1C8C81\"><w:anchorlock/><v:textbox inset=\"0,0,0,0\"><center style=\"color:#ffffff; font-family:Arial, sans-serif; font-size:16px\"><![endif]--><a class=\"botao\" href=\"https://www.selecaotransformaminas.mg.gov.br\" style=\"-webkit-text-size-adjust: none; text-decoration: none; display: block; color: #ffffff; background-color: #1C8C81; border-radius: 0px; -webkit-border-radius: 0px; -moz-border-radius: 0px; width: 100%; width: calc(100% - 2px); border-top: 1px solid #1C8C81; border-right: 1px solid #1C8C81; border-bottom: 1px solid #1C8C81; border-left: 1px solid #1C8C81; padding-top: 10px; padding-bottom: 10px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;\" target=\"_blank\"><span style=\"padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;\"><span style=\"font-size: 16px; line-height: 2; word-break: break-word; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 32px;\"><strong>Acessar o sistema</strong></span></span></a>
+                                        <!--[if mso]></center></v:textbox></v:roundrect></td></tr></table><![endif]-->
+                                        </div>
+                                        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"divider\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\" valign=\"top\" width=\"100%\">
+                                        <tbody>
+                                        <tr style=\"vertical-align: top;\" valign=\"top\">
+                                        <td class=\"divider_inner\" style=\"word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;\" valign=\"top\">
+                                        <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"divider_content\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 1px dotted #BBBBBB; width: 100%;\" valign=\"top\" width=\"100%\">
+                                        <tbody>
+                                        <tr style=\"vertical-align: top;\" valign=\"top\">
+                                        <td style=\"word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\" valign=\"top\"><span></span></td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                        </td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        </div>
+                                        <!--<![endif]-->
+                                        </div>
+                                        </div>
+                                        <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+                                        <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+                                        </div>
+                                        </div>
+                                        </div>
+                                        <div style=\"background-color:transparent;\">
+                                        <div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
+                                        <div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
+                                        <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
+                                        <!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
+                                        <div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
+                                        <div style=\"width:100% !important;\">
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        <div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
+                                        <!--<![endif]-->
+                                        <!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px; font-family: Arial, sans-serif\"><![endif]-->
+                                        <div style=\"color:#555555;font-family:Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.8;padding-top:5px;padding-right:10px;padding-bottom:5px;padding-left:10px;\">
+                                        <div style=\"font-size: 14px; line-height: 1.8; color: #555555; font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif; mso-line-height-alt: 25px;\">
+                                        <p style=\"font-size: 17px; line-height: 1.8; word-break: break-word; mso-line-height-alt: 31px; mso-ansi-font-size: 18px; margin: 0;\"><span style=\"font-size: 17px; color: #000000; mso-ansi-font-size: 18px;\">Não consegue acessar o sistema?</span><br/><span style=\"font-size: 17px; color: #000000; mso-ansi-font-size: 18px;\">Entre em contato <a class=\"aqui\" href=\"https://www.mg.gov.br/transforma-minas/fale-conosco\" rel=\"noopener\" style=\"text-decoration: underline; color: #0068A5;\" target=\"_blank\" title=\"Fale conosco\">aqui</a>.</span></p>
+                                        </div>
+                                        </div>
+                                        <!--[if mso]></td></tr></table><![endif]-->
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        </div>
+                                        <!--<![endif]-->
+                                        </div>
+                                        </div>
+                                        <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+                                        <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+                                        </div>
+                                        </div>
+                                        </div>
+                                        <div style=\"background-color:transparent;\">
+                                        <div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #312f2f;\">
+                                        <div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#312f2f;\">
+                                        <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#312f2f\"><![endif]-->
+                                        <!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#312f2f;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
+                                        <div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
+                                        <div style=\"width:100% !important;\">
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        <div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
+                                        <!--<![endif]-->
+                                        <div align=\"center\" class=\"img-container center autowidth\" style=\"padding-right: 0px;padding-left: 0px;\">
+                                        <!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr style=\"line-height:0px\"><td style=\"padding-right: 0px;padding-left: 0px;\" align=\"center\"><![endif]--><img align=\"center\" alt=\"Governo do Estado de Minas Gerais\" border=\"0\" class=\"center autowidth\" src=\"http://planejamento.mg.gov.br/sites/default/files/Logo_Seplag2019-01.png\" style=\"text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 304px; display: block;\" title=\"Governo do Estado de Minas Gerais\" width=\"304\"/>
+                                        <div style=\"font-size:1px;line-height:10px\"> </div>
+                                        <!--[if mso]></td></tr></table><![endif]-->
+                                        </div>
+                                        <!--[if (!mso)&(!IE)]><!-->
+                                        </div>
+                                        <!--<![endif]-->
+                                        </div>
+                                        </div>
+                                        <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+                                        <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+                                        </div>
+                                        </div>
+                                        </div>
+                                        <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+                                        </td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                        <!--[if (IE)]></div><![endif]-->
+                                        </body>
+                                        </html>";
 										$this -> email -> message($msg);
 										if(!$this -> email -> send()){
-												$this -> Usuarios_model -> log('erro', 'Candidaturas/teste_aderencia', 'Erro de envio de e-mail de entrevista do '.$dados_candidato->vc_nome);
-										}
+                                                
+												$this -> Usuarios_model -> log('erro', 'Candidaturas/AgendamentoEntrevista', 'Erro de envio de e-mail de Teste de Aderência e HBDI do '.$dados_candidato->vc_nome.' feito pelo usuário '.$this -> session -> uid);
+                                        }
+                                        else{
+                                                
+                                                $this -> Usuarios_model -> log('sucesso', 'Candidaturas/AgendamentoEntrevista', 'E-mail de entrevista do '.$dados_candidato->vc_nome.' enviado com sucesso pelo usuário '.$this -> session -> uid);
+                                        }
+                                        $this -> Usuarios_model -> log('sucesso', 'Candidaturas/AgendamentoEntrevista', 'Inserção/Alteração de data limite do Teste de aderência e HBDI pelo usuário '.$this -> session -> uid);
 								}
                                 $this -> Candidaturas_model -> update_candidatura('dt_candidatura', date('Y-m-d H:i:s'),  $candidatura);
 
-                                $this -> Usuarios_model -> log('sucesso', 'Candidaturas/AgendamentoEntrevista', 'Entrevista para a candidatura '.$dados_candidatura[0] -> pr_candidatura.' editada com sucesso pelo usuário '.$this -> session -> uid, 'tb_candidaturas', $dados_candidatura[0] -> pr_candidatura);
+                                $this -> Usuarios_model -> log('sucesso', 'Candidaturas/AgendamentoEntrevista', 'Entrevista para a candidatura '.$dados_candidatura[0] -> pr_candidatura.' agendada com sucesso pelo usuário '.$this -> session -> uid, 'tb_candidaturas', $dados_candidatura[0] -> pr_candidatura);
 
                                 $dados['sucesso'] = 'Entrevista agendada com sucesso.<br/><br/><a href="'.base_url('Vagas/resultado/'.$dados_candidatura[0]->es_vaga).'" class="btn btn-light">Voltar</a>';
                                 $dados['erro'] = '';
@@ -1055,7 +1124,7 @@ class Vagas extends CI_Controller {
                         $dados['candidato'] = $this -> Candidatos_model -> get_candidatos ($dados_candidatura[0] -> es_candidato);
                         $dados['candidatura'] = $dados_candidatura;
                         //$dados['usuarios'] = $this -> Usuarios_model -> get_usuarios ('', '', 2,'',true);
-                        $dados['usuarios'] = $this -> Usuarios_model -> get_usuarios ('', '', array(2,3),'',true);
+                        $dados['usuarios'] = $this -> Usuarios_model -> get_usuarios ('', '', array(2,3),$dados_candidatura[0] -> es_vaga,true);
                         $dados['status'] = $this -> Candidaturas_model -> get_status ();
                         /*if($dados_candidatura[0] -> es_status==11){
                                 $tipo_entrevista = 'especialista';
@@ -1219,6 +1288,74 @@ class Vagas extends CI_Controller {
                 //}
 
                 $this -> load -> view('vagas', $dados);
+        }
+
+        function calcula_nota($vaga,$etapa){
+                $this -> load -> model('Candidaturas_model');
+                $this -> load -> model('Questoes_model');
+
+                $vagas = $this -> Vagas_model -> get_vagas($vaga, false, 'object');
+      
+                $questoes = $this -> Questoes_model -> get_questoes('', $vagas[0] -> es_grupoVaga, $etapa,'', true, '1');
+                if(isset($questoes)){
+                        foreach($questoes as $questao){
+                                $opcoes[$questao -> pr_questao] = $this -> Questoes_model -> get_opcoes('', $questao -> pr_questao);
+                        }
+                }
+
+                if($etapa == 2 || $etapa == 3 || $etapa == 4 || $etapa == 5 || $etapa == 6 || $etapa == 7){
+
+                        
+
+                        $questoes = $this -> Questoes_model -> get_questoes('', $vagas[0] -> es_grupoVaga, $etapa,'', true);
+                        
+                        $total_max = 0;
+                        if(isset($questoes)){
+                                foreach($questoes as $questao){
+                                        if($questao -> in_tipo == '1'){
+                                                
+                                                $max = 0;
+                                                foreach($opcoes[$questao -> pr_questao] as $opcao){
+                                                        if($max < intval($opcao->in_valor)){
+                                                                $max = intval($opcao->in_valor);
+                                                        }
+                                                }
+                                                $total_max += $max;
+                                        }
+                                        else if($questao -> in_tipo == '3' || $questao -> in_tipo == '4'){        
+                                                $total_max += intval($questao -> in_peso);
+                                        }
+                                        else if($questao -> in_tipo == '5'){                                        
+                                                $total_max += intval($questao->in_peso);
+                                        }
+                                        else if($questao -> in_tipo == '6'){                                        
+                                                $total_max += intval($questao -> in_peso);
+                                        }
+                                }
+                        }
+                        
+
+                        $notas = $this -> Candidaturas_model -> get_nota_total ('',$vaga,$etapa);
+                                                
+                        if(isset($notas[0] -> pr_nota_total)){
+                                if($notas[0] -> in_nota_total != $total_max){
+                                        $this -> Candidaturas_model -> update_nota_total('in_nota_total',$total_max,$notas[0] -> pr_nota_total);
+                                }                                
+                        }
+                        else{
+                                $dados_nota=array('vaga'=>$vaga,'nota_total'=>$total_max,'etapa'=>$etapa);
+                                $this -> Candidaturas_model -> create_nota_total($dados_nota);
+                        }
+                }                                
+        }
+
+        public function recalcular_nota($vaga){
+                $this->calcula_nota($vaga,3);
+                $this->calcula_nota($vaga,4);
+                $this->calcula_nota($vaga,5);
+                $this->calcula_nota($vaga,6);
+                $this->calcula_nota($vaga,7);
+                redirect('Vagas/resultado/'.$vaga);
         }
         
 		public function reprovar_habilitacao($id){
@@ -2842,7 +2979,7 @@ class Vagas extends CI_Controller {
                $dados_vaga = $this -> Vagas_model -> get_vagas ($vaga); 
                
                $this -> load -> model('Questoes_model');
-               
+               $this -> load -> model('Usuarios_model');
                $questoes1 = $this -> Questoes_model -> get_questoes('', $dados_vaga[0] -> es_grupoVaga, 1);
                $questoes2 = $this -> Questoes_model -> get_questoes('', $dados_vaga[0] -> es_grupoVaga, 2);
                $questoes3 = $this -> Questoes_model -> get_questoes('', $dados_vaga[0] -> es_grupoVaga, 3);
@@ -2854,6 +2991,7 @@ class Vagas extends CI_Controller {
                // && isset($questoes4) && isset($questoes2)
                if(isset($questoes1) && isset($questoes3)){
                         $this -> Vagas_model -> update_vaga('bl_liberado', '1', $vaga);
+                        $this -> Usuarios_model -> log('sucesso', 'Vagas/liberar_vaga', 'Vaga '.$vaga.' liberada com sucesso pelo usuário '.$this -> session -> uid, 'tb_vagas', $vaga);
                         echo "
                                 <script type=\"text/javascript\">
                                         alert('Vaga liberada para preenchimento público.');
@@ -3083,17 +3221,6 @@ class Vagas extends CI_Controller {
 				return true;
 	  
         }
-
-	function data_maior($data){
-                $inicio = show_sql_date($data,true);
-                $fim = show_sql_date($this -> input -> post('fim'),true);
-                
-                if(strtotime($inicio) >= strtotime($fim)){
-                        $this -> form_validation -> set_message('data_maior', 'A data de Término deve ser maior que o \'Início das inscrições\'');
-                        return false;
-                }
-                return true;
-        }
         /*function valida_unico2($avaliador){
                 $candidatura = $this -> input -> post('$codigo');
                 $tipo_entrevista = $this -> input -> post('tipo_entrevista');
@@ -3116,11 +3243,42 @@ class Vagas extends CI_Controller {
 
         }*/
 
+        function data_maior($data){
+                $inicio = show_sql_date($data,true);
+                $fim = show_sql_date($this -> input -> post('fim'),true);
+                
+                if(strtotime($inicio) >= strtotime($fim)){
+                        $this -> form_validation -> set_message('data_maior', 'A data de Término deve ser maior que o \'Início das inscrições\'');
+                        return false;
+                }
+                return true;
+        }
+
+        function data_fim($data){
+                $fim = show_sql_date($data,true);
+                $atual = time();
+                $this -> load -> model('Candidaturas_model');
+
+                
+                if(strtotime($fim) < $atual){
+                        $candidaturas = $this -> Candidaturas_model -> get_candidaturas('', '', $this -> input -> post('codigo'));
+                        foreach($candidaturas as $candidatura){
+                                //echo $fim."".$candidatura -> dt_realizada."<br />";
+                                if((strtotime($candidatura -> dt_candidatura) > strtotime($fim) && $candidatura -> es_status < 7 && $candidatura -> es_status <> 5) || ($candidatura -> es_status >= 7 and strtotime($candidatura -> dt_realizada) > strtotime($fim))){
+                                        $this -> form_validation -> set_message('data_fim', 'A data de Término está menor que a de candidaturas pendentes.');
+                                        return false;
+                                }
+                        }
+
+                }
+                return true;
+
+        }
 		
 
         function valida_unico3($data){
-                return true;
-				/*$data = show_sql_date($data,true);
+                //return true;
+				$data = show_sql_date($data,true);
 				$candidatura = $this -> input -> post('codigo');
                 $tipo_entrevista = $this -> input -> post('tipo_entrevista');
                 
@@ -3151,20 +3309,19 @@ class Vagas extends CI_Controller {
 								}
 						}
 						
-				return true;*/
+				return true;
 
         }
         
         function data_atual($data){
-		return true;
-                /*$data = show_sql_date($data);
-
+                $data = show_sql_date($data);
+                
                 if(strtotime($data)<=strtotime(date('Y-m-d'))){
                         $this -> form_validation -> set_message('data_atual', 'A data de agendamento deve ser maior que a atual.');
                         return false;
                 }
                 //return false;
-                return true;*/
+                return true;
         }
 
         private function envio_email($candidatura,$vaga,$modelo,$tipo_entrevista,$data='',$hora='',$link='',$observacoes=''){
@@ -3886,6 +4043,15 @@ class Vagas extends CI_Controller {
                         }
                         
                 }
+                else{
+                        if($modelo == 'agendamento_entrevista'){
+                                $this -> Usuarios_model -> log('sucesso', 'Candidaturas/AgendamentoEntrevista', 'Envio de e-mail de entrevista do '.$candidato->vc_nome.' pelo usuário '. $this -> session -> uid.' feita com sucesso.');
+                        }
+                        else if($modelo == 'reagendamento_candidato'){
+                                        $this -> Usuarios_model -> log('sucesso', 'Candidaturas/AgendamentoEntrevista', 'Envio de e-mail de alteração de agendamento de entrevista para o e-mail '.$candidato -> vc_email.' pelo usuário '. $this -> session -> uid.' feita com sucesso.', 'tb_candidaturas', $candidatura[0] -> pr_candidatura);
+                        } 
+                }
+
                     
         }
 

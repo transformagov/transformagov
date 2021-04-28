@@ -175,7 +175,7 @@ class Candidaturas extends CI_Controller {
                                                                         $dados_upload["envio_questao".$row -> pr_questao]['questao'] = $row -> pr_questao;
 
                                                                         $id = $this -> Anexos_model -> salvar_anexo($dados_upload["envio_questao".$row -> pr_questao], '1');
-
+                                                                        
                                                                         if($id > 0){
                                                                                 //rename($config['upload_path'].$dados_upload["envio_questao".$row -> pr_questao]['file_name'], $config['upload_path'].$id);
                                                                                 if(copy($_FILES['Questao'.$row -> pr_questao]['tmp_name'],$config['upload_path'].$id)){
@@ -216,7 +216,7 @@ class Candidaturas extends CI_Controller {
                                                         if(isset($_FILES['Questao'.$row -> pr_questao]['name']) && strlen($_FILES['Questao'.$row -> pr_questao]['name']) > 0){
                                                                 @unlink($config['upload_path'].$_FILES['Questao'.$row -> pr_questao]['name']);
                                                                 //$this -> upload -> do_upload('Questao'.$row -> pr_questao)
-																if ( !($_FILES['Questao'.$row -> pr_questao]['type'] == 'application/pdf'  && $_FILES['Questao'.$row -> pr_questao]["size"] <= 2 * 1024 * 1024)){
+								if ( !($_FILES['Questao'.$row -> pr_questao]['type'] == 'application/pdf'  && $_FILES['Questao'.$row -> pr_questao]["size"] <= 2 * 1024 * 1024)){
                                                                         $this -> form_validation -> set_rules('Questao'.$row -> pr_questao, "'Questão $x'", 'required', array('required' => "O envio da questão {$x} não foi efetuado, são aceitos somente arquivos do tipo PDF de até 2 MBytes."));
                                                                 }
                                                                 else{
@@ -239,6 +239,7 @@ class Candidaturas extends CI_Controller {
                                                                                                 $dados_arquivo['candidatura'] = $candidatura[0] -> pr_candidatura;
                                                                                                 $dados_arquivo["Questao".$row -> pr_questao] = '1';
                                                                                                 $this -> Candidaturas_model -> salvar_resposta($dados_arquivo, $row -> pr_questao);
+                                                                                                
                                                                                         }
                                                                                         $anexos = $this -> Anexos_model -> get_anexo($id);
                                                                                         if(isset($anexos)){
@@ -721,9 +722,64 @@ a[x-apple-data-detectors=true] {
                 $dados['adicionais'] = array(
                                             'wizard' => true);
                 $candidatura = $this -> Candidaturas_model -> get_candidaturas('', $this -> session -> candidato, $dados['vaga']);
+                $vaga = $this -> Vagas_model -> get_vagas($dados['vaga'], false);
                 if($candidatura[0] -> es_status == '5' || $candidatura[0] -> es_status == '7'){
                         redirect('Candidaturas/index');
                 }
+
+
+                //******************
+                /*
+                Atribui valores default para todas as questões, no caso de não ter resposta
+                */
+                $questoes = $this -> Questoes_model -> get_questoes('', $vaga[0] -> es_grupoVaga, 1);
+                $respostas_filtradas = array();
+                
+                foreach($questoes as $questao){
+                        
+                        //if($questao -> bl_removido == '0'){
+                                $respostas_filtradas[$questao->pr_questao] = '0';
+                        //}
+                        
+                        
+                        
+                }
+
+                
+                $respostas = $this -> Questoes_model -> get_respostas('',$candidatura[0]->pr_candidatura,'','',1);
+                
+                
+                if(isset($respostas)){
+                        foreach($respostas as $resposta){
+                                
+                                if(isset($respostas_filtradas[$resposta->es_questao])){
+                                                
+                                        $respostas_filtradas[$resposta->es_questao] = '1';
+                                                
+                                }
+                                        
+                                        
+                        }
+                }
+                echo $cont1;
+                $sair = false;
+                foreach($questoes as $questao){
+                        if($respostas_filtradas[$questao->pr_questao] == '0'){
+                                $sair = true;
+                                break;
+                        }
+                }
+                if($sair == true){
+                        $this -> Candidaturas_model -> update_candidatura('es_status', 1,  $candidatura[0] -> pr_candidatura);
+                        echo "<script type=\"text/javascript\">alert('Existe questões de requisitos obrigatórios não preenchidos. Preencha esses requisitos para concluir a candidatura.');window.location='/Candidaturas/Prova/".$dados['vaga']."'</script>";
+                        //redirect('Candidaturas/Prova/'.$dados['vaga']);
+                        
+                }
+
+
+
+                //******************
+
                 $dados['candidatura'] = $candidatura;
                 $vaga = $this -> Vagas_model -> get_vagas($dados['vaga'], false);
 
@@ -769,6 +825,7 @@ a[x-apple-data-detectors=true] {
                 if(isset($dados_experiencia) && count($dados_experiencia)>0){
                         foreach($dados_experiencia as $experiencia){
                                 ++$i;
+                                $dados['vc_cargo'][$i]=$experiencia->vc_cargo;
                                 $dados['vc_empresa'][$i]=$experiencia->vc_empresa;
                                 $dados['dt_inicio'][$i]=$experiencia->dt_inicio;
                                 $dados['bl_emprego_atual'][$i]=$experiencia->bl_emprego_atual;
@@ -780,8 +837,8 @@ a[x-apple-data-detectors=true] {
                                         $dados['pr_experienca'][$i]=$experiencia->pr_experienca;
                                         $dados['es_experiencia_pai'][$i]=$experiencia->es_experiencia_pai;
 
-										$dados["anexos_experiencia"][$i] = $this -> Anexos_model -> get_anexo('','','','',$experiencia->pr_experienca);
-										$dados["anexos_experiencia2"][$i] = $this -> Anexos_model -> get_anexo('','','','',$experiencia->es_experiencia_pai);
+                                        $dados["anexos_experiencia"][$i] = $this -> Anexos_model -> get_anexo('','','','',$experiencia->pr_experienca);
+                                        $dados["anexos_experiencia2"][$i] = $this -> Anexos_model -> get_anexo('','','','',$experiencia->es_experiencia_pai);
                                 }
                                 else{
                                         $dados['es_experiencia_pai'][$i]=$experiencia->pr_experienca;
@@ -858,17 +915,20 @@ a[x-apple-data-detectors=true] {
                                                 }
                                                 $algum = false;
                                                 for($i = 1; $i <= $this -> input -> post('num_experiencia'); $i++){
-                                                        if(strlen($this -> input -> post("empresa{$i}")) > 0 || strlen($this -> input -> post("inicio{$i}")) > 0 || strlen($this -> input -> post("mes_inicio{$i}")) > 0 || strlen($this -> input -> post("fim{$i}")) > 0 || strlen($this -> input -> post("mes_fim{$i}")) > 0 || strlen($this -> input -> post("atividades{$i}")) > 0){
+                                                        if(strlen($this -> input -> post("cargo{$i}")) > 0 || strlen($this -> input -> post("empresa{$i}")) > 0 || strlen($this -> input -> post("inicio{$i}")) > 0 || strlen($this -> input -> post("mes_inicio{$i}")) > 0 || strlen($this -> input -> post("fim{$i}")) > 0 || strlen($this -> input -> post("mes_fim{$i}")) > 0 || strlen($this -> input -> post("atividades{$i}")) > 0){
                                                                 $algum = true;
+                                                                if(strlen($this -> input -> post("cargo{$i}")) == 0){
+                                                                        $erro .= "Você deve inserir o cargo da 'Experiência profissional {$i}'.<br/>";
+                                                                }
                                                                 if(strlen($this -> input -> post("empresa{$i}")) == 0){
                                                                         $erro .= "Você deve inserir a instituição / empresa da 'Experiência profissional {$i}'.<br/>";
                                                                 }
                                                                 if(strlen($this -> input -> post("inicio{$i}")) == 0){
-																		$erro .= "Você deve inserir a data de início da 'Experiência profissional {$i}'.<br/>";
-																}
-																else if(strlen($this -> input -> post("fim{$i}")) > 0 && strtotime($this -> input -> post("fim{$i}"))<strtotime($this -> input -> post("inicio{$i}"))){
-																		$erro .= "A data de término deve ser igual ou maior à dta de início da 'Experiência profissional {$i}'.<br/>";
-																}
+                                                                        $erro .= "Você deve inserir a data de início da 'Experiência profissional {$i}'.<br/>";
+                                                                }
+                                                                else if(strlen($this -> input -> post("fim{$i}")) > 0 && strtotime($this -> input -> post("fim{$i}"))<strtotime($this -> input -> post("inicio{$i}"))){
+                                                                        $erro .= "A data de término deve ser igual ou maior à dta de início da 'Experiência profissional {$i}'.<br/>";
+                                                                }
                                                                 if(strlen($this -> input -> post("atividades{$i}")) == 0){
                                                                         $erro .= "Você deve inserir a descrição de atividades da 'Experiência profissional {$i}'.<br/>";
                                                                 }
@@ -1072,32 +1132,33 @@ a[x-apple-data-detectors=true] {
                                                         }
                                                 }
                                                 for($i = 1; $i <= $this -> input -> post('num_experiencia'); $i++){
-                                                        if(strlen($this -> input -> post("empresa{$i}")) > 0 || strlen($this -> input -> post("inicio{$i}")) > 0 || strlen($this -> input -> post("atividades{$i}")) > 0){
+                                                        if(strlen($this -> input -> post("cargo{$i}")) > 0 || strlen($this -> input -> post("empresa{$i}")) > 0 || strlen($this -> input -> post("inicio{$i}")) > 0 || strlen($this -> input -> post("atividades{$i}")) > 0){
                                                                 if(strlen($this -> input -> post("codigo_experiencia{$i}"))>0){
                                                                         /*$this -> Candidaturas_model -> delete_experiencia_candidatura($this -> input -> post("codigo_experiencia{$i}"),$candidatura[0] -> pr_candidatura);
                                                                         $this -> Candidaturas_model -> create_experiencia_candidatura($this -> input -> post("codigo_experiencia{$i}"),$candidatura[0] -> pr_candidatura);
                                                                         */
+                                                                        $this -> Candidaturas_model -> update_experiencia("vc_cargo", $this -> input -> post("cargo{$i}") ,$this -> input -> post("codigo_experiencia{$i}"));
                                                                         $this -> Candidaturas_model -> update_experiencia("vc_empresa", $this -> input -> post("empresa{$i}") ,$this -> input -> post("codigo_experiencia{$i}"));
                                                                         $this -> Candidaturas_model -> update_experiencia("dt_inicio", $this -> input -> post("inicio{$i}") ,$this -> input -> post("codigo_experiencia{$i}"));
 
                                                                         $this -> Candidaturas_model -> update_experiencia("bl_emprego_atual", $this -> input -> post("emprego_atual{$i}") ,$this -> input -> post("codigo_experiencia{$i}"));
 
-																		if(strlen($this -> input -> post("fim{$i}"))>0){
+									if(strlen($this -> input -> post("fim{$i}"))>0){
                                                                                 $this -> Candidaturas_model -> update_experiencia("dt_fim", $this -> input -> post("fim{$i}") ,$this -> input -> post("codigo_experiencia{$i}"));
                                                                         }
-																		else{
-																				$this -> Candidaturas_model -> update_experiencia("dt_fim", null ,$this -> input -> post("codigo_experiencia{$i}"));
-																		}
+                                                                        else{
+                                                                                $this -> Candidaturas_model -> update_experiencia("dt_fim", null ,$this -> input -> post("codigo_experiencia{$i}"));
+                                                                        }
                                                                         $this -> Candidaturas_model -> update_experiencia("tx_atividades", $this -> input -> post("atividades{$i}"),$this -> input -> post("codigo_experiencia{$i}"));
 
-																		/*if(isset($_FILES["comprovante{$i}"]['name']) && strlen($_FILES["comprovante{$i}"]['name']) > 0){
-																				$dados_upload["envio_experiencia{$i}"]['experiencia'] = $this -> input -> post("codigo_experiencia{$i}");
+                                                                        /*if(isset($_FILES["comprovante{$i}"]['name']) && strlen($_FILES["comprovante{$i}"]['name']) > 0){
+                                                                                        $dados_upload["envio_experiencia{$i}"]['experiencia'] = $this -> input -> post("codigo_experiencia{$i}");
 
-																				$id = $this -> Anexos_model -> salvar_anexo($dados_upload["envio_experiencia{$i}"], '1');
-																				if($id > 0){
-																						rename($config['upload_path'].$dados_upload["envio_experiencia{$i}"]['file_name'], $config['upload_path'].$id);
-																				}
-																		}*/
+                                                                                        $id = $this -> Anexos_model -> salvar_anexo($dados_upload["envio_experiencia{$i}"], '1');
+                                                                                        if($id > 0){
+                                                                                                        rename($config['upload_path'].$dados_upload["envio_experiencia{$i}"]['file_name'], $config['upload_path'].$id);
+                                                                                        }
+                                                                        }*/
                                                                 }
                                                                 else{
                                                                         /*if(strlen($dados_form["codigo_experiencia_pai".$i])==0){
@@ -1173,6 +1234,7 @@ a[x-apple-data-detectors=true] {
                                                         if(isset($dados_experiencia) && count($dados_experiencia)>0){
                                                                 foreach($dados_experiencia as $experiencia){
                                                                         ++$i;
+                                                                        $dados['vc_cargo'][$i]=$experiencia->vc_cargo;
                                                                         $dados['vc_empresa'][$i]=$experiencia->vc_empresa;
                                                                         $dados['dt_inicio'][$i]=$experiencia->dt_inicio;
                                                                         $dados['bl_emprego_atual'][$i]=$experiencia->bl_emprego_atual;
@@ -1244,16 +1306,77 @@ a[x-apple-data-detectors=true] {
                 else{
                         $dados['vaga'] = $this -> uri -> segment(3);
                 }
+                
                 $dados['adicionais'] = array(
                                             'wizard' => true);
                 $candidatura = $this -> Candidaturas_model -> get_candidaturas('', $this -> session -> candidato, $dados['vaga']);
                 if($candidatura[0] -> es_status == '5' || $candidatura[0] -> es_status == '7'){
                         redirect('Candidaturas/index');
                 }
+
+
+
+                
+
                 $dados['candidatura'] = $candidatura;
                 //var_dump($this -> input -> post(null,true));
                 //echo "candidatura: ".$candidatura -> pr_candidatura."<br>";
                 $vaga = $this -> Vagas_model -> get_vagas($dados['vaga'], false);
+
+
+
+                //******************
+                /*
+                Atribui valores default para todas as questões, no caso de não ter resposta
+                */
+                $questoes = $this -> Questoes_model -> get_questoes('', $vaga[0] -> es_grupoVaga, 1);
+                $respostas_filtradas = array();
+                
+                foreach($questoes as $questao){
+                        
+                        //if($questao -> bl_removido == '0'){
+                                $respostas_filtradas[$questao->pr_questao] = '0';
+                        //}
+                        
+                        
+                        
+                }
+
+                
+                $respostas = $this -> Questoes_model -> get_respostas('',$candidatura[0]->pr_candidatura,'','',1);
+                
+                
+                if(isset($respostas)){
+                        foreach($respostas as $resposta){
+                                
+                                if(isset($respostas_filtradas[$resposta->es_questao])){
+                                                
+                                        $respostas_filtradas[$resposta->es_questao] = '1';
+                                                
+                                }
+                                        
+                                        
+                        }
+                }
+                echo $cont1;
+                $sair = false;
+                foreach($questoes as $questao){
+                        if($respostas_filtradas[$questao->pr_questao] == '0'){
+                                $sair = true;
+                                break;
+                        }
+                }
+                if($sair == true){
+                        $this -> Candidaturas_model -> update_candidatura('es_status', 1,  $candidatura[0] -> pr_candidatura);
+                        echo "<script type=\"text/javascript\">alert('Existe questões de requisitos obrigatórios não preenchidos. Preencha esses requisitos para concluir a candidatura.');window.location='/Candidaturas/Prova/".$dados['vaga']."'</script>";
+                        //redirect('Candidaturas/Prova/'.$dados['vaga']);
+                        
+                }
+
+
+
+                //******************
+
                 //var_dump($vaga);
                 //echo 'vaga: '.$dados['vaga'].', '.$vaga['dt_fim'].'<br>';
                 if(mysql_to_unix($vaga[0] -> dt_fim) < time()){
@@ -1601,10 +1724,21 @@ a[x-apple-data-detectors=true] {
 
                                                 }
                                                 else{
+                                                        /*
+                                                        Atribui valores default para todas as questões, no caso de não ter resposta
+                                                        */
+                                                        //$questoes = $this -> Questoes_model -> get_questoes('', $vaga[0] -> es_grupoVaga, 1);
+                                                        $respostas_filtradas = array();
+                                                        
+                                                        /*foreach($questoes as $questao){
+                                                                $respostas_filtradas[$questao->pr_questao] = '0';
+                                                                
+                                                        }*/
 
+                                                        
                                                         $respostas = $this -> Questoes_model -> get_respostas('',$candidatura[0]->pr_candidatura,'','',1);
                                                         $falha = false;
-                                                        $respostas_filtradas = array();
+                                                        
                                                         if(isset($respostas)){
                                                                         foreach($respostas as $resposta){
                                                                                         if(isset($respostas_filtradas[$resposta->es_questao])){
@@ -1935,16 +2069,16 @@ a[x-apple-data-detectors=true] {
                                                                 $dados['sucesso'] = 'Obrigado pela participação. Seu cadastro foi concluído e agora faz parte do banco de dados do Processo Seletivo.<br/><br/>Em caso de dúvidas, favor entrar em contato com o fale conosco.<br/><br/><a href="'.base_url('Candidaturas/index').'">Voltar</a>';
                                                                 $dados['erro'] = '';
 
-																$candidato = $this -> Candidatos_model -> get_candidatos ($candidatura[0] -> es_candidato);
+								$candidato = $this -> Candidatos_model -> get_candidatos ($candidatura[0] -> es_candidato);
 
 
                                                                 $this->load->library('email');
 
-																$config['protocol'] = 'smpt';
-																$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-																$config['smtp_port'] = 25;
-																$config['smtp_user'] = 'pontodigital';
-																$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
+                                                                $config['protocol'] = 'smpt';
+                                                                $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
+                                                                $config['smtp_port'] = 25;
+                                                                $config['smtp_user'] = 'pontodigital';
+                                                                $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
                                                                 $config['charset'] = 'UTF-8';
 
                                                                 $config['wordwrap'] = TRUE;
@@ -2489,15 +2623,16 @@ a[x-apple-data-detectors=true] {
                                                 $dados_nota=array('candidatura'=>$candidatura[0] -> pr_candidatura,'nota'=>$nota_etapa5,'etapa'=>5);
                                                 $this -> Candidaturas_model -> create_nota($dados_nota);
                                         }*/
-                                        $this -> calcula_nota($candidatura[0] -> pr_candidatura,5);
+                                        
                                         if($this -> input -> post('salvar') == 'Salvar'){
                                                 $this -> Candidaturas_model -> update_candidatura('dt_candidatura', date('Y-m-d H:i:s'),  $candidatura[0] -> pr_candidatura);
                                                 $this -> Usuarios_model -> log('sucesso', 'Candidaturas/Prova', "Prova da candidatura {$candidatura[0] -> pr_candidatura} salva com sucesso.", 'tb_candidaturas', $candidatura[0] -> pr_candidatura);
-                                                redirect('Candidaturas/index');
+                                                echo "<script type=\"text/javascript\">alert('Formulário salvo. Você precisa clicar em \'Concluir\' para enviar.');window.location='".base_url()."/Candidaturas/index';</script>";
+                                                //redirect('Candidaturas/index');
                                         }
                                         else if ($this -> input -> post('salvar') == 'Concluir'){
-                                                
-                                                if(strlen($candidatura[0] -> es_avaliador_competencia1) > 0 && strlen($candidatura[0] -> es_avaliador_especialista) > 0){
+                                                $this -> calcula_nota($candidatura[0] -> pr_candidatura,5);
+                                                if(strlen($candidatura[0] -> es_avaliador_competencia1) > 0 && strlen($candidatura[0] -> es_avaliador_especialista) > 0 && $candidatura[0] -> en_hbdi == '2' && $candidatura[0] -> en_motivacao =='2'){
                                                         $this -> Candidaturas_model -> update_candidatura('es_status', 14,  $candidatura[0] -> pr_candidatura);
 
                                                         $dados_candidato = $this -> Candidatos_model -> get_candidatos($candidatura[0] -> es_candidato);
@@ -2870,18 +3005,20 @@ a[x-apple-data-detectors=true] {
                 $this -> load -> view('candidaturas', $dados);
         }
 
-
-        public function HBDI(){ //teste de aderência - perfil candidato
+        public function TesteMotivacao(){ //teste de motivação - perfil candidato
                 if($this -> session -> perfil != 'candidato'){
+                        redirect('Interna/index');
+                }
+                else if($this -> uri -> segment(3) == 'Interna'){
                         redirect('Interna/index');
                 }
                 $this -> load -> model('Questoes_model');
                 $this -> load -> library('email');
 
                 $pagina['menu1']='Candidaturas';
-                $pagina['menu2']='HBDI';
-                $pagina['url']='Candidaturas/HBDI';
-                $pagina['nome_pagina']='HBDI';
+                $pagina['menu2']='TesteMotivacao';
+                $pagina['url']='Candidaturas/TesteMotivacao';
+                $pagina['nome_pagina']='Teste de Motivação do Serviço Público';
                 $pagina['icone']='fa fa-pencil-square-o';
 
                 $dados=$pagina;
@@ -2911,7 +3048,7 @@ a[x-apple-data-detectors=true] {
                 else{*/
                         if(isset($candidatura[0]) && ($candidatura[0] -> es_status == '10' || $candidatura[0] -> es_status == '11' || $candidatura[0] -> es_status == '12')){ //
 
-                                $dados['questoes'] = $this -> Questoes_model -> get_questoes('', $vaga[0] -> es_grupoVaga, 5);
+                                $dados['questoes'] = $this -> Questoes_model -> get_questoes('', $vaga[0] -> es_grupoVaga, 7);
                                 $dados['opcoes'] = $this -> Questoes_model -> get_opcoes('', '', $candidatura[0] -> es_vaga);
                                 //$dados['opcoes'] = $this -> Questoes_model -> get_opcoes('', '', $candidatura[0] -> es_vaga);
                                 $dados['respostas'] = $resposta = $this -> Questoes_model -> get_respostas('',$candidatura[0]->pr_candidatura);
@@ -2956,19 +3093,464 @@ a[x-apple-data-detectors=true] {
                                         $falha = false;
                                         $falha2 = false;
 
+                                        /*$total = 0;
+                                        $nota = 0;*/
+
+                                        foreach ($dados['questoes'] as $row){
+                                                //$num = count($this -> Questoes_model -> get_respostas ('', $candidatura[0] -> pr_candidatura, $row -> pr_questao));
+                                                //if($num == 0){
+                                                //echo $row -> pr_questao;
+                                                /*if(strlen($row->in_peso)>0||$row -> in_tipo == '1'){
+                                                        if(($row -> in_tipo == '3' || $row -> in_tipo == '4') && (mb_convert_case($row -> vc_respostaAceita, MB_CASE_LOWER, "UTF-8") == 'sim' || mb_convert_case($row -> vc_respostaAceita, MB_CASE_LOWER, "UTF-8") == 'não' || strstr($row -> vc_respostaAceita, 'Sim,'))){
+                                                                if($this -> input -> post("Questao".$row -> pr_questao)=='1' && mb_convert_case($row -> vc_respostaAceita, MB_CASE_LOWER, "UTF-8") == 'sim'){
+                                                                        $nota += intval($row->in_peso);
+                                                                }
+                                                                else if($this -> input -> post("Questao".$row -> pr_questao)=='1' && mb_convert_case($row -> vc_respostaAceita, MB_CASE_LOWER, "UTF-8") == 'não'){
+                                                                        $nota += intval($row->in_peso);
+                                                                }
+                                                                $total += intval($row->in_peso);
+                                                        }
+                                                        else if($row -> in_tipo == '5'){
+                                                                if(intval($this -> input -> post("Questao".$row -> pr_questao))>=1 && (mb_convert_case($row -> vc_respostaAceita, MB_CASE_LOWER, "UTF-8") == 'básico' || $row -> vc_respostaAceita == '')){
+                                                                        $nota += intval($row->in_peso);
+                                                                }
+                                                                else if(intval($this -> input -> post("Questao".$row -> pr_questao))>=2 && mb_convert_case($row -> vc_respostaAceita, MB_CASE_LOWER, "UTF-8") == 'intermediário'){
+                                                                        $nota += intval($row->in_peso);
+                                                                }
+                                                                else if(intval($this -> input -> post("Questao".$row -> pr_questao))>=3 && mb_convert_case($row -> vc_respostaAceita, MB_CASE_LOWER, "UTF-8") == 'avançado'){
+                                                                        $nota += intval($row->in_peso);
+                                                                }
+                                                                $total += intval($row->in_peso);
+                                                        }
+                                                        else if($row -> in_tipo == '1'){
+                                                                $opcoes = $this -> Questoes_model -> get_opcoes('',$row -> pr_questao);
+                                                                $total_parcial=0;
+                                                                foreach($opcoes as $opcao){
+
+                                                                        if($this -> input -> post("Questao".$row -> pr_questao)==$opcao->pr_opcao){
+                                                                                //echo $opcao->in_valor;
+                                                                                $nota += intval($opcao->in_valor);
+                                                                        }
+                                                                        if($total_parcial<intval($opcao->in_valor)){
+                                                                                $total_parcial=intval($opcao->in_valor);
+                                                                        }
+                                                                }
+                                                                //echo $total_parcial."<br />";
+                                                                $total += $total_parcial;
+
+                                                        }
+														else if($row -> in_tipo == '6'){
+																$nota += intval($this -> input -> post("Questao".$row -> pr_questao));
+																$total += intval($row->in_peso);
+														}
+                                                }*/
+                                                if(strlen($this -> input -> post("codigo_resposta".$row -> pr_questao))>0){
+                                                        if(strlen($this -> input -> post("Questao".$row -> pr_questao))>0){
+                                                                $this -> Candidaturas_model -> update_resposta("tx_resposta",$this -> input -> post("Questao".$row -> pr_questao),$this -> input -> post("codigo_resposta".$row -> pr_questao));
+
+                                                                $this -> Candidaturas_model -> update_resposta("dt_alteracao",date('Y-m-d H:i:s'),$this -> input -> post("codigo_resposta".$row -> pr_questao));
+                                                        }
+                                                        else{
+                                                                $this -> Candidaturas_model -> delete_resposta($this -> input -> post("codigo_resposta".$row -> pr_questao));
+                                                        }
+                                                }
+                                                else{
+                                                        if(strlen($this -> input -> post("Questao".$row -> pr_questao))>0){
+                                                                $this -> Candidaturas_model -> salvar_resposta($dados_form, $row -> pr_questao);
+                                                        }
+                                                }
+
+                                                /*}
+                                                else{
+                                                        $falha2 = true;
+                                                        break;
+                                                }*/
+                                                /*if($this -> input -> post('Questao'.$row -> pr_questao) == '0'){
+                                                        $falha = true;
+                                                        break;
+                                                }*/
+                                        }
+                                        /*$nota_etapa5=$nota;
+
+                                        $notas = $this -> Candidaturas_model -> get_nota ('',$candidatura[0] -> pr_candidatura,5);
+                                        //echo $total;
+                                        if(isset($notas[0] -> pr_nota)){
+                                                $this -> Candidaturas_model -> update_nota('in_nota',$nota_etapa5,$notas[0] -> pr_nota);
+                                        }
+                                        else{
+                                                $dados_nota=array('candidatura'=>$candidatura[0] -> pr_candidatura,'nota'=>$nota_etapa5,'etapa'=>5);
+                                                $this -> Candidaturas_model -> create_nota($dados_nota);
+                                        }*/
                                         
                                         if($this -> input -> post('salvar') == 'Salvar'){
                                                 $this -> Candidaturas_model -> update_candidatura('dt_candidatura', date('Y-m-d H:i:s'),  $candidatura[0] -> pr_candidatura);
                                                 $this -> Usuarios_model -> log('sucesso', 'Candidaturas/Prova', "Prova da candidatura {$candidatura[0] -> pr_candidatura} salva com sucesso.", 'tb_candidaturas', $candidatura[0] -> pr_candidatura);
-                                                redirect('Candidaturas/index');
+                                                echo "<script type=\"text/javascript\">alert('Formulário salvo. Você precisa clicar em \'Concluir\' para enviar.');window.location='".base_url()."/Candidaturas/index';</script>";
+                                                //redirect('Candidaturas/index');
                                         }
                                         else if ($this -> input -> post('salvar') == 'Concluir'){
-                                                
-                                                
+                                                $this -> calcula_nota($candidatura[0] -> pr_candidatura,7);
+                                                if(strlen($candidatura[0] -> es_avaliador_competencia1) > 0 && strlen($candidatura[0] -> es_avaliador_especialista) > 0 && $candidatura[0] -> en_hbdi == '2' && $candidatura[0] -> en_aderencia =='2'){
+                                                        $this -> Candidaturas_model -> update_candidatura('es_status', 14,  $candidatura[0] -> pr_candidatura);
 
-                                                $this -> Candidaturas_model -> update_candidatura('en_aderencia', '2',  $candidatura[0] -> pr_candidatura);
+                                                        $dados_candidato = $this -> Candidatos_model -> get_candidatos($candidatura[0] -> es_candidato);
+
+                                                        $config['protocol'] = 'smpt';
+                                                        $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
+                                                        $config['smtp_port'] = 25;
+                                                        $config['smtp_user'] = 'pontodigital';
+                                                        $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
+                                                        $config['charset'] = 'UTF-8';
+
+                                                        $config['wordwrap'] = TRUE;
+
+                                                        $config['mailtype'] = 'html';
+
+                                                        $this->email->initialize($config);
+
+                                                        $this -> email -> from($this -> config -> item('email'), $this -> config -> item('nome'));
+                                                        $this -> email -> to($dados_candidato -> vc_email);
+
+                                                        $this -> email -> subject('['.$this -> config -> item('nome').'] Aprovação para aguardando decisão final');
+                                                        //$msg='Olá '.$dados_candidato->vc_nome.',<br><br>Sua candidatura está esperando a decisão final.<br><br>Em caso de dúvidas, verifique no sistema do '.$this -> config -> item('nome').' a situação deste agendamento. Acesse o sistema por meio do link: '.base_url();
+                                                        $msg="<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional //EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+
+<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:v=\"urn:schemas-microsoft-com:vml\">
+<head>
+<!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
+<meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\"/>
+<meta content=\"width=device-width\" name=\"viewport\"/>
+<!--[if !mso]><!-->
+<meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\"/>
+<!--<![endif]-->
+<title></title>
+<!--[if !mso]><!-->
+<link href=\"https://fonts.googleapis.com/css?family=Open+Sans\" rel=\"stylesheet\" type=\"text/css\"/>
+<link href=\"https://fonts.googleapis.com/css?family=Open+Sans\" rel=\"stylesheet\" type=\"text/css\"/>
+<!--<![endif]-->
+<style type=\"text/css\">
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        table,
+        td,
+        tr {
+            vertical-align: top;
+            border-collapse: collapse;
+        }
+
+        * {
+            line-height: inherit;
+        }
+        
+        .botao:hover{
+            background-color: #718066 !important;
+        }
+        
+        .aqui:hover{
+            color: #DF2935 !important;
+        }
+
+        a[x-apple-data-detectors=true] {
+            color: inherit !important;
+            text-decoration: none !important;
+        }
+    </style>
+<style id=\"media-query\" type=\"text/css\">
+        @media (max-width: 620px) {
+
+            .block-grid,
+            .col {
+                min-width: 320px !important;
+                max-width: 100% !important;
+                display: block !important;
+            }
+
+            .block-grid {
+                width: 100% !important;
+            }
+
+            .col {
+                width: 100% !important;
+            }
+
+            .col>div {
+                margin: 0 auto;
+            }
+
+            img.fullwidth,
+            img.fullwidthOnMobile {
+                max-width: 100% !important;
+            }
+
+            .no-stack .col {
+                min-width: 0 !important;
+                display: table-cell !important;
+            }
+
+            .no-stack.two-up .col {
+                width: 50% !important;
+            }
+
+            .no-stack .col.num4 {
+                width: 33% !important;
+            }
+
+            .no-stack .col.num8 {
+                width: 66% !important;
+            }
+
+            .no-stack .col.num4 {
+                width: 33% !important;
+            }
+
+            .no-stack .col.num3 {
+                width: 25% !important;
+            }
+
+            .no-stack .col.num6 {
+                width: 50% !important;
+            }
+
+            .no-stack .col.num9 {
+                width: 75% !important;
+            }
+
+            .video-block {
+                max-width: none !important;
+            }
+
+            .mobile_hide {
+                min-height: 0px;
+                max-height: 0px;
+                max-width: 0px;
+                display: none;
+                overflow: hidden;
+                font-size: 0px;
+            }
+
+            .desktop_hide {
+                display: block !important;
+                max-height: none !important;
+            }
+        }
+    </style>
+</head>
+<body class=\"clean-body\" style=\"margin: 0; padding: 0; -webkit-text-size-adjust: 100%; background-color: #ffffff;\">
+<!--[if IE]><div class=\"ie-browser\"><![endif]-->
+<table bgcolor=\"#ffffff\" cellpadding=\"0\" cellspacing=\"0\" class=\"nl-container\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; min-width: 320px; Margin: 0 auto; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; width: 100%;\" valign=\"top\" width=\"100%\">
+<tbody>
+<tr style=\"vertical-align: top;\" valign=\"top\">
+<td style=\"word-break: break-word; vertical-align: top;\" valign=\"top\">
+<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td align=\"center\" style=\"background-color:#ffffff\"><![endif]-->
+<div style=\"background-color:transparent;\">
+<div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
+<div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
+<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
+<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
+<div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
+<div style=\"width:100% !important;\">
+<!--[if (!mso)&(!IE)]><!-->
+<div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
+<!--<![endif]-->
+<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 0px; padding-bottom: 10px; font-family: Arial, sans-serif\"><![endif]-->
+<div style=\"color:#304025;font-family:'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:1.5;padding-top:0px;padding-right:10px;padding-bottom:10px;padding-left:10px;\">
+<div style=\"font-size: 14px; line-height: 1.5; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #304025; mso-line-height-alt: 21px;\">
+<p style=\"font-size: 46px; line-height: 1.5; text-align: center; word-break: break-word; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 69px; margin: 0;\"><span style=\"color: #304025; font-size: 46px;\"><strong>Transforma Minas</strong></span></p>
+<p style=\"font-size: 20px; line-height: 1.5; text-align: center; word-break: break-word; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 30px; margin: 0;\"><span style=\"font-size: 20px; color: #304025;\"><strong>Programa de Gestão de Pessoas por Mérito e Competência</strong></span></p>
+</div>
+</div>
+<!--[if mso]></td></tr></table><![endif]-->
+<!--[if (!mso)&(!IE)]><!-->
+</div>
+<!--<![endif]-->
+</div>
+</div>
+<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+<!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+</div>
+</div>
+</div>
+<div style=\"background-color:transparent;\">
+<div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
+<div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
+<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
+<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
+<div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
+<div style=\"width:100% !important;\">
+<!--[if (!mso)&(!IE)]><!-->
+<div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
+<!--<![endif]-->
+<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"divider\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\" valign=\"top\" width=\"100%\">
+<tbody>
+<tr style=\"vertical-align: top;\" valign=\"top\">
+<td class=\"divider_inner\" style=\"word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;\" valign=\"top\">
+<table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"divider_content\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 1px dotted #BBBBBB; width: 98%;\" valign=\"top\" width=\"98%\">
+<tbody>
+<tr style=\"vertical-align: top;\" valign=\"top\">
+<td style=\"word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\" valign=\"top\"><span></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (!mso)&(!IE)]><!-->
+</div>
+<!--<![endif]-->
+</div>
+</div>
+<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+<!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+</div>
+</div>
+</div>
+<div style=\"background-color:transparent;\">
+<div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
+<div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
+<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
+<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
+<div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
+<div style=\"width:100% !important;\">
+<!--[if (!mso)&(!IE)]><!-->
+<div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
+<!--<![endif]-->
+<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px; font-family: Arial, sans-serif\"><![endif]-->
+<div style=\"color:#555555;font-family:Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.8;padding-top:5px;padding-right:10px;padding-bottom:5px;padding-left:10px;\">
+<div style=\"line-height: 1.8; font-size: 12px; color: #555555; font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif; mso-line-height-alt: 22px;\">
+<p style=\"font-size: 14px; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 24px;\"><strong>Aguardando decisão final</strong></span></span></p>
+<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><br/><span style=\"color: #000000; font-size: 17px; mso-ansi-font-size: 18px;\">".($dados_candidato -> in_genero == 2? "Cara":"Caro")." <strong>{$dados_candidato->vc_nome}</strong>, sua candidatura foi avaliada e aguarda decisão final!</span></p>
+<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
+<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">Fique atento a quaisquer notificações no sistema ou contatos por parte da equipe do Transforma Minas. </span></span></p>
+<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
+<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"><span style=\"color: #000000;\"><span style=\"font-size: 17px; mso-ansi-font-size: 18px;\">Dúvidas sobre as etapas do processo de seleção do Transforma Minas?<br/>Clique <a href=\"https://www.mg.gov.br/conteudo/transforma-minas/etapas-do-processo\" rel=\"noopener\" style=\"text-decoration: underline; color: #0068A5;\" target=\"_blank\" title=\"Etapas Transforma Minas\">aqui</a>.</span></span></p>
+<p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\"> </p>
+<p style=\"font-size: 17px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 31px; mso-ansi-font-size: 18px; margin: 0;\"><span style=\"color: #000000; font-size: 17px; mso-ansi-font-size: 18px;\">Para acessar o sistema clique no botão abaixo:</span></p>
+</div>
+</div>
+<!--[if mso]></td></tr></table><![endif]-->
+<!--[if (!mso)&(!IE)]><!-->
+</div>
+<!--<![endif]-->
+</div>
+</div>
+<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+<!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+</div>
+</div>
+</div>
+<div style=\"background-color:transparent;\">
+<div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
+<div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
+<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
+<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
+<div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
+<div style=\"width:100% !important;\">
+<!--[if (!mso)&(!IE)]><!-->
+<div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
+<!--<![endif]-->
+<div align=\"left\" class=\"button-container\" style=\"padding-top:5px;padding-right:10px;padding-bottom:5px;padding-left:10px;\">
+<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;\"><tr><td style=\"padding-top: 5px; padding-right: 10px; padding-bottom: 5px; padding-left: 10px\" align=\"left\"><v:roundrect xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"urn:schemas-microsoft-com:office:word\" href=\"https://www.selecaotransformaminas.mg.gov.br/\" style=\"height:39pt; width:465pt; v-text-anchor:middle;\" arcsize=\"0%\" stroke=\"false\" fillcolor=\"#304025\"><w:anchorlock/><v:textbox inset=\"0,0,0,0\"><center style=\"color:#ffffff; font-family:Arial, sans-serif; font-size:16px\"><![endif]--><a class=\"botao\" href=\"https://www.selecaotransformaminas.mg.gov.br/\" style=\"-webkit-text-size-adjust: none; text-decoration: none; display: block; color: #ffffff; background-color: #304025; border-radius: 0px; -webkit-border-radius: 0px; -moz-border-radius: 0px; width: 100%; width: calc(100% - 2px); border-top: 1px solid #304025; border-right: 1px solid #304025; border-bottom: 1px solid #304025; border-left: 1px solid #304025; padding-top: 10px; padding-bottom: 10px; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-align: center; mso-border-alt: none; word-break: keep-all;\" target=\"_blank\"><span style=\"padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;\"><span style=\"font-size: 16px; line-height: 2; word-break: break-word; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; mso-line-height-alt: 32px;\"><strong>Acessar o sistema</strong></span></span></a>
+<!--[if mso]></center></v:textbox></v:roundrect></td></tr></table><![endif]-->
+</div>
+<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"divider\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\" valign=\"top\" width=\"100%\">
+<tbody>
+<tr style=\"vertical-align: top;\" valign=\"top\">
+<td class=\"divider_inner\" style=\"word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;\" valign=\"top\">
+<table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"divider_content\" role=\"presentation\" style=\"table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 1px dotted #BBBBBB; width: 98%;\" valign=\"top\" width=\"98%\">
+<tbody>
+<tr style=\"vertical-align: top;\" valign=\"top\">
+<td style=\"word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\" valign=\"top\"><span></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (!mso)&(!IE)]><!-->
+</div>
+<!--<![endif]-->
+</div>
+</div>
+<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+<!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+</div>
+</div>
+</div>
+<div style=\"background-color:transparent;\">
+<div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;\">
+<div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;\">
+<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#ffffff\"><![endif]-->
+<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
+<div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
+<div style=\"width:100% !important;\">
+<!--[if (!mso)&(!IE)]><!-->
+<div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
+<!--<![endif]-->
+<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px; font-family: Arial, sans-serif\"><![endif]-->
+<div style=\"color:#555555;font-family:Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.8;padding-top:5px;padding-right:10px;padding-bottom:5px;padding-left:10px;\">
+<div style=\"font-size: 14px; line-height: 1.8; color: #555555; font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif; mso-line-height-alt: 25px;\">
+<p style=\"font-size: 17px; line-height: 1.8; word-break: break-word; mso-line-height-alt: 31px; mso-ansi-font-size: 18px; margin: 0;\"><span style=\"font-size: 17px; color: #000000; mso-ansi-font-size: 18px;\">Não consegue acessar o sistema?</span><br/><span style=\"font-size: 17px; color: #000000; mso-ansi-font-size: 18px;\">Entre em contato <a class=\"aqui\" href=\"https://www.mg.gov.br/transforma-minas/fale-conosco\" rel=\"noopener\" style=\"text-decoration: underline; color: #0068A5;\" target=\"_blank\" title=\"Fale conosco\">aqui</a>.</span></p>
+</div>
+</div>
+<!--[if mso]></td></tr></table><![endif]-->
+<!--[if (!mso)&(!IE)]><!-->
+</div>
+<!--<![endif]-->
+</div>
+</div>
+<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+<!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+</div>
+</div>
+</div>
+<div style=\"background-color:transparent;\">
+<div class=\"block-grid\" style=\"Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #312f2f;\">
+<div style=\"border-collapse: collapse;display: table;width: 100%;background-color:#312f2f;\">
+<!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:transparent;\"><tr><td align=\"center\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px\"><tr class=\"layout-full-width\" style=\"background-color:#312f2f\"><![endif]-->
+<!--[if (mso)|(IE)]><td align=\"center\" width=\"600\" style=\"background-color:#312f2f;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;\" valign=\"top\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;\"><![endif]-->
+<div class=\"col num12\" style=\"min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;\">
+<div style=\"width:100% !important;\">
+<!--[if (!mso)&(!IE)]><!-->
+<div style=\"border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;\">
+<!--<![endif]-->
+<div align=\"center\" class=\"img-container center autowidth\" style=\"padding-right: 0px;padding-left: 0px;\">
+<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr style=\"line-height:0px\"><td style=\"padding-right: 0px;padding-left: 0px;\" align=\"center\"><![endif]--><img align=\"center\" alt=\"Governo do Estado de Minas Gerais\" border=\"0\" class=\"center autowidth\" src=\"http://planejamento.mg.gov.br/sites/default/files/Logo_Seplag2019-01.png\" style=\"text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 304px; display: block;\" title=\"Governo do Estado de Minas Gerais\" width=\"304\"/>
+<div style=\"font-size:1px;line-height:10px\"> </div>
+<!--[if mso]></td></tr></table><![endif]-->
+</div>
+<!--[if (!mso)&(!IE)]><!-->
+</div>
+<!--<![endif]-->
+</div>
+</div>
+<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+<!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+</div>
+</div>
+</div>
+<!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (IE)]></div><![endif]-->
+</body>
+</html>";
+                                                        $this -> email -> message($msg);
+                                                        /*if(!$this -> email -> send()){
+                                                                $this -> Usuarios_model -> log('erro', 'Candidaturas/TesteAderencia', 'Erro de envio de e-mail de entrevista do '.$dados_candidato->vc_nome);
+                                                        }*/
+                                                }
+
+                                                $this -> Candidaturas_model -> update_candidatura('en_motivacao', '2',  $candidatura[0] -> pr_candidatura);
                                                 $this -> Candidaturas_model -> update_candidatura('dt_candidatura', date('Y-m-d H:i:s'),  $candidatura[0] -> pr_candidatura);
-                                                $this -> Usuarios_model -> log('sucesso', 'Candidaturas/TesteAderencia', "Teste de aderência da candidatura {$dados_form['candidatura']} respondida com sucesso.", 'tb_candidaturas', $dados_form['candidatura']);
+                                                $this -> Candidaturas_model -> update_candidatura('dt_motivacao', date('Y-m-d H:i:s'),  $candidatura[0] -> pr_candidatura);
+                                                $this -> Usuarios_model -> log('sucesso', 'Candidaturas/TesteMotivacao', "Teste de motivação da candidatura {$dados_form['candidatura']} respondida com sucesso.", 'tb_candidaturas', $dados_form['candidatura']);
                                                 redirect('Candidaturas/index/');
                                                 
                                         }
@@ -2980,6 +3562,237 @@ a[x-apple-data-detectors=true] {
                         }
                 //}
                 $this -> load -> view('candidaturas', $dados);
+        }
+
+
+        public function HBDI(){ 
+                if($this -> session -> perfil != 'candidato'){
+                        redirect('Interna/index');
+                }
+                else if($this -> uri -> segment(3) == 'Interna'){
+                        redirect('Interna/index');
+                }
+                $this -> load -> model('Questoes_model');
+                $this -> load -> library('email');
+
+                $pagina['menu1']='Candidaturas';
+                $pagina['menu2']='HBDI';
+                $pagina['url']='Candidaturas/HBDI';
+                $pagina['nome_pagina']='HBDI';
+                $pagina['icone']='fa fa-pencil-square-o';
+
+                $dados=$pagina;
+                if($this -> input -> post('candidatura') > 0){
+                        $dados['candidatura'] = $this -> input -> post('candidatura');
+                }
+                else{
+                        $dados['candidatura'] = $this -> uri -> segment(3);
+                }
+
+                $dados['adicionais'] = array(
+                                            'wizard' => true);
+
+                $candidatura = $this -> Candidaturas_model -> get_candidaturas($dados['candidatura']);
+                $dados['hbdi'] = $this -> Candidaturas_model -> get_hbdi($dados['candidatura']);
+
+                if($this -> session -> candidato != $candidatura[0] -> es_candidato){
+                        $this -> Usuarios_model -> log('seguranca', 'Candidaturas/HBDI', "Tentativa de visualização de teste HBDI concluído ou não solicitado da candidatura ".$candidatura[0] -> pr_candidatura." pelo candidato ".$this -> session -> candidato, 'tb_candidaturas', $candidatura[0] -> pr_candidatura);
+                        echo "<script type=\"text/javascript\">alert('Acesso indevido ao HBDI de uma candidatura armazenada para fins de auditoria');window.location='".base_url()."';</script>";
+
+                        exit();
+                }
+                else if($candidatura[0] -> en_hbdi != '1'){
+                        $this -> Usuarios_model -> log('seguranca', 'Candidaturas/HBDI', "HBDI da candidatura ".$candidatura[0] -> pr_candidatura." pelo candidato ".$this -> session -> candidato." não liberado ou concluído.", 'tb_candidaturas', $candidatura[0] -> pr_candidatura);
+                        echo "<script type=\"text/javascript\">alert('Acesso indevido ao HBDI de uma candidatura armazenada para fins de auditoria');window.location='".base_url()."';</script>";
+
+                        exit();
+                }
+                //echo $candidatura[0] -> es_status
+                //var_dump($this -> input -> post(null,true));
+                //echo "candidatura: ".$candidatura -> pr_candidatura."<br>";
+
+                $vaga = $this -> Vagas_model -> get_vagas($candidatura[0] -> es_vaga, false);
+                //var_dump($vaga);
+                //echo 'vaga: '.$dados['vaga'].', '.$vaga['dt_fim'].'<br>';
+                /*if(mysql_to_unix($vaga[0] -> dt_fim) < time()){
+                        $dados['sucesso'] = '';
+                        $dados['erro'] = "O prazo de preenchimento desta vaga encerrou-se em ".show_date($vaga[0] -> dt_fim, true).'. Essa tentativa foi registrada para fins de auditoria.<br/>';
+                        $this -> Usuarios_model -> log('seguranca', 'Candidaturas/Prova', "Tentativa de preenchimento de prova da ".$candidatura[0] -> pr_candidatura." fora do prazo.", 'tb_candidaturas', $candidatura[0] -> pr_candidatura);
+                }
+                else{*/
+                        if(isset($candidatura[0]) && ($candidatura[0] -> es_status == '10' || $candidatura[0] -> es_status == '11' || $candidatura[0] -> es_status == '12')){ //
+
+                                if($this -> input -> post('salvar') == 'Concluir'){
+
+                                        $this -> form_validation -> set_rules('MotivacaoTrabalho1', "'Quais sentidos ou situações fazem você se sentir mais motivado no trabalho?'","callback_valida_20[MotivacaoTrabalho]");
+
+                                        $this -> form_validation -> set_rules('Gosto1', "'Quando aprendo, gosto de...'","callback_valida_20[Gosto]");
+
+                                        $this -> form_validation -> set_rules('Prefiro1', "'Prefiro aprender por meio de…'","callback_valida_20[Prefiro]");
+
+                                        $this -> form_validation -> set_rules('Pergunta', "'Qual o tipo de pergunta que você mais gosta de fazer?'","callback_valida_1[Pergunta]");
+
+                                        $this -> form_validation -> set_rules('Fazer1', "'O que você mais gosta de fazer?'","callback_valida_16[Fazer]");
+
+                                        $this -> form_validation -> set_rules('Comprar1', "'Ao comprar um carro você…'","callback_valida_20[Comprar]");
+
+                                        $this -> form_validation -> set_rules('Comportamento', "'Como você define seu comportamento?'", "callback_valida_1[Comportamento]");
+
+                                        $this -> form_validation -> set_rules('Estilo1', "'Palavras que definem meu estilo...'", "callback_valida_16[Estilo]");
+
+                                        $this -> form_validation -> set_rules('PontoFraco1', "'Quais as frases que você mais ouve dos outros em relação a seus \"pontos fracos\"?'","callback_valida_20[PontoFraco]");
+
+                                        $this -> form_validation -> set_rules('Resolver', "'Quando tenho que resolver um problema, eu geralmente…'", "callback_valida_1[Resolver]");
+
+                                        $this -> form_validation -> set_rules('Procuro', "'Quando tenho que resolver um problema, eu procuro…'", "callback_valida_1[Procuro]");
+
+                                        $this -> form_validation -> set_rules('Frase1', "'Quais as frases que mais se aproximam do que você diz?'","callback_valida_12[Frase]");
+                                        
+                                }
+                                else{
+                                        $this -> form_validation -> set_rules('MotivacaoTrabalho1', "'Quais sentidos ou situações fazem você se sentir mais motivado no trabalho?'", 'trim');
+                                        $this -> form_validation -> set_rules('Gosto1', "'Quando aprendo, gosto de...'", 'trim');
+                                        $this -> form_validation -> set_rules('Prefiro1', "'Prefiro aprender por meio de…'", 'trim');
+                                        $this -> form_validation -> set_rules('Pergunta', "'Qual o tipo de pergunta que você mais gosta de fazer?'", 'trim');
+                                        $this -> form_validation -> set_rules('Fazer1', "'O que você mais gosta de fazer?'", 'trim');
+                                        $this -> form_validation -> set_rules('Comprar1', "'Ao comprar um carro você…'", 'trim');
+                                        $this -> form_validation -> set_rules('Comportamento', "'Como você define seu comportamento?'", 'trim');
+                                        $this -> form_validation -> set_rules('Estilo1', "'Palavras que definem meu estilo...'", 'trim');
+                                        $this -> form_validation -> set_rules('PontoFraco1', "'Quais as frases que você mais ouve dos outros em relação a seus \"pontos fracos\"?'", 'trim');
+                                        $this -> form_validation -> set_rules('Resolver1', "'Quando tenho que resolver um problema, eu geralmente…'", 'trim');
+                                        $this -> form_validation -> set_rules('Procuro1', "'Quando tenho que resolver um problema, eu procuro…'", 'trim');
+                                        $this -> form_validation -> set_rules('Frase1', "'Quais as frases que mais se aproximam do que você diz?'", 'trim');
+                                }
+
+                                if ($this -> form_validation -> run() == FALSE){
+                                        $dados['sucesso'] = '';
+                                        $dados['erro'] = validation_errors();
+                                        
+
+                                }
+                                else{
+                                        
+
+                                        
+
+                                        
+                                        if($this -> input -> post('salvar') == 'Salvar'){
+                                                $dados_form = $this -> input -> post(null,true);
+                                                $dados_form['candidatura'] = $candidatura[0] -> pr_candidatura;
+                                                $this -> Candidaturas_model -> update_candidatura('dt_candidatura', date('Y-m-d H:i:s'),  $candidatura[0] -> pr_candidatura);
+                                                $this -> Candidaturas_model -> atualiza_hbdi($dados_form);
+                                                $this -> Usuarios_model -> log('sucesso', 'Candidaturas/HBDI', "HBDI da candidatura {$candidatura[0] -> pr_candidatura} salva com sucesso.", 'tb_candidaturas', $candidatura[0] -> pr_candidatura);
+                                                //redirect('Candidaturas/index');
+                                                echo "<script type=\"text/javascript\">alert('Formulário salvo. Você precisa clicar em \'Concluir\' para enviar.');window.location='".base_url()."/Candidaturas/index';</script>";
+                                                exit();
+                                        }
+                                        else if($this -> input -> post('salvar') == 'Concluir'){
+                                                $dados_form = $this -> input -> post(null,true);
+                                                $dados_form['candidatura'] = $candidatura[0] -> pr_candidatura;
+                                                $this -> Candidaturas_model -> update_candidatura('dt_candidatura', date('Y-m-d H:i:s'),  $candidatura[0] -> pr_candidatura);
+                                                $this -> Candidaturas_model -> update_candidatura('dt_hbdi', date('Y-m-d H:i:s'),  $candidatura[0] -> pr_candidatura);
+                                                $this -> Candidaturas_model -> update_candidatura('en_hbdi', '2',  $candidatura[0] -> pr_candidatura);
+                                                $this -> Candidaturas_model -> atualiza_hbdi($dados_form);
+                                                $this -> Usuarios_model -> log('sucesso', 'Candidaturas/Prova', "HBDI da candidatura {$candidatura[0] -> pr_candidatura} concluída com sucesso.", 'tb_candidaturas', $candidatura[0] -> pr_candidatura);
+                                                redirect('Candidaturas/index');
+                                                exit();
+                                        }
+                                        else{
+                                                $dados['sucesso'] = '';
+                                                $dados['erro'] = '';
+                                        }
+                                        
+                                }
+                        }
+                        else{
+                                $dados['sucesso'] = '';
+                                $dados['erro'] = 'Não existe confirmação de cadastro de candidatura em seu nome para essa vaga.';
+                        }
+                //}
+                $this -> load -> view('candidaturas', $dados);
+        }
+
+        /**
+         * Originalmente a função de erro do CodeIgniter aceita como parâmetros o primeiro parâmetro o campo e o segundo valor
+         * Foi utilizado de forma diferente para permitir a validação de múltiplos checkboxes, sendo o primeiro valor 'inútil' e o segundo valor uma string com um valor em comum das checkboxes a serem avaliadas
+         */
+        public function valida_20($valor1,$campo){
+                $contador = 0;
+                $campos = array('MotivacaoTrabalho'=>"'Quais sentidos ou situações fazem você se sentir mais motivado no trabalho?'",
+                                'Gosto'=>"'Quando aprendo, gosto de...'",
+                                'Prefiro'=>"'Prefiro aprender por meio de…'",
+                                'Comprar'=>"Ao comprar um carro você…",
+                                'PontoFraco'=>"Quais as frases que você mais ouve dos outros em relação a seus \"pontos fracos\"?"
+                );
+                for($x=1;$x<=20;$x++){
+                        if($this->input->post($campo.$x)>0){
+                                $contador++;
+                        }
+                }
+                if($contador!=5){
+                        $this -> form_validation -> set_message('valida_20', "O campo '".$campos[$campo]."' deve ter cinco opções escolhidas");
+                        return false;
+                }
+                return true;
+        }
+
+        /**
+         * Originalmente a função de erro do CodeIgniter aceita como parâmetros o primeiro parâmetro o campo e o segundo valor
+         * Foi utilizado de forma diferente para permitir a validação de múltiplos checkboxes, sendo o primeiro valor 'inútil' e o segundo valor uma string com um valor em comum das checkboxes a serem avaliadas
+         */
+        public function valida_1($valor1,$campo){
+
+                $contador = $this->input->post($campo);
+                
+                $campos = array('Pergunta'=>"Qual o tipo de pergunta que você mais gosta de fazer?",
+                                'Comportamento'=>"Como você define seu comportamento?",
+                                'Resolver'=>"Quando tenho que resolver um problema, eu geralmente…",
+                                'Procuro'=>"Quando tenho que resolver um problema, eu procuro…");
+                if(!($contador>0)){
+                        $this -> form_validation -> set_message('valida_1', "O campo '".$campos[$campo]."' deve ter 1 opção escolhida");
+                        return false;
+                }
+                return true;
+        }
+
+        /**
+         * Originalmente a função de erro do CodeIgniter aceita como parâmetros o primeiro parâmetro o campo e o segundo valor
+         * Foi utilizado de forma diferente para permitir a validação de múltiplos checkboxes, sendo o primeiro valor 'inútil' e o segundo valor uma string com um valor em comum das checkboxes a serem avaliadas
+         */
+        public function valida_16($valor1,$campo){
+                $contador = 0;
+                $campos = array('Fazer'=>"O que você mais gosta de fazer?",
+                                'Estilo'=>"Palavras que definem meu estilo...");
+                for($x=1;$x<=16;$x++){
+                        if($this->input->post($campo.$x)>0){
+                                $contador++;
+                        }
+                }
+                if($contador!=4){
+                        $this -> form_validation -> set_message('valida_16', "O campo 'O que você mais gosta de fazer?' deve ter quatro opções escolhidas");
+                        return false;
+                }
+                return true;
+        }
+
+        /**
+         * Originalmente a função de erro do CodeIgniter aceita como parâmetros o primeiro parâmetro o campo e o segundo valor
+         * Foi utilizado de forma diferente para permitir a validação de múltiplos checkboxes, sendo o primeiro valor 'inútil' e o segundo valor uma string com um valor em comum das checkboxes a serem avaliadas
+         */
+        public function valida_12($valor1,$campo){
+                $contador = 0;
+                $campos = array('Frase'=>"Quais as frases que mais se aproximam do que você diz?");
+
+                for($x=1;$x<=12;$x++){
+                        if($this->input->post($campo.$x)>0){
+                                $contador++;
+                        }
+                }
+                if($contador!=3){
+                        $this -> form_validation -> set_message('valida_12', "O campo '".$campos[$campo]."' deve ter três opções escolhidas");
+                        return false;
+                }
+                return true;
         }
 
         public function valida_create($valor){ //callback de validação customizada do formulário de cadastro - perfil de candidato
@@ -3163,31 +3976,35 @@ a[x-apple-data-detectors=true] {
 
                 $dados['candidato'] = $this -> Candidatos_model -> get_candidatos ($candidatura[0] -> es_candidato);
 
-				//$dados['anexos'][$formacao->pr_formacao] =  $this -> Anexos_model -> get_anexo('', $formacao->pr_formacao,'', '');
-				$anexos = $this -> Anexos_model -> get_anexo('','',$candidatura[0] -> pr_candidatura, '');
-				$dados['anexos_questao'] = array();
-				if(isset($anexos)){
-						foreach($anexos as $anexo){
+                //$dados['anexos'][$formacao->pr_formacao] =  $this -> Anexos_model -> get_anexo('', $formacao->pr_formacao,'', '');
+                $anexos = $this -> Anexos_model -> get_anexo('','',$candidatura[0] -> pr_candidatura, '');
+                $dados['anexos_questao'] = array();
+                if(isset($anexos)){
+                                foreach($anexos as $anexo){
 
-								$dados['anexos_questao'][$anexo -> es_questao] = $anexo;
+                                                $dados['anexos_questao'][$anexo -> es_questao] = $anexo;
 
-						}
-				}
+                                }
+                }
+
+                $dados['hbdi'] = $this -> Candidaturas_model -> get_hbdi($candidatura[0] -> pr_candidatura);
 
                 $dados['questoes1'] = $this -> Questoes_model -> get_questoes('', $vaga[0] -> es_grupoVaga, 1);
                 $dados['questoes2'] = $this -> Questoes_model -> get_questoes('', $vaga[0] -> es_grupoVaga, 2);
                 $dados['questoes3'] = $this -> Questoes_model -> get_questoes('', $vaga[0] -> es_grupoVaga, 3);
 
                 $dados['entrevistas'] = $this -> Candidaturas_model -> get_entrevistas('',$this -> uri -> segment(3),'competencia');
+                $dados['entrevistas_especialista'] = $this -> Candidaturas_model -> get_entrevistas('',$this -> uri -> segment(3),'especialista');
 
                 $dados['questoes4'] = $this -> Questoes_model -> get_questoes('', $vaga[0] -> es_grupoVaga, 4);
                 $dados['questoes5'] = $this -> Questoes_model -> get_questoes('', $vaga[0] -> es_grupoVaga, 5);
                 $dados['questoes6'] = $this -> Questoes_model -> get_questoes('', $vaga[0] -> es_grupoVaga, 6);
+                $dados['questoes7'] = $this -> Questoes_model -> get_questoes('', $vaga[0] -> es_grupoVaga, 7);
                 $dados['respostas'] = $this -> Questoes_model -> get_respostas('', $candidatura[0] -> pr_candidatura);
                 $dados['opcoes'] = $this -> Questoes_model -> get_opcoes('', '', $candidatura[0] -> es_vaga);
 
                 //$dados['vaga'] = $this -> Vagas_model -> get_vagas ($candidatura[0] -> es_vaga, false);
-                $dados['candidatura'] = $this -> Candidaturas_model -> get_candidaturas ($candidatura[0] -> pr_candidatura);
+                $dados['candidatura'] = $candidatura;
                 $dados['formacoes'] = $this -> Candidaturas_model -> get_formacao(null,$candidatura[0] -> es_candidato,$candidatura[0]->pr_candidatura);
                 if(isset($dados['formacoes'])){
                         foreach($dados['formacoes'] as $formacao){
@@ -3891,17 +4708,19 @@ a[x-apple-data-detectors=true] {
                                         else{
                                                 redirect('Candidaturas/ListaAvaliacao/');
                                         }
-										//exit();
+					exit();
 
                                 }
-                                else{
+                                else if(strlen($this -> input -> post('salvar_entrevista')) > 0){
+                                        $this -> Usuarios_model -> log('sucesso', 'Candidaturas/AvaliacaoEntrevista', "Entrevista da candidatura {$dados_form['candidatura']} salva com sucesso pelo avaliador ".$this -> session -> uid.".", 'tb_candidaturas', $dados_form['candidatura']);
+
                                         if($dados['vaga'] > 0){
                                                 redirect('Vagas/resultado/'.$dados['vaga']);
                                         }
                                         else{
                                                 redirect('Candidaturas/ListaAvaliacao/');
                                         }
-										//exit();
+					exit();
                                 }
                         }
                 }
@@ -5273,7 +6092,7 @@ a[x-apple-data-detectors=true] {
 										}*/
                                 }
 								else if($this -> input -> post('salvar') == 'Reprovar na habilitação'){
-
+                                                                                $this -> Candidaturas_model -> delete_nota('', $candidatura[0] -> pr_candidatura,  3);
 										$this -> Candidaturas_model -> update_candidatura('es_status', 20,  $candidatura[0] -> pr_candidatura);
 										$this -> Candidaturas_model -> update_candidatura('dt_candidatura', date('Y-m-d H:i:s'),  $candidatura[0] -> pr_candidatura);
 										$this -> Candidaturas_model -> update_candidatura('es_avaliador_curriculo', $this -> session -> uid,  $candidatura[0] -> pr_candidatura);
@@ -5937,8 +6756,12 @@ a[x-apple-data-detectors=true] {
                                                 foreach ($opcoes as $row2){
                                                         if($row2 -> pr_opcao == $res){
                                                                 $res2 = $row2 -> tx_opcao;
+                                                                /*if(($row -> es_etapa == 3 || $row -> es_etapa == 4 || $row -> es_etapa == 5 || $row -> es_etapa == 6) && ($this -> session -> perfil != 'candidato' && $this -> session -> perfil != 'avaliador')){
+                                                                        $res2.=" - Nota: ".intval($row2->in_valor);
+                                                                }*/
                                                         }
                                                 }
+
                                                 echo form_textarea($attributes, $res2);
                                         }
                                 }
@@ -5992,6 +6815,10 @@ a[x-apple-data-detectors=true] {
                                                 $attributes = array('name' => 'Questao'.$row -> pr_questao,
                                                                     'class' => 'form-control text-box single-line',
                                                                     'disabled' => 'disabled');
+                                                $res_nota = '';
+                                                /*if(($row -> es_etapa == 3 || $row -> es_etapa == 4 || $row -> es_etapa == 5 || $row -> es_etapa == 6) && ($this -> session -> perfil != 'candidato' && $this -> session -> perfil != 'avaliador')){
+                                                        $res_nota=" - Nota: -".intval($res) * intval($row -> in_peso);
+                                                }*/
                                                 if($row -> in_tipo == 3){
                                                         if($res == '1'){
                                                                 $res = 'Sim';
@@ -6008,7 +6835,11 @@ a[x-apple-data-detectors=true] {
                                                                 $res = 'Não';
                                                         }
                                                 }
-                                                echo form_input($attributes, $res);
+                                                
+
+
+                                                echo form_input($attributes, $res.$res_nota);
+                                                
                                         }
                                 }
                                 else if($row -> in_tipo == 5){ //níveis
@@ -6046,7 +6877,11 @@ a[x-apple-data-detectors=true] {
                                                 $attributes = array('name' => 'Questao'.$row -> pr_questao,
                                                                     'class' => 'form-control text-box single-line',
                                                                     'disabled' => 'disabled');
-                                                echo form_input($attributes, $valores[$res]);
+                                                $res_nota = "";
+                                                /*if(($row -> es_etapa == 3 || $row -> es_etapa == 4 || $row -> es_etapa == 5 || $row -> es_etapa == 6) && ($this -> session -> perfil != 'candidato' && $this -> session -> perfil != 'avaliador')){
+                                                        $res_nota=" - Nota: ".round((intval($res)/3) * intval($row -> in_peso));
+                                                }*/
+                                                echo form_input($attributes, $valores[$res].$res_nota);
                                         }
                                 }
                                 else if($row -> in_tipo == 6){
@@ -6070,6 +6905,9 @@ a[x-apple-data-detectors=true] {
                                                 $attributes = array('name' => 'Questao'.$row -> pr_questao,
                                                                     'class' => 'form-control text-box single-line',
                                                                     'disabled' => 'disabled');
+                                                /*if(($row -> es_etapa == 3 || $row -> es_etapa == 4 || $row -> es_etapa == 5 || $row -> es_etapa == 6) && ($this -> session -> perfil != 'candidato' && $this -> session -> perfil != 'avaliador')){
+                                                        $res.=" - Nota: ".$res;
+                                                }*/
                                                 echo form_input($attributes, $res);
                                         }
                                 }
@@ -6085,7 +6923,7 @@ a[x-apple-data-detectors=true] {
                                                         if(isset($anexos_questao[$row -> pr_questao])){
                                                                 $vc_anexo = $anexos_questao[$row -> pr_questao]->vc_arquivo;
                                                                 $pr_arquivo = $anexos_questao[$row -> pr_questao]->pr_anexo;
-																echo "<a href=\"".site_url('Interna/download/'.$pr_arquivo)."\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-download\"></i> ".$vc_anexo."</button></a>";
+								echo "<a href=\"".site_url('Interna/download/'.$pr_arquivo)."\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-download\"></i> ".$vc_anexo."</button></a>";
                                                         }
                                                         else if($row -> bl_obrigatorio){
                                                                 $attributes['required'] = 'required';
@@ -6126,7 +6964,12 @@ a[x-apple-data-detectors=true] {
         }
 
         public function eliminar_entrevista($id,$vaga=''){
+                $candidatura = $this -> Candidaturas_model -> get_candidaturas($id);
+
+                //echo $candidatura[0]->es_status;
                 $this -> Candidaturas_model -> update_candidatura('es_status', 15,  $id);
+                $etapa=array(10=>4,11=>6);
+                $this -> Candidaturas_model -> delete_nota('', $id,  $etapa[$candidatura[0]->es_status]);
                 $this -> Candidaturas_model -> update_candidatura('dt_candidatura', date('Y-m-d H:i:s'),  $candidatura[0] -> pr_candidatura);
                 $this -> Usuarios_model -> log('sucesso', 'Candidaturas/eliminar_entrevista', "Candidatura {$id} eliminado por não comparecimento.", 'tb_candidaturas', $id);
                 if(strlen($vaga) > 0){
@@ -6198,7 +7041,7 @@ a[x-apple-data-detectors=true] {
 
 
 
-                if($etapa == 2 || $etapa == 3 || $etapa == 5 || $etapa == 6){
+                if($etapa == 2 || $etapa == 3 || $etapa == 5 || $etapa == 6 || $etapa == 7){
 
                         $respostas_query = $this -> Questoes_model -> get_respostas('', $candidatura, '', '',$etapa);
                         $respostas = array();
@@ -6249,7 +7092,7 @@ a[x-apple-data-detectors=true] {
                                         }
                                         $total_max += intval($questao->in_peso);*/
                                         $total+=$nota;
-					$total_max += intval($questao->in_peso);
+                                        $total_max += intval($questao->in_peso);
                                 }
                                 else if($questao -> in_tipo == '6'){
                                         
@@ -6257,6 +7100,7 @@ a[x-apple-data-detectors=true] {
                                         $total_max += intval($questao -> in_peso);
                                 }
                         }
+                        //echo $total."-".$total_max;
                         $total_percentual = round(($total/$total_max)*100);
                         $notas = $this -> Candidaturas_model -> get_nota ('',$candidatura,$etapa);
                                                 
@@ -7153,7 +7997,7 @@ Se houver algum campo obrigatório não preenchido, favor preenchê-lo e inserir
 <br><br>
 O manual do sistema encontra-se disponível no site da SEPLAG para orientações em relação ao sistema.
 <br><br>
-Caso tenha algum problema, gentileza encaminhar email para <strong> edital.brumadinho@planejamento.mg.gov.br</strong> contendo nome completo, cpf, vaga pra a qual se candidatou, descrição do problema/erro e print da tela contendo o problema ou a mensagem de erro do sistema.    
+Caso tenha algum problema, gentileza encaminhar email para <strong> editbrumadinhoal.@planejamento.mg.gov.br</strong> contendo nome completo, cpf, vaga pra a qual se candidatou, descrição do problema/erro e print da tela contendo o problema ou a mensagem de erro do sistema.    
 </span></span></p>
 <p style=\"font-size: 14px; text-align: justify; line-height: 1.8; word-break: break-word; mso-line-height-alt: 25px; margin: 0;\">&nbsp;</p>
 

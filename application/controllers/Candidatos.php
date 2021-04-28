@@ -376,6 +376,7 @@ class Candidatos extends CI_Controller {
                         if(count($dados_experiencia)>0){
                                 foreach($dados_experiencia as $experiencia){
                                         ++$i;
+                                        $dados['vc_cargo'][$i]=$experiencia->vc_cargo;
                                         $dados['vc_empresa'][$i]=$experiencia->vc_empresa;
                                         $dados['dt_inicio'][$i]=$experiencia->dt_inicio;
                                         $dados['bl_emprego_atual'][$i]=$experiencia->bl_emprego_atual;                                        
@@ -438,8 +439,11 @@ class Candidatos extends CI_Controller {
                         }
                         $algum = false;
                         for($i = 1; $i <= $this -> input -> post('num_experiencia'); $i++){
-                                if(strlen($this -> input -> post("empresa{$i}")) > 0 || strlen($this -> input -> post("inicio{$i}")) > 0 || strlen($this -> input -> post("fim{$i}")) > 0 || strlen($this -> input -> post("atividades{$i}")) > 0){
-                                        $algum = true; 
+                                if(strlen($this -> input -> post("cargo{$i}")) > 0 || strlen($this -> input -> post("empresa{$i}")) > 0 || strlen($this -> input -> post("inicio{$i}")) > 0 || strlen($this -> input -> post("fim{$i}")) > 0 || strlen($this -> input -> post("atividades{$i}")) > 0){
+                                        $algum = true;
+                                        if(strlen($this -> input -> post("cargo{$i}")) == 0){
+                                                $erro .= "Você deve inserir o cargo da 'Experiência profissional {$i}'.<br/>";
+                                        } 
                                         if(strlen($this -> input -> post("empresa{$i}")) == 0){
                                                 $erro .= "Você deve inserir a instituição / empresa da 'Experiência profissional {$i}'.<br/>";
                                         }
@@ -581,8 +585,9 @@ class Candidatos extends CI_Controller {
                                                         }
                                                 }
                                                 for($i = 1; $i <= $this -> input -> post('num_experiencia'); $i++){
-                                                        if(strlen($this -> input -> post("empresa{$i}")) > 0 || strlen($this -> input -> post("inicio{$i}")) > 0 || strlen($this -> input -> post("atividades{$i}")) > 0){
+                                                        if(strlen($this -> input -> post("cargo{$i}")) > 0 || strlen($this -> input -> post("empresa{$i}")) > 0 || strlen($this -> input -> post("inicio{$i}")) > 0 || strlen($this -> input -> post("atividades{$i}")) > 0){
                                                                 if(strlen($this -> input -> post("codigo_experiencia{$i}"))>0){
+                                                                        $this -> Candidaturas_model -> update_experiencia("vc_cargo", $this -> input -> post("cargo{$i}") ,$this -> input -> post("codigo_experiencia{$i}"));
                                                                         $this -> Candidaturas_model -> update_experiencia("vc_empresa", $this -> input -> post("empresa{$i}") ,$this -> input -> post("codigo_experiencia{$i}"));
                                                                         $this -> Candidaturas_model -> update_experiencia("dt_inicio", $this -> input -> post("inicio{$i}") ,$this -> input -> post("codigo_experiencia{$i}"));
                                                                         $this -> Candidaturas_model -> update_experiencia("bl_emprego_atual", $this -> input -> post("emprego_atual{$i}") ,$this -> input -> post("codigo_experiencia{$i}"));
@@ -652,6 +657,7 @@ class Candidatos extends CI_Controller {
                                                 $i=0;
                                                 foreach($dados_experiencia as $experiencia){
                                                         ++$i;
+                                                        $dados['vc_cargo'][$i]=$experiencia->vc_cargo;
                                                         $dados['vc_empresa'][$i]=$experiencia->vc_empresa;
                                                         $dados['dt_inicio'][$i]=$experiencia->dt_inicio;
                                                         $dados['bl_emprego_atual'][$i]=$experiencia->bl_emprego_atual;                                                
@@ -671,7 +677,7 @@ class Candidatos extends CI_Controller {
                                                 }
                                                 $dados['erro'] = '';
 
-                                                $this -> Usuarios_model -> log('sucesso', 'Candidatos/index', 'Candidato '.$this -> session -> candidato.' atualizou seus dados com sucesso.', 'tb_candidatos', $this -> session -> candidato);
+                                                $this -> Usuarios_model -> log('sucesso', 'Candidatos/curriculo_base', 'Candidato '.$this -> session -> candidato.' atualizou o currículo base com sucesso.', 'tb_candidatos', $this -> session -> candidato);
                                         /*}
                                         else{
                                                 $erro = $this -> db -> error();
@@ -1043,6 +1049,9 @@ class Candidatos extends CI_Controller {
                                         if(!$this -> email -> send()){
                                                 $this -> Usuarios_model -> log('erro', 'Candidatos/cadastro', "Erro de envio de confirmação de reprovação dos requisitos mínimos para o e-mail {$dados_form['Email']} do candidato {$pr_candidato}.", 'tb_candidatos', $pr_candidato);
                                         }
+                                        else{
+                                                $this -> Usuarios_model -> log('sucesso', 'Candidatos/cadastro', "Envio de confirmação de reprovação dos requisitos mínimos para o e-mail {$dados_form['Email']} do candidato {$pr_candidato} feita com sucesso.", 'tb_candidatos', $pr_candidato);
+                                        }
                                         //****************************
                                                
                                         $dados['sucesso'] = "Seu cadastro foi realizado porém, infelizmente, você não cumpre com os requisitos mínimos para concorrer a alguma vaga. Em caso de dúvidas favor entrar em contato pelo fale conosco.<br/><br/><a href=\"".base_url()."\">Voltar</a>";
@@ -1076,16 +1085,15 @@ class Candidatos extends CI_Controller {
                                                 $pr_usuario = $this -> Usuarios_model -> create_usuario($dados_form);
                                                 if($pr_usuario > 0){
                                                         $config['protocol'] = 'smpt';
-                                $config['charset'] = 'UTF-8';
-                                $config['wordwrap'] = TRUE;
-                                $config['mailtype'] = 'html';
-                                $config['smtp_host'] = 'smtp.mailgun.org';
-                                $config['smtp_port'] = 587;
-                                $config['smtp_user'] = 'transformaminas@pencillabs.com.br';
-                                $config['smtp_pass'] = '2d657985dbf03eb123040b63bcfb255f-28d78af2-3dbbfc4c';
-                                $config['protocol'] = 'smtp';
-                                $config['smtp_auth'] = TRUE;
-                                $config['smtp_crypto'] = 'tls';
+														$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
+														$config['smtp_port'] = 25;
+														$config['smtp_user'] = 'pontodigital';
+														$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
+														$config['charset'] = 'UTF-8';
+
+														$config['wordwrap'] = TRUE;
+
+														$config['mailtype'] = 'html';
 
 														$this->email->initialize($config);
                                                         $this -> email -> from($this -> config -> item('email'), $this -> config -> item('nome'));
@@ -1430,13 +1438,16 @@ class Candidatos extends CI_Controller {
                                                         if(!$this -> email -> send()){
                                                                 $this -> Usuarios_model -> log('erro', 'Candidatos/cadastro', "Erro de envio de e-mail com senha de cadastro para o e-mail {$dados_form['Email']} do candidato {$pr_candidato}.", 'tb_candidatos', $pr_candidato);
                                                         }
-							$dados['sucesso'] = "<div class=\"alert-text\">
+                                                        else{
+                                                                $this -> Usuarios_model -> log('sucesso', 'Candidatos/cadastro', "Envio de e-mail com senha de cadastro para o e-mail {$dados_form['Email']} do candidato {$pr_candidato} realizado com sucesso.", 'tb_candidatos', $pr_candidato);
+                                                        }
+                                                        //$dados['sucesso'] = "<strong>Cadastro realizado com sucesso.</strong> Você vai receber sua senha inicial de acesso por e-mail. Caso não receba, tente recuperar sua senha pela página inicial ou entre em contato pelo fale conosco.<br/><br/><a href=\"".base_url()."\">Voltar</a>";
+                                                        $dados['sucesso'] = "<div class=\"alert-text\">
 <strong><strong>Cadastro realizado com sucesso.</strong> Você vai receber sua senha inicial de acesso por e-mail. Caso não receba, tente recuperar sua senha pela página inicial ou entre em contato pelo fale conosco.<br><br><h5><b>Atenção</b></h5><br>
 <strong>Para se candidatar a uma das vagas disponibilizadas no sistema</strong>, faça seu primeiro login e então escolha a vaga de interesse no menu candidaturas. Após a escolha, preencha todas as fases da candidatura e clique no botão concluir para confirmá-la.
 <br>
 <br><a href=\"".base_url()."\">Voltar</a></strong>
 </div>";
-                                                        //$dados['sucesso'] = "<strong>Cadastro realizado com sucesso.</strong> Você vai receber sua senha inicial de acesso por e-mail. Caso não receba, tente recuperar sua senha pela página inicial ou entre em contato pelo fale conosco.<br/><br/><a href=\"".base_url()."\">Voltar</a>";
                                                         $dados['erro'] =  NULL;
                                                         $this -> Usuarios_model -> log('sucesso', 'Candidatos/cadastro', "Candidato {$pr_candidato} criado e associado ao usuário {$pr_usuario} criado com sucesso.", 'tb_candidatos', $pr_candidato);
                                                 }
@@ -1629,11 +1640,11 @@ class Candidatos extends CI_Controller {
 						$this -> Usuarios_model -> update_usuario('in_erros', '0', $usuario);
 						$this -> Usuarios_model -> update_usuario('bl_trocasenha', '1', $usuario);
 						$config['protocol'] = 'smpt';
-        $config['smtp_host'] = 'smtp.gmail.com';
-        $config['smtp_port'] = 587;
-        $config['smtp_user'] = 'transformaminashomolog@gmail.com';
-        $config['smtp_pass'] = '"|D_Wj&[jS6%|K?&l9i#';
-        $config['charset'] = 'UTF-8';
+						$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
+						$config['smtp_port'] = 25;
+						$config['smtp_user'] = 'pontodigital';
+						$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
+						$config['charset'] = 'UTF-8';
 
 						$config['wordwrap'] = TRUE;
 
@@ -1980,28 +1991,31 @@ class Candidatos extends CI_Controller {
                         if(!$this -> email -> send()){
                                 $dados['sucesso'] = '';
                                 $dados['erro'] =  'Erro no envio do e-mail com a nova senha. Os responsáveis já foram avisados.<br/><br/><a href="'.base_url('Candidatos/ListaCandidatos').'" class="btn btn-light">Voltar</a>';
-                                $this -> Usuarios_model -> log('erro', 'Candidatos/novaSenha', 'Erro de envio de e-mail com senha de cadastro para o e-mail '.$dados['usuario'] -> vc_email.' do usuário '.$dados['usuario'] -> pr_usuario, 'tb_usuarios', $usuario);
+                                $this -> Usuarios_model -> log('erro', 'Candidatos/novaSenha', 'Erro de envio de e-mail com senha de cadastro para o e-mail '.$dados['usuario'] -> vc_email.' do usuário '.$dados['usuario'] -> pr_usuario.' feita pelo usuário '.$this -> session -> uid, 'tb_usuarios', $usuario);
+                                echo "<script type=\"text/javascript\">alert('Erro no envio do e-mail com a nova senha. Os responsáveis já foram avisados.');window.location='".base_url('Candidatos/ListaCandidatos')."';</script>";
                         }
                         else{
-								if($this -> session -> perfil == 'administrador'){
-										$dados['sucesso'] = 'Nova senha enviada com sucesso.A nova senha é:<br/><br/><b>'.$senha.'</b><br/><br/><a href="'.base_url('Candidatos/ListaCandidatos').'" class="btn btn-light">Voltar</a>';
-								}
-								else{
-										$dados['sucesso'] = 'Nova senha enviada com sucesso.<br/><br/><a href="'.base_url('Candidatos/ListaCandidatos').'" class="btn btn-light">Voltar</a>';
-								}
+                                if($this -> session -> perfil == 'administrador'){
+                                                $dados['sucesso'] = 'Nova senha enviada com sucesso.A nova senha é:'.$senha;
+                                }
+                                else{
+                                                $dados['sucesso'] = 'Nova senha enviada com sucesso.';
+                                }
                                 //$dados['sucesso'] = 'Nova senha enviada com sucesso. A nova senha é '.$senha.'<br/><br/><a href="'.base_url('Candidatos/ListaCandidatos').'" class="btn btn-light">Voltar</a>';
                                 $dados['erro'] =  NULL;
-                                $this -> Usuarios_model -> log('sucesso', 'Candidatos/novaSenha', "Nova senha para Usuário {$usuario} enviada com sucesso.", 'tb_usuarios', $usuario);
+                                $this -> Usuarios_model -> log('sucesso', 'Candidatos/novaSenha', "Nova senha para Usuário {$usuario} enviada com sucesso pelo usuário ".$this -> session -> uid.".", 'tb_usuarios', $usuario);
+                                echo "<script type=\"text/javascript\">alert('".$dados['sucesso']."');window.location='".base_url('Candidatos/ListaCandidatos')."';</script>";
                         }
                 }
                 else{
                         $erro = $this -> db -> error();
                         $dados['sucesso'] = '';
                         $dados['erro'] =  'Erro na recuperação dos dados do usuário. Os responsáveis já foram avisados.<br/><br/><a href="'.base_url('Candidatos/ListaCandidatos').'" class="btn btn-light">Voltar</a>';
-                        $this -> Usuarios_model -> log('erro', 'Candidatos/novaSenha', "Erro na recuperação dos dados do usuário {$usuario}. Erro: ".$erro['message']);
+                        $this -> Usuarios_model -> log('erro', 'Candidatos/novaSenha', "Erro na recuperação dos dados do usuário {$usuario} pelo usuário ".$this -> session -> uid.". Erro: ".$erro['message']);
+                        echo "<script type=\"text/javascript\">alert('Erro na recuperação dos dados do usuário. Os responsáveis já foram avisados.');window.location='".base_url('Candidatos/ListaCandidatos')."';</script>";
                 }
 
-                $this -> load -> view('candidatos', $dados);
+                //$this -> load -> view('candidatos', $dados);
         }
 	public function delete(){
                 if(!$this -> session -> logado){
@@ -2033,6 +2047,7 @@ class Candidatos extends CI_Controller {
                         $dados['sucesso'] = '';
                         $dados['erro'] = 'Você não pode desativar seu próprio acesso por essa funcionalidade. Essa tentativa foi registrada para fins de auditoria.<br/><br/><a href="'.base_url('Candidatos/ListaCandidatos').'" class="btn btn-light">Voltar</a>';
                         $this -> Usuarios_model -> log('seguranca', 'Candidatos/delete', "Usuário {$usuario} tentou se desativar.", 'tb_usuarios', $usuario);
+                        echo "<script type=\"text/javascript\">alert('Você não pode desativar seu próprio acesso por essa funcionalidade. Essa tentativa foi registrada para fins de auditoria.');window.location='".base_url('Candidatos/ListaCandidatos')."';</script>";
                 }
                 else{
                         $dados_candidato2['codigo'] = $dados_candidato -> pr_candidato;
@@ -2045,14 +2060,15 @@ class Candidatos extends CI_Controller {
                         $dados['sucesso'] = 'O usuário \''.$dados_usuario -> vc_nome.'\' foi desativado com sucesso.<br/><br/><a href="'.base_url('Candidatos/ListaCandidatos').'" class="btn btn-light">Voltar</a>';
                         $dados['erro'] = '';
                         $this -> Usuarios_model -> log('sucesso', 'Candidatos/delete', "Usuário {$usuario} desativado pelo usuário ".$this -> session -> uid, 'tb_usuarios', $usuario);
+                        echo "<script type=\"text/javascript\">alert('\'".$dados_usuario -> vc_nome."\' foi desativado com sucesso.');window.location='".base_url('Candidatos/ListaCandidatos')."';</script>";
                 }
-                $this -> load -> view('candidatos', $dados);
+                //$this -> load -> view('candidatos', $dados);
         }
 	public function reactivate(){
                 if(!$this -> session -> logado){
                         redirect('Publico');
                 }
-				else if($this -> session -> perfil != 'sugesp' && $this -> session -> perfil != 'orgaos' && $this -> session -> perfil != 'administrador'){
+		else if($this -> session -> perfil != 'sugesp' && $this -> session -> perfil != 'orgaos' && $this -> session -> perfil != 'administrador'){
                         redirect('Interna/index');
                 }
                 $this -> load -> model('Usuarios_model');
@@ -2082,18 +2098,18 @@ class Candidatos extends CI_Controller {
                         $this -> Usuarios_model -> update_usuario('vc_senha_temporaria', $password, $usuario);
                         $this -> Usuarios_model -> update_usuario('dt_alteracao', date('Y-m-d H:i:s'), $usuario);
 						
-						$config['protocol'] = 'smpt';
-						$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-						$config['smtp_port'] = 25;
-						$config['smtp_user'] = 'pontodigital';
-						$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-						$config['charset'] = 'UTF-8';
+                        $config['protocol'] = 'smpt';
+                        $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
+                        $config['smtp_port'] = 25;
+                        $config['smtp_user'] = 'pontodigital';
+                        $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
+                        $config['charset'] = 'UTF-8';
 
-						$config['wordwrap'] = TRUE;
+                        $config['wordwrap'] = TRUE;
 
-						$config['mailtype'] = 'html';
+                        $config['mailtype'] = 'html';
 
-						$this->email->initialize($config);
+                        $this->email->initialize($config);
 						
                         $this -> email -> from($this -> config -> item('email'), $this -> config -> item('nome'));
                         $this -> email -> to($dados['usuario'] -> vc_email);
@@ -2108,15 +2124,17 @@ class Candidatos extends CI_Controller {
                         }
                         $dados['sucesso'] = 'Usuário reativado com sucesso.<br/><br/><a href="'.base_url('Candidatos/ListaCandidatos').'" class="btn btn-light">Voltar</a>';
                         $dados['erro'] =  NULL;
+                        echo "<script type=\"text/javascript\">alert('Usuário reativado com sucesso.');window.location='".base_url('Candidatos/ListaCandidatos')."';</script>";
                 }
                 else{
                         $erro = $this -> db -> error();
                         $dados['sucesso'] = '';
                         $dados['erro'] =  'Erro na recuperação dos dados do usuário. Os responsáveis já foram avisados.<br/><br/><a href="'.base_url('Candidatos/ListaCandidatos').'" class="btn btn-light">Voltar</a>';
                         $this -> Usuarios_model -> log('erro', 'Candidatos/reactivate', "Erro na recuperação dos dados do usuário {$usuario}. Erro: ".$erro['message']);
+                        echo "<script type=\"text/javascript\">alert('Erro na recuperação dos dados do usuário. Os responsáveis já foram avisados.');window.location='".base_url('Candidatos/ListaCandidatos')."';</script>";
                 }
 
-                $this -> load -> view('candidatos', $dados);
+                //$this -> load -> view('candidatos', $dados);
         }
         public function fetch_Municipios(){ //função de preenchimento da combo da view de cadastro
                 $this -> load -> model('Candidatos_model');
