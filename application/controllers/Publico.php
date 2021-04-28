@@ -108,6 +108,15 @@ class Publico extends CI_Controller {
                                 $config['wordwrap'] = TRUE;
                                 $config['mailtype'] = 'html';
 
+                                // TODO PENCIL: Remover antes do merge
+                                $config['smtp_host'] = 'smtp.mailgun.org';
+                                $config['smtp_port'] = 587;
+                                $config['smtp_user'] = 'transformaminas@pencillabs.com.br';
+                                $config['smtp_pass'] = '2d657985dbf03eb123040b63bcfb255f-28d78af2-3dbbfc4c';
+                                $config['protocol'] = 'smtp';
+                                $config['smtp_auth'] = TRUE;
+                                $config['smtp_crypto'] = 'tls';
+
                                 $this->email->initialize($config);
                                 
                                 $this -> email -> from($this -> config -> item('email'), $this -> config -> item('nome'));

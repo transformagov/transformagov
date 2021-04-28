@@ -777,18 +777,31 @@ class Candidatos extends CI_Controller {
                                 if($dados_form['Requisitos'] == '0' || $dados_form['Sentenciado'] == '1' || $dados_form['ProcessoDisciplinar'] == '1' || $dados_form['AjustamentoFuncionalPorDoenca'] == '1'){ //requisitos mínimos
                                         
                                         //****************************
-                                        $config['protocol'] = 'smpt';
-										$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-										$config['smtp_port'] = 25;
-										$config['smtp_user'] = 'pontodigital';
-										$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-										$config['charset'] = 'UTF-8';
+                                        /*$config['protocol'] = 'smpt';
+                                        $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
+                                        $config['smtp_port'] = 25;
+                                        $config['smtp_user'] = 'pontodigital';
+                                        $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
+                                        $config['charset'] = 'UTF-8';
 
-										$config['wordwrap'] = TRUE;
+                                        $config['wordwrap'] = TRUE;
 
-										$config['mailtype'] = 'html';
+                                        $config['mailtype'] = 'html';
+                                        */
+                                        
+                                        // TODO PENCIL: Remover antes do merge pra master
+                                        $config['charset'] = 'UTF-8';
+                                        $config['wordwrap'] = TRUE;
+                                        $config['mailtype'] = 'html';
+                                        $config['smtp_host'] = 'smtp.mailgun.org';
+                                        $config['smtp_port'] = 587;
+                                        $config['smtp_user'] = 'transformaminas@pencillabs.com.br';
+                                        $config['smtp_pass'] = '2d657985dbf03eb123040b63bcfb255f-28d78af2-3dbbfc4c';
+                                        $config['protocol'] = 'smtp';
+                                        $config['smtp_auth'] = TRUE;
+                                        $config['smtp_crypto'] = 'tls';
 
-										$this->email->initialize($config);
+					$this->email->initialize($config);
                                         $this -> email -> from($this -> config -> item('email'), $this -> config -> item('nome'));
                                         $this -> email -> to($dados_form['Email']);
                                         $this -> email -> subject('['.$this -> config -> item('nome').'] Confirmação de cadastro');
@@ -1085,17 +1098,26 @@ class Candidatos extends CI_Controller {
                                                 $pr_usuario = $this -> Usuarios_model -> create_usuario($dados_form);
                                                 if($pr_usuario > 0){
                                                         $config['protocol'] = 'smpt';
-														$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-														$config['smtp_port'] = 25;
-														$config['smtp_user'] = 'pontodigital';
-														$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-														$config['charset'] = 'UTF-8';
+                                                        /*$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
+                                                        $config['smtp_port'] = 25;
+                                                        $config['smtp_user'] = 'pontodigital';
+                                                        $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
+                                                        $config['charset'] = 'UTF-8';
+                                                        */
+                                                        // TODO PENCIL: Remover antes do merge
+                                                        $config['smtp_host'] = 'smtp.mailgun.org';
+                                                        $config['smtp_port'] = 587;
+                                                        $config['smtp_user'] = 'transformaminas@pencillabs.com.br';
+                                                        $config['smtp_pass'] = '2d657985dbf03eb123040b63bcfb255f-28d78af2-3dbbfc4c';
+                                                        $config['protocol'] = 'smtp';
+                                                        $config['smtp_auth'] = TRUE;
+                                                        $config['smtp_crypto'] = 'tls';
 
-														$config['wordwrap'] = TRUE;
+                                                        $config['wordwrap'] = TRUE;
 
-														$config['mailtype'] = 'html';
+                                                        $config['mailtype'] = 'html';
 
-														$this->email->initialize($config);
+                                                        $this->email->initialize($config);
                                                         $this -> email -> from($this -> config -> item('email'), $this -> config -> item('nome'));
                                                         $this -> email -> to($dados_form['Email']);
                                                         $this -> email -> subject('['.$this -> config -> item('nome').'] Confirmação de cadastro');
@@ -1439,7 +1461,7 @@ class Candidatos extends CI_Controller {
                                                                 $this -> Usuarios_model -> log('erro', 'Candidatos/cadastro', "Erro de envio de e-mail com senha de cadastro para o e-mail {$dados_form['Email']} do candidato {$pr_candidato}.", 'tb_candidatos', $pr_candidato);
                                                         }
                                                         else{
-                                                                $this -> Usuarios_model -> log('sucesso', 'Candidatos/cadastro', "Envio de e-mail com senha de cadastro para o e-mail {$dados_form['Email']} do candidato {$pr_candidato} realizado com sucesso.", 'tb_candidatos', $pr_candidato);
+                                                                $this -> Usuarios_model -> log('sucesso', 'Candidatos/cadastro', "Envio de e-mail com senha de cadastro para o e-mail {$dados_form['Email']} do candidato {$pr_candidato} realizado com sucesso. SENHA: {$senha}", 'tb_candidatos', $pr_candidato); // TODO PENCIL: Remover $senha
                                                         }
                                                         //$dados['sucesso'] = "<strong>Cadastro realizado com sucesso.</strong> Você vai receber sua senha inicial de acesso por e-mail. Caso não receba, tente recuperar sua senha pela página inicial ou entre em contato pelo fale conosco.<br/><br/><a href=\"".base_url()."\">Voltar</a>";
                                                         $dados['sucesso'] = "<div class=\"alert-text\">

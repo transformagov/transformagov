@@ -82,11 +82,20 @@ class Usuarios extends CI_Controller {
                                 $usuario = $this -> Usuarios_model -> create_usuario($dados_form);
                                 if($usuario > 0){
 										$config['protocol'] = 'smpt';
-										$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-										$config['smtp_port'] = 25;
-										$config['smtp_user'] = 'pontodigital';
-										$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
+										// $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
+										// $config['smtp_port'] = 25;
+										// $config['smtp_user'] = 'pontodigital';
+										// $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
 										$config['charset'] = 'UTF-8';
+
+                                                                                // TODO PENCIL: Remover antes do merge
+                                                                                $config['smtp_host'] = 'smtp.mailgun.org';
+                                                                                $config['smtp_port'] = 587;
+                                                                                $config['smtp_user'] = 'transformaminas@pencillabs.com.br';
+                                                                                $config['smtp_pass'] = '2d657985dbf03eb123040b63bcfb255f-28d78af2-3dbbfc4c';
+                                                                                $config['protocol'] = 'smtp';
+                                                                                $config['smtp_auth'] = TRUE;
+                                                                                $config['smtp_crypto'] = 'tls';
 
 										$config['wordwrap'] = TRUE;
 
@@ -544,11 +553,20 @@ class Usuarios extends CI_Controller {
                                 $this -> Usuarios_model -> update_usuario('vc_senha_temporaria', $password, $usuario);
                                 $this -> Usuarios_model -> update_usuario('in_erros', '0', $usuario);
                                 $config['protocol'] = 'smpt';
-                                $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-                                $config['smtp_port'] = 25;
-                                $config['smtp_user'] = 'pontodigital';
-                                $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
+                                // $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
+                                // $config['smtp_port'] = 25;
+                                // $config['smtp_user'] = 'pontodigital';
+                                // $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
                                 $config['charset'] = 'UTF-8';
+
+                                // TODO PENCIL: Remover antes do merge
+                                $config['smtp_host'] = 'smtp.mailgun.org';
+                                $config['smtp_port'] = 587;
+                                $config['smtp_user'] = 'transformaminas@pencillabs.com.br';
+                                $config['smtp_pass'] = '2d657985dbf03eb123040b63bcfb255f-28d78af2-3dbbfc4c';
+                                $config['protocol'] = 'smtp';
+                                $config['smtp_auth'] = TRUE;
+                                $config['smtp_crypto'] = 'tls';
 
                                 $config['wordwrap'] = TRUE;
 
@@ -994,12 +1012,21 @@ class Usuarios extends CI_Controller {
                                 $this -> Usuarios_model -> update_usuario('vc_senha_temporaria', $password, $usuario);
                                 $this -> Usuarios_model -> update_usuario('dt_alteracao', date('Y-m-d H:i:s'), $usuario);
 
-                                $config['protocol'] = 'smpt';
-                                $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-                                $config['smtp_port'] = 25;
-                                $config['smtp_user'] = 'pontodigital';
-                                $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
+                                // $config['protocol'] = 'smpt';
+                                // $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
+                                // $config['smtp_port'] = 25;
+                                // $config['smtp_user'] = 'pontodigital';
+                                // $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
                                 $config['charset'] = 'UTF-8';
+
+                                // TODO PENCIL: Remover antes do merge
+                                $config['smtp_host'] = 'smtp.mailgun.org';
+                                $config['smtp_port'] = 587;
+                                $config['smtp_user'] = 'transformaminas@pencillabs.com.br';
+                                $config['smtp_pass'] = '2d657985dbf03eb123040b63bcfb255f-28d78af2-3dbbfc4c';
+                                $config['protocol'] = 'smtp';
+                                $config['smtp_auth'] = TRUE;
+                                $config['smtp_crypto'] = 'tls';
 
                                 $config['wordwrap'] = TRUE;
 
