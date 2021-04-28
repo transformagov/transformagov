@@ -9,13 +9,14 @@ if(isset($adicionais)){
         $pagina['adicionais']=$adicionais;
 }
 
-$this -> load -> view('publicoCabecalho');
+$this -> load -> view('templates/publicoCabecalho');
+
 echo "
             <section class=\"login-block\">
                 <!-- Container-fluid starts -->
                 <div class=\"container\">
                     <div class=\"row\">
-                        <div class=\"col-sm-12\">
+                        <div class=\"col-sm-12 d-flex justify-content-center\">
                             <!-- Authentication card start -->";
 $attributes = array('class' => 'md-float-material form-material');
 echo form_open($url, $attributes);
@@ -33,18 +34,18 @@ echo "
 }*/
 echo "
                                     </div>-->
-                                    <div class=\"auth-box card\">
+                                    <div class=\"card col-lg-8 mt-3 p-3 mx-auto\">
                                         <div class=\"card-block\">
                                             <div class=\"row m-b-20\">
                                                 <div class=\"col-md-12\">
-                                                    <h3 class=\"text-center\">{$nome_pagina}</h3>
+                                                    <h3 class=\"h3 text-gray-800 mb-4 text-center\">{$nome_pagina}</h3>
                                                 </div>
                                             </div>";
 
 
 if(strlen($erro)>0){
         echo "
-                                            <div class=\"alert background-danger\">
+                                            <div class=\"alert alert-danger background-danger\">
                                                     <div class=\"alert-text\">
                                                             <strong>ERRO</strong>: {$erro}
                                                     </div>
@@ -88,6 +89,9 @@ if($menu2 == 'index'){
                             'class' => 'form-control',
                             'value'=>'',
                             'placeholder'=>'Senha');
+        if(strstr($erro, 'Senha')){
+                $attributes['class'] = 'form-control is-invalid';
+        }
         echo form_password($attributes);
         echo "
                                                  <span class=\"form-bar\"><input type=\"checkbox\" onclick=\"mostrarSenha()\" style=\"padding-left:10px; margin-top:10px; text-align:center;\"> Mostrar senha </span>
@@ -135,7 +139,8 @@ if($menu2 == 'contato'){
                             'style' => 'height:100px');
         echo form_textarea($attributes, set_value('msg'));
         echo "
-                                            </div>";
+                                            </div>
+                                        </div>";
 }
 if($menu2 == 'index'){
         echo "
@@ -199,7 +204,7 @@ echo "
                     <!-- end of row -->
 
                     <div class=\"text-center\" style=\"margin-top: 10px\">
-                            <br/>SUGESP - SEPLAG © Layout Adminty
+                            <br/>SUGESP - SEPLAG
                     </div>
                 </div>
                 <!-- end of container-fluid -->
@@ -446,5 +451,5 @@ echo "
                 </script>";
 
  */
-$this -> load -> view('publicoRodape', $pagina);
+$this -> load -> view('templates/publicoRodape', $pagina);
 ?>

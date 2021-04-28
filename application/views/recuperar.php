@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$this -> load -> view('publicoCabecalho');
+$this -> load -> view('templates/publicoCabecalho');
 echo "
                                                         <div class=\"kt-login__signin\">
 								<div class=\"kt-login__head\">
@@ -73,5 +73,5 @@ else{
                     });
                 </script>";
 }
-$this -> load -> view('publicoRodape');
+$this -> load -> view('templates/publicoRodape');
 ?>
