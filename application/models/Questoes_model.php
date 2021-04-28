@@ -19,7 +19,7 @@ class Questoes_model extends CI_Model {
                 if(strlen($etapa) > 0){
                         $this -> db -> where('q.es_etapa', $etapa);
                 }
-				if(strlen($tipo) > 0){
+		if(strlen($tipo) > 0){
                         $this -> db -> where('q.in_tipo', $tipo);
                 }
                 if($vigentes){
@@ -35,6 +35,7 @@ class Questoes_model extends CI_Model {
                         $this -> db -> order_by('q.es_etapa ASC, q.pr_questao ASC');
                 }
                 $query = $this -> db -> get();
+                
                 if($query -> num_rows() > 0){                        
                         $resultado = $query -> result();
                         foreach ($resultado as $linha){                                
@@ -78,14 +79,15 @@ class Questoes_model extends CI_Model {
                 }
         }
 		
-		function delete_resposta($primaria){
+	function delete_resposta($primaria){
 				if(strlen($primaria)==0){
                         return FALSE;
                 }
                 $this -> db -> where('pr_resposta', $primaria);
                 $this -> db -> delete ('tb_respostas');
                 return $this -> db -> affected_rows();
-		}
+        }
+        
         public function get_opcoes($id='', $questao='', $vaga=''){
                 if(strlen($id) > 0){
                         $this -> db -> where('o.pr_opcao', $id);
@@ -230,6 +232,83 @@ class Questoes_model extends CI_Model {
                 //echo $this->db->last_query();
                 return $retorno;
         }
+
+        public function get_grupos_questoes_duplicadas($questao_origem='', $grupo_origem='', $questao_destino='',$grupo_destino=''){
+                if(strlen($questao_origem) > 0){
+                        $this -> db -> where('r.es_questao_origem', $questao_origem);
+                }
+                if(strlen($grupo_origem) > 0){
+                        $this -> db -> where('r.es_grupovaga_origem', $grupo_origem);
+                }
+                if(strlen($questao_destino) > 0){
+                        $this -> db -> where('r.es_questao_destino', $questao_destino);
+                }
+                if(strlen($grupo_destino) > 0){
+                        $this -> db -> where('r.es_grupovaga_destino', $grupo_destino);
+                }
+                
+
+                $this -> db -> where('q2.bl_removido', '0');
+
+                $this -> db -> join('tb_gruposvagas g', 'g.pr_grupovaga=r.es_grupovaga_destino');
+                $this -> db -> join('tb_gruposvagas g2', 'g2.pr_grupovaga=r.es_grupovaga_origem');
+                $this -> db -> join('tb_questoes q2', 'q2.pr_questao=r.es_questao_origem');
+                $this -> db -> join('tb_usuarios u', 'u.pr_usuario=r.es_usuario');
+                $this -> db -> select ('r.*,q2.pr_questao,q2.tx_questao,q2.es_etapa,q2.in_tipo,q2.in_peso,g.vc_grupovaga as grupo_destino,g2.vc_grupovaga as grupo_origem,u.vc_nome as usuario');
+                $this -> db -> from('rl_gruposvagas_questoes_duplicadas r');
+                
+                $this -> db -> order_by('q2.es_etapa,q2.tx_questao,r.dt_cadastro');
+                
+                $query = $this -> db -> get();
+                if($query -> num_rows() > 0){                                                
+                        return $query -> result();
+                }
+                else{
+                        return NULL;
+                }
+        }
+
+        public function cont_grupos_questoes_duplicadas($questao_origem='', $grupo_origem=''){
+                if(strlen($questao_origem) > 0){
+                        $this -> db -> where('r.es_questao_origem', $questao_origem);
+                }
+                if(strlen($grupo_origem) > 0){
+                        $this -> db -> where('r.es_grupovaga_origem', $grupo_origem);
+                }
+                $this -> db -> where('q2.bl_removido', '0');
+                $this -> db -> join('tb_gruposvagas g2', 'g2.pr_grupovaga=r.es_grupovaga_origem');
+                $this -> db -> join('tb_questoes q2', 'q2.pr_questao=r.es_questao_origem');
+                
+
+                $this -> db -> select ('q2.pr_questao,q2.tx_questao,q2.es_etapa,q2.in_tipo,g2.vc_grupovaga,count(1) as quantitativo');
+                $this -> db -> from('rl_gruposvagas_questoes_duplicadas r');
+
+                $this->db->group_by("q2.pr_questao,q2.tx_questao,q2.es_etapa,q2.in_tipo,g2.vc_grupovaga");
+                $this -> db -> order_by('count(1) desc');
+
+                $query = $this -> db -> get();
+                if($query -> num_rows() > 0){                                                
+                        return $query -> result();
+                }
+                else{
+                        return NULL;
+                }
+        }
+
+        public function create_grupos_questoes_duplicadas($dados){
+                $data=array(
+                        'es_grupovaga_origem' => $dados['grupo_origem'],
+                        'es_questao_origem' => $dados['questao_origem'],
+                        'es_grupovaga_destino' => $dados['grupo_destino'],
+                        'es_questao_destino' => $dados['questao_destino'],
+                        'es_usuario' => $this -> session -> uid,
+                        'dt_cadastro' => date('Y-m-d H:i:s')
+                );
+                $this -> db -> insert ('rl_gruposvagas_questoes_duplicadas', $data);
+                $retorno = $this -> db -> insert_id();
+                return $retorno;
+        }
+
         public function update_questao($campo, $valor, $primaria){
                 if(strlen($primaria)==0){
                         return FALSE;
@@ -245,6 +324,9 @@ class Questoes_model extends CI_Model {
                 return $this -> db -> affected_rows();
         }
         public function create_opcoes($dados){
+                if(strlen($dados['valor']) == 0){
+                        $dados['valor'] = 0;
+                }
                 $data=array(
                         'es_questao' => $dados['questao'],
                         'tx_opcao' => $dados['texto'],

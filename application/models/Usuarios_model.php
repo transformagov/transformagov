@@ -16,14 +16,14 @@ class Usuarios_model extends CI_Model {
                 else{
                         $this -> db -> where('es_candidato', null);
                 }
-                if(is_array($perfil)){
+                if(strlen($vaga) >0){
+                        $this -> db -> where("((pr_usuario in (select es_usuario from rl_vagas_avaliadores where es_vaga={$vaga}) and en_perfil = 2) or en_perfil = 3)");
+                }
+                else if(is_array($perfil)){
                         $this -> db -> where_in('en_perfil', $perfil);
                 }
                 else if(strlen($perfil) > 0){
                         $this -> db -> where('en_perfil', $perfil);
-                }
-                if(strlen($vaga) >0){
-                        $this -> db -> where("(pr_usuario not in (select es_usuario from rl_vagas_avaliadores where es_vaga={$vaga}))");
                 }
                 if($ativo == true){
                         $this -> db -> where('bl_removido !=','1');
@@ -153,7 +153,7 @@ class Usuarios_model extends CI_Model {
                 //echo "tipo: $tipo, local: $local, texto: $texto, tabela: $tabela, chave: $chave<br/>";
                 
                 if(strlen($chave)==0){
-                        $chave='null';
+                        $chave=null;
                 }
                 $texto.='<br/>';
                 $local=addslashes($local);

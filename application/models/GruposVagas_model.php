@@ -5,12 +5,15 @@ class GruposVagas_model extends CI_Model {
         function __construct() {
                 parent::__construct();
         }
-        public function get_grupos($id='', $vigentes=true) {
+        public function get_grupos($id='', $vigentes=true,$nao_finalizado=false) {
                 if(strlen($id) > 0){
                         $this -> db -> where('g.pr_grupovaga', $id);
                 }
                 if($vigentes){
                         $this -> db -> where ('g.bl_removido', '0');
+                }
+                if($nao_finalizado){
+                        $this -> db -> where ('g.pr_grupovaga not in (select r.es_grupovaga from rl_gruposvagas_questoes r join tb_questoes q on q.pr_questao=r.es_questao where q.pr_questao in (select es_questao from tb_respostas) and q.es_etapa in (6))',null);
                 }
                 $grupos = array();
                 $this -> db -> select ('g.*, i.vc_sigla');
@@ -18,6 +21,7 @@ class GruposVagas_model extends CI_Model {
                 $this -> db -> join('tb_instituicoes2 i', 'g.es_instituicao=i.pr_instituicao','left');
                 $this -> db -> order_by ('g.vc_grupovaga', 'ASC');
                 $query = $this -> db -> get();
+                //echo $this -> db -> last_query();
                 if ($query -> num_rows() > 0) {
                         /*
                         $results = $query -> result_array();

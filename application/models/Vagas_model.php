@@ -17,9 +17,9 @@ class Vagas_model extends CI_Model {
                                 $this -> db -> where('v.dt_fim >=', date('Y-m-d H:i:s'));
                                 $this -> db -> where('v.bl_removido', '0');
                         }
-						else if($nao_removidos){
-								$this -> db -> where('v.bl_removido', '0');
-						}
+                        else if($nao_removidos){
+                                        $this -> db -> where('v.bl_removido', '0');
+                        }
                         if(strlen($not_candidato) > 0){
                                 $this -> db -> where("v.pr_vaga not in (select es_vaga from tb_candidaturas where es_candidato={$not_candidato})");
                         }
@@ -41,9 +41,9 @@ class Vagas_model extends CI_Model {
                 else if(strlen($status_candidatura) > 0){
                         $this -> db -> where("v.pr_vaga in (select es_vaga from tb_candidaturas where es_status in ({$status_candidatura}))");
                 }
-				if($this -> session -> brumadinho == '1'){
-						$this -> db -> where('v.bl_brumadinho', '1');
-				}
+                if($this -> session -> brumadinho == '1'){
+                        $this -> db -> where('v.bl_brumadinho', '1');
+                }
                 if(strlen($avaliador) > 0){
                         $this -> db -> where("v.pr_vaga in (select es_vaga from rl_vagas_avaliadores where es_usuario={$avaliador})");
                 }		
