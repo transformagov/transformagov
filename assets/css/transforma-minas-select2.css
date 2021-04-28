@@ -1,0 +1,27 @@
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-container--default .select2-selection--single {
+    color: #fff;
+    height: auto;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    background-color: var(--primary);
+    color: #fff;
+    padding: 8px 30px 8px 20px;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: var(--primary);
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 10px;
+    right: 15px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #fff transparent transparent transparent;
+}

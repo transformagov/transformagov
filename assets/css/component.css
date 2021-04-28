@@ -1,6 +1,8 @@
 /* General styles for the modal */
 
 /*
+nifty-modal under MIT License: https://github.com/auxiliary/nifty-modal/blob/master/LICENSE
+
 Styles for the html/body for special modal where we want 3d effects
 Note that we need a container wrapping all content on the page for the
 perspective effects (not including the modals and the overlay).
