@@ -655,6 +655,26 @@ else if(strlen($sucesso) > 0){
                                                                 <div class=\"col-lg-12\">
                                                                 ";                                                            
                 $attributes = array('class' => 'esquerdo control-label');
+                echo form_label('Cargo <abbr title="Obrigatório">*</abbr>', "cargo{$i}", $attributes);
+                echo " 
+                                                                    <br />";
+                if(!isset($vc_cargo[$i]) || (strlen($vc_cargo[$i]) == 0 && strlen(set_value("cargo{$i}")) > 0) || (strlen(set_value("cargo{$i}")) > 0 && $vc_cargo[$i] != set_value("cargo{$i}"))){
+                        $vc_cargo[$i] = set_value("cargo{$i}");
+                }
+                $attributes = array('name' => "cargo{$i}",
+                                    'id' => "cargo{$i}",
+                                    'maxlength' => '100',
+                                    'required' => 'required',
+                                    'oninvalid' => "this.scrollIntoView({block:'center'});",
+                                    'class' => 'form-control');
+                echo form_input($attributes, $vc_cargo[$i]);
+                echo "
+                                                                </div>
+                                                        </div>
+                                                        <div class=\"form-group row\">
+                                                                <div class=\"col-lg-12\">
+                                                                ";                                                            
+                $attributes = array('class' => 'esquerdo control-label');
                 echo form_label('Instituição / empresa <abbr title="Obrigatório">*</abbr>', "empresa{$i}", $attributes);
                 echo " 
                                                                     <br />";

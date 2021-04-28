@@ -50,7 +50,7 @@ if($menu2 == 'index'){
                                                                             <thead>
                                                                                     <tr>
                                                                                             <th>Nome</th>
-											    <th>CPF</th>
+                                                                                            <th>CPF</th>
                                                                                             <th>Perfil</th>
                                                                                             <th>Cadastro</th>
                                                                                             <th>Último acesso</th>

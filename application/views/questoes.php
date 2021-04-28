@@ -100,7 +100,7 @@ if($menu2 == 'index'){
                 foreach ($questoes as $linha){
                         echo "
                                                                                     <tr>
-                                                                                            <td>".strip_tags($linha -> tx_questao)."</td>
+                                                                                            <td>".$linha -> tx_questao."</td>
                                                                                             <td class=\"text-center\">".$linha -> vc_etapa."</td>
                                                                                             <td class=\"text-center\">";
                         if($linha -> in_tipo == 1){
@@ -290,6 +290,7 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
                         $tx_questao = set_value('descricao');
                 }
                 $attributes = array('name' => 'descricao',
+                                    
                                     'rows'=>'3',
                                     'class' => 'form-control');
                 if(strstr($erro, "'Descrição'")){
@@ -299,6 +300,7 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
                 echo "
                                                                             </div>
                                                                     </div>
+                                                                    
                                                                     <div class=\"form-group row\">";
                 $attributes = array('class' => 'col-lg-3 col-form-label text-right');
                 echo form_label('Etapa <abbr title="Obrigatório">*</abbr>', 'grupo', $attributes);
@@ -376,7 +378,7 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
                                                                     </div>
                                                                     <div class=\"form-group row\">";
                 $attributes = array('class' => 'col-lg-3 col-form-label text-right');
-                echo form_label('Peso', 'peso', $attributes);
+                echo form_label('Peso (desconsiderar se for questão personalizada, já que a pontuação é feita na própria opção)', 'peso', $attributes);
                 echo "
                                                                             <div class=\"col-lg-1\">";
                 if(!isset($in_peso) || (strlen($in_peso) == 0 && strlen(set_value('peso')) > 0)){
@@ -508,7 +510,10 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
                         var newElement = '<div class=\"kt-separator kt-separator--border-dashed kt-separator--space-sm\"></div><fieldset><legend>Nova resposta ' + valor_num + '</legend><div class=\"form-group row\"><div class=\"col-lg-9\"><label>Texto</label><input type=\"text\" class=\"form-control\" name=\"texto' + valor_num + '\" /></div><div class=\"col-lg-3\"><label>Valor</label><div class=\"row align-items-center\"><div class=\"col-6\"><input type=\"number\" class=\"form-control\" name=\"valor' + valor_num + '\" id=\"slider_input' + valor_num + '\" placeholder=\"Valor\"/></div></div></div></div></fieldset>';
                         $( '#div_respostas' ).append( $(newElement) );
                         $('input[name=num]').val(valor_num);
-                });";
+                });
+                
+                
+                ";
                 if(strlen($in_peso)==0){
                         $in_peso=0;
                 }

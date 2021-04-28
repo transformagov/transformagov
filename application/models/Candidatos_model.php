@@ -19,6 +19,8 @@ class Candidatos_model extends CI_Model {
                 return $Estados;
         }
         public function get_Municipios($id='', $estado='') {
+                $results = array();
+
                 if(strlen($id) > 0){
                         $this -> db -> select ('m.pr_municipio, m.vc_municipio, u.ch_sigla');
                         $this -> db -> from ('tb_municipios m');

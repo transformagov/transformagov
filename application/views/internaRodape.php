@@ -182,6 +182,14 @@ if(isset($adicionais['accordion'])){
         <!-- accordion -->
         <script type=\"text/javascript\" src=\"".base_url('assets/pages/accordion/accordion.js')."\"></script>";
 }
+if(isset($adicionais['wysiwyg'])){
+        echo "
+        <!-- wysiwyg -->
+        <script type=\"text/javascript\" src=\"".base_url('assets/pages/wysiwyg-editor/js/tinymce.min.js')."\"></script>
+        <script type=\"text/javascript\" src=\"".base_url('assets/pages/wysiwyg-editor/wysiwyg-editor.js')."\"></script>
+        <script type=\"text/javascript\" src=\"".base_url('assets/js/script.js')."\"></script>
+        ";
+}
 echo "
         <!-- Custom js -->
         <script type=\"text/javascript\" src=\"".base_url('assets/js/pcoded.min.js')."\"></script>

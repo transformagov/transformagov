@@ -35,6 +35,7 @@ echo "
                                                                                             <th>Data</th>
                                                                                             <th>Tipo</th>
                                                                                             <th>Local</th>
+                                                                                            <th>IP</th>
                                                                                             <th>Texto</th>
                                                                                     </tr>
                                                                             </thead>
@@ -64,6 +65,7 @@ echo "
                         }
                         echo "
                                                                                                     <td>".$linha -> vc_local."</td>
+                                                                                                    <td>".$linha -> vc_ip."</td>
                                                                                                     <td>".$linha -> tx_texto."</td>
                                                                                                     </td>
                                                                                             </tr>";

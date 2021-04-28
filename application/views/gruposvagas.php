@@ -31,6 +31,9 @@ if($menu2 == 'index'){
         echo "
                                                                     <div class=\"col-lg-4 text-right\">
                                                                             <a href=\"".base_url('GruposVagas/create')."\" class=\"btn btn-primary btn-square\"> <i class=\"fa fa-plus-circle\"></i> Novo grupo de vagas </a>
+                                                                            <br />
+                                                                            <a href=\"".base_url('GruposVagas/historico_duplicate_total')."\" class=\"btn btn-warning btn-square\"> <i class=\"fa fa-lg mr-0 fa-sort-amount-desc\"></i> Histórico de duplicações </a>
+                                                                            <a href=\"".base_url('GruposVagas/historico_duplicate_quantitativo')."\" class=\"btn btn-danger btn-square\"> <i class=\"fa fa-lg mr-0 fa-sort-amount-desc\"></i> Quantitativo de duplicações </a>
                                                                     </div>";
 }
 if($menu2 != 'index' && strlen($sucesso) == 0 && ($menu2 == 'create' || $menu2 == 'edit' || $menu2 == 'questoes')){
@@ -81,6 +84,11 @@ if($menu2 == 'index'){
                                 echo anchor('Questoes/index/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Definir questões</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Definir questões\"");
                                 echo anchor('GruposVagas/edit/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-edit">Editar</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Editar grupo\"");
                                 echo "<a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-danger\" title=\"Desativar grupo de vagas\" onclick=\"confirm_delete(".$linha -> pr_grupovaga.");\"><i class=\"fa fa-lg mr-0 fa-times-circle\">Desativar</i></a>";
+                                echo anchor('GruposVagas/duplicate/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Duplicar questões</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Duplicar questões\"");
+                                if($linha -> etapa7 == '0'){
+                                        echo anchor('GruposVagas/create_motivacao/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Criar questões do formulário de motivação</i>', " class=\"btn btn-sm btn-square btn-danger\" title=\"Criar questões do formulário de motivação\"");
+                                }
+                                
                         }
                         else{
                                 echo "<a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-success\" title=\"Reativar grupo de vagas\" onclick=\"confirm_reactivate(".$linha -> pr_grupovaga.");\"><i class=\"fa fa-lg mr-0 fa-plus-circle\">Reativar</i></a>";
@@ -274,6 +282,733 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
                 format: 'dd/mm/yyyy hh:ii'
             });
         </script>";
+        }
+}
+else if($menu2 == 'duplicate'){
+        if(strlen($erro)>0){
+                echo "
+                                                            <div class=\"alert alert-danger background-danger\" role=\"alert\">
+                                                                    <div class=\"alert-text\">
+                                                                            <strong>ERRO</strong>:<br /> $erro
+                                                                    </div>
+                                                            </div>";
+        //$erro='';
+        }
+        else if(strlen($sucesso) > 0){
+                echo "
+                                                            <div class=\"alert alert-success background-success\" role=\"alert\">
+                                                                    <div class=\"alert-text\">
+                                                                            $sucesso
+                                                                    </div>
+                                                            </div>";
+        }
+        if(strlen($sucesso) == 0){
+                $attributes = array('id' => 'form_gruposvagas');
+                
+                echo form_open($url, $attributes, array('codigo' => $codigo));
+                
+                echo "
+                                                                <div class=\"form-group row\">";
+                $attributes = array('class' => 'col-lg-1 col-form-label text-left');
+                echo form_label('Grupo de vaga de destino <abbr title="Obrigatório">*</abbr>', 'grupo', $attributes);
+                echo "
+                                                                        <div class=\"col-lg-8\">";
+                $grupo = '';
+                if(strlen(set_value('grupo')) > 0){
+                        $grupo = set_value('grupo');
+                }
+                $array_grupos = array(''=>'');
+                foreach($grupos as $grupo){
+                        if($codigo != $grupo -> pr_grupovaga){
+                                $array_grupos[$grupo -> pr_grupovaga] = $grupo -> vc_grupovaga;
+                        }                     
+                }
+                if(strstr($erro, "'Grupo'")){
+                        echo form_dropdown('grupo', $array_grupos, $grupo, "class=\"form-control is-invalid\" id=\"grupo\"");
+                }
+                else{
+                        echo form_dropdown('grupo', $array_grupos, $grupo, "class=\"form-control\" id=\"grupo\"");
+                }
+                echo "
+                                                                        </div>
+                                                                        <div class=\"col-lg-3 text-right\">
+                ";
+                $attributes = array('class' => 'btn btn-primary','id'=>'salvar_grupo');
+                echo form_submit('salvar_grupo', 'Duplicar selecionadas', $attributes);
+
+                echo "
+                                                                        </div>
+                                                                </div>
+                                                                                                           
+                                                                <div class=\"form-group row\">
+                                                                        <div class=\"col-lg-12\">
+                                                                                <a href=\"#\" onclick=\"check_all();\"> Marcar todas</a> &nbsp; <a href=\"#\" onclick=\"uncheck_all();\"> Desmarcar todas</a>
+                                                                        </div>
+                                                                </div>
+
+                                                                <div class=\"dt-responsive table-responsive\">
+                                                                            
+                                                                        <table class=\"table table-striped table-bordered table-hover\" id=\"questoes_table\">
+                                                                                <thead>
+                                                                                        <tr>
+                                                                                                <th>Selecionar</th>
+                                                                                                <th>Questão duplicada</th>
+                                                                                                <th>Etapa</th>
+                                                                                                <th>Enunciado</th>
+                                                                                                <th>Tipo</th>
+                                                                                                <th>Peso</th>
+                                                                                        </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                            ";
+                
+                foreach($questoes as $questao){
+                        // &nbsp; <a href=\"".base_url('GruposVagas/historico_duplicate/'.$codigo)."\">Histórico de duplicações</a>
+                        if($questao -> cont_respostas > 0 || $cont_vagas == 0){
+                                echo "
+                                                                                        <tr>
+                                                                                                <td>";
+                                $attributes = array('id'=>'questao'.$questao -> pr_questao,'name' => 'questao'.$questao -> pr_questao, 'value' => '1');
+                                
+                                        //$attributes['disabled'] = 'disabled';
+                                
+                                echo form_checkbox($attributes, set_value('questao'.$questao -> pr_questao), (set_value('questao'.$questao -> pr_questao)=='1' && strlen(set_value('questao'.$questao -> pr_questao))>0));
+                                echo "</td>
+                                                                                                <td>
+                                                                                                        ".($questao -> bl_duplicado == '1'?"Sim":"Não")."
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                        ".$questao -> es_etapa."ª Etapa
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                        {$questao -> tx_questao}
+                                                                                                </td>
+                                                                                                <td>";
+                                if($questao -> in_tipo == 1){
+                                        echo 'Customizadas';
+                                }
+                                else if($questao -> in_tipo == 2){
+                                        echo 'Aberta';
+                                }
+                                else if($questao -> in_tipo == 3){
+                                        echo 'Sim/Não (sim positivo)';
+                                }
+                                else if($questao -> in_tipo == 4){
+                                        echo 'Sim/Não (não positivo)';
+                                }
+                                else if($questao -> in_tipo == 5){
+                                        echo 'Nenhum/Básico/Intermediário/Avançado';
+                                }
+                                else if($questao -> in_tipo == 6){
+                                        echo 'Intervalo';
+                                }
+                                else if($questao -> in_tipo == 7){
+                                        echo 'Upload de arquivo';
+                                }                                                                                
+                                echo "</td>
+                                                                                                <td>
+                                                                                                        {$questao -> in_peso}
+                                                                                                </td>
+                                                                                        </tr>";
+                        }
+                }
+                
+
+                echo "
+                                                                                </tbody>
+                                                                        </table>
+                                                                            
+                                                                </div>
+                                                                
+                                                            </form>";
+                                                            //paginação retirada pois impede a escolha de todas as questões "check_all"
+                $pagina['js'] = "
+                                                            <script type=\"text/javascript\">
+
+                                                                        function check_all(){
+                                                                                $(':checkbox').prop('checked', true);
+                                                                        }
+                                                                        function uncheck_all(){
+                                                                                $(':checkbox').prop('checked', false);
+                                                                        }
+                                                                        jQuery(':submit').click(function (event) {
+                                                                                var form = document.getElementById('form_gruposvagas');
+                                                                                var se_repetido = 0;
+                                                                                if(form.elements['grupo'].value==''){
+                                                                                        event.preventDefault();
+                                                                                        alert('O grupo de destino deve ser escolhido.');
+                                                                                        return;
+                                                                                }
+                                                                                var se_escolhido = 0;
+
+                                                                                ";
+                foreach($questoes_duplicadas as $questao_duplicada){
+                        $pagina['js'] .= "
+                                                                                if(form.elements['questao{$questao_duplicada -> es_questao_origem}'] && form.elements['questao{$questao_duplicada -> es_questao_origem}'].checked == true && form.elements['grupo'] && form.elements['grupo'].value == '".$questao_duplicada -> es_grupovaga_destino."'){
+                                                                                        se_repetido = 1;
+                                                                                                                                                         
+                                                                                }
+                                                                                
+                        ";
+                }
+                foreach($questoes as $questao){
+                        if($questao -> cont_respostas > 0 || $cont_vagas == 0){
+                                $pagina['js'] .= "
+                                                                                if(form.elements['questao{$questao -> pr_questao}'] && form.elements['questao{$questao -> pr_questao}'].checked == true){
+                                                                                        se_escolhido = 1;
+                                                                                                                                                         
+                                                                                }
+                                                                                
+                                ";
+                        }
+                }                                                                
+                $pagina['js'] .= "
+                                                                                if(se_escolhido==0){
+                                                                                        event.preventDefault();
+                                                                                        alert('Ao menos uma questão deve ser escolhida.');
+                                                                                        return;
+                                                                                }
+
+                                                                                var titulo = 'Confirmação de duplicação';
+                                                                                var grupo = form.elements['grupo'];
+                                                                                var texto = 'Deseja confirmar a duplicação das questões selecionadas para o grupo: <u>'+grupo.options[grupo.selectedIndex].text+'</u>?';
+                                                                                if(se_repetido == 1){
+                                                                                        titulo = 'Aviso de duplicação';
+                                                                                        texto = 'Existe questão(s) já duplicada para o grupo <u>'+grupo.options[grupo.selectedIndex].text+'</u>, deseja prosseguir?';
+                                                                                }
+                                                                                if (this.id == 'salvar_grupo') {
+                                                                                        event.preventDefault();
+                                                                                        $(document).ready(function(){
+                                                                                                event.preventDefault();
+                                                                                                swal.fire({
+                                                                                                        title: titulo,                                                                                                        
+                                                                                                        html: texto,                                                                                                        
+                                                                                                        type: 'warning',
+                                                                                                        showCancelButton: true,
+                                                                                                        cancelButtonText: 'Não',
+                                                                                                        confirmButtonText: 'Sim, desejo salvar'
+                                                                                                })
+                                                                                                .then(function(result) {
+                                                                                                        if (result.value) {
+                                                                                                                //desfaz as configurações do botão
+                                                                                                                $('#salvar_grupo').unbind(\"click\");
+                                                                                                                //clica, concluindo o processo
+                                                                                                                $('#salvar_grupo').click();
+                                                                                                        }
+                                                                                                        
+                                                                                                });
+                                                                                                
+                                                                                                
+                                                                                        });
+                                                                                                                                                                                                                                                                }
+                                                                        });
+                                                                        
+
+                                                            </script>
+                                                            
+                                                            <script type=\"text/javascript\">
+                                                                jQuery('#questoes_table input:checkbox').change(function() {
+
+                                                                        if(this.checked)  // check if checkbox checked then change color of row
+                                                         
+                                                                                jQuery(this).closest('td').css('background-color', '#6f6 !important');
+                                                                        else
+                                                                                jQuery(this).closest('td').css('background-color', '');
+                                                         
+                                                                 });
+                                                                    $('#questoes_table').DataTable({
+                                                                            order: [
+                                                                                [2, 'asc']
+                                                                            ],
+                                                                            columnDefs: [
+                                                                                    {
+                                                                                        'orderable': false,
+                                                                                        'targets': [-1]
+                                                                                    },
+                                                                                    {
+                                                                                        'searchable': false,
+                                                                                        'targets': [-1]
+                                                                                    }
+                                                                            ],
+                                                                            'rowCallback': function(row, data, index){
+                                                                                if(data[1] == 'Sim'){
+                                                                                    $(row).find('td:eq(1)').css('background-color', '#f66');
+                                                                                }
+                                                                                
+                                                                              },
+                                                                            lengthMenu: [
+                                                                                [-1],
+										[\"Todos\"]
+                                                                            ],
+                                                                            language: {
+                                                                                        \"decimal\":        \"\",
+                                                                                        \"emptyTable\":     \"Nenhum item encontrado\",
+                                                                                        \"info\":           \"Mostrando de  _START_ até _END_ de _TOTAL_ itens\",
+                                                                                        \"infoEmpty\":      \"Mostrando 0 até 0 de 0 itens\",
+                                                                                        \"infoFiltered\":   \"(filtrado de _MAX_ itens no total)\",
+                                                                                        \"infoPostFix\":    \"\",
+                                                                                        \"thousands\":      \",\",
+                                                                                        \"lengthMenu\":     \"Mostrar _MENU_\",
+                                                                                        \"loadingRecords\": \"Carregando...\",
+                                                                                        \"processing\":     \"Carregando...\",
+                                                                                        \"search\":         \"Pesquisar:\",
+                                                                                        \"zeroRecords\":    \"Nenhum item encontrado\",
+                                                                                        
+                                                                                        \"paginate\": {
+                                                                                            \"first\":      \"Primeira\",
+                                                                                            \"last\":       \"Última\",
+                                                                                            \"next\":       \"Próxima\",
+                                                                                            \"previous\":   \"Anterior\"
+                                                                                        },
+                                                                                        \"aria\": {
+                                                                                            \"sortAscending\":  \": clique para ordenar de forma crescente\",
+                                                                                            \"sortDescending\": \": clique para ordenar de forma decrescente\"
+                                                                                        }
+                                                                            }
+                                                                    });
+                                                                    $(document).ready(function(){
+ 
+                                                                        $('#grupo').change(function(){
+                                                                                var grupo = $(this).val();
+                                                                                
+                                                                                $.ajax({
+                                                                                        url:'".base_url('GruposVagas/getEtapa')."',
+                                                                                        method: 'post',
+                                                                                        data : {grupo:grupo},
+                                                                                        dataType: 'json',
+                                                                                        success: function(response){
+                                                                                                var len = response.length;
+                                                                                                
+                                                                                                
+                                                                                                        // Read values
+                                                                                                ";
+                foreach($questoes as $questao){
+                        
+                        $pagina['js'] .= "
+                                                                                                        
+                                                                                                        if(response[".$questao -> es_etapa."] == 1){
+                                                                                                                
+                                                                                                                $('#questao".$questao -> pr_questao."').prop('checked', false);
+                                                                                                                $('#questao".$questao -> pr_questao."').prop('disabled', 'disabled');
+                                                                                                        }
+                                                                                                        else{
+                                                                                                                $('#questao".$questao -> pr_questao."').prop('disabled','');
+                                                                                                        }
+                        ";
+                }                                                                                
+                $pagina['js'] .= "
+                                                                                        
+                                                                                                
+                                                                                
+                                                                                        }
+                                                                                });
+                                                                        });
+                                                                    });
+                                                            </script>";
+        }
+}
+else if($menu2 == 'historico_duplicate'){
+        echo "
+                                                        <div class=\"dt-responsive table-responsive\">
+                                                                                                                        
+                                                                <table class=\"table table-striped table-bordered table-hover\" id=\"questoes_table\">
+                                                                        <thead>
+                                                                                <tr>
+                                                                                        
+                                                                                        
+                                                                                        <th>Etapa</th>
+                                                                                        <th>Enunciado</th>
+                                                                                        <th>Tipo</th>
+                                                                                        <th>Peso</th>
+                                                                                        <th>Grupo de destino</th>
+                                                                                        <th>Data de duplicação</th>
+                                                                                </tr>
+                                                                        </thead>
+                                                                        <tbody>
+            ";
+
+        foreach($questoes_duplicadas as $questao_duplicada){
+                echo "
+                                                                                <tr> 
+
+                                                                                        <td>
+                                                                                                ".$questao_duplicada -> es_etapa."ª Etapa
+                                                                                        </td>
+                                                                                        <td>
+                                                                                                {$questao_duplicada -> tx_questao}
+                                                                                        </td>
+                                                                                        <td>";
+                if($questao_duplicada -> in_tipo == 1){
+                        echo 'Customizadas';
+                }
+                else if($questao_duplicada -> in_tipo == 2){
+                        echo 'Aberta';
+                }
+                else if($questao_duplicada -> in_tipo == 3){
+                        echo 'Sim/Não (sim positivo)';
+                }
+                else if($questao_duplicada -> in_tipo == 4){
+                        echo 'Sim/Não (não positivo)';
+                }
+                else if($questao_duplicada -> in_tipo == 5){
+                        echo 'Nenhum/Básico/Intermediário/Avançado';
+                }
+                else if($questao_duplicada -> in_tipo == 6){
+                        echo 'Intervalo';
+                }
+                else if($questao_duplicada -> in_tipo == 7){
+                        echo 'Upload de arquivo';
+                }                                                                                
+                echo "</td>
+                                                                                        <td>
+                                                                                                {$questao_duplicada -> in_peso}
+                                                                                        </td>
+                                                                                        <td>
+                                                                                                {$questao_duplicada -> grupo_destino}
+                                                                                        </td>
+                                                                                        <td>
+                                                                                                ".show_date($questao_duplicada -> dt_cadastro,true)."
+                                                                                        </td>
+                                                                                </tr>";
+        }
+
+
+        echo "
+                                                                        </tbody>
+                                                                </table>
+                                                                
+                                                        </div>
+                                                        <div class=\"j-footer\">
+                                                                <hr>
+                                                                <div class=\"row\">
+                                                                        <div class=\"col-lg-12 text-center\">
+                                                                                        
+                                                                                <button type=\"button\" class=\"btn btn-primary\" onclick=\"window.location='".base_url('GruposVagas/duplicate/'.$grupo)."'\">Voltar</button>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+        ";
+        $pagina['js'] = "
+                                                            
+                                                        <script type=\"text/javascript\">
+                                                                $('#questoes_table').DataTable({
+                                                                        order: [
+                                                                        [0, 'asc']
+                                                                        ],
+                                                                        columnDefs: [
+                                                                                {
+                                                                                'orderable': false,
+                                                                                'targets': [-1]
+                                                                                },
+                                                                                {
+                                                                                'searchable': false,
+                                                                                'targets': [-1]
+                                                                                }
+                                                                        ],
+                                                                        
+                                                                        language: {
+                                                                                \"decimal\":        \"\",
+                                                                                \"emptyTable\":     \"Nenhum item encontrado\",
+                                                                                \"info\":           \"Mostrando de  _START_ até _END_ de _TOTAL_ itens\",
+                                                                                \"infoEmpty\":      \"Mostrando 0 até 0 de 0 itens\",
+                                                                                \"infoFiltered\":   \"(filtrado de _MAX_ itens no total)\",
+                                                                                \"infoPostFix\":    \"\",
+                                                                                \"thousands\":      \",\",
+                                                                                \"lengthMenu\":     \"Mostrar _MENU_\",
+                                                                                \"loadingRecords\": \"Carregando...\",
+                                                                                \"processing\":     \"Carregando...\",
+                                                                                \"search\":         \"Pesquisar:\",
+                                                                                \"zeroRecords\":    \"Nenhum item encontrado\",
+                                                                                
+                                                                                \"paginate\": {
+                                                                                        \"first\":      \"Primeira\",
+                                                                                        \"last\":       \"Última\",
+                                                                                        \"next\":       \"Próxima\",
+                                                                                        \"previous\":   \"Anterior\"
+                                                                                },
+                                                                                \"aria\": {
+                                                                                        \"sortAscending\":  \": clique para ordenar de forma crescente\",
+                                                                                        \"sortDescending\": \": clique para ordenar de forma decrescente\"
+                                                                                }
+                                                                        }
+                                                                });
+                                                        </script>";
+}
+else if($menu2 == 'historico_duplicate_total'){
+        echo "
+                                                        <div class=\"dt-responsive table-responsive\">
+                                                                                                                        
+                                                                <table class=\"table table-striped table-bordered table-hover\" id=\"questoes_table\">
+                                                                        <thead>
+                                                                                <tr>                                                                                        
+                                                                                        <th>Data/Hora</th>
+                                                                                        <th>Usuário</th>
+                                                                                        <th>Enunciado</th>
+                                                                                        <th>Etapa</th>
+                                                                                        
+                                                                                        <th>Tipo</th>
+                                                                                        <th>Grupo de origem</th>
+                                                                                        <th>Grupo de destino</th>
+                                                                                        
+                                                                                </tr>
+                                                                        </thead>
+                                                                        <tbody>
+            ";
+
+        foreach($questoes_duplicadas as $questao_duplicada){
+                echo "
+                                                                                <tr>
+                                                                                        <td>
+                                                                                                ".show_date($questao_duplicada -> dt_cadastro,true)."
+                                                                                        </td>
+                                                                                        <td>
+                                                                                                ".$questao_duplicada -> usuario."
+                                                                                        </td>
+                                                                                        <td>
+                                                                                                {$questao_duplicada -> tx_questao}
+                                                                                        </td>
+                                                                                        <td>
+                                                                                                ".$questao_duplicada -> es_etapa."ª Etapa
+                                                                                        </td>
+                                                                                        
+                                                                                        <td>";
+                if($questao_duplicada -> in_tipo == 1){
+                        echo 'Customizadas';
+                }
+                else if($questao_duplicada -> in_tipo == 2){
+                        echo 'Aberta';
+                }
+                else if($questao_duplicada -> in_tipo == 3){
+                        echo 'Sim/Não (sim positivo)';
+                }
+                else if($questao_duplicada -> in_tipo == 4){
+                        echo 'Sim/Não (não positivo)';
+                }
+                else if($questao_duplicada -> in_tipo == 5){
+                        echo 'Nenhum/Básico/Intermediário/Avançado';
+                }
+                else if($questao_duplicada -> in_tipo == 6){
+                        echo 'Intervalo';
+                }
+                else if($questao_duplicada -> in_tipo == 7){
+                        echo 'Upload de arquivo';
+                }                                                                                
+                echo "</td>
+                                                                                        <td>
+                                                                                                {$questao_duplicada -> grupo_origem}
+                                                                                        </td>
+                                                                                        <td>
+                                                                                                {$questao_duplicada -> grupo_destino}
+                                                                                        </td>
+                                                                                        
+                                                                                </tr>";
+        }
+
+
+        echo "
+                                                                        </tbody>
+                                                                </table>
+                                                                
+                                                        </div>
+                                                        <div class=\"j-footer\">
+                                                                <hr>
+                                                                <div class=\"row\">
+                                                                        <div class=\"col-lg-12 text-center\">
+                                                                                        
+                                                                                <button type=\"button\" class=\"btn btn-primary\" onclick=\"window.location='".base_url('GruposVagas/index')."'\">Voltar</button>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+        ";
+        $pagina['js'] = "
+                                                            
+                                                        <script type=\"text/javascript\">
+                                                                $('#questoes_table').DataTable({
+                                                                        order: [
+                                                                        [0, 'desc']
+                                                                        ],
+                                                                        columnDefs: [
+                                                                                {
+                                                                                'orderable': false,
+                                                                                'targets': [-1]
+                                                                                },
+                                                                                {
+                                                                                'searchable': false,
+                                                                                'targets': [-1]
+                                                                                }
+                                                                        ],
+                                                                        
+                                                                        language: {
+                                                                                \"decimal\":        \"\",
+                                                                                \"emptyTable\":     \"Nenhum item encontrado\",
+                                                                                \"info\":           \"Mostrando de  _START_ até _END_ de _TOTAL_ itens\",
+                                                                                \"infoEmpty\":      \"Mostrando 0 até 0 de 0 itens\",
+                                                                                \"infoFiltered\":   \"(filtrado de _MAX_ itens no total)\",
+                                                                                \"infoPostFix\":    \"\",
+                                                                                \"thousands\":      \",\",
+                                                                                \"lengthMenu\":     \"Mostrar _MENU_\",
+                                                                                \"loadingRecords\": \"Carregando...\",
+                                                                                \"processing\":     \"Carregando...\",
+                                                                                \"search\":         \"Pesquisar:\",
+                                                                                \"zeroRecords\":    \"Nenhum item encontrado\",
+                                                                                
+                                                                                \"paginate\": {
+                                                                                        \"first\":      \"Primeira\",
+                                                                                        \"last\":       \"Última\",
+                                                                                        \"next\":       \"Próxima\",
+                                                                                        \"previous\":   \"Anterior\"
+                                                                                },
+                                                                                \"aria\": {
+                                                                                        \"sortAscending\":  \": clique para ordenar de forma crescente\",
+                                                                                        \"sortDescending\": \": clique para ordenar de forma decrescente\"
+                                                                                }
+                                                                        }
+                                                                });
+                                                        </script>";
+}
+else if($menu2 == 'historico_duplicate_quantitativo'){
+        echo "
+                                                        <div class=\"dt-responsive table-responsive\">
+                                                                                                                        
+                                                                <table class=\"table table-striped table-bordered table-hover\" id=\"questoes_table\">
+                                                                        <thead>
+                                                                                <tr>                                                                                        
+                                                                                        
+                                                                                        <th>Enunciado</th>
+                                                                                        <th>Etapa</th>
+                                                                                        
+                                                                                        <th>Tipo</th>
+                                                                                        <th>Grupo de origem</th>
+                                                                                        <th>Total</th>
+                                                                                        
+                                                                                </tr>
+                                                                        </thead>
+                                                                        <tbody>
+            ";
+
+        foreach($questoes_duplicadas as $questao_duplicada){
+                echo "
+                                                                                <tr>
+                                                                                        
+                                                                                        <td>
+                                                                                                {$questao_duplicada -> tx_questao}
+                                                                                        </td>
+                                                                                        <td>
+                                                                                                ".$questao_duplicada -> es_etapa."ª Etapa
+                                                                                        </td>
+                                                                                        
+                                                                                        <td>";
+                if($questao_duplicada -> in_tipo == 1){
+                        echo 'Customizadas';
+                }
+                else if($questao_duplicada -> in_tipo == 2){
+                        echo 'Aberta';
+                }
+                else if($questao_duplicada -> in_tipo == 3){
+                        echo 'Sim/Não (sim positivo)';
+                }
+                else if($questao_duplicada -> in_tipo == 4){
+                        echo 'Sim/Não (não positivo)';
+                }
+                else if($questao_duplicada -> in_tipo == 5){
+                        echo 'Nenhum/Básico/Intermediário/Avançado';
+                }
+                else if($questao_duplicada -> in_tipo == 6){
+                        echo 'Intervalo';
+                }
+                else if($questao_duplicada -> in_tipo == 7){
+                        echo 'Upload de arquivo';
+                }                                                                                
+                echo "</td>
+                                                                                        <td>
+                                                                                                {$questao_duplicada -> vc_grupovaga}
+                                                                                        </td>
+                                                                                        <td>
+                                                                                                {$questao_duplicada -> quantitativo}
+                                                                                        </td>
+                                                                                        
+                                                                                </tr>";
+        }
+
+
+        echo "
+                                                                        </tbody>
+                                                                </table>
+                                                                
+                                                        </div>
+                                                        <div class=\"j-footer\">
+                                                                <hr>
+                                                                <div class=\"row\">
+                                                                        <div class=\"col-lg-12 text-center\">
+                                                                                        
+                                                                                <button type=\"button\" class=\"btn btn-primary\" onclick=\"window.location='".base_url('GruposVagas/index')."'\">Voltar</button>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+        ";
+        $pagina['js'] = "
+                                                            
+                                                        <script type=\"text/javascript\">
+                                                                $('#questoes_table').DataTable({
+                                                                        order: [
+                                                                        [4, 'desc']
+                                                                        ],
+                                                                        columnDefs: [
+                                                                                {
+                                                                                'orderable': false,
+                                                                                'targets': [-1]
+                                                                                },
+                                                                                {
+                                                                                'searchable': false,
+                                                                                'targets': [-1]
+                                                                                }
+                                                                        ],
+                                                                        
+                                                                        language: {
+                                                                                \"decimal\":        \"\",
+                                                                                \"emptyTable\":     \"Nenhum item encontrado\",
+                                                                                \"info\":           \"Mostrando de  _START_ até _END_ de _TOTAL_ itens\",
+                                                                                \"infoEmpty\":      \"Mostrando 0 até 0 de 0 itens\",
+                                                                                \"infoFiltered\":   \"(filtrado de _MAX_ itens no total)\",
+                                                                                \"infoPostFix\":    \"\",
+                                                                                \"thousands\":      \",\",
+                                                                                \"lengthMenu\":     \"Mostrar _MENU_\",
+                                                                                \"loadingRecords\": \"Carregando...\",
+                                                                                \"processing\":     \"Carregando...\",
+                                                                                \"search\":         \"Pesquisar:\",
+                                                                                \"zeroRecords\":    \"Nenhum item encontrado\",
+                                                                                
+                                                                                \"paginate\": {
+                                                                                        \"first\":      \"Primeira\",
+                                                                                        \"last\":       \"Última\",
+                                                                                        \"next\":       \"Próxima\",
+                                                                                        \"previous\":   \"Anterior\"
+                                                                                },
+                                                                                \"aria\": {
+                                                                                        \"sortAscending\":  \": clique para ordenar de forma crescente\",
+                                                                                        \"sortDescending\": \": clique para ordenar de forma decrescente\"
+                                                                                }
+                                                                        }
+                                                                });
+                                                        </script>";
+}
+else if($menu2 == 'create_motivacao'){
+        if(strlen($erro)>0){
+                echo "
+                                                            <div class=\"alert alert-danger background-danger\" role=\"alert\">
+                                                                    <div class=\"alert-text\">
+                                                                            <strong>ERRO</strong>:<br /> $erro
+                                                                    </div>
+                                                            </div>";
+        //$erro='';
+        }
+        else if(strlen($sucesso) > 0){
+                echo "
+                                                            <div class=\"alert alert-success background-success\" role=\"alert\">
+                                                                    <div class=\"alert-text\">
+                                                                            $sucesso
+                                                                    </div>
+                                                            </div>";
         }
 }
 /*
