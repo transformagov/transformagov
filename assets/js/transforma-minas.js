@@ -87,7 +87,7 @@
 		});
 
 		// PAGE LOADING ANIMATION FADE-IN, FADE-OUT
-		$(".theme-loader").animate({ opacity: "0" }, 1200);
+		$(".theme-loader").animate({ opacity: "0" }, 1000);
 		setTimeout(function () {
 			$(".theme-loader").remove();
 		}, 800);

@@ -199,10 +199,12 @@ table.table.table-striped.table-bordered tbody tr td a:last-child {
 	background-color: white;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	/*align-items: center;*/
 }
 
 .loader {
+	position: relative;
+	top: 40vh;
 	border: 10px solid #f3f3f3; /* Light grey */
 	border-top: 10px solid var(--primary);
 	border-bottom: 10px solid var(--primary);
