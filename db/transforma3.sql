@@ -14,9 +14,11 @@ SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES latin1 */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
 -- Database: `transforma`
@@ -235,7 +237,7 @@ CREATE TABLE IF NOT EXISTS `tb_candidaturas` (
   `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
   `vc_urlDocumentoIdentificacao` varchar(500) COLLATE utf8_bin DEFAULT NULL,
   `vc_urlCurriculum` varchar(500) COLLATE utf8_bin DEFAULT NULL,
-  `en_aderencia` enum('0','1','2') COLLATE utf8_bin DEFAULT NULL COMMENT '1->teste de aderencia obrigat�rio, 2-> teste de ader�ncia feito',
+  `en_aderencia` enum('0','1','2') COLLATE utf8_bin DEFAULT NULL COMMENT '1->teste de aderencia obrigatório, 2-> teste de aderência feito',
   `dt_aderencia` datetime DEFAULT NULL,
   `es_avaliador_competencia1` int(10) UNSIGNED DEFAULT NULL,
   `es_avaliador_especialista` int(10) UNSIGNED DEFAULT NULL,
@@ -270,7 +272,7 @@ DROP TABLE IF EXISTS `tb_competencias`;
 CREATE TABLE IF NOT EXISTS `tb_competencias` (
   `pr_competencia` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `vc_competencia` varchar(200) NOT NULL,
-  `tx_descri��o` text NOT NULL,
+  `tx_descrição` text NOT NULL,
   PRIMARY KEY (`pr_competencia`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
@@ -278,15 +280,15 @@ CREATE TABLE IF NOT EXISTS `tb_competencias` (
 -- Dumping data for table `tb_competencias`
 --
 
-INSERT INTO `tb_competencias` (`pr_competencia`, `vc_competencia`, `tx_descri��o`) VALUES
-(12, 'Capacidade de Comunica��o', ''),
-(13, 'Gest�o de Pessoas', ''),
-(14, 'Lideran�a e engajamento de pessoas', ''),
-(15, 'Orienta��o para Resultados e usu�rios', ''),
-(16, 'Vis�o Sist�mica', ''),
-(17, 'Desafia o status quo/Inova��o', ''),
-(18, 'Resili�ncia', ''),
-(19, 'Resolu��o de conflitos', '');
+INSERT INTO `tb_competencias` (`pr_competencia`, `vc_competencia`, `tx_descrição`) VALUES
+(12, 'Capacidade de Comunicação', ''),
+(13, 'Gestão de Pessoas', ''),
+(14, 'Liderança e engajamento de pessoas', ''),
+(15, 'Orientação para Resultados e usuários', ''),
+(16, 'Visão Sistêmica', ''),
+(17, 'Desafia o status quo/Inovação', ''),
+(18, 'Resiliência', ''),
+(19, 'Resolução de conflitos', '');
 
 -- --------------------------------------------------------
 
@@ -355,13 +357,13 @@ CREATE TABLE IF NOT EXISTS `tb_etapas` (
 --
 
 INSERT INTO `tb_etapas` (`pr_etapa`, `vc_etapa`, `in_ordem`, `vc_texto`, `bl_removido`) VALUES
-(1, 'Etapa 1 - Req. obrigat�rios', 1, 'Para participar do processo de certifica��o para Superintendente Regional de Ensino, na Secretaria de Estado de Educa��o de Minas Gerais, � necess�rio que voc� cumpra os pr�-requisitos publicados no documento de descri��o da posi��o. Por favor, preencha os campo abaixo para verificar se voc� � eleg�vel para esta posi��o. ', '0'),
-(2, 'Etapa 2 - Req. desej�veis', 2, 'Processo de Avalia��o n�o eliminat�rio', '0'),
-(3, 'Etapa 3 - An�. curricular', 3, 'An�lise curricular pelo Avaliador ', '0'),
-(4, 'Etapa 4 - Entrevista', 4, 'Avalia��o pelo Gestor', '0'),
-(5, 'Etapa 5 - Teste de ader�ncia', 5, 'Teste de ader�ncia feito pelo candidato', '0'),
-(6, 'Etapa 7 - Entrevista com especialista', 7, 'Avalia��o com o especialista', '0'),
-(7, 'Etapa 6 - Teste de Motiva��o', 6, 'Teste de Motiva��o de Servi�o P�blico', '0');
+(1, 'Etapa 1 - Req. obrigatórios', 1, 'Para participar do processo de certificação para Superintendente Regional de Ensino, na Secretaria de Estado de Educação de Minas Gerais, é necessário que você cumpra os pré-requisitos publicados no documento de descrição da posição. Por favor, preencha os campo abaixo para verificar se você é elegível para esta posição. ', '0'),
+(2, 'Etapa 2 - Req. desejáveis', 2, 'Processo de Avaliação não eliminatório', '0'),
+(3, 'Etapa 3 - Aná. curricular', 3, 'Análise curricular pelo Avaliador ', '0'),
+(4, 'Etapa 4 - Entrevista', 4, 'Avaliação pelo Gestor', '0'),
+(5, 'Etapa 5 - Teste de aderência', 5, 'Teste de aderência feito pelo candidato', '0'),
+(6, 'Etapa 7 - Entrevista com especialista', 7, 'Avaliação com o especialista', '0'),
+(7, 'Etapa 6 - Teste de Motivação', 6, 'Teste de Motivação de Serviço Público', '0');
 
 -- --------------------------------------------------------
 
@@ -657,139 +659,116 @@ CREATE TABLE IF NOT EXISTS `tb_instituicoes2` (
 INSERT INTO `tb_instituicoes2` (`pr_instituicao`, `DDNRPESSOAFISJUR`, `vc_instituicao`, `in_tipounidade`, `vc_sigla`, `en_sexonome`, `bl_extinto`) VALUES
 (1, NULL, 'INSTITUICAO C/ CODIGO DE UNIDADE NAO INFORMADO', 0, 'INVALIDO', 'm', '1'),
 (2, 2, 'Vice Governadoria do Estado', 2, 'VICEGOVERNADORIA', 'f', '0'),
-(9, NULL, 'Caixa de Amortiza��o da D�vida', 8, 'CADIV', 'f', '0'),
+(9, NULL, 'Caixa de Amortização da Dívida', 8, 'CADIV', 'f', '0'),
 (1071, 1857449, 'Gabinete Militar do Governador do Estado', 4, 'GMG', 'm', '0'),
 (1081, 1858199, 'Advocacia Geral do Estado', 4, 'AGE', 'f', '0'),
 (1101, 2939378, 'Ouvidoria Geral do Estado de Minas Gerais', 4, 'OGE', 'f', '0'),
-(1111, 1857428, 'Escrit�rio de Representa��o do Governo de Minas Gerais em Bras�lia', 4, 'ERGMG-BSB', 'm', '0'),
+(1111, 1857428, 'Escritório de Representação do Governo de Minas Gerais em Brasília', 4, 'ERGMG-BSB', 'm', '0'),
 (1121, 1857416, 'Secretaria do Governo', 3, 'SEGOV', 'f', '1'),
-(1141, 1791028, 'Escrit�rio de Representa��o do Governo de Minas Gerais no RJ', 4, 'ERGMG-RJ', 'm', '1'),
-(1161, 1808437, 'Escrit�rio de Representa��o do Governo de Minas Gerais em SP', 4, 'ERGMG-SP', 'm', '1'),
-(1171, 1858268, 'Secretaria de Estado de Recursos Humanos e Administra��o', 3, 'SERHA', 'f', '1'),
+(1141, 1791028, 'Escritório de Representação do Governo de Minas Gerais no RJ', 4, 'ERGMG-RJ', 'm', '1'),
+(1161, 1808437, 'Escritório de Representação do Governo de Minas Gerais em SP', 4, 'ERGMG-SP', 'm', '1'),
+(1171, 1858268, 'Secretaria de Estado de Recursos Humanos e Administração', 3, 'SERHA', 'f', '1'),
 (1191, 1858211, 'Secretaria de Estado de Fazenda', 3, 'SEF', 'f', '0'),
-(1201, 1858214, 'Secretaria de Estado de Planejamento e Coordena��o', 3, 'SEPLAN', 'f', '1'),
-(1221, 1858203, 'Secretaria de Estado de Desenvolvimento Econ�mico, Ci�ncia, Tecnologia e Ensino Superior', 3, 'SEDECTES', 'f', '0'),
-(1231, 1858202, 'Secretaria de Estado de Agricultura, Pecu�ria e Abastecimento', 3, 'SEAPA', 'f', '0'),
-(1251, 1857466, 'Pol�cia Militar do Estado de Minas Gerais', 4, 'PMMG', 'f', '0'),
-(1261, 1858210, 'Secretaria de Estado de Educa��o', 3, 'SEE', 'f', '0'),
+(1201, 1858214, 'Secretaria de Estado de Planejamento e Coordenação', 3, 'SEPLAN', 'f', '1'),
+(1221, 1858203, 'Secretaria de Estado de Desenvolvimento Econômico, Ciência, Tecnologia e Ensino Superior', 3, 'SEDECTES', 'f', '0'),
+(1231, 1858202, 'Secretaria de Estado de Agricultura, Pecuária e Abastecimento', 3, 'SEAPA', 'f', '0'),
+(1251, 1857466, 'Polícia Militar do Estado de Minas Gerais', 4, 'PMMG', 'f', '0'),
+(1261, 1858210, 'Secretaria de Estado de Educação', 3, 'SEE', 'f', '0'),
 (1271, 1858208, 'Secretaria de Estado de Cultura e Turismo', 3, 'SECULT', 'f', '0'),
 (1281, 1858209, 'Secretaria de Esportes', 1, 'SEESP', 'f', '1'),
 (1301, 1858216, 'Secretaria de Estado de Infraestrutura e Mobilidade', 3, 'SEINFRA', 'f', '0'),
-(1311, 1858205, 'Secretaria de Ind�stria', 3, 'SEI', 'f', '1'),
-(1321, 1858213, 'Secretaria de Estado de Sa�de', 3, 'SES', 'f', '0'),
-(1341, 1857419, 'Coordenadoria de Apoio e Assist�ncia � Pessoa Deficiente', 4, 'CAADE', 'f', '1'),
-(1371, 1857447, 'Secretaria de Estado de Meio Ambiente e Desenvolvimento Sustent�vel', 3, 'SEMAD', 'f', '0'),
-(1381, 1858267, 'Secretaria de Estado do Trabalho, da Assist�ncia Social, da Crian�a e do Adolescente', 3, 'SETASCAD', 'f', '1'),
+(1311, 1858205, 'Secretaria de Indústria', 3, 'SEI', 'f', '1'),
+(1321, 1858213, 'Secretaria de Estado de Saúde', 3, 'SES', 'f', '0'),
+(1341, 1857419, 'Coordenadoria de Apoio e Assistência à Pessoa Deficiente', 4, 'CAADE', 'f', '1'),
+(1371, 1857447, 'Secretaria de Estado de Meio Ambiente e Desenvolvimento Sustentável', 3, 'SEMAD', 'f', '0'),
+(1381, 1858267, 'Secretaria de Estado do Trabalho, da Assistência Social, da Criança e do Adolescente', 3, 'SETASCAD', 'f', '1'),
 (1401, 2671339, 'Corpo de Bombeiros Militar de Minas Gerais', 4, 'CBMMG', 'm', '0'),
 (1411, 2716739, 'Secretaria de Estado de Turismo', 3, 'SETUR', 'f', '0'),
 (1421, 1791031, 'SECRETARIA COMUNICACAO SOCIAL ', 0, 'SECS', 'f', '1'),
-(1441, 2873312, 'Defensoria P�blica do Estado de Minas Gerais', 4, 'DPMG', 'f', '0'),
-(1451, 1858212, 'Secretaria de Estado de Administra��o Prisional', 3, 'SEAP', 'f', '0'),
-(1461, 2873313, 'Secretaria de Estado de Desenvolvimento Econ�mico', 3, 'SEDE', 'f', '0'),
-(1471, 1858204, 'Secretaria de Estado de Cidades e de Integra��o Regional', 3, 'SECIR', 'f', '0'),
+(1441, 2873312, 'Defensoria Pública do Estado de Minas Gerais', 4, 'DPMG', 'f', '0'),
+(1451, 1858212, 'Secretaria de Estado de Administração Prisional', 3, 'SEAP', 'f', '0'),
+(1461, 2873313, 'Secretaria de Estado de Desenvolvimento Econômico', 3, 'SEDE', 'f', '0'),
+(1471, 1858204, 'Secretaria de Estado de Cidades e de Integração Regional', 3, 'SECIR', 'f', '0'),
 (1481, 2873309, 'Secretaria de Estado de Trabalho e Desenvolvimento Social', 3, 'SEDESE', 'f', '0'),
 (1491, 2873308, 'Secretaria de Estado de Governo', 3, 'SEGOV', 'f', '0'),
-(1501, 2873307, 'Secretaria de Estado de Planejamento e Gest�o', 3, 'SEPLAG', 'f', '0'),
-(1511, 1858215, 'Pol�cia Civil do Estado de Minas Gerais', 4, 'PCMG', 'f', '0'),
+(1501, 2873307, 'Secretaria de Estado de Planejamento e Gestão', 3, 'SEPLAG', 'f', '0'),
+(1511, 1858215, 'Polícia Civil do Estado de Minas Gerais', 4, 'PCMG', 'f', '0'),
 (1521, 2273949, 'Controladoria Geral do Estado', 4, 'CGE', 'f', '0'),
 (1531, 3017980, 'Secretaria de Estado de Esportes e da Juventude', 3, 'SEEJ', 'f', '1'),
-(1541, 3017981, 'Escola de Sa�de P�blica de Minas Gerais', 4, 'ESP', 'f', '0'),
-(1571, 3189804, 'Secretaria de Estado de Casa Civil e de Rela��es Institucionais', 3, 'SECCRI', 'f', '0'),
+(1541, 3017981, 'Escola de Saúde Pública de Minas Gerais', 4, 'ESP', 'f', '0'),
+(1571, 3189804, 'Secretaria de Estado de Casa Civil e de Relações Institucionais', 3, 'SECCRI', 'f', '0'),
 (1581, 3189872, 'Secretaria de Estado de Trabalho e Emprego', 3, 'SETE', 'f', '1'),
-(1591, 3189873, 'Secretaria de Estado de Desenvolvimento e Integra��o do Norte e Nordeste de Minas Gerais', 3, 'SEDINOR', 'f', '0'),
-(1601, 3190139, 'Escrit�rio de Prioridades Estrat�gicas', 3, 'EPE', 'm', '1'),
+(1591, 3189873, 'Secretaria de Estado de Desenvolvimento e Integração do Norte e Nordeste de Minas Gerais', 3, 'SEDINOR', 'f', '0'),
+(1601, 3190139, 'Escritório de Prioridades Estratégicas', 3, 'EPE', 'm', '1'),
 (1631, 3200569, 'Secretaria Geral', 1, 'SG', 'f', '0'),
-(1641, 3347491, 'Secretaria de Estado de Desenvolvimento Agr�rio', 3, 'SEDA', 'f', '0'),
-(1651, 3346710, 'Secretaria de Estado de Direitos Humanos, Participa��o Social e Cidadania', 3, 'SEDPAC', 'f', '0'),
+(1641, 3347491, 'Secretaria de Estado de Desenvolvimento Agrário', 3, 'SEDA', 'f', '0'),
+(1651, 3346710, 'Secretaria de Estado de Direitos Humanos, Participação Social e Cidadania', 3, 'SEDPAC', 'f', '0'),
 (1671, 3347506, 'Secretaria de Estado de Esportes ', 3, 'SEESP', 'f', '0'),
-(1691, 3408097, 'Secretaria de Estado de Seguran�a P�blica', 3, 'SESP', 'f', '0'),
+(1691, 3408097, 'Secretaria de Estado de Segurança Pública', 3, 'SESP', 'f', '0'),
 (1692, NULL, 'INSTITUICAO C/ CODIGO DE UNIDADE NAO INFORMADO', 0, 'INVALIDO', 'm', '1'),
 (1693, NULL, 'INSTITUICAO C/ CODIGO DE UNIDADE NAO INFORMADO', 0, 'INVALIDO', 'm', '1'),
-(1701, 3414458, 'Secretaria de Estado Extraordin�ria de Desenvolvimento Integrado', 3, 'SEEDIF', 'f', '1'),
+(1701, 3414458, 'Secretaria de Estado Extraordinária de Desenvolvimento Integrado', 3, 'SEEDIF', 'f', '1'),
 (1941, 1853802, 'ENCARGOS GERAIS PLANEJAMENTO E GESTAO', 0, 'ENCARGOS', 'm', '1'),
-(2011, 1857455, 'Instituto de Previd�ncia dos Servidores do Estado de Minas Gerais', 6, 'IPSEMG', 'm', '0'),
+(2011, 1857455, 'Instituto de Previdência dos Servidores do Estado de Minas Gerais', 6, 'IPSEMG', 'm', '0'),
 (2041, 1857459, 'Loteria do Estado de Minas Gerais', 6, 'LEMG', 'f', '0'),
-(2061, 1857440, 'Funda��o Jo�o Pinheiro', 5, 'FJP', 'f', '0'),
-(2071, 1857430, 'Funda��o de Amparo a Pesquisa do Estado de Minas Gerais', 5, 'FAPEMIG', 'f', '0'),
-(2081, 1857417, 'Funda��o Centro Tecnol�gico de Minas Gerais', 5, 'CETEC', 'f', '0'),
-(2091, 2273955, 'Funda��o Estadual do Meio Ambiente', 5, 'FEAM', 'f', '0'),
+(2061, 1857440, 'Fundação João Pinheiro', 5, 'FJP', 'f', '0'),
+(2071, 1857430, 'Fundação de Amparo a Pesquisa do Estado de Minas Gerais', 5, 'FAPEMIG', 'f', '0'),
+(2081, 1857417, 'Fundação Centro Tecnológico de Minas Gerais', 5, 'CETEC', 'f', '0'),
+(2091, 2273955, 'Fundação Estadual do Meio Ambiente', 5, 'FEAM', 'f', '0'),
 (2101, 1767133, 'Instituto Estadual de Florestas', 6, 'IEF', 'm', '0'),
-(2111, 1858201, 'Funda��o Rural Mineira', 5, 'RURALMINAS', 'f', '0'),
-(2121, 1857454, 'Instituto de Previd�ncia dos Servidores Militares do Estado de Minas Gerais', 6, 'IPSM', 'm', '0'),
-(2141, 1857422, 'Departamento de Obras P�blicas do Estado de Minas Gerais', 6, 'DEOP', 'm', '1'),
-(2151, 1857438, 'Funda��o Helena Antipoff', 5, 'FHA', 'f', '0'),
-(2161, 1857434, 'Funda��o Educacional Caio Martins', 5, 'FUCAM', 'f', '0'),
-(2171, 1857429, 'Funda��o de Arte de Ouro Preto', 5, 'FAOP', 'f', '0'),
-(2181, 1857432, 'Funda��o Cl�vis Salgado', 5, 'FCS', 'f', '0'),
-(2201, 1857451, 'Instituto Estadual do Patrim�nio Hist�rico e Art�stico de Minas Gerais', 5, 'IEPHA', 'm', '0'),
-(2211, 1858561, 'Funda��o TV Minas', 5, 'TVMINAS', 'f', '0'),
-(2231, 1853800, 'Administra��o de Est�dios do Estado de Minas Gerais', 6, 'ADEMG', 'f', '1'),
-(2241, 2273951, 'Instituto Mineiro de Gest�o das �guas', 6, 'IGAM', 'm', '0'),
+(2111, 1858201, 'Fundação Rural Mineira', 5, 'RURALMINAS', 'f', '0'),
+(2121, 1857454, 'Instituto de Previdência dos Servidores Militares do Estado de Minas Gerais', 6, 'IPSM', 'm', '0'),
+(2141, 1857422, 'Departamento de Obras Públicas do Estado de Minas Gerais', 6, 'DEOP', 'm', '1'),
+(2151, 1857438, 'Fundação Helena Antipoff', 5, 'FHA', 'f', '0'),
+(2161, 1857434, 'Fundação Educacional Caio Martins', 5, 'FUCAM', 'f', '0'),
+(2171, 1857429, 'Fundação de Arte de Ouro Preto', 5, 'FAOP', 'f', '0'),
+(2181, 1857432, 'Fundação Clóvis Salgado', 5, 'FCS', 'f', '0'),
+(2201, 1857451, 'Instituto Estadual do Patrimônio Histórico e Artístico de Minas Gerais', 5, 'IEPHA', 'm', '0'),
+(2211, 1858561, 'Fundação TV Minas', 5, 'TVMINAS', 'f', '0'),
+(2231, 1853800, 'Administração de Estádios do Estado de Minas Gerais', 6, 'ADEMG', 'f', '1'),
+(2241, 2273951, 'Instituto Mineiro de Gestão das Águas', 6, 'IGAM', 'm', '0'),
 (2251, 1857457, 'Junta Comercial do Estado de Minas Gerais', 6, 'JUCEMG', 'f', '0'),
-(2261, 1857448, 'Funda��o Ezequiel Dias', 5, 'FUNED', 'f', '0'),
-(2271, 1857431, 'Funda��o Hospitalar do Estado de Minas Gerais', 5, 'FHEMIG', 'f', '0'),
-(2281, 1858563, 'Funda��o de Educa��o para o Trabalho de Minas Gerais', 5, 'UTRAMIG', 'f', '0'),
-(2301, 1857424, 'Departamento de Edifica��es e Estradas de Rodagem do Estado de Minas Gerais', 6, 'DEER', 'm', '0'),
+(2261, 1857448, 'Fundação Ezequiel Dias', 5, 'FUNED', 'f', '0'),
+(2271, 1857431, 'Fundação Hospitalar do Estado de Minas Gerais', 5, 'FHEMIG', 'f', '0'),
+(2281, 1858563, 'Fundação de Educação para o Trabalho de Minas Gerais', 5, 'UTRAMIG', 'f', '0'),
+(2301, 1857424, 'Departamento de Edificações e Estradas de Rodagem do Estado de Minas Gerais', 6, 'DEER', 'm', '0'),
 (2311, 1858562, 'Universidade Estadual de Montes Claros', 6, 'UNIMONTES', 'f', '0'),
-(2321, 1857439, 'Funda��o Centro de Hematologia e Hemoterapia do Estado de Minas Gerais', 5, 'HEMOMINAS', 'f', '0'),
+(2321, 1857439, 'Fundação Centro de Hematologia e Hemoterapia do Estado de Minas Gerais', 5, 'HEMOMINAS', 'f', '0'),
 (2331, 1857456, 'Instituto de Metrologia e Qualidade', 6, 'IPEM', 'm', '0'),
 (2351, 1806206, 'Universidade do Estado de Minas Gerais', 6, 'UEMG', 'f', '0'),
-(2371, 1862379, 'Instituto Mineiro de Agropecu�ria', 6, 'IMA', 'm', '0'),
-(2381, 1857423, 'Departamento Estadual de Telecomunica��es de Minas Gerais', 6, 'DETEL', 'm', '1'),
+(2371, 1862379, 'Instituto Mineiro de Agropecuária', 6, 'IMA', 'm', '0'),
+(2381, 1857423, 'Departamento Estadual de Telecomunicações de Minas Gerais', 6, 'DETEL', 'm', '1'),
 (2391, 1857452, 'Imprensa Oficial do Estado de Minas Gerais', 6, 'IOF', 'f', '1'),
-(2401, 2426354, 'Instituto de Geoinforma��o e Tecnologia', 6, 'IGTEC', 'm', '0'),
+(2401, 2426354, 'Instituto de Geoinformação e Tecnologia', 6, 'IGTEC', 'm', '0'),
 (2411, 2855048, 'Instituto de Terras do Estado de Minas Gerais', 6, 'ITER', 'm', '1'),
 (2421, 1857418, 'Instituto de Desenvolvimento do Norte e Nordeste de Minas Gerais', 6, 'IDENE', 'm', '0'),
-(2431, 3115953, 'Ag�ncia de Desenvolvimento da Regi�o Metropolitana de Belo Horizonte', 6, 'ARMBH', 'f', '0'),
-(2441, 3133385, 'Ag�ncia Reguladora de Servi�os de Abastecimento de �gua e de Esgotamento Sanit�rio do Estado de Minas Gerais', 6, 'ARSAE', 'f', '0'),
-(2451, 3146991, 'Funda��o Centro Internacional de Educa��o Capacita��o e Pesquisa Aplicada em �guas', 5, 'HIDROEX', 'f', '0'),
-(2461, 3230042, 'Ag�ncia Metropolitana do Vale do A�o', 6, 'ARMVA', 'f', '0'),
-(3001, NULL, 'Secretaria de Estado Extraordin�ria para Assuntos de Reforma Agr�ria', 3, 'SEARA', 'f', '0'),
-(3041, 2426998, 'Empresa de Assist�ncia T�cnica e Extens�o Rural do Estado de Minas Gerais', 8, 'EMATER', 'f', '0'),
-(3051, 2426999, 'Empresa de Pesquisa Agropecu�ria de Minas Gerais', 8, 'EPAMIG', 'f', '0'),
-(3151, 1858200, 'R�dio Inconfid�ncia Ltda.', 8, 'INCONFIDENCIA', 'f', '0'),
+(2431, 3115953, 'Agência de Desenvolvimento da Região Metropolitana de Belo Horizonte', 6, 'ARMBH', 'f', '0'),
+(2441, 3133385, 'Agência Reguladora de Serviços de Abastecimento de Água e de Esgotamento Sanitário do Estado de Minas Gerais', 6, 'ARSAE', 'f', '0'),
+(2451, 3146991, 'Fundação Centro Internacional de Educação Capacitação e Pesquisa Aplicada em Águas', 5, 'HIDROEX', 'f', '0'),
+(2461, 3230042, 'Agência Metropolitana do Vale do Aço', 6, 'ARMVA', 'f', '0'),
+(3001, NULL, 'Secretaria de Estado Extraordinária para Assuntos de Reforma Agrária', 3, 'SEARA', 'f', '0'),
+(3041, 2426998, 'Empresa de Assistência Técnica e Extensão Rural do Estado de Minas Gerais', 8, 'EMATER', 'f', '0'),
+(3051, 2426999, 'Empresa de Pesquisa Agropecuária de Minas Gerais', 8, 'EPAMIG', 'f', '0'),
+(3151, 1858200, 'Rádio Inconfidência Ltda.', 8, 'INCONFIDENCIA', 'f', '0'),
 (3261, NULL, 'Transportes Metropolitanos de Belo Horizonte S.A.', 8, 'METROMINAS', 'f', '0'),
-(5011, 2426992, 'Companhia de Desenvolvimento Econ�mico de Minas Gerais', 8, 'CODEMIG', 'f', '0'),
-(5071, 2426982, 'Companhia de Habita��o do Estado de Minas Gerais', 8, 'COHAB', 'f', '0'),
+(5011, 2426992, 'Companhia de Desenvolvimento Econômico de Minas Gerais', 8, 'CODEMIG', 'f', '0'),
+(5071, 2426982, 'Companhia de Habitação do Estado de Minas Gerais', 8, 'COHAB', 'f', '0'),
 (5080, NULL, 'Companhia de Saneamento de Minas Gerais', 8, 'COPASA', 'f', '0'),
-(5121, 2426989, 'Companhia Energ�tica de Minas Gerais', 8, 'CEMIG', 'f', '0'),
+(5121, 2426989, 'Companhia Energética de Minas Gerais', 8, 'CEMIG', 'f', '0'),
 (5131, 2427004, 'Instituto de Desenvolvimento Integrado de Minas Gerais', 6, 'INDI', 'm', '0'),
-(5141, 1764024, 'Companhia de Tecnologia da Informa��o do Estado de Minas Gerais', 8, 'PRODEMGE', 'f', '0'),
-(5181, 2426997, 'Distribuidora de T�tulos e Valores Mobili�rios de Minas Gerais S.A.', 8, 'DIMINAS', 'f', '0'),
-(5191, 2427005, 'Minas Gerais Participa��es S.A.', 8, 'MGI', 'f', '0'),
+(5141, 1764024, 'Companhia de Tecnologia da Informação do Estado de Minas Gerais', 8, 'PRODEMGE', 'f', '0'),
+(5181, 2426997, 'Distribuidora de Títulos e Valores Mobiliários de Minas Gerais S.A.', 8, 'DIMINAS', 'f', '0'),
+(5191, 2427005, 'Minas Gerais Participações S.A.', 8, 'MGI', 'f', '0'),
 (5201, 2426925, 'Banco de Desenvolvimento de Minas Gerais S.A.', 8, 'BDMG', 'm', '0'),
-(5241, 2426990, 'Companhia Mineira de Promo��es', 8, 'PROMINAS', 'f', '0'),
-(5251, NULL, 'Companhia de G�s de Minas Gerais', 8, 'GASMIG', 'f', '0'),
-(5381, 2427008, 'Minas Gerais Administra��o e Servi�os S.A.', 8, 'MGS', 'f', '0'),
-(1260365, NULL, 'Secretaria de Estado Extraordin�ria da Copa do Mundo', 3, 'SECOPA', 'f', '1'),
-(1260366, NULL, 'Secretaria de Estado Extraordin�ria de Gest�o Metropolitana', 3, 'SEEGM', 'f', '1'),
-(1260367, NULL, 'Secretaria de Estado Extraordin�ria de Regulariza��o Fundi�ria', 3, 'SEERF', 'f', '1'),
-(1260368, NULL, 'Conselho Estadual de Educa��o', 8, 'CEE', 'm', '0'),
+(5241, 2426990, 'Companhia Mineira de Promoções', 8, 'PROMINAS', 'f', '0'),
+(5251, NULL, 'Companhia de Gás de Minas Gerais', 8, 'GASMIG', 'f', '0'),
+(5381, 2427008, 'Minas Gerais Administração e Serviços S.A.', 8, 'MGS', 'f', '0'),
+(1260365, NULL, 'Secretaria de Estado Extraordinária da Copa do Mundo', 3, 'SECOPA', 'f', '1'),
+(1260366, NULL, 'Secretaria de Estado Extraordinária de Gestão Metropolitana', 3, 'SEEGM', 'f', '1'),
+(1260367, NULL, 'Secretaria de Estado Extraordinária de Regularização Fundiária', 3, 'SEERF', 'f', '1'),
+(1260368, NULL, 'Conselho Estadual de Educação', 8, 'CEE', 'm', '0'),
 (1260370, NULL, 'INSTITUICAO C/ CODIGO DE UNIDADE NAO INFORMADO', 0, 'INVALIDO', 'm', '1'),
-(1260371, NULL, 'Conselho Nacional de Secret�rios de Estado da Administra��o', 0, 'CONSAD', 'm', '0');
-
-
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tb_instituicoes3`
---
-
-CREATE TABLE IF NOT EXISTS `tb_instituicoes3` (
-  `pr_instituicao` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `vc_instituicao` varchar(250) COLLATE utf8_bin NOT NULL,
-  `vc_sigla` varchar(50) COLLATE utf8_bin DEFAULT NULL,
-  `in_codigo` int(10) unsigned DEFAULT NULL,
-  `vc_cnpj` varchar(20) COLLATE utf8_bin DEFAULT NULL,
-  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
-  PRIMARY KEY (`pr_instituicao`),
-  UNIQUE KEY `in_codigo` (`in_codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-
+(1260371, NULL, 'Conselho Nacional de Secretários de Estado da Administração', 0, 'CONSAD', 'm', '0');
 
 -- --------------------------------------------------------
 
@@ -870,6 +849,24 @@ CREATE TABLE IF NOT EXISTS `tb_notas_totais` (
   KEY `es_etapa` (`es_etapa`)
 ) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
 
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `tb_instituicoes3`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_instituicoes3` (
+  `pr_instituicao` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `vc_instituicao` varchar(250) COLLATE utf8_bin NOT NULL,
+  `vc_sigla` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `in_codigo` int(10) unsigned DEFAULT NULL,
+  `vc_cnpj` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pr_instituicao`),
+  UNIQUE KEY `in_codigo` (`in_codigo`)
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
 -- --------------------------------------------------------
 
 --
@@ -887,8 +884,9 @@ CREATE TABLE IF NOT EXISTS `tb_opcoes` (
   KEY `IDQuestao` (`es_questao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8513 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- --------------------------------------------------------
 
+
+-- --------------------------------------------------------
 --
 -- Table structure for table `tb_questoes`
 --
@@ -900,7 +898,7 @@ CREATE TABLE IF NOT EXISTS `tb_questoes` (
   `tx_questao` mediumtext COLLATE utf8_bin NOT NULL,
   `vc_respostaAceita` varchar(500) COLLATE utf8_bin DEFAULT NULL,
   `in_peso` tinyint(3) UNSIGNED DEFAULT NULL,
-  `in_tipo` tinyint(3) UNSIGNED NOT NULL COMMENT '1: Customizadas; 2: Aberta; 3: Sim/N�o (Sim positivo); 4: Sim/N�o (N�o positivo); 5: Nenhum/B�sico/Intermedi�rio/Avan�ado; 6 - Intervalo',
+  `in_tipo` tinyint(3) UNSIGNED NOT NULL COMMENT '1: Customizadas; 2: Aberta; 3: Sim/Não (Sim positivo); 4: Sim/Não (Não positivo); 5: Nenhum/Básico/Intermediário/Avançado; 6 - Intervalo',
   `bl_eliminatoria` enum('0','1') COLLATE utf8_bin NOT NULL,
   `bl_obrigatorio` enum('0','1') COLLATE utf8_bin NOT NULL,
   `es_usuarioCadastro` int(10) UNSIGNED NOT NULL,
@@ -988,25 +986,25 @@ CREATE TABLE IF NOT EXISTS `tb_status_candidaturas` (
 INSERT INTO `tb_status_candidaturas` (`pr_status`, `in_status_legado`, `vc_status`) VALUES
 (1, 1, 'Cadastro iniciado'),
 (2, NULL, 'Cadastro indeferido'),
-(3, NULL, 'Curr�culo Cadastrado'),
-(4, 4, 'Aprovado(a) req. obrigat�rios'),
-(5, 5, 'Eliminado(a) req.  obrigat�rios'),
-(6, NULL, 'Curr�culo preenchido'),
+(3, NULL, 'Currículo Cadastrado'),
+(4, 4, 'Aprovado(a) req. obrigatórios'),
+(5, 5, 'Eliminado(a) req.  obrigatórios'),
+(6, NULL, 'Currículo preenchido'),
 (7, 6, 'Candidatura realizada'),
-(8, NULL, 'Curr�culo Avaliado'),
-(9, 9, 'Reprovado(a) an�lise curricular'),
+(8, NULL, 'Currículo Avaliado'),
+(9, 9, 'Reprovado(a) análise curricular'),
 (10, 8, 'Selecionado(a) para entrevista'),
-(11, NULL, 'Avaliado(a) Entrevista por Compet�ncia'),
+(11, NULL, 'Avaliado(a) Entrevista por Competência'),
 (12, NULL, 'Avaliado(a) Entrevista com especialista'),
-(13, NULL, 'Eliminado(a) Revis�o de requisitos'),
-(14, 10, 'Aguardando decis�o final'),
+(13, NULL, 'Eliminado(a) Revisão de requisitos'),
+(14, 10, 'Aguardando decisão final'),
 (15, 11, 'Eliminado(a) na entrevista'),
-(16, NULL, 'Aguardando an�lise da autoridade m�xima'),
-(17, NULL, 'Req. desej�veis preenchidos'),
+(16, NULL, 'Aguardando análise da autoridade máxima'),
+(17, NULL, 'Req. desejáveis preenchidos'),
 (18, NULL, 'Reprovado(a) no processo seletivo'),
 (19, NULL, 'Aprovado(a) no processo seletivo'),
-(20, NULL, 'Reprovado(a) Habilita��o'),
-(21, NULL, 'Reprovado(a) Habilita��o (confirmado)');
+(20, NULL, 'Reprovado(a) Habilitação'),
+(21, NULL, 'Reprovado(a) Habilitação (confirmado)');
 
 -- --------------------------------------------------------
 
@@ -1031,29 +1029,29 @@ INSERT INTO `tb_uf` (`pr_uf`, `ch_sigla`, `vc_uf`) VALUES
 (1, 'AC', 'Acre'),
 (2, 'AL', 'Alagoas'),
 (3, 'AM', 'Amazonas'),
-(4, 'AP', 'Amap�'),
+(4, 'AP', 'Amapá'),
 (5, 'BA', 'Bahia'),
-(6, 'CE', 'Cear�'),
+(6, 'CE', 'Ceará'),
 (7, 'DF', 'Distrito Federal'),
-(8, 'ES', 'Esp�rito Santo'),
-(9, 'GO', 'Goi�s'),
-(10, 'MA', 'Maranh�o'),
+(8, 'ES', 'Espírito Santo'),
+(9, 'GO', 'Goiás'),
+(10, 'MA', 'Maranhão'),
 (11, 'MG', 'Minas Gerais'),
 (12, 'MS', 'Mato Grosso do Sul'),
 (13, 'MT', 'Mato Grosso'),
-(14, 'PA', 'Par�'),
-(15, 'PB', 'Para�ba'),
+(14, 'PA', 'Pará'),
+(15, 'PB', 'Paraíba'),
 (16, 'PE', 'Pernambuco'),
-(17, 'PI', 'Piau�'),
-(18, 'PR', 'Paran�'),
+(17, 'PI', 'Piauí'),
+(18, 'PR', 'Paraná'),
 (19, 'RJ', 'Rio de Janeiro'),
 (20, 'RN', 'Rio Grande do Norte'),
-(21, 'RO', 'Rond�nia'),
+(21, 'RO', 'Rondônia'),
 (22, 'RR', 'Roraima'),
 (23, 'RS', 'Rio Grande do Sul'),
 (24, 'SC', 'Santa Catarina'),
 (25, 'SE', 'Sergipe'),
-(26, 'SP', 'São Paulo'),
+(26, 'SP', 'SÃ£o Paulo'),
 (27, 'TO', 'Tocantins');
 
 -- --------------------------------------------------------
@@ -1141,13 +1139,6 @@ CREATE TABLE IF NOT EXISTS `tb_vagas` (
   KEY `es_usuarioAlteracao` (`es_usuarioAlteracao`),
   KEY `es_instituicao` (`es_instituicao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-
-
-
-
-
 
 --
 -- Constraints for dumped tables
