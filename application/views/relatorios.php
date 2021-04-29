@@ -10,8 +10,7 @@ if(isset($adicionais)){
         $pagina['adicionais']=$adicionais;
 }
 
-$this -> load -> view('internaCabecalho', $pagina);
-$this -> load -> view('internaMenu', $pagina);
+$this->load->view('templates/internaCabecalho', $pagina);
 
 echo "
                         <div class=\"pcoded-content\">
@@ -2689,5 +2688,7 @@ else if($menu2 == 'AvaliacaoEspecialista'){
 
 echo "
                                             </div>";
-$this -> load -> view('internaRodape', $pagina);
+
+$this->load->view('templates/internaRodape', $pagina);
+
 ?>

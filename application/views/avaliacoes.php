@@ -10,8 +10,7 @@ if(isset($adicionais)){
         $pagina['adicionais']=$adicionais;
 }
 
-$this -> load -> view('internaCabecalho', $pagina);
-$this -> load -> view('internaMenu', $pagina);
+$this->load->view('templates/internaCabecalho', $pagina);
 
 if ($menu2 != 'AvaliacaoCurriculo'){
     //Modelo padrão de página
@@ -6307,5 +6306,5 @@ if($menu2 == 'AvaliacaoEntrevistaEspecialista'){ //avaliação da entrevista esp
 echo "
                                     </div>";
 
-$this -> load -> view('internaRodape', $pagina);
+$this->load->view('templates/internaRodape', $pagina);
 ?>

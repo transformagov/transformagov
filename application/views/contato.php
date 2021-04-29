@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $this -> load -> view('templates/publicoCabecalho');
+
 echo "
                 <div class=\"content\">
                         <!-- BEGIN LOGIN FORM -->
@@ -94,5 +95,6 @@ else{
                          SUGESP - SEPLAG © Layout Metronic
                 </div>";
 }
+
 $this -> load -> view('templates/publicoRodape');
 ?>
