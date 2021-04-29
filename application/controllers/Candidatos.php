@@ -1461,7 +1461,7 @@ class Candidatos extends CI_Controller {
                                                                 $this -> Usuarios_model -> log('erro', 'Candidatos/cadastro', "Erro de envio de e-mail com senha de cadastro para o e-mail {$dados_form['Email']} do candidato {$pr_candidato}.", 'tb_candidatos', $pr_candidato);
                                                         }
                                                         else{
-                                                                $this -> Usuarios_model -> log('sucesso', 'Candidatos/cadastro', "Envio de e-mail com senha de cadastro para o e-mail {$dados_form['Email']} do candidato {$pr_candidato} realizado com sucesso. SENHA: {$senha}", 'tb_candidatos', $pr_candidato); // TODO PENCIL: Remover $senha
+                                                                $this -> Usuarios_model -> log('sucesso', 'Candidatos/cadastro', "Envio de e-mail com senha de cadastro para o e-mail {$dados_form['Email']} do candidato {$pr_candidato} realizado com sucesso.", 'tb_candidatos', $pr_candidato);
                                                         }
                                                         //$dados['sucesso'] = "<strong>Cadastro realizado com sucesso.</strong> Você vai receber sua senha inicial de acesso por e-mail. Caso não receba, tente recuperar sua senha pela página inicial ou entre em contato pelo fale conosco.<br/><br/><a href=\"".base_url()."\">Voltar</a>";
                                                         $dados['sucesso'] = "<div class=\"alert-text\">
