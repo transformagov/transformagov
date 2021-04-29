@@ -21,7 +21,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='index';
                 $pagina['url']='Vagas/index';
                 $pagina['nome_pagina']='Lista de vagas';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 $dados['adicionais'] = array('datatables' => true);
@@ -81,7 +81,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='create';
                 $pagina['url']='Vagas/create';
                 $pagina['nome_pagina']='Nova vaga';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 $dados['adicionais'] = array('pickers' => true);
@@ -153,7 +153,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='edit';
                 $pagina['url']='Vagas/edit';
                 $pagina['nome_pagina']='Editar vaga';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 $dados['adicionais'] = array('pickers' => true);
@@ -482,7 +482,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='delete';
                 $pagina['url']='Vagas/delete';
                 $pagina['nome_pagina']='Desativar vaga';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 $vaga = $this -> uri -> segment(3);
@@ -504,7 +504,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='reactivate';
                 $pagina['url']='Vagas/reactivate';
                 $pagina['nome_pagina']='Reativar vaga';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 $vaga = $this -> uri -> segment(3);
@@ -534,7 +534,7 @@ class Vagas extends CI_Controller {
                         $pagina['menu2']='AgendamentoEntrevista';
                         $pagina['url']='Vagas/AgendamentoEntrevista/'.$candidatura.'/'.$tipo_entrevista;
                         $pagina['nome_pagina']='Agendamento de entrevista'.($tipo_entrevista == 'especialista'?' com especialista':' por competência');
-                        $pagina['icone']='fa fa-pencil-square-o';
+                        $pagina['icone']='fa fa-edit';
 
                         $dados=$pagina;
                         $dados['adicionais'] = array('pickers' => true,'calendar' => true,'moment'=>true,'select2'=>true);
@@ -3016,7 +3016,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='index';
                 $pagina['url']='Vagas/questoes';
                 $pagina['nome_pagina']='Lista de questões';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 $dados['adicionais'] = array('datatables' => true);
@@ -3036,7 +3036,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='questoes';
                 $pagina['url']='Vagas/questoes';
                 $pagina['nome_pagina']='Definir questões';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 //$dados['adicionais'] = array('pickers' => true);
@@ -3093,7 +3093,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='selecionar_entrevista';
                 $pagina['url']='Vagas/selecionar_entrevista/'.$vaga;
                 $pagina['nome_pagina']='Selecionar candidatos para a entrevista';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
                 $dados=$pagina;
 
                 $dados['adicionais'] = array(
@@ -3124,7 +3124,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='visualizar_nota';
                 $pagina['url']='Vagas/visualizar_nota/'.$vaga;
                 $pagina['nome_pagina']='Visualização das notas';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
                 $dados=$pagina;
 
                 $dados['adicionais'] = array(

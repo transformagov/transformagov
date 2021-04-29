@@ -22,7 +22,7 @@ class Candidaturas extends CI_Controller {
                 $pagina['menu2']='index';
                 $pagina['url']='Candidaturas/index';
                 $pagina['nome_pagina']='Candidaturas';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
                 $dados['adicionais'] = array(
@@ -43,7 +43,7 @@ class Candidaturas extends CI_Controller {
                 $pagina['menu2']='create';
                 $pagina['url']='Candidaturas/create';
                 $pagina['nome_pagina']='Nova candidatura';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
                 $dados['adicionais'] = array('wizard' => true);
@@ -100,7 +100,7 @@ class Candidaturas extends CI_Controller {
                 $pagina['menu2']='Prova';
                 $pagina['url']='Candidaturas/Prova';
                 $pagina['nome_pagina']='Nova candidatura';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
                 if($this -> input -> post('vaga') > 0){
@@ -710,7 +710,7 @@ a[x-apple-data-detectors=true] {
                 $pagina['menu2']='Curriculo';
                 $pagina['url']='Candidaturas/Curriculo';
                 $pagina['nome_pagina']='Nova candidatura';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
                 if($this -> input -> post('vaga') > 0){
@@ -1297,7 +1297,7 @@ a[x-apple-data-detectors=true] {
                 $pagina['menu2']='Questionario';
                 $pagina['url']='Candidaturas/Questionario';
                 $pagina['nome_pagina']='Nova candidatura';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
                 if($this -> input -> post('vaga') > 0){
@@ -2461,7 +2461,7 @@ a[x-apple-data-detectors=true] {
                 $pagina['menu2']='TesteAderencia';
                 $pagina['url']='Candidaturas/TesteAderencia';
                 $pagina['nome_pagina']='Teste de aderência';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
                 if($this -> input -> post('candidatura') > 0){
@@ -3019,7 +3019,7 @@ a[x-apple-data-detectors=true] {
                 $pagina['menu2']='TesteMotivacao';
                 $pagina['url']='Candidaturas/TesteMotivacao';
                 $pagina['nome_pagina']='Teste de Motivação do Serviço Público';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
                 if($this -> input -> post('candidatura') > 0){
@@ -3579,7 +3579,7 @@ a[x-apple-data-detectors=true] {
                 $pagina['menu2']='HBDI';
                 $pagina['url']='Candidaturas/HBDI';
                 $pagina['nome_pagina']='HBDI';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
                 if($this -> input -> post('candidatura') > 0){
@@ -3827,7 +3827,7 @@ a[x-apple-data-detectors=true] {
                 else{
                         $pagina['nome_pagina']='Candidaturas';
                 }
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
                 $dados['adicionais'] = array(
@@ -3943,7 +3943,7 @@ a[x-apple-data-detectors=true] {
                 $pagina['menu2']='DetalheAvaliacao';
                 $pagina['url']='Candidaturas/DetalheAvaliacao';
                 $pagina['nome_pagina']='Detalhes de avaliação';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
 
@@ -4058,7 +4058,7 @@ a[x-apple-data-detectors=true] {
                 $pagina['menu2']='AvaliacaoEntrevista';
                 $pagina['url']='Candidaturas/AvaliacaoEntrevista';
                 $pagina['nome_pagina']='Avaliação da entrevista';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
                 if($this -> input -> post('codigo') > 0){
@@ -4754,7 +4754,7 @@ a[x-apple-data-detectors=true] {
                 $pagina['menu2']='AvaliacaoEntrevistaEspecialista';
                 $pagina['url']='Candidaturas/AvaliacaoEntrevistaEspecialista';
                 $pagina['nome_pagina']='Avaliação da entrevista com especialista';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
                 if($this -> input -> post('codigo') > 0){
@@ -5317,7 +5317,7 @@ a[x-apple-data-detectors=true] {
                         $pagina['menu2']='AgendamentoEntrevista';
                         $pagina['url']='Candidaturas/AgendamentoEntrevista';
                         $pagina['nome_pagina']='Agendamento de entrevista';
-                        $pagina['icone']='fa fa-pencil-square-o';
+                        $pagina['icone']='fa fa-edit';
 
                         $dados=$pagina;
                         $dados['adicionais'] = array('pickers' => true,'calendar' => true,'moment'=>true);
@@ -5510,7 +5510,7 @@ a[x-apple-data-detectors=true] {
                 $pagina['menu2']='editDossie';
                 $pagina['url']='Candidaturas/editDossie';
                 $pagina['nome_pagina']='Texto do dossiê';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
 
@@ -5583,7 +5583,7 @@ a[x-apple-data-detectors=true] {
 				}
                 
                 $pagina['nome_pagina']='Análise Curricular';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
 
@@ -6510,7 +6510,7 @@ a[x-apple-data-detectors=true] {
                 $pagina['menu2']='RevisaoRequisitos';
                 $pagina['url']='Candidaturas/RevisaoRequisitos/'.$id;
                 $pagina['nome_pagina']='Revisão de Requisitos';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
 

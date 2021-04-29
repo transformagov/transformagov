@@ -23,7 +23,7 @@ class Relatorios extends CI_Controller {
                 $pagina['menu2']='index';
                 $pagina['url']='Relatorios/index';
                 $pagina['nome_pagina']='Relatorios';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 				
                 $dados=$pagina;
 				$this -> load -> view('relatorios', $dados);
@@ -44,7 +44,7 @@ class Relatorios extends CI_Controller {
 						$vagas = $this ->Vagas_model -> get_vagas ($vaga);
 						$pagina['nome_pagina']='Relatorios - '.$vagas[0] -> vc_vaga;
 				}
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
 				
@@ -199,7 +199,7 @@ class Relatorios extends CI_Controller {
 						$vagas = $this ->Vagas_model -> get_vagas ($vaga);
 						$pagina['nome_pagina']='Relatorios - '.$vagas[0] -> vc_vaga;
 				}
-				$pagina['icone']='fa fa-pencil-square-o';
+				$pagina['icone']='fa fa-edit';
 
 				$dados=$pagina;
 				
@@ -361,7 +361,7 @@ class Relatorios extends CI_Controller {
                 $pagina['menu2']='AvaliacaoCurricular';
                 $pagina['url']='Relatorios/AvaliacaoCurricular';
                 $pagina['nome_pagina']='Resultados da Avaliação Curricular';
-                $pagina['icone']='fa fa-pencil-square-o';
+                $pagina['icone']='fa fa-edit';
 
                 $dados=$pagina;
                 $dados['sucesso'] = '';
@@ -581,7 +581,7 @@ class Relatorios extends CI_Controller {
 				$pagina['menu2']='AvaliacaoCompetencia';
 				$pagina['url']='Relatorios/AvaliacaoCompetencia';
 				$pagina['nome_pagina']='Resultados da Avaliação por Competência';
-				$pagina['icone']='fa fa-pencil-square-o';
+				$pagina['icone']='fa fa-edit';
 
 				$dados=$pagina;
 				$dados['sucesso'] = '';
@@ -788,7 +788,7 @@ class Relatorios extends CI_Controller {
 				$pagina['menu2']='TesteAderencia';
 				$pagina['url']='Relatorios/TesteAderencia';
 				$pagina['nome_pagina']='Resultados do Teste de Aderência';
-				$pagina['icone']='fa fa-pencil-square-o';
+				$pagina['icone']='fa fa-edit';
 
 				$dados=$pagina;
 				$dados['sucesso'] = '';
@@ -995,7 +995,7 @@ class Relatorios extends CI_Controller {
 				$pagina['menu2']='TesteMotivacao';
 				$pagina['url']='Relatorios/TesteMotivacao';
 				$pagina['nome_pagina']='Resultados do Teste de Motivação';
-				$pagina['icone']='fa fa-pencil-square-o';
+				$pagina['icone']='fa fa-edit';
 
 				$dados=$pagina;
 				$dados['sucesso'] = '';
@@ -1202,7 +1202,7 @@ class Relatorios extends CI_Controller {
 				$pagina['menu2']='HBDI';
 				$pagina['url']='Relatorios/HBDI';
 				$pagina['nome_pagina']='Resultados do Teste HBDI';
-				$pagina['icone']='fa fa-pencil-square-o';
+				$pagina['icone']='fa fa-edit';
 
 				$dados=$pagina;
 				$dados['sucesso'] = '';
@@ -2014,7 +2014,7 @@ class Relatorios extends CI_Controller {
 				$pagina['menu2']='AvaliacaoEspecialista';
 				$pagina['url']='Relatorios/AvaliacaoEspecialista';
 				$pagina['nome_pagina']='Resultados da Avaliação com Especialista';
-				$pagina['icone']='fa fa-pencil-square-o';
+				$pagina['icone']='fa fa-edit';
 
 				$dados=$pagina;
 				$dados['sucesso'] = '';

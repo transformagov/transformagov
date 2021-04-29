@@ -24,7 +24,7 @@ class GruposVagas extends CI_Controller {
                 $pagina['menu2']='index';
                 $pagina['url']='GruposVagas/index';
                 $pagina['nome_pagina']='Grupos de vagas';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 $dados['adicionais'] = array(
@@ -58,7 +58,7 @@ class GruposVagas extends CI_Controller {
                 $pagina['menu2']='create';
                 $pagina['url']='GruposVagas/create';
                 $pagina['nome_pagina']='Novo grupo de vagas';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 //$dados += $this -> input -> post(null,true);
@@ -98,7 +98,7 @@ class GruposVagas extends CI_Controller {
                 $pagina['menu2']='edit';
                 $pagina['url']='GruposVagas/edit';
                 $pagina['nome_pagina']='Editar grupo de vagas';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 $dados['adicionais'] = array('pickers' => true);
@@ -292,7 +292,7 @@ class GruposVagas extends CI_Controller {
                 $pagina['menu2']='historico_duplicate';
                 $pagina['url']='GruposVagas/historico_duplicate';
                 $pagina['nome_pagina']='Histórico de questão - '. $dados_grupo[0] -> vc_grupovaga;
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 
@@ -321,7 +321,7 @@ class GruposVagas extends CI_Controller {
                 $pagina['menu2']='historico_duplicate_total';
                 $pagina['url']='GruposVagas/historico_duplicate_total';
                 $pagina['nome_pagina']='Histórico de questões duplicadas';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 
@@ -349,7 +349,7 @@ class GruposVagas extends CI_Controller {
                 $pagina['menu2']='historico_duplicate_quantitativo';
                 $pagina['url']='GruposVagas/historico_duplicate_quantitativo';
                 $pagina['nome_pagina']='Quantitativo de questões duplicadas';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 
@@ -383,7 +383,7 @@ class GruposVagas extends CI_Controller {
                 $pagina['menu2']='create_motivacao';
                 $pagina['url']='GruposVagas/create_motivacao';
                 $pagina['nome_pagina']='Criar questões de motivação - '. $dados_grupo[0] -> vc_grupovaga;
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 $dados['adicionais'] = array('pickers' => true);
@@ -454,7 +454,7 @@ class GruposVagas extends CI_Controller {
                 $pagina['menu2']='delete';
                 $pagina['url']='GruposVagas/delete';
                 $pagina['nome_pagina']='Desativar grupo de vagas';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 $grupo = $this -> uri -> segment(3);
@@ -473,7 +473,7 @@ class GruposVagas extends CI_Controller {
                 $pagina['menu2']='reactivate';
                 $pagina['url']='GruposVagas/reactivate';
                 $pagina['nome_pagina']='Reativar grupo de vagas';
-                $pagina['icone']='fa fa-thumb-tack';
+                $pagina['icone']='fa fa-thumbtack';
 
                 $dados=$pagina;
                 $grupo = $this -> uri -> segment(3);

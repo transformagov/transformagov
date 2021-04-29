@@ -199,7 +199,7 @@ class Interna extends CI_Controller {
                 $pagina['menu2']='auditoria';
                 $pagina['url']='Interna/auditoria';
                 $pagina['nome_pagina']='Auditoria';
-                $pagina['icone']='fa fa-gear';
+                $pagina['icone']='fa fa-cog';
 
                 $dados=$pagina;
                 $dados['adicionais'] = array(
