@@ -14,7 +14,7 @@ $this->load->view('templates/internaCabecalho', $pagina);
 
 if ($menu2 != 'AvaliacaoCurriculo'){
     //Modelo padrão de página
-    echo "              <div class=\"pcoded-content\">
+    echo "              <div class=\"col-12\">
                             <div class=\"pcoded-inner-content\">
                                 <div class=\"main-body\">
                                     <div class=\"page-wrapper\">
@@ -29,7 +29,7 @@ if ($menu2 != 'AvaliacaoCurriculo'){
     
 } else {
     //Modelo de página de avaliação de currículo
-    echo "              <div class=\"pcoded-content\">
+    echo "              <div class=\"col-12\">
                             <div class=\"pcoded-inner-content p-0\">    
                                 <div class=\"main-body\">
                                     <div class=\"page-wrapper p-0\">

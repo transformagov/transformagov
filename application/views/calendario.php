@@ -14,7 +14,7 @@ $this->load->view('templates/internaCabecalho', $pagina);
 
 
 echo "
-                        <div class=\"pcoded-content\">
+                        <div class=\"col-12\">
                             <div class=\"pcoded-inner-content\">
                                 <div class=\"main-body\">
                                     <div class=\"page-wrapper\">
