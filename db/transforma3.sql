@@ -334,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `tb_entrevistas` (
   KEY `es_avaliador2` (`es_avaliador2`),
   KEY `es_alterador` (`es_alterador`),
   KEY `es_avaliador3` (`es_avaliador3`)
-) ENGINE=InnoDB AUTO_INCREMENT=416 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=416 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -650,7 +650,7 @@ CREATE TABLE IF NOT EXISTS `tb_instituicoes2` (
   `bl_extinto` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`pr_instituicao`),
   UNIQUE KEY `DDNRPESSOAFISJUR` (`DDNRPESSOAFISJUR`)
-) ENGINE=InnoDB AUTO_INCREMENT=1260372 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1260372 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tb_instituicoes2`
@@ -1104,7 +1104,7 @@ CREATE TABLE IF NOT EXISTS `tb_usuarios_bak` (
   `bl_trocasenha` enum('0','1') CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '1',
   `in_erros` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `bl_removido` enum('0','1') CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

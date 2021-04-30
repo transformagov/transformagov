@@ -334,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `tb_entrevistas` (
   KEY `es_avaliador2` (`es_avaliador2`),
   KEY `es_alterador` (`es_alterador`),
   KEY `es_avaliador3` (`es_avaliador3`)
-) ENGINE=InnoDB AUTO_INCREMENT=416 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=416 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -650,7 +650,7 @@ CREATE TABLE IF NOT EXISTS `tb_instituicoes2` (
   `bl_extinto` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`pr_instituicao`),
   UNIQUE KEY `DDNRPESSOAFISJUR` (`DDNRPESSOAFISJUR`)
-) ENGINE=InnoDB AUTO_INCREMENT=1260372 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1260372 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tb_instituicoes2`
@@ -849,6 +849,24 @@ CREATE TABLE IF NOT EXISTS `tb_notas_totais` (
   KEY `es_etapa` (`es_etapa`)
 ) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
 
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `tb_instituicoes3`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_instituicoes3` (
+  `pr_instituicao` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `vc_instituicao` varchar(250) COLLATE utf8_bin NOT NULL,
+  `vc_sigla` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `in_codigo` int(10) unsigned DEFAULT NULL,
+  `vc_cnpj` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pr_instituicao`),
+  UNIQUE KEY `in_codigo` (`in_codigo`)
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
 -- --------------------------------------------------------
 
 --
@@ -866,8 +884,9 @@ CREATE TABLE IF NOT EXISTS `tb_opcoes` (
   KEY `IDQuestao` (`es_questao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8513 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- --------------------------------------------------------
 
+
+-- --------------------------------------------------------
 --
 -- Table structure for table `tb_questoes`
 --
@@ -1085,7 +1104,7 @@ CREATE TABLE IF NOT EXISTS `tb_usuarios_bak` (
   `bl_trocasenha` enum('0','1') CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '1',
   `in_erros` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `bl_removido` enum('0','1') CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
