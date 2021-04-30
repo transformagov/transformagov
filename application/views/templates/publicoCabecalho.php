@@ -12,7 +12,6 @@ echo "<!DOCTYPE html>
             <title>".$this -> config -> item('nome')."</title>
             <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
             <meta content=\"width=device-width, initial-scale=1.0\" name=\"viewport\"/>
-            <meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\">
             <meta content=\"Sistema do ".$this -> config -> item('nome')."\" name=\"description\"/>
             <meta content=\"Cristiano de Magalhães Barros\" name=\"author\"/>
 
