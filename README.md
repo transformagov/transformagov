@@ -93,3 +93,28 @@ Existe um script chamado `run.sh`, no repositório. Ele executa tarefas como ini
 Após instalar as dependências, realizar a configuração do banco e do nginx, o desenvolvedor pode reutilizar
 esse script para subir a aplicação. Lembrando que, subindo manualmente, a aplicação irá responder na porta 80.
 Isso pode ser alterado no arquivo de configuração do nginx.
+
+# Ambiente de desenvolvimento
+
+Para auxiliar no ambiente de desenvolvimento. O Makefile tem dois comandos, `make sampleusers` e `make sampledevdata`.
+`make sampleusers` pode ser usado logo após `make restore` e serão adicionado 4 usuários.Já o comando `make sampledevdata` não precisa do `make restore` e possue os usuários do `make sampledevdata` além de alguns dadados já cadastrados a mais.
+
+## Usuários
+
+Apos a execução do comando `make restore`, é possivel executar o comando `make sampleusers` ou executando apenas `make sampledevdata`. Serão inseridos no banco de dados 4 usuários, os valores do campos CPF, RG e CEP foram gerados usando uma ferramenta.
+
+Tipo: admin
+CPF: 771.194.760-76
+Senha: usuadmin123
+
+Tipo: candidato
+CPF 687.541.020-65
+Senha: usucandidato123
+
+Tipo: avaliador
+CPF: 211.013.760-66
+Senha: usuavaliador123
+
+Tipo gestor:
+CPF: 058.636.740-32
+Senha: usugestor123
