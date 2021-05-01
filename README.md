@@ -97,7 +97,7 @@ Isso pode ser alterado no arquivo de configuração do nginx.
 # Ambiente de desenvolvimento
 
 Para auxiliar no ambiente de desenvolvimento. O Makefile tem dois comandos, `make sampleusers` e `make sampledevdata`.
-`make sampleusers` pode ser usado logo após `make restore` e serão adicionado 4 usuários.Já o comando `make sampledevdata` não precisa do `make restore` e possue os usuários do `make sampledevdata` além de alguns dadados já cadastrados a mais.
+`make sampleusers` pode ser usado logo após `make restore` e serão adicionados 4 usuários.Já o comando `make sampledevdata` não precisa do `make restore` e possue os usuários do `make sampleusers` além de alguns dadados já cadastrados a mais.
 
 ## Usuários
 
