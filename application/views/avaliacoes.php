@@ -4909,7 +4909,7 @@ if($menu2 == 'DetalheAvaliacao'){ //detalhamento da candidatura
         echo "                                          </div><!-- Fim div tab conteudo -->  
                                                     </div> <!-- Fim div card block -->
                                                 </div>
-                                            </div>";
+                                            </div></div>";
 }
 
 if($menu2 == 'RevisaoRequisitos'){ //detalhamento da candidatura
@@ -5552,7 +5552,7 @@ if($menu2 == 'RevisaoRequisitos'){ //detalhamento da candidatura
                                                                     </form>
                                                             </div>
                                                     </div>
-                                            </div>";
+                                            </div></div>";
 }
 
 if($menu2 == 'AgendamentoEntrevista'){ //agendamento da entrevista ou calendário
