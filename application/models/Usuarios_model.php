@@ -14,7 +14,7 @@ class Usuarios_model extends CI_Model {
                         $this -> db -> where('vc_login', $cpf);
                 }
                 else{
-                        $this -> db -> where('es_candidato', null);
+                        // $this -> db -> where('es_candidato', null);
                 }
                 if(strlen($vaga) >0){
                         $this -> db -> where("((pr_usuario in (select es_usuario from rl_vagas_avaliadores where es_vaga={$vaga}) and en_perfil = 2) or en_perfil = 3)");
@@ -32,7 +32,8 @@ class Usuarios_model extends CI_Model {
                 $this -> db -> order_by ('vc_nome', 'ASC');
                 $query = $this -> db -> get('tb_usuarios');
                 if($query -> num_rows() == 1){
-                        return $query -> row();
+                        // return $query -> row();
+                       return $query -> result();
                 }
                 else if($query -> num_rows() > 1){
                         return $query -> result();
