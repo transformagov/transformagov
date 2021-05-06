@@ -75,6 +75,11 @@ if (in_array($this->session->perfil, array_keys($perfilTypes))) {
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/transforma-minas-select2.css') ?>" />
     <?php endif ?>
 
+    <?php if(isset($adicionais['calendar'])): ?>
+        <!-- Calender css -->
+        <link rel="stylesheet" type="text/css" href="<?= base_url('bower_components\fullcalendar\css\fullcalendar.css') ?>">
+        <link rel="stylesheet" type="text/css" href="<?= base_url('bower_components\fullcalendar\css\fullcalendar.print.css') ?>" media='print'>
+    <?php endif ?>
 </head>
 
 <body id="page-top">

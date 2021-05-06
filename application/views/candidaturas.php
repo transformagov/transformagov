@@ -81,13 +81,13 @@ if($menu2 == 'index'){ //lista de candidaturas - perfil candidato
                                 echo "
                                                                                             <td class=\"text-center\">";
                                 if(($dt_aderencia > $atual || strlen($linha -> dt_aderencia) == 0) && $linha -> en_aderencia == '1'){
-                                        echo anchor('Candidaturas/TesteAderencia/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-calendar-check-o">Teste de aderência</i>', " class=\"btn btn-sm btn-square btn-danger\" title=\"Teste de aderência\"");
+                                        echo anchor('Candidaturas/TesteAderencia/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-calendar-check">Teste de aderência</i>', " class=\"btn btn-sm btn-square btn-danger\" title=\"Teste de aderência\"");
                                 }
                                 if(($dt_aderencia > $atual || strlen($linha -> dt_aderencia) == 0) && $linha -> en_hbdi == 1){
-                                        echo anchor('Candidaturas/HBDI/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-calendar-check-o">HBDI</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"HBDI\"");
+                                        echo anchor('Candidaturas/HBDI/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-calendar-check">HBDI</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"HBDI\"");
                                 }
                                 if(($dt_aderencia > $atual || strlen($linha -> dt_aderencia) == 0) && $linha -> en_motivacao == 1){
-                                        echo anchor('Candidaturas/TesteMotivacao/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-calendar-check-o">Teste de Motivação</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Teste de Motivação\"");
+                                        echo anchor('Candidaturas/TesteMotivacao/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-calendar-check">Teste de Motivação</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Teste de Motivação\"");
                                 }                                                            
                                 
                         }

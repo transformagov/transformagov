@@ -286,3 +286,18 @@ form#form_candidatura button.btn-primary {
 .avaliacao-tabs button.tablinks.active {
 	background-color: #312f2f;
 }
+
+.background-success {
+    background-color: #0ac282;
+    color: #fff;
+}
+
+.background-danger {
+    background-color: #fe5d70;
+    color: #fff
+}
+
+.alert {
+    font-size: 15px;
+    margin-bottom: 2rem;
+}

@@ -176,8 +176,8 @@ if($menu2 == 'index'){
                                         //if(isset($selecao_entrevista[$linha -> pr_vaga])){
                                                 //echo anchor('Vagas/selecionar_entrevista/'.$linha -> pr_vaga, '<i class="fa fa-lg mr-0 fa-edit"></i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Selecionar candidatos\"");
                                         //}
-                                        //echo anchor('Vagas/visualizar_nota/'.$linha -> pr_vaga, '<i class="fa fa-lg mr-0 fa-file-text"></i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Visualizar candidato\"");
-                                        echo anchor('Vagas/resultado/'.$linha -> pr_vaga, '<i class="fa fa-lg mr-0 fa-sort-amount-desc">Resultados</i>', " class=\"btn btn-sm btn-square btn-info\" title=\"Resultados\"");
+                                        //echo anchor('Vagas/visualizar_nota/'.$linha -> pr_vaga, '<i class="fa fa-lg mr-0 fa-file-alt"></i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Visualizar candidato\"");
+                                        echo anchor('Vagas/resultado/'.$linha -> pr_vaga, '<i class="fa fa-lg mr-0 fa-sort-amount-down">Resultados</i>', " class=\"btn btn-sm btn-square btn-info\" title=\"Resultados\"");
                                 }
                                 if($linha -> bl_finalizado != '1' && $this -> session -> perfil != 'avaliador'){
                                                 echo anchor('Vagas/edit/'.$linha -> pr_vaga, '<i class="fa fa-lg mr-0 fa-edit">Editar</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Editar vaga\"");
@@ -748,10 +748,10 @@ else if($menu2 == 'resultado'){
 							
 								if($linha -> es_status == 8 || $linha -> es_status == 10){ //candidatura realizada ou selecionado para entrevista por competência
                                                                                 if($this -> session -> perfil != 'avaliador'){
-                                                                                        echo anchor('Vagas/AgendamentoEntrevista/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-calendar-check-o">Agendamento competência</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Agendar entrevista por competência\"");
-                                                                                        echo anchor('Vagas/AgendamentoEntrevista/'.$linha -> pr_candidatura.'/especialista', '<i class="fa fa-lg mr-0 fa-calendar-check-o">Agendamento especialista</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Agendar entrevista com especialista\"");
+                                                                                        echo anchor('Vagas/AgendamentoEntrevista/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-calendar-check">Agendamento competência</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Agendar entrevista por competência\"");
+                                                                                        echo anchor('Vagas/AgendamentoEntrevista/'.$linha -> pr_candidatura.'/especialista', '<i class="fa fa-lg mr-0 fa-calendar-check">Agendamento especialista</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Agendar entrevista com especialista\"");
                                                                                         /*if(strlen($linha -> en_aderencia) == 0 && $linha -> es_status == 10){
-                                                                                                        echo anchor('Vagas/teste_aderencia/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-text">Solicitar teste de aderência</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Solicitar teste de aderência\"");
+                                                                                                        echo anchor('Vagas/teste_aderencia/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-alt">Solicitar teste de aderência</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Solicitar teste de aderência\"");
                                                                                         }*/
                                                                                 }
                                                                                 if($linha -> es_status == 10){
@@ -775,10 +775,10 @@ else if($menu2 == 'resultado'){
 
 								else if($linha -> es_status == 11){ //candidatura com entrevista com especialista já realizada
                                                                                 if($this -> session -> perfil != 'avaliador'){
-										                echo anchor('Vagas/AgendamentoEntrevista/'.$linha -> pr_candidatura.'/especialista', '<i class="fa fa-lg mr-0 fa-calendar-check-o">Agendamento especialista</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Agendar entrevista com especialista\"");
+										                echo anchor('Vagas/AgendamentoEntrevista/'.$linha -> pr_candidatura.'/especialista', '<i class="fa fa-lg mr-0 fa-calendar-check">Agendamento especialista</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Agendar entrevista com especialista\"");
                                                                                 }
                                                                                                 /*if(strlen($linha -> en_aderencia) == 0){
-												echo anchor('Vagas/teste_aderencia/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-text">Solicitar teste de aderência</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Solicitar teste de aderência\"");
+												echo anchor('Vagas/teste_aderencia/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-alt">Solicitar teste de aderência</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Solicitar teste de aderência\"");
 										}*/
 										/*if($linha -> en_aderencia == '1'){
 												echo "<a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-danger\" title=\"Eliminar candidatura pelo não preenchimento do teste de aderência\" onclick=\"confirm_reprovacao_entrevista(".$linha -> pr_candidatura.");\"><i class=\"fa fa-lg mr-0 fa-times-circle\">Eliminar por Teste de Aderência</i></a>";
@@ -796,7 +796,7 @@ else if($menu2 == 'resultado'){
                                                                 }
                                                                 else if($linha -> es_status == 12){
                                                                                 if(strlen($linha -> es_avaliador_competencia1) == 0){
-                                                                                        echo anchor('Vagas/AgendamentoEntrevista/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-calendar-check-o">Agendamento Competência</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Agendar entrevista por competência\"");
+                                                                                        echo anchor('Vagas/AgendamentoEntrevista/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-calendar-check">Agendamento Competência</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Agendar entrevista por competência\"");
                                                                                 }
 										/*if($linha -> en_aderencia == '1'){
 												echo "<a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-danger\" title=\"Eliminar candidatura pelo não preenchimento do teste de aderência\" onclick=\"confirm_reprovacao_entrevista(".$linha -> pr_candidatura.");\"><i class=\"fa fa-lg mr-0 fa-times-circle\">Eliminar por Teste de Aderência</i></a>";
@@ -813,18 +813,18 @@ else if($menu2 == 'resultado'){
                                                                                 }
 								}
 								else if($linha -> es_status == 14 && $this -> session -> perfil != 'avaliador'){
-										echo anchor('Candidaturas/editDossie/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-text">Dossiê</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Dossiê\" target=\"blank\"");
+										echo anchor('Candidaturas/editDossie/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-alt">Dossiê</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Dossiê\" target=\"blank\"");
 								}
 								else if($linha -> es_status == 16 && $this -> session -> perfil != 'avaliador'){
-                                                                                echo anchor('Candidaturas/Dossie/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-text">Dossiê</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Dossiê\" target=\"blank\"");
+                                                                                echo anchor('Candidaturas/Dossie/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-alt">Dossiê</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Dossiê\" target=\"blank\"");
 										echo "<a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-success\" title=\"Aprovar candidato\" onclick=\"confirm_aprovacao_final(".$linha -> pr_candidatura.");\"><i class=\"fa fa-lg mr-0 fa-plus-circle\">Aprovar candidato</i></a>";
 								}
                                                                 else if(($linha -> es_status == 18 || $linha -> es_status == 19)&& $this -> session -> perfil != 'avaliador'){
-                                                                                echo anchor('Candidaturas/Dossie/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-text">Dossiê</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Dossiê\" target=\"blank\"");
+                                                                                echo anchor('Candidaturas/Dossie/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-alt">Dossiê</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Dossiê\" target=\"blank\"");
                                                                 }
 								else if(($linha -> es_status == 20 || $linha -> es_status == 7) && $dt_fim < $atual){
 										if($this -> session -> perfil == 'sugesp' || $this -> session -> perfil == 'orgaos' || $this -> session -> perfil == 'administrador' || $this -> session -> perfil == 'avaliador'){
-												echo anchor('Candidaturas/AvaliacaoCurriculo/'.$linha -> pr_candidatura.'/'.$linha->es_vaga, '<i class="fa fa-lg mr-0 fa-file-text">Currículo</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Analisar Currículo\"");
+												echo anchor('Candidaturas/AvaliacaoCurriculo/'.$linha -> pr_candidatura.'/'.$linha->es_vaga, '<i class="fa fa-lg mr-0 fa-file-alt">Currículo</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Analisar Currículo\"");
 												
 												if($linha -> es_status == 20){
 														echo "<a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-danger\" title=\"Confirmar reprovação por habilitação\" onclick=\"confirm_reprovacao_habilitacao(".$linha -> pr_candidatura.");\"><i class=\"fa fa-lg mr-0 fa-times-circle\">Confirmar reprovação por habilitação</i></a>";
@@ -836,9 +836,9 @@ else if($menu2 == 'resultado'){
 								}*/
 						}
                         else if(($linha -> es_status == 16 || $linha -> es_status == 18 || $linha -> es_status == 19)&& $this -> session -> perfil != 'avaliador'){
-                                echo anchor('Candidaturas/Dossie/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-text">Dossiê</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Dossiê\" target=\"blank\"");
+                                echo anchor('Candidaturas/Dossie/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-alt">Dossiê</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Dossiê\" target=\"blank\"");
                         }
-                        //echo anchor('Candidaturas/RevisaoRequisitos/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-calendar-check-o"></i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Revisão de requisitos\"");
+                        //echo anchor('Candidaturas/RevisaoRequisitos/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-calendar-check"></i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Revisão de requisitos\"");
                          
 
 
@@ -1247,7 +1247,7 @@ else if($menu2 == 'resultado3'){
 
 
                         
-			echo anchor('Candidaturas/AvaliacaoCurriculo/'.$linha -> pr_candidatura.'/'.$linha->es_vaga, '<i class="fa fa-lg mr-0 fa-file-text">Currículo</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Analisar Currículo\"");
+			echo anchor('Candidaturas/AvaliacaoCurriculo/'.$linha -> pr_candidatura.'/'.$linha->es_vaga, '<i class="fa fa-lg mr-0 fa-file-alt">Currículo</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Analisar Currículo\"");
                         if($linha -> es_status == 20 && $this -> session -> perfil != 'avaliador'){
                                 echo "<a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-danger\" title=\"Confirmar reprovação por habilitação\" onclick=\"confirm_reprovacao_habilitacao(".$linha -> pr_candidatura.");\"><i class=\"fa fa-lg mr-0 fa-times-circle\">Confirmar reprovação por habilitação</i></a>";
                         }

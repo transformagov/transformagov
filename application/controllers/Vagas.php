@@ -237,7 +237,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='resultado';
                 $pagina['url']='Vagas/resultado';
                 $pagina['nome_pagina']='Resultados';
-                $pagina['icone']='fa fa-sort-amount-desc';
+                $pagina['icone']='fa fa-sort-amount-down';
 
                 $dados=$pagina;
                 $dados['sucesso'] = '';
@@ -365,7 +365,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='resultado2';
                 $pagina['url']='Vagas/resultado2';
                 $pagina['nome_pagina']='Resultados por Competência';
-                $pagina['icone']='fa fa-sort-amount-desc';
+                $pagina['icone']='fa fa-sort-amount-down';
 
                 $dados=$pagina;
                 $dados['sucesso'] = '';
@@ -423,7 +423,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='resultado3';
                 $pagina['url']='Vagas/resultado3';
                 $pagina['nome_pagina']='Resultados Reprovados Habilitação';
-                $pagina['icone']='fa fa-sort-amount-desc';
+                $pagina['icone']='fa fa-sort-amount-down';
 
                 $dados=$pagina;
                 $dados['sucesso'] = '';
@@ -1186,7 +1186,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='';
                 $pagina['url']='Vagas/resultado/';
                 $pagina['nome_pagina']='Resultados';
-                $pagina['icone']='fa fa-sort-amount-desc';
+                $pagina['icone']='fa fa-sort-amount-down';
                 $dados=$pagina;
                 
                 
@@ -1249,7 +1249,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='';
                 $pagina['url']='Vagas/resultado';
                 $pagina['nome_pagina']='Resultados';
-                $pagina['icone']='fa fa-sort-amount-desc';
+                $pagina['icone']='fa fa-sort-amount-down';
                 $dados=$pagina;
                 
                 $vaga = $this -> uri -> segment(3);
@@ -1381,7 +1381,7 @@ class Vagas extends CI_Controller {
                 $pagina['menu2']='';
                 $pagina['url']='Vagas/resultado';
                 $pagina['nome_pagina']='Resultados';
-                $pagina['icone']='fa fa-sort-amount-desc';
+                $pagina['icone']='fa fa-sort-amount-down';
                 $dados=$pagina;
                 
                 //$vaga = $this -> uri -> segment(3);

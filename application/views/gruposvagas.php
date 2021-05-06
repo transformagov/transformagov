@@ -31,8 +31,8 @@ if($menu2 == 'index'){
                                                                     <div class=\"col-lg-4 text-right\">
                                                                             <a href=\"".base_url('GruposVagas/create')."\" class=\"btn btn-primary btn-square\"> <i class=\"fa fa-plus-circle\"></i> Novo grupo de vagas </a>
                                                                             <br />
-                                                                            <a href=\"".base_url('GruposVagas/historico_duplicate_total')."\" class=\"btn btn-warning btn-square\"> <i class=\"fa fa-lg mr-0 fa-sort-amount-desc\"></i> Histórico de duplicações </a>
-                                                                            <a href=\"".base_url('GruposVagas/historico_duplicate_quantitativo')."\" class=\"btn btn-danger btn-square\"> <i class=\"fa fa-lg mr-0 fa-sort-amount-desc\"></i> Quantitativo de duplicações </a>
+                                                                            <a href=\"".base_url('GruposVagas/historico_duplicate_total')."\" class=\"btn btn-warning btn-square\"> <i class=\"fa fa-lg mr-0 fa-sort-amount-down\"></i> Histórico de duplicações </a>
+                                                                            <a href=\"".base_url('GruposVagas/historico_duplicate_quantitativo')."\" class=\"btn btn-danger btn-square\"> <i class=\"fa fa-lg mr-0 fa-sort-amount-down\"></i> Quantitativo de duplicações </a>
                                                                     </div>";
 }
 if($menu2 != 'index' && strlen($sucesso) == 0 && ($menu2 == 'create' || $menu2 == 'edit' || $menu2 == 'questoes')){

@@ -45,27 +45,6 @@ echo "
                                                                         3) O uso não autorizado do sistema é proibido.
                                                                     </div>
                                                                 </div>";
-if($this -> session -> perfil == 'candidato'){ //candidato
-        echo "
-																
-                                                                <div class=\"card\">
-                                                                    <div class=\"card-header\">
-                                                                        <h5>O GOVERNO DE MINAS GERAIS ESTÁ INOVANDO NA FORMA DE SELECIONAR TALENTOS</h5>
-                                                                    </div>
-                                                                    <div class=\"card-block\">
-                                                                        O estado estruturará processos seletivos para as posições de liderança de diversos Órgãos e Entidades. Faça parte desse time e ajude a transformar a realidade dos mineiros!<br/><br/>
-                                                                        O Governo do Estado de Minas Gerais lançou no dia 08/03/2019 o Transforma Minas. Programa inovador que tem como os objetivos transformar a cultura de gestão de pessoas no setor público; replicar as mais atualizadas práticas de RH e prestar melhores serviços aos cidadãos. Trata-se de um programa inspirado em modelos já consagrados em países como Austrália, Chile e Reino Unido.<br/><br/>
-                                                                        Esse processo seletivo está sendo realizado pelo Governo de Minas Gerais.<br/><br/><br/>
-                                                                        GOVERNO DO ESTADO DE MINAS GERAIS<br/><br/>
-                                                                        MG Cidade Administrativa - Rodovia Papa João Paulo II, 3777<br/>
-                                                                        Serra Verde, Belo Horizonte, MG - CEP 31630-903
-                                                                    
-
-                                                                        
-                                                                    </div>
-                                                                </div>																
-																";
-}
 echo "
                                                 </div>
                                             </div>

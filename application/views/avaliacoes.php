@@ -1898,13 +1898,13 @@ if($menu2 == 'ListaAvaliacao'){
                                                                                             <td class=\"text-center\">";
                         //if($linha -> es_status != 1){
                                 echo anchor('Candidaturas/DetalheAvaliacao/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-search">Detalhes</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Detalhes\"");
-                                //echo anchor('Candidaturas/Dossie/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-text"></i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Dossiê\"");
+                                //echo anchor('Candidaturas/Dossie/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-alt"></i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Dossiê\"");
                         //}
                         if(($linha -> es_status == 7 || $linha -> es_status == 20) && $dt_fim < $atual){ //aprovado 2ª etapa
                                 
                                 if($this -> session -> perfil == 'sugesp' || $this -> session -> perfil == 'orgaos' || $this -> session -> perfil == 'administrador' || $this -> session -> perfil == 'avaliador'){
                                         echo "<br />";
-                                        echo anchor('Candidaturas/AvaliacaoCurriculo/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-text">Currículo</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Analisar Currículo\"");
+                                        echo anchor('Candidaturas/AvaliacaoCurriculo/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-alt">Currículo</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Analisar Currículo\"");
                                        
                                 }
                                 
@@ -2172,13 +2172,13 @@ if($menu2 == 'ListaAvaliacao'){
                                                                                             <td class=\"text-center\">";
                         //if($linha -> es_status != 1){
                                 echo anchor('Candidaturas/DetalheAvaliacao/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-search">Detalhes</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Detalhes\"");
-                                //echo anchor('Candidaturas/Dossie/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-text"></i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Dossiê\"");
+                                //echo anchor('Candidaturas/Dossie/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-alt"></i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Dossiê\"");
                         //}
                         if(($linha -> es_status == 7 || $linha -> es_status == 20) && $dt_fim < $atual){ //aprovado 2ª etapa
                                 
                                 if($this -> session -> perfil == 'sugesp' || $this -> session -> perfil == 'orgaos' || $this -> session -> perfil == 'administrador' || $this -> session -> perfil == 'avaliador'){
                                         echo "<br />";
-                                        echo anchor('Candidaturas/AvaliacaoCurriculo/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-text">Currículo</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Analisar Currículo\"");
+                                        echo anchor('Candidaturas/AvaliacaoCurriculo/'.$linha -> pr_candidatura, '<i class="fa fa-lg mr-0 fa-file-alt">Currículo</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Analisar Currículo\"");
                                        
                                 }
                                 

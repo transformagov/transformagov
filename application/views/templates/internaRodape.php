@@ -180,6 +180,11 @@
         <script type="text/javascript" src="<?= base_url('bower_components\select2\js\select2.full.min.js') ?>"></script>
     <?php endif ?>
 
+    <?php if(isset($adicionais['moment']) || isset($adicionais['pickers']) || isset($adicionais['calendar'])): ?>
+        <script src="<?= base_url('bower_components/moment/min/moment-with-locales.js') ?>" type="text/javascript"></script>
+        <script src="<?= base_url('bower_components/moment/locale/pt-br.js') ?>" type="text/javascript"></script>
+    <?php endif ?>
+
     <input type="hidden" id="passwordChangeUrl" value="<?= base_url().'Interna/alterar_senha' ?>"/>
     <script src="<?= base_url('assets/js/transforma-minas.js') ?>"></script>
 
