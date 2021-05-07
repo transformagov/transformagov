@@ -1120,8 +1120,9 @@ else{
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>";
+                                                    </div>    
+                                                </div>
+                                        </div>";
                         /*echo "
                                                                                                                             </div>
                                                                                                                     </div>

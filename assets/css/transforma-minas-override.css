@@ -282,7 +282,7 @@ form#form_candidatura button.btn-primary {
 	border: none;
 	padding: 10px;
 	width: 100%;
-	text-align: left;
+	text-align: right;
 }
 .avaliacao-tabs button.tablinks.active {
 	background-color: #312f2f;
@@ -359,4 +359,22 @@ footer.sticky-footer {
 		padding: 10px 12px;
 		width: 15rem;
 	}
+}
+
+/* Reduz padding dos containers internos para encaixar menu de Avaliação do candidato */
+.container,
+.container-fluid,
+.container-xl {
+	padding-left: 0rem;
+	padding-right: 0rem;
+}
+
+.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow {
+	margin-bottom: 0rem !important;
+}
+
+/* Remove bordas accordion */
+#accordion .ui-state-default,
+#accordion .ui-widget-content {
+	border: 0;
 }

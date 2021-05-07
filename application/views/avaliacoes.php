@@ -34,8 +34,8 @@ if ($menu2 != 'AvaliacaoCurriculo'){
                                 <div class=\"main-body\">
                                     <div class=\"page-wrapper p-0\">
                                         <div class=\"page-body\"> 
-                                            <div class=\"row\" style=\"position:relative; left:15px;\">               
-                                                <div class=\"col-sm-3 shadow-lg p-0 avaliacao-tabs\" style=\"max-width:280px; min-width:240px;\">
+                                            <div class=\"row\" style=\"position:relative; left:1px;\">
+                                                <div class=\"col-sm-3 shadow-lg p-0 avaliacao-tabs\" style=\"max-width:260px; min-width:240px;\">
                                                     <div class=\"menu1\">
                                                         <button class=\"tablinks primeiro active\" onclick=\"abreConteudo(event, 'lkavaliacao')\"><span class=\"pcoded-mclass\">Avaliação</span><span class=\"pcoded-micon\"><i class=\"fas fa-tasks\" style=\"margin-left: 11px; font-size:1.1em;\"></i></span></button>
                                                         <hr> 
