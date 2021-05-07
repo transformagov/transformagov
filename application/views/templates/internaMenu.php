@@ -111,7 +111,7 @@ function isActive(bool $check)
         </li>
     <?php endif ?>
 
-    <li class="nav-item <?= isActive($menu1 == 'Usuarios') ?>">
+    <li class="nav-item">
         <a class="nav-link" href="<?= base_url('Interna/logout') ?>">
             <i class="fas fa-sign-out-alt"></i>
             <span>Sair</span>

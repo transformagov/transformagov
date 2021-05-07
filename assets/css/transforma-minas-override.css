@@ -66,9 +66,10 @@ ul {
 	margin-bottom: 0;
 }
 
+/* comentado por Cristiano - 22/04/2021
 .login-block .form-group {
-	margin-top: 20px;
-}
+    margin-top: 20px;
+}*/
 
 /* General */
 .card {
@@ -272,7 +273,7 @@ form#form_candidatura button.btn-primary {
 }
 
 .avaliacao-tabs hr {
-	background-color: #FFFFFF;
+	background-color: #ffffff;
 }
 
 .avaliacao-tabs button.tablinks {
@@ -288,16 +289,74 @@ form#form_candidatura button.btn-primary {
 }
 
 .background-success {
-    background-color: #0ac282;
-    color: #fff;
+	background-color: #0ac282;
+	color: #fff;
 }
 
 .background-danger {
-    background-color: #fe5d70;
-    color: #fff
+	background-color: #fe5d70;
+	color: #fff;
 }
 
 .alert {
-    font-size: 15px;
-    margin-bottom: 2rem;
+	font-size: 15px;
+	margin-bottom: 2rem;
+}
+
+.login-block {
+	padding: 30px 0;
+	margin: 0 auto; /*
+	background: url(../images/auth/bg.jpg) no-repeat;
+	background-size: cover;*/
+	min-height: 100vh;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+	background-color: var(--primary-darker);
+}
+.btn.btn-square {
+	border-radius: 0;
+}
+
+.badge-lg {
+	padding: 5px 9px;
+	font-size: 14px;
+}
+
+.topbar {
+	font-size: 15px;
+}
+
+.sidebar-dark .nav-item .nav-link i {
+	color: #fff;
+}
+footer.bg-white {
+	background: #252323 !important;
+	color: gray;
+}
+footer.sticky-footer {
+	padding: 0.5rem 0;
+}
+
+@media (min-width: 768px) {
+	.sidebar {
+		width: 15rem !important;
+	}
+	.sidebar .nav-item .nav-link span {
+		font-size: 15px;
+	}
+	.sidebar .nav-item .nav-link i {
+		font-size: 16px;
+	}
+	.sidebar .nav-item .nav-link {
+		padding: 10px 12px;
+		width: 15rem;
+	}
 }

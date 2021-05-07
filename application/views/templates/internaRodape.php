@@ -10,7 +10,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span><?= $this->config->item('nome') ?>; SUGESP - SEPLAG</span>
+                        <span>Desenvolvido pela SUGESP - SEPLAG/MG</span>
                     </div>
                 </div>
             </footer>
@@ -28,7 +28,6 @@
     </a>
 
     <!-- Logout Modal-->
-    <!--
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -47,51 +46,50 @@
             </div>
         </div>
     </div>
-    -->
 
     <div class="modal fade" id="trocarsenha" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                                <div class="modal-header">
-                                        <h4 class="modal-title">Alterar senha</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                                                <span aria-hidden="true">&times;</span>
-                                        </button>
-                                </div>
-                                <form method="post" action="javascript:;" id="form_alterarsenha" class="form-horizontal">
-                                        <div class="modal-body">
-                                            <?php if ($this->session->trocasenha): ?>
-                                                <div class="alert alert-warning">
-                                                        <div class="alert-text">
-                                                                Você deve alterar a senha recebida por e-mail.
-                                                        </div>
-                                                </div>
-                                            <?php endif ?>
-                                                <p style="margin-left: 10px; font-size: medium;">
-                                                        <span class="bolder">Padrão da senha:</span><br/>
-                                                        Tamanho mínimo: 8 caracteres<br/>
-                                                        Tamanho máximo: 20 caracteres.
-                                                </p>
-                                                <h5>Senha atual</h5>
-                                                <p>
-                                                        <input class="form-control form-control-inline input-medium" type="password" name="senhaAtual" id="senhaAtual" />
-                                                </p>
-                                                <h5>Nova senha</h5>
-                                                <p>
-                                                        <input class="form-control form-control-inline input-medium" type="password" name="senhaNova" id="senhaNova" />
-                                                </p>
-                                                <h5>Confirmação</h5>
-                                                <p>
-                                                        <input class="form-control form-control-inline input-medium" type="password" name="senhaConfirmacao" id="senhaConfirmacao" />
-                                                </p>
-                                        </div>
-                                        <div class="modal-footer">
-                                                <button type="button" data-dismiss="modal" class="btn default">Cancelar</button>
-                                                <button type="button" name="alterar" id="alterarSenha" class="btn btn-primary">Alterar</button>
-                                        </div>
-                                </div>
-                        </form>
-                </div>
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Alterar senha</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<form method="post" action="javascript:;" id="form_alterarsenha" class="form-horizontal">
+						<div class="modal-body">
+							<?php if ($this->session->trocasenha): ?>
+							<div class="alert alert-warning">
+								<div class="alert-text">
+									Você deve alterar a senha recebida por e-mail.
+								</div>
+							</div>
+							<?php endif ?>
+							<p style="margin-left: 10px; font-size: medium;">
+								<span class="bolder">Padrão da senha:</span><br/>
+								Tamanho mínimo: 8 caracteres<br/>
+								Tamanho máximo: 20 caracteres.
+							</p>
+							<h5>Senha atual</h5>
+							<p>
+								<input class="form-control form-control-inline input-medium" type="password" name="senhaAtual" id="senhaAtual" />
+							</p>
+							<h5>Nova senha</h5>
+							<p>
+								<input class="form-control form-control-inline input-medium" type="password" name="senhaNova" id="senhaNova" />
+							</p>
+							<h5>Confirmação</h5>
+							<p>
+								<input class="form-control form-control-inline input-medium" type="password" name="senhaConfirmacao" id="senhaConfirmacao" />
+							</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" data-dismiss="modal" class="btn default">Cancelar</button>
+							<button type="button" name="alterar" id="alterarSenha" class="btn btn-primary">Alterar</button>
+						</div>
+					</div>
+				</form>
+			</div>
         </div>
     
     <!--
@@ -101,7 +99,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     -->
 
-    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="<?= base_url('assets/vendor/jquery/jquery.min.js') ?>"></script>
