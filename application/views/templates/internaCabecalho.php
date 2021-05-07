@@ -79,6 +79,7 @@ if (in_array($this->session->perfil, array_keys($perfilTypes))) {
         <!-- Calender css -->
         <link rel="stylesheet" type="text/css" href="<?= base_url('bower_components\fullcalendar\css\fullcalendar.css') ?>">
         <link rel="stylesheet" type="text/css" href="<?= base_url('bower_components\fullcalendar\css\fullcalendar.print.css') ?>" media='print'>
+        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/transforma-minas-calendar.css') ?>" />
     <?php endif ?>
 </head>
 

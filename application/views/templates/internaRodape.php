@@ -105,6 +105,9 @@
     <script src="<?= base_url('assets/vendor/jquery-ui/jquery-ui.min.js') ?>"></script>
     <script src="<?= base_url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 
+    <!-- Moment -->
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+
     <!-- Core plugin JavaScript-->
     <script src="<?= base_url('assets/vendor/jquery-easing/jquery.easing.min.js') ?>"></script>
 
@@ -143,11 +146,6 @@
         <script src="<?= base_url('assets/pages/form-masking/form-mask.js') ?>"></script>
     <?php endif ?>
 
-    <?php if(isset($adicionais['calendar'])): ?>
-        <!-- calendar js -->
-        <script type="text/javascript" src="<?= base_url('bower_components\fullcalendar\js\fullcalendar.min.js') ?>"></script>
-    <?php endif ?>
-
     <?php if(isset($adicionais['pickers'])): ?>
         <!-- datetimepicker js -->
         <script src="<?= base_url('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') ?>" type="text/javascript"></script>
@@ -177,9 +175,9 @@
         <script type="text/javascript" src="<?= base_url('bower_components\select2\js\select2.full.min.js') ?>"></script>
     <?php endif ?>
 
-    <?php if(isset($adicionais['moment']) || isset($adicionais['pickers']) || isset($adicionais['calendar'])): ?>
-        <script src="<?= base_url('bower_components/moment/min/moment-with-locales.js') ?>" type="text/javascript"></script>
-        <script src="<?= base_url('bower_components/moment/locale/pt-br.js') ?>" type="text/javascript"></script>
+    <?php if(isset($adicionais['calendar'])): ?>
+        <!-- calendar js -->
+        <script type="text/javascript" src="<?= base_url('bower_components\fullcalendar\js\fullcalendar.min.js') ?>"></script>
     <?php endif ?>
 
     <input type="hidden" id="passwordChangeUrl" value="<?= base_url().'Interna/alterar_senha' ?>"/>

@@ -1,0 +1,9 @@
+.fc td, .fc th {
+    line-height: 2.5;
+}
+
+.fc th {
+    background: #01a9ac;
+    color: #fff;
+    border-color: #01a9ac;
+}
