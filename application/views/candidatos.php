@@ -983,7 +983,7 @@ else if($menu2 == 'view'){
                                                                                     </div>
                                                                                     <div class=\"j-footer\">
                                                                                             <div class=\"text-center\">
-                                                                                                    <button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Candidatos/ListaCandidatos')."'\">< Voltar</button>
+                                                                                                    <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Candidatos/ListaCandidatos')."'\">< Voltar</button>
                                                                                             </div>
                                                                                     </div>
                                                                             </form>

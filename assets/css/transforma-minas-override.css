@@ -396,3 +396,11 @@ footer.sticky-footer {
 	width: calc(100% - 255px);
 	z-index: 1000;
 }
+
+.scroll-to-top {
+	bottom: 2rem;
+}
+
+.table .btn-square, .table .badge {
+    font-size: 10px;
+}

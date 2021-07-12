@@ -5547,7 +5547,7 @@ if($menu2 == 'RevisaoRequisitos'){ //detalhamento da candidatura
                                 
                         }
                         echo "                                                                                
-                                                                                    <button type=\"reset\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Candidaturas/ListaAvaliacao')."';\">< Voltar</button>
+                                                                                    <button type=\"reset\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Candidaturas/ListaAvaliacao')."';\">< Voltar</button>
                                                                             </div>
                                                                     </form>
                                                             </div>
