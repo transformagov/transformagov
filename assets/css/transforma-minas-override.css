@@ -103,6 +103,10 @@ ul {
 	border-bottom-color: #ccc;
 }
 
+table.dataTable {
+    border-spacing: 0;
+}
+
 .dataTable thead th {
 	border-bottom: 2px solid #dee2e6;
 	border-top: none;
@@ -377,4 +381,10 @@ footer.sticky-footer {
 #accordion .ui-state-default,
 #accordion .ui-widget-content {
 	border: 0;
+}
+
+.sidebar .nav-item.active .nav-link {
+	background: #c11a32;
+	color: #fff;
+	font-weight: 500;
 }
