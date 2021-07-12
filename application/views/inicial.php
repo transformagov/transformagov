@@ -40,9 +40,8 @@ echo "
                                                                         Se os dados acima estiverem corretos, utilize o menu ao lado para iniciar suas atividades.
 
                                                                         <h5 style=\"text-align:left\">AVISOS</h4>
-                                                                        1) Você está acessando um sistema governamental, de responsabilidade do Governo do Estado de Minas Gerais, que deverá ser utilizado de acordo com a legislação vigente.<br/>
-                                                                        2) A utilização do sistema é monitorada constantemente, sendo que para entrar você deve concordar em ceder dados de uso e informações pessoais que podem ficar registradas para aplicações legais.<br/>
-                                                                        3) O uso não autorizado do sistema é proibido.
+                                                                        1) A utilização do sistema é monitorada constantemente, sendo que para entrar você deve concordar em ceder dados de uso e informações pessoais que podem ficar registradas para aplicações legais.<br/>
+                                                                        2) O uso não autorizado do sistema é proibido.
                                                                     </div>
                                                                 </div>";
 echo "
