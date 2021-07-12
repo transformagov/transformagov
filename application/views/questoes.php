@@ -45,7 +45,10 @@ if($menu2 == 'index'){
         foreach($chaves as $chave){
                 $vigente_etapa[$chave]=0;
                 
-        }    
+        }
+        if(!is_array($questoes)) {
+                $questoes = array();
+        }
         foreach ($questoes as $linha){
                 if($linha -> cont_respostas > 0){
                        $vigente_etapa[$linha -> es_etapa] = 1; 

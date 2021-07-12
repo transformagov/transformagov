@@ -761,7 +761,6 @@ a[x-apple-data-detectors=true] {
                                         
                         }
                 }
-                echo $cont1;
                 $sair = false;
                 foreach($questoes as $questao){
                         if($respostas_filtradas[$questao->pr_questao] == '0'){
@@ -1358,7 +1357,6 @@ a[x-apple-data-detectors=true] {
                                         
                         }
                 }
-                echo $cont1;
                 $sair = false;
                 foreach($questoes as $questao){
                         if($respostas_filtradas[$questao->pr_questao] == '0'){
