@@ -388,3 +388,11 @@ footer.sticky-footer {
 	color: #fff;
 	font-weight: 500;
 }
+
+/* Fixa footer na parte inferior da tela */
+footer.sticky-footer {
+	position: fixed;
+	bottom: 0;
+	width: calc(100% - 255px);
+	z-index: 1000;
+}
