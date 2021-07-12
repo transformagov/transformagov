@@ -15,7 +15,7 @@ $this->load->view('templates/internaCabecalho', $pagina);
 if ($menu2 != 'AvaliacaoCurriculo'){
     //Modelo padrão de página
     echo "              <div class=\"col-12\">
-                            <div class=\"pcoded-inner-content\">
+                            <div class=\"tsm-inner-content\">
                                 <div class=\"main-body\">
                                     <div class=\"page-wrapper\">
                                         <div class=\"page-body\">
@@ -30,22 +30,22 @@ if ($menu2 != 'AvaliacaoCurriculo'){
 } else {
     //Modelo de página de avaliação de currículo
     echo "              <div class=\"col-12\">
-                            <div class=\"pcoded-inner-content p-0\">    
+                            <div class=\"tsm-inner-content p-0\">    
                                 <div class=\"main-body\">
                                     <div class=\"page-wrapper p-0\">
                                         <div class=\"page-body\"> 
                                             <div class=\"row\" style=\"position:relative; left:1px;\">
                                                 <div class=\"col-sm-3 shadow-lg p-0 avaliacao-tabs\" style=\"max-width:260px; min-width:240px;\">
                                                     <div class=\"menu1\">
-                                                        <button class=\"tablinks primeiro active\" onclick=\"abreConteudo(event, 'lkavaliacao')\"><span class=\"pcoded-mclass\">Avaliação</span><span class=\"pcoded-micon\"><i class=\"fas fa-tasks\" style=\"margin-left: 11px; font-size:1.1em;\"></i></span></button>
+                                                        <button class=\"tablinks primeiro active\" onclick=\"abreConteudo(event, 'lkavaliacao')\"><span class=\"tsm-mclass\">Avaliação</span><span class=\"tsm-micon\"><i class=\"fas fa-tasks\" style=\"margin-left: 11px; font-size:1.1em;\"></i></span></button>
                                                         <hr> 
-                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkcompleta')\"><span class=\"pcoded-mclass\">Candidatura completa</span><span class=\"pcoded-micon\"><i class=\"fas fa-id-badge\" style=\"margin-left: 12px; font-size:1.3em\"></i></span></button>
-                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkdados')\"><span class=\"pcoded-mclass\">Dados da candidatura</span><span class=\"pcoded-micon\"><i class=\"fas fa-address-book\" style=\"margin-left: 12px; font-size:1.1em\"></i></span></button>
-                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkprereq')\"><span class=\"pcoded-mclass\">Pré Requisitos da Vaga</span><span class=\"pcoded-micon\"><i class=\"fas fa-address-book\" style=\"margin-left: 12px; font-size:1.1em\"></i></span></button>
-                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkformacoes')\"><span class=\"pcoded-mclass\">Formações Acadêmicas</span><span class=\"pcoded-micon\"><i class=\"fas fa-user-graduate\" style=\"margin-left: 12px; font-size:1.1em\"></i></span></button>
-                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkcursos')\"><span class=\"pcoded-mclass\">Cursos e Seminários</span><span class=\"pcoded-micon\"><i class=\"fas fa-university\" style=\"margin-left: 12px; font-size:1.1em\"></i></span></button>
-                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkexperiencias')\"><span class=\"pcoded-mclass\">Experiências Profissionais</span><span class=\"pcoded-micon\"><i class=\"fas fa-user-tie\" style=\"margin-left: 12px; font-size:1.2em\"></i></span></button>
-                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkdesejaveis')\"><span class=\"pcoded-mclass\">Requisitos Desejáveis</span><span class=\"pcoded-micon\"><i class=\"fas fa-portrait\" style=\"margin-left: 12px; font-size:1.3em\"></i></span></button>
+                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkcompleta')\"><span class=\"tsm-mclass\">Candidatura completa</span><span class=\"tsm-micon\"><i class=\"fas fa-id-badge\" style=\"margin-left: 12px; font-size:1.3em\"></i></span></button>
+                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkdados')\"><span class=\"tsm-mclass\">Dados da candidatura</span><span class=\"tsm-micon\"><i class=\"fas fa-address-book\" style=\"margin-left: 12px; font-size:1.1em\"></i></span></button>
+                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkprereq')\"><span class=\"tsm-mclass\">Pré Requisitos da Vaga</span><span class=\"tsm-micon\"><i class=\"fas fa-address-book\" style=\"margin-left: 12px; font-size:1.1em\"></i></span></button>
+                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkformacoes')\"><span class=\"tsm-mclass\">Formações Acadêmicas</span><span class=\"tsm-micon\"><i class=\"fas fa-user-graduate\" style=\"margin-left: 12px; font-size:1.1em\"></i></span></button>
+                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkcursos')\"><span class=\"tsm-mclass\">Cursos e Seminários</span><span class=\"tsm-micon\"><i class=\"fas fa-university\" style=\"margin-left: 12px; font-size:1.1em\"></i></span></button>
+                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkexperiencias')\"><span class=\"tsm-mclass\">Experiências Profissionais</span><span class=\"tsm-micon\"><i class=\"fas fa-user-tie\" style=\"margin-left: 12px; font-size:1.2em\"></i></span></button>
+                                                        <button class=\"tablinks\" onclick=\"abreConteudo(event, 'lkdesejaveis')\"><span class=\"tsm-mclass\">Requisitos Desejáveis</span><span class=\"tsm-micon\"><i class=\"fas fa-portrait\" style=\"margin-left: 12px; font-size:1.3em\"></i></span></button>
                                                     </div>
                                                 </div>
                                                 <div class=\"col p-0 pr-4\" style=\"background-color: white; min-height: calc(100vh - 70px);\">";                                                                                                                                
