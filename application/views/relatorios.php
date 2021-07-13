@@ -76,7 +76,7 @@ else if($menu2 == 'DocumentosObrigatorios'){
                 $attributes = array('class' => 'btn btn-primary');
                 echo form_submit('carregar', 'Carregar relatório', $attributes);
                 echo "
-																							<button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
+																							<button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
 																					</div>
 																			</div>
 																	</div>
@@ -278,7 +278,7 @@ else if($menu2 == 'RequisitosDesejaveis'){
 			$attributes = array('class' => 'btn btn-primary');
 			echo form_submit('carregar', 'Carregar relatório', $attributes);
 			echo "
-																						<button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
+																						<button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
 																				</div>
 																		</div>
 																</div>
@@ -497,7 +497,7 @@ else if($menu2 == 'AvaliacaoCurricular'){
                 $attributes = array('class' => 'btn btn-primary');
                 echo form_submit('carregar', 'Carregar relatório', $attributes);
                 echo "
-																							<button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
+																							<button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
 																					</div>
 																			</div>
 																	</div>
@@ -765,7 +765,7 @@ else if($menu2 == 'AvaliacaoCompetencia'){
 			$attributes = array('class' => 'btn btn-primary');
 			echo form_submit('carregar', 'Carregar relatório', $attributes);
 			echo "
-																						<button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
+																						<button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
 																				</div>
 																		</div>
 																</div>
@@ -1035,7 +1035,7 @@ else if($menu2 == 'TesteAderencia'){
 			$attributes = array('class' => 'btn btn-primary');
 			echo form_submit('carregar', 'Carregar relatório', $attributes);
 			echo "
-																						<button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
+																						<button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
 																				</div>
 																		</div>
 																</div>
@@ -1577,7 +1577,7 @@ else if($menu2 == 'HBDI'){
 			$attributes = array('class' => 'btn btn-primary');
 			echo form_submit('carregar', 'Carregar relatório', $attributes);
 			echo "
-																						<button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
+																						<button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
 																				</div>
 																		</div>
 																</div>
@@ -2450,7 +2450,7 @@ else if($menu2 == 'AvaliacaoEspecialista'){
 			$attributes = array('class' => 'btn btn-primary');
 			echo form_submit('carregar', 'Carregar relatório', $attributes);
 			echo "
-																						<button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
+																						<button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Relatorios/index')."'\">Cancelar</button>
 																				</div>
 																		</div>
 																</div>

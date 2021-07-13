@@ -1734,7 +1734,7 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
         echo "
                                                                     <div class=\"col-lg-4 text-right\">
                                                                             <button type=\"button\" class=\"btn btn-primary\" onclick=\"document.getElementById('form_usuarios').submit();\"> Salvar </button>
-                                                                            <button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Usuarios/index')."'\">Cancelar</button>
+                                                                            <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Usuarios/index')."'\">Cancelar</button>
                                                                     </div>";
 }
 echo "
@@ -6063,11 +6063,11 @@ if($menu2 == 'AvaliacaoEntrevista'){ //avaliação da entrevista - 4ª etapa
                 echo form_submit('concluir_entrevista', 'Concluir', $attributes);
                 if(isset($vaga) && $vaga > 0){
                         echo "
-                                                                                                            <button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Vagas/resultado/'.$vaga)."'\">Cancelar</button>";
+                                                                                                            <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Vagas/resultado/'.$vaga)."'\">Cancelar</button>";
                 }
                 else{
                         echo "
-                                                                                                            <button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Candidaturas/ListaAvaliacao')."'\">Cancelar</button>";
+                                                                                                            <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Candidaturas/ListaAvaliacao')."'\">Cancelar</button>";
                 }
                 
 
@@ -6276,11 +6276,11 @@ if($menu2 == 'AvaliacaoEntrevistaEspecialista'){ //avaliação da entrevista esp
                 echo form_submit('concluir_entrevista', 'Concluir', $attributes);
                 if(isset($vaga) && $vaga > 0){
                         echo "
-                                                                                                            <button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Vagas/resultado/'.$vaga)."'\">Cancelar</button>";
+                                                                                                            <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Vagas/resultado/'.$vaga)."'\">Cancelar</button>";
                 }
                 else{
                         echo "
-                                                                                                            <button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Candidaturas/ListaAvaliacao')."'\">Cancelar</button>";
+                                                                                                            <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Candidaturas/ListaAvaliacao')."'\">Cancelar</button>";
                 }
                 echo "
                                                                                                             

@@ -433,7 +433,7 @@ else{
                 $attributes = array('class' => 'btn btn-primary');
                 echo form_submit('cadastrar', 'Candidatar-se', $attributes);
                 echo "
-                                                                                <button type=\"reset\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Candidaturas/index')."';\">Cancelar</button>";
+                                                                                <button type=\"reset\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Candidaturas/index')."';\">Cancelar</button>";
                 
                 echo "
                                                                             </div>
@@ -1669,7 +1669,7 @@ else{
                                 echo form_submit('salvar', 'Concluir', $attributes);
                         }
                         echo "
-                                                                                        <button type=\"reset\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Candidaturas/index')."';\">Cancelar</button>";
+                                                                                        <button type=\"reset\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Candidaturas/index')."';\">Cancelar</button>";
 
                         echo "
                                                                             </div>
@@ -1706,7 +1706,7 @@ else{
                                 echo form_submit('salvar', 'Concluir', $attributes);
                         }
                         echo "
-                                                                                        <button type=\"reset\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Candidaturas/index')."';\">Cancelar</button>";
+                                                                                        <button type=\"reset\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Candidaturas/index')."';\">Cancelar</button>";
 
                         echo "
                                                                             </div>
@@ -1895,7 +1895,7 @@ else{
                                 //echo form_submit('salvar', 'Concluir', $attributes);
                         //}
                         echo "
-                                                                                        <button type=\"reset\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Candidaturas/index')."';\">Cancelar</button>";
+                                                                                        <button type=\"reset\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Candidaturas/index')."';\">Cancelar</button>";
 
                         echo "
                                                                             </div>
@@ -3773,7 +3773,7 @@ else{
                                 echo form_submit('salvar', 'Concluir', $attributes);
                         //}
                         echo "
-                                                                                        <button type=\"reset\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Candidaturas/index')."';\">Cancelar</button>";
+                                                                                        <button type=\"reset\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Candidaturas/index')."';\">Cancelar</button>";
 
                         echo "
                                                                             </div>

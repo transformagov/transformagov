@@ -36,7 +36,7 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
         echo "
                                                                     <div class=\"col-lg-4 text-right\">
                                                                             <button type=\"button\" class=\"btn btn-primary\" onclick=\"document.getElementById('form_usuarios').submit();\"> Salvar </button>
-                                                                            <button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Usuarios/index')."'\">Cancelar</button>
+                                                                            <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Usuarios/index')."'\">Cancelar</button>
                                                                     </div>";
 }
 echo "
@@ -337,7 +337,7 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
                 $attributes = array('class' => 'btn btn-primary');
                 echo form_submit('salvar_usuario', 'Salvar', $attributes);
                 echo "
-                                                                                    <button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Usuarios/index')."'\">Cancelar</button>
+                                                                                    <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Usuarios/index')."'\">Cancelar</button>
                                                                             </div>
                                                                     </div>
                                                             </form>

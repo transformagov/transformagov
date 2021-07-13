@@ -27,7 +27,7 @@ echo "
                                                                     </div>
                                                                     <div class=\"col-lg-4 text-right\">
                                                                             <button type=\"button\" class=\"btn btn-primary\" onclick=\"$('#Salvar').click();\"> Salvar </button>
-                                                                            <button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url()."'\">Cancelar</button>
+                                                                            <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url()."'\">Cancelar</button>
                                                                     </div>
                                                             </div>";
 
@@ -821,7 +821,7 @@ else if(strlen($sucesso) > 0){
         $attributes['id'] = "Salvar";
         echo form_submit('cadastrar', 'Salvar', $attributes);
         echo "
-                                                                                                    <a href=\"".base_url()."\" class=\"btn btn-default\"> Cancelar </a>
+                                                                                                    <a href=\"".base_url()."\" class=\"btn btn-outline-dark\"> Cancelar </a>
                                                                                             </div>
                                                                                     </div>
                                                                             </form>

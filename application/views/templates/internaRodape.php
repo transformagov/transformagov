@@ -84,7 +84,7 @@
 							</p>
 						</div>
 						<div class="modal-footer">
-							<button type="button" data-dismiss="modal" class="btn default">Cancelar</button>
+							<button type="button" data-dismiss="modal" class="btn btn-outline-dark">Cancelar</button>
 							<button type="button" name="alterar" id="alterarSenha" class="btn btn-primary">Alterar</button>
 						</div>
 					</div>

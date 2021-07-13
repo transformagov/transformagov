@@ -31,7 +31,7 @@ if($menu2 != 'ListaCandidatos' && strlen($sucesso) == 0 && ($menu2 == 'create' |
         echo "
                                                                     <div class=\"col-lg-4 text-right\">
                                                                             <button type=\"button\" class=\"btn btn-primary\" onclick=\"document.getElementById('form_candidatos').submit();\"> Salvar </button>
-                                                                            <button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Candidatos/ListaCandidatos')."'\">Cancelar</button>
+                                                                            <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Candidatos/ListaCandidatos')."'\">Cancelar</button>
                                                                     </div>";
 }
 echo "

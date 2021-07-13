@@ -39,7 +39,7 @@ if($menu2 != 'index' && strlen($sucesso) == 0 && ($menu2 == 'create' || $menu2 =
         echo "
                                                                     <div class=\"col-lg-4 text-right\">
                                                                             <button type=\"button\" class=\"btn btn-primary\" onclick=\"document.getElementById('form_gruposvagas').submit();\"> Salvar </button>
-                                                                            <button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('GruposVagas/index')."'\">Cancelar</button>
+                                                                            <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('GruposVagas/index')."'\">Cancelar</button>
                                                                     </div>";
 }
 echo "
@@ -263,7 +263,7 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
                 $attributes = array('class' => 'btn btn-primary');
                 echo form_submit('salvar_grupo', 'Salvar', $attributes);
                 echo "
-                                                                                            <button type=\"button\" class=\"btn btn-default\" onclick=\"window.location='".base_url('GruposVagas/index')."'\">Cancelar</button>
+                                                                                            <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('GruposVagas/index')."'\">Cancelar</button>
                                                                                     </div>
                                                                             </div>
                                                                     </div>
