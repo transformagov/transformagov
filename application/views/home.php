@@ -138,6 +138,20 @@ if($menu2 == 'contato'){
                             'placeholder' => 'Mensagem',
                             'style' => 'height:100px');
         echo form_textarea($attributes, set_value('msg'));
+
+        echo '<div class="text-center center-block"><br />';
+        $attributes = array('class' => 'btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase',
+                            'style'=>'width:60%');
+        echo form_submit('Publico/contato', 'Enviar', $attributes);
+        echo '
+        <hr />
+        <a
+        href="'.base_url("Publico/index").'"
+        >
+          Voltar
+        </a>
+        ';
+        echo '</div>';
         echo "
                                             </div>
                                         </div>";
@@ -154,13 +168,16 @@ if($menu2 == 'index'){
                                             <hr>
                                             <div class=\"row m-t-25 text-center\">
                                                     <div class=\"col-12\">
-                                                            <a href=\"".base_url('Publico/recuperar')."\">Esqueceu sua senha?</a><br/>
-                                                            <a href=\"";
-        //echo base_url('Publico/contato');
+                                                            <a href=\"".base_url('Publico/recuperar')."\">Esqueceu sua senha?</a><br/>";
+
+        echo "<a href=\"" . base_url('Publico/contato') . "\" class=\"kt-login__link\" alt=\"Fale conosco\">Fale conosco</a>";
+        /*echo "<a href=\"";
         echo 'https://www.mg.gov.br/transforma-minas/fale-conosco';
-        echo "\" class=\"kt-login__link\" target=\"_blank\">Fale conosco</a><br/>
-                                                            <a href=\"https://www.mg.gov.br/transforma-minas/faq\">Perguntas frequentes</a>
-                                                    </div>
+        echo "\" class=\"kt-login__link\" target=\"_blank\">Fale conosco</a>
+        */
+        /*
+        echo "<br/><a href=\"https://www.mg.gov.br/transforma-minas/faq\">Perguntas frequentes</a>*/
+        echo "                                            </div>
                                             </div>";
 }
 else if($menu2 == 'recuperar'){
