@@ -404,3 +404,8 @@ footer.sticky-footer {
 .table .btn-square, .table .badge {
     font-size: 10px;
 }
+
+/* GruposVagas/index Ações dropdown-menu */
+.dataTable button.dropdown-toggle {
+	font-size: 14px;
+}

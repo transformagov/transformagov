@@ -80,6 +80,7 @@ if($menu2 == 'index'){
                         echo "
                                                                                             <td class=\"align-middle text-center\" style=\"white-space:nowrap\">";
                         if($linha -> bl_removido == '0'){
+                                /*
                                 echo anchor('Questoes/index/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Definir questões</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Definir questões\"");
                                 echo anchor('GruposVagas/edit/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-edit">Editar</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Editar grupo\"");
                                 echo "<a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-danger\" title=\"Desativar grupo de vagas\" onclick=\"confirm_delete(".$linha -> pr_grupovaga.");\"><i class=\"fa fa-lg mr-0 fa-times-circle\">Desativar</i></a>";
@@ -87,7 +88,34 @@ if($menu2 == 'index'){
                                 if($linha -> etapa7 == '0'){
                                         echo anchor('GruposVagas/create_motivacao/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Criar questões do formulário de motivação</i>', " class=\"btn btn-sm btn-square btn-danger\" title=\"Criar questões do formulário de motivação\"");
                                 }
-                                
+                                */
+                                echo '
+                                <div class="input-group-prepend">
+                                        <button
+                                                class="btn btn-square btn-outline-secondary dropdown-toggle"
+                                                type="button"
+                                                data-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                        >
+                                                Selecione uma ação
+                                        </button>
+                                        <div class="dropdown-menu">
+                                ';
+                                                // Definir questões
+                                                echo anchor('Questoes/index/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Definir questões</i>', " class=\"btn btn-sm dropdown-item\" title=\"Definir questões\"");
+                                                // Editar
+                                                echo anchor('GruposVagas/edit/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-edit">Editar</i>', " class=\"btn btn-sm dropdown-item\" title=\"Editar grupo\"");
+                                                // Desativar
+                                                echo "<a href=\"javascript:/\" class=\"btn btn-sm dropdown-item\" title=\"Desativar grupo de vagas\" onclick=\"confirm_delete(".$linha -> pr_grupovaga.");\"><i class=\"fa fa-lg mr-0 fa-times-circle\">Desativar</i></a>";
+                                                // Duplicar questões
+                                                echo anchor('GruposVagas/duplicate/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Duplicar questões</i>', " class=\"btn btn-sm dropdown-item\" title=\"Duplicar questões\"");
+                                                if($linha -> etapa7 == '0'){
+                                                        // Criar questões do formulário de motivação
+                                                        echo anchor('GruposVagas/create_motivacao/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Criar questões do formulário de motivação</i>', " class=\"btn btn-sm dropdown-item\" title=\"Criar questões do formulário de motivação\"");
+                                                }
+                                echo    '</div>
+                                </div>';
                         }
                         else{
                                 echo "<a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-success\" title=\"Reativar grupo de vagas\" onclick=\"confirm_reactivate(".$linha -> pr_grupovaga.");\"><i class=\"fa fa-lg mr-0 fa-plus-circle\">Reativar</i></a>";
