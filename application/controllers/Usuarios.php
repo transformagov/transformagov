@@ -543,6 +543,11 @@ class Usuarios extends CI_Controller {
                 else{
                         $usuario = $this -> uri -> segment(3);
                         $dados['usuario'] = $this -> Usuarios_model -> get_usuarios($usuario);
+
+                        if(is_array($dados['usuario']) && count($dados['usuario']) > 0) {
+                                $dados['usuario'] = $dados['usuario'][0];
+                        }
+
                         if($dados['usuario'] -> pr_usuario > 0){
                                 $senha = random_string ('alnum', 8);
                                 //$senha = "transforma";
