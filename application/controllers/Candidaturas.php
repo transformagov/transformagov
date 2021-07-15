@@ -381,26 +381,18 @@ class Candidaturas extends CI_Controller {
 
                                                         $candidato = $this -> Candidatos_model -> get_candidatos ($candidatura[0] -> es_candidato);
 
-                                                                                                                        /*
-                                                                                                                        $mail->Port = 25; //Indica a porta de conexão
-                                                                                                                        $mail->Host = 'smtpprdo.prodemge.gov.br';//Endereço do Host do SMTP
-                                                                                                                        $mail->SMTPAuth = true; //define se haverá ou não autenticação
-                                                                                                                        $mail->Username = 'pontodigital'; //Login de autenticação do SMTP
-                                                                                                                        $mail->Password = 'fXso2ogUbw9PE8Aj'; //Senha de autenticação do SMTP
-                                                                                                                        */
-
                                                         $this->load->library('email');
 
-                                                                                                                        $config['protocol'] = 'smpt';
-                                                                                                                        $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-                                                                                                                        $config['smtp_port'] = 25;
-                                                                                                                        $config['smtp_user'] = 'pontodigital';
-                                                                                                                        $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-                                                        $config['charset'] = 'UTF-8';
-
-                                                        $config['wordwrap'] = TRUE;
-
-                                                        $config['mailtype'] = 'html';
+                                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
+                                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
                                                         $this->email->initialize($config);
 
@@ -1771,26 +1763,18 @@ a[x-apple-data-detectors=true] {
 
                                                                 $candidato = $this -> Candidatos_model -> get_candidatos ($candidatura[0] -> es_candidato);
 
-																/*
-																$mail->Port = 25; //Indica a porta de conexão
-																$mail->Host = 'smtpprdo.prodemge.gov.br';//Endereço do Host do SMTP
-																$mail->SMTPAuth = true; //define se haverá ou não autenticação
-																$mail->Username = 'pontodigital'; //Login de autenticação do SMTP
-																$mail->Password = 'fXso2ogUbw9PE8Aj'; //Senha de autenticação do SMTP
-																*/
-
                                                                 $this->load->library('email');
 
-																$config['protocol'] = 'smpt';
-																$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-																$config['smtp_port'] = 25;
-																$config['smtp_user'] = 'pontodigital';
-																$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-                                                                $config['charset'] = 'UTF-8';
-
-                                                                $config['wordwrap'] = TRUE;
-
-                                                                $config['mailtype'] = 'html';
+                                                                $config['charset'] = $_SERVER['ENV_CHARSET'];
+                                                                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                                                                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                                                                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                                                                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                                                                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                                                                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                                                                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                                                                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                                                                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
                                                                 $this->email->initialize($config);
 
@@ -2072,16 +2056,16 @@ a[x-apple-data-detectors=true] {
 
                                                                 $this->load->library('email');
 
-                                                                $config['protocol'] = 'smpt';
-                                                                $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-                                                                $config['smtp_port'] = 25;
-                                                                $config['smtp_user'] = 'pontodigital';
-                                                                $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-                                                                $config['charset'] = 'UTF-8';
-
-                                                                $config['wordwrap'] = TRUE;
-
-                                                                $config['mailtype'] = 'html';
+                                                                $config['charset'] = $_SERVER['ENV_CHARSET'];
+                                                                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                                                                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                                                                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                                                                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                                                                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                                                                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                                                                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                                                                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                                                                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
                                                                 $this->email->initialize($config);
 
@@ -2635,16 +2619,16 @@ a[x-apple-data-detectors=true] {
 
                                                         $dados_candidato = $this -> Candidatos_model -> get_candidatos($candidatura[0] -> es_candidato);
 
-                                                        $config['protocol'] = 'smpt';
-                                                        $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-                                                        $config['smtp_port'] = 25;
-                                                        $config['smtp_user'] = 'pontodigital';
-                                                        $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-                                                        $config['charset'] = 'UTF-8';
-
-                                                        $config['wordwrap'] = TRUE;
-
-                                                        $config['mailtype'] = 'html';
+                                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
+                                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
                                                         $this->email->initialize($config);
 
@@ -3193,16 +3177,16 @@ a[x-apple-data-detectors=true] {
 
                                                         $dados_candidato = $this -> Candidatos_model -> get_candidatos($candidatura[0] -> es_candidato);
 
-                                                        $config['protocol'] = 'smpt';
-                                                        $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-                                                        $config['smtp_port'] = 25;
-                                                        $config['smtp_user'] = 'pontodigital';
-                                                        $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-                                                        $config['charset'] = 'UTF-8';
-
-                                                        $config['wordwrap'] = TRUE;
-
-                                                        $config['mailtype'] = 'html';
+                                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
+                                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
                                                         $this->email->initialize($config);
 
@@ -4341,16 +4325,16 @@ a[x-apple-data-detectors=true] {
 
                                                         $dados_candidato = $this -> Candidatos_model -> get_candidatos($candidatura[0] -> es_candidato);
 
-                                                        $config['protocol'] = 'smpt';
-                                                        $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-                                                        $config['smtp_port'] = 25;
-                                                        $config['smtp_user'] = 'pontodigital';
-                                                        $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-                                                        $config['charset'] = 'UTF-8';
-
-                                                        $config['wordwrap'] = TRUE;
-
-                                                        $config['mailtype'] = 'html';
+                                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
+                                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
                                                         $this->email->initialize($config);
 
@@ -4918,16 +4902,16 @@ a[x-apple-data-detectors=true] {
 
                                                 $dados_candidato = $this -> Candidatos_model -> get_candidatos($candidatura[0] -> es_candidato);
 
-												$config['protocol'] = 'smpt';
-												$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-												$config['smtp_port'] = 25;
-												$config['smtp_user'] = 'pontodigital';
-												$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-                                                $config['charset'] = 'UTF-8';
-
-                                                $config['wordwrap'] = TRUE;
-
-                                                $config['mailtype'] = 'html';
+                                                $config['charset'] = $_SERVER['ENV_CHARSET'];
+                                                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                                                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                                                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                                                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                                                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                                                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                                                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                                                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                                                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
                                                 $this->email->initialize($config);
 
@@ -5726,16 +5710,16 @@ a[x-apple-data-detectors=true] {
 
                                 //alterado para aguardando decisão final após análise curricular, temporário
                                 //$this -> Candidaturas_model -> update_candidatura('es_status', 14,  $candidatura[0] -> pr_candidatura);
-								$config['protocol'] = 'smpt';
-								$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-								$config['smtp_port'] = 25;
-								$config['smtp_user'] = 'pontodigital';
-								$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-								$config['charset'] = 'UTF-8';
-
-								$config['wordwrap'] = TRUE;
-
-								$config['mailtype'] = 'html';
+                                                                $config['charset'] = $_SERVER['ENV_CHARSET'];
+                                                                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                                                                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                                                                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                                                                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                                                                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                                                                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                                                                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                                                                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                                                                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
 								$this->email->initialize($config);
 
@@ -7293,16 +7277,16 @@ a[x-apple-data-detectors=true] {
 						$this -> load -> model('Anexos_model');
 						$this -> load -> library('email');
 						
-						$config['protocol'] = 'smpt';
-						$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-						$config['smtp_port'] = 25;
-						$config['smtp_user'] = 'pontodigital';
-						$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-						$config['charset'] = 'UTF-8';
-
-						$config['wordwrap'] = TRUE;
-
-						$config['mailtype'] = 'html';
+						$config['charset'] = $_SERVER['ENV_CHARSET'];
+                                                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                                                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                                                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                                                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                                                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                                                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                                                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                                                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                                                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
 						$this->email->initialize($config);
 

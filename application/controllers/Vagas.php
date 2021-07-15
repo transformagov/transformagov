@@ -619,16 +619,16 @@ class Vagas extends CI_Controller {
                                 //var_dump($entrevista_anterior);
                                 if($entrevista_anterior != null){
                                     
-                                        $config['protocol'] = 'smpt';
-										$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-										$config['smtp_port'] = 25;
-										$config['smtp_user'] = 'pontodigital';
-										$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-										$config['charset'] = 'UTF-8';
-
-										$config['wordwrap'] = TRUE;
-
-										$config['mailtype'] = 'html';
+                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
+                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
 										$this->email->initialize($config);
                                     
@@ -734,21 +734,21 @@ class Vagas extends CI_Controller {
                                         if(isset($questoes3) && $dados_candidatura[0] -> en_motivacao != '2' && $dados_candidatura[0] -> en_motivacao != '1'){
                                             $this -> Candidaturas_model -> update_candidatura('en_motivacao', '1',  $candidatura);
                                         }
-										$config['protocol'] = 'smpt';
-										$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-										$config['smtp_port'] = 25;
-										$config['smtp_user'] = 'pontodigital';
-										$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-                                        $config['charset'] = 'UTF-8';
-                                        
+
+                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
+                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
                                         $partes = explode(" ",$dados_form['data2']);
                                         $data = $partes[0];
                                         $hora = $partes[1];
-
-										$config['wordwrap'] = TRUE;
-
-										$config['mailtype'] = 'html';
 
 										$this->email->initialize($config);
 
@@ -1164,17 +1164,17 @@ class Vagas extends CI_Controller {
                 $this -> load -> model('Candidatos_model');
                 $this -> load -> model('Usuarios_model');
 				$this -> load -> library('email');
-				
-				$config['protocol'] = 'smpt';
-				$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-				$config['smtp_port'] = 25;
-				$config['smtp_user'] = 'pontodigital';
-				$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-				$config['charset'] = 'UTF-8';
 
-				$config['wordwrap'] = TRUE;
-
-				$config['mailtype'] = 'html';
+                $config['charset'] = $_SERVER['ENV_CHARSET'];
+                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
 				$this->email->initialize($config);
 				
@@ -1232,16 +1232,16 @@ class Vagas extends CI_Controller {
                 $this -> load -> model('Usuarios_model');
 				$this -> load -> library('email');
 				
-				$config['protocol'] = 'smpt';
-    			$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-    			$config['smtp_port'] = 25;
-    			$config['smtp_user'] = 'pontodigital';
-    			$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-                $config['charset'] = 'UTF-8';
-
-                $config['wordwrap'] = TRUE;
-
-                $config['mailtype'] = 'html';
+				$config['charset'] = $_SERVER['ENV_CHARSET'];
+                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
                 $this->email->initialize($config);
 				
@@ -1364,16 +1364,16 @@ class Vagas extends CI_Controller {
                 $this -> load -> model('Usuarios_model');
 				$this -> load -> library('email');
 				
-				$config['protocol'] = 'smpt';
-				$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-				$config['smtp_port'] = 25;
-				$config['smtp_user'] = 'pontodigital';
-				$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-				$config['charset'] = 'UTF-8';
-
-				$config['wordwrap'] = TRUE;
-
-				$config['mailtype'] = 'html';
+				$config['charset'] = $_SERVER['ENV_CHARSET'];
+                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
 				$this->email->initialize($config);
 				
@@ -1779,16 +1779,16 @@ class Vagas extends CI_Controller {
                     
                         $dados_candidato = $this -> Candidatos_model -> get_candidatos($dados_candidatura[0] -> es_candidato);
 
-                        $config['protocol'] = 'smpt';
-						$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-						$config['smtp_port'] = 25;
-						$config['smtp_user'] = 'pontodigital';
-						$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-						$config['charset'] = 'UTF-8';
-
-						$config['wordwrap'] = TRUE;
-
-						$config['mailtype'] = 'html';
+                        $config['charset'] = $_SERVER['ENV_CHARSET'];
+                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
 						$this->email->initialize($config);
 
@@ -2158,16 +2158,16 @@ class Vagas extends CI_Controller {
                 $dados_candidatura = $this -> Candidaturas_model -> get_candidaturas($candidatura);
                 $dados_candidato = $this -> Candidatos_model -> get_candidatos($dados_candidatura[0] -> es_candidato);
                 
-                $config['protocol'] = 'smpt';
-				$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-				$config['smtp_port'] = 25;
-				$config['smtp_user'] = 'pontodigital';
-				$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-				$config['charset'] = 'UTF-8';
-
-				$config['wordwrap'] = TRUE;
-
-				$config['mailtype'] = 'html';
+                $config['charset'] = $_SERVER['ENV_CHARSET'];
+                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
 				$this->email->initialize($config);
                 
@@ -2517,16 +2517,17 @@ class Vagas extends CI_Controller {
                 $this -> load -> model('Candidatos_model');
                 $this -> load -> model('Usuarios_model');
 				$this -> load -> library('email');
-				$config['protocol'] = 'smpt';
-				$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-				$config['smtp_port'] = 25;
-				$config['smtp_user'] = 'pontodigital';
-				$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-				$config['charset'] = 'UTF-8';
 
-				$config['wordwrap'] = TRUE;
-
-				$config['mailtype'] = 'html';
+				$config['charset'] = $_SERVER['ENV_CHARSET'];
+                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
 				$this->email->initialize($config);
 				
@@ -2575,16 +2576,16 @@ class Vagas extends CI_Controller {
                         
                         $this -> load -> library('email');
                         
-						$config['protocol'] = 'smpt';
-						$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-						$config['smtp_port'] = 25;
-						$config['smtp_user'] = 'pontodigital';
-						$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-						$config['charset'] = 'UTF-8';
-
-						$config['wordwrap'] = TRUE;
-
-						$config['mailtype'] = 'html';
+						$config['charset'] = $_SERVER['ENV_CHARSET'];
+                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
 						$this->email->initialize($config);
 						
@@ -2949,16 +2950,16 @@ class Vagas extends CI_Controller {
 
                         $dados_candidato = $this -> Candidatos_model -> get_candidatos($dados_candidatura[0] -> es_candidato);
 						
-						$config['protocol'] = 'smpt';
-						$config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-						$config['smtp_port'] = 25;
-						$config['smtp_user'] = 'pontodigital';
-						$config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-						$config['charset'] = 'UTF-8';
-
-						$config['wordwrap'] = TRUE;
-
-						$config['mailtype'] = 'html';
+						$config['charset'] = $_SERVER['ENV_CHARSET'];
+                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
 						$this->email->initialize($config);
 						
@@ -4012,16 +4013,16 @@ class Vagas extends CI_Controller {
                 
                 $this->load->library('email');
 
-                $config['protocol'] = 'smpt';
-                $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-                $config['smtp_port'] = 25;
-                $config['smtp_user'] = 'pontodigital';
-                $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-                $config['charset'] = 'UTF-8';
-
-                $config['wordwrap'] = TRUE;
-
-                $config['mailtype'] = 'html';
+                $config['charset'] = $_SERVER['ENV_CHARSET'];
+                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
                 $this->email->initialize($config);
 
@@ -4060,16 +4061,16 @@ class Vagas extends CI_Controller {
             
                 $this->load->library('email');
 
-                $config['protocol'] = 'smpt';
-                $config['smtp_host'] = 'smtpprdo.prodemge.gov.br';
-                $config['smtp_port'] = 25;
-                $config['smtp_user'] = 'pontodigital';
-                $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
-                $config['charset'] = 'UTF-8';
-
-                $config['wordwrap'] = TRUE;
-
-                $config['mailtype'] = 'html';
+                $config['charset'] = $_SERVER['ENV_CHARSET'];
+                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
+                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
+                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
+                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
+                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
+                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
+                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
+                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
+                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
 
                 $this->email->initialize($config);
 
