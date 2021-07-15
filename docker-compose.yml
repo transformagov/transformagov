@@ -8,6 +8,8 @@ services:
       - "8080:80"
     volumes:
       - ./:/transforma-minas/
+    env_file:
+      - .env
     entrypoint: /tmp/run.sh
     #entrypoint: tail -f /dev/null
   db:
