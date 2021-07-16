@@ -21,13 +21,20 @@ function getEmailEnvConfigs()
     return $config;
 }
 
+function readTemplateFile(string $fileName) {
+    $file_path = TEMPLATES_PATH . "/" . $fileName;
+
+    $file = fopen($file_path, "r");
+    $template = fread($file, filesize($file_path));
+    fclose($file);
+
+    return $template;
+}
+
 
 function loadCadastroHtml($titulo, $subTitulo, $nomeCompleto, $senha, $cpf)
 {
-    $file_path = TEMPLATES_PATH . "/cadastro.html";
-    $file = fopen(TEMPLATES_PATH . "/cadastro.html", "r");
-    $template = fread($file, filesize($file_path));
-    fclose($file);
+    $template = readTemplateFile("cadastro.html");
 
     $data = array(
         ":titulo" => $titulo,
@@ -44,10 +51,7 @@ function loadCadastroHtml($titulo, $subTitulo, $nomeCompleto, $senha, $cpf)
 
 function loadCadastroIndeferidoHtml($titulo, $subTitulo, $nomeCompleto)
 {
-    $file_path = TEMPLATES_PATH . "/cadastroIndeferido.html";
-    $file = fopen(TEMPLATES_PATH . "/cadastroIndeferido.html", "r");
-    $template = fread($file, filesize($file_path));
-    fclose($file);
+    $template = readTemplateFile("cadastroIndeferido.html");
 
     $data = array(
         ":titulo" => $titulo,
@@ -61,10 +65,7 @@ function loadCadastroIndeferidoHtml($titulo, $subTitulo, $nomeCompleto)
 
 function loadAlteracaoDeSenhaHtml($titulo, $subTitulo, $nomeUsuario, $login, $senha)
 {
-    $file_path = TEMPLATES_PATH . "/alteracaoDeSenha.html";
-    $file = fopen(TEMPLATES_PATH . "/alteracaoDeSenha.html", "r");
-    $template = fread($file, filesize($file_path));
-    fclose($file);
+    $template = readTemplateFile("alteracaoDeSenha.html");
 
     $data = array(
         ":titulo" => $titulo,
@@ -82,10 +83,7 @@ function loadAlteracaoDeSenhaHtml($titulo, $subTitulo, $nomeUsuario, $login, $se
 
 function loadCandidaturaIndeferidaHtml($genero, $nome, $vaga)
 {
-    $file_path = TEMPLATES_PATH . "/candidaturaIndeferida.html";
-    $file = fopen(TEMPLATES_PATH . "/candidaturaIndeferida.html", "r");
-    $template = fread($file, filesize($file_path));
-    fclose($file);
+    $template = readTemplateFile("candidaturaIndeferida.html");
 
     $data = array(
         ":generoCheck" => $genero == 2 ? "Cara" : "Caro",
@@ -98,12 +96,24 @@ function loadCandidaturaIndeferidaHtml($genero, $nome, $vaga)
 }
 
 
+function loadAguardandoDecisaoFinalHtml($genero, $nome)
+{
+    $template = readTemplateFile("aguardandoDecisaoFinal.html");
+
+    $data = array(
+        ":generoCheck" => $genero == 2 ? "Cara" : "Caro",
+        ":nome" => $nome,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data);
+}
+
+
 function loadTestHtml()
 {
-    $file_path = TEMPLATES_PATH . "/test.html";
-    $file = fopen(TEMPLATES_PATH . "/test.html", "r");
-    $template = fread($file, filesize($file_path));
-    fclose($file);
+    $template = readTemplateFile("test.html");
 
     return $template;
 }
