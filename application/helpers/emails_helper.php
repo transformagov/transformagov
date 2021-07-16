@@ -33,11 +33,77 @@ function loadCadastroHtml($titulo, $subTitulo, $nomeCompleto, $senha, $cpf)
         ":titulo" => $titulo,
         ":subTitulo" => $subTitulo,
         ":nomeCompleto" => $nomeCompleto,
-        ":cpf" => $senha,
-        ":senha" => $cpf,
+        ":cpf" => $cpf,
+        ":senha" => $senha,
         ":urlBase" => base_url(""),
         ":urlContato" => base_url("Publico/contato")
     );
 
     return strtr($template, $data);
+}
+
+function loadCadastroIndeferidoHtml($titulo, $subTitulo, $nomeCompleto)
+{
+    $file_path = TEMPLATES_PATH . "/cadastroIndeferido.html";
+    $file = fopen(TEMPLATES_PATH . "/cadastroIndeferido.html", "r");
+    $template = fread($file, filesize($file_path));
+    fclose($file);
+
+    $data = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":nomeCompleto" => $nomeCompleto,
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data);
+}
+
+function loadAlteracaoDeSenhaHtml($titulo, $subTitulo, $nomeUsuario, $login, $senha)
+{
+    $file_path = TEMPLATES_PATH . "/alteracaoDeSenha.html";
+    $file = fopen(TEMPLATES_PATH . "/alteracaoDeSenha.html", "r");
+    $template = fread($file, filesize($file_path));
+    fclose($file);
+
+    $data = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":nomeUsuario" => $nomeUsuario,
+        ":login" => $login,
+        ":cpf" => $senha,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data);
+}
+
+
+function loadCandidaturaIndeferidaHtml($genero, $nome, $vaga)
+{
+    $file_path = TEMPLATES_PATH . "/candidaturaIndeferida.html";
+    $file = fopen(TEMPLATES_PATH . "/candidaturaIndeferida.html", "r");
+    $template = fread($file, filesize($file_path));
+    fclose($file);
+
+    $data = array(
+        ":generoCheck" => $genero == 2 ? "Cara" : "Caro",
+        ":nome" => $nome,
+        ":vaga" => $vaga,
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data);
+}
+
+
+function loadTestHtml()
+{
+    $file_path = TEMPLATES_PATH . "/test.html";
+    $file = fopen(TEMPLATES_PATH . "/test.html", "r");
+    $template = fread($file, filesize($file_path));
+    fclose($file);
+
+    return $template;
 }

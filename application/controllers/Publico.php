@@ -11,6 +11,10 @@ class Publico extends CI_Controller {
                 $this -> load -> library('form_validation');
                 $this -> load -> model('Usuarios_model');
         }
+        public function test(){
+                $this->load->helper('emails');
+                echo loadTestHtml();
+              }
 	public function index(){ //login
                 $pagina['menu1']='Publico';
                 $pagina['menu2']='index';
