@@ -111,6 +111,24 @@ function loadAguardandoDecisaoFinalHtml($genero, $nome)
 }
 
 
+function loadCandidaturaHabilitadaCurriculoAvaliadoHtml($titulo, $subTitulo, $genero, $nome, $vaga)
+{
+    $template = readTemplateFile("candidaturaHabilitadaCurriculoAvaliado.html");
+
+    $data = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":generoCheck" => $genero == 2 ? "Cara" : "Caro",
+        ":nome" => $nome,
+        ":vaga" => $vaga,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data);
+}
+
+
 function loadTestHtml()
 {
     $template = readTemplateFile("test.html");
