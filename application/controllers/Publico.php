@@ -105,16 +105,8 @@ class Publico extends CI_Controller {
                                 $this -> Usuarios_model -> update_usuario('vc_senha_temporaria', $password, $row -> pr_usuario);
 
                                 // TODO PENCIL: Remover antes do merge
-                                $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                $this->load->helper('emails');
+                                $config = getEmailEnvConfigs();
 
                                 $this->email->initialize($config);
                                 

@@ -618,17 +618,8 @@ class Vagas extends CI_Controller {
                                 //var_dump($dados_form);
                                 //var_dump($entrevista_anterior);
                                 if($entrevista_anterior != null){
-                                    
-                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                        $this->load->helper('emails');
+                                        $config = getEmailEnvConfigs();
 
 										$this->email->initialize($config);
                                     
@@ -735,16 +726,8 @@ class Vagas extends CI_Controller {
                                             $this -> Candidaturas_model -> update_candidatura('en_motivacao', '1',  $candidatura);
                                         }
 
-                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                        $this->load->helper('emails');
+                                        $config = getEmailEnvConfigs();
 
                                         $partes = explode(" ",$dados_form['data2']);
                                         $data = $partes[0];
@@ -1165,16 +1148,8 @@ class Vagas extends CI_Controller {
                 $this -> load -> model('Usuarios_model');
 				$this -> load -> library('email');
 
-                $config['charset'] = $_SERVER['ENV_CHARSET'];
-                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                $this->load->helper('emails');
+                $config = getEmailEnvConfigs();
 
 				$this->email->initialize($config);
 				
@@ -1232,16 +1207,8 @@ class Vagas extends CI_Controller {
                 $this -> load -> model('Usuarios_model');
 				$this -> load -> library('email');
 				
-				$config['charset'] = $_SERVER['ENV_CHARSET'];
-                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+				$this->load->helper('emails');
+                $config = getEmailEnvConfigs();
 
                 $this->email->initialize($config);
 				
@@ -1364,16 +1331,8 @@ class Vagas extends CI_Controller {
                 $this -> load -> model('Usuarios_model');
 				$this -> load -> library('email');
 				
-				$config['charset'] = $_SERVER['ENV_CHARSET'];
-                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+				$this->load->helper('emails');
+                $config = getEmailEnvConfigs();
 
 				$this->email->initialize($config);
 				
@@ -1779,16 +1738,8 @@ class Vagas extends CI_Controller {
                     
                         $dados_candidato = $this -> Candidatos_model -> get_candidatos($dados_candidatura[0] -> es_candidato);
 
-                        $config['charset'] = $_SERVER['ENV_CHARSET'];
-                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                        $this->load->helper('emails');
+                        $config = getEmailEnvConfigs();
 
 						$this->email->initialize($config);
 
@@ -2158,16 +2109,8 @@ class Vagas extends CI_Controller {
                 $dados_candidatura = $this -> Candidaturas_model -> get_candidaturas($candidatura);
                 $dados_candidato = $this -> Candidatos_model -> get_candidatos($dados_candidatura[0] -> es_candidato);
                 
-                $config['charset'] = $_SERVER['ENV_CHARSET'];
-                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                $this->load->helper('emails');
+                $config = getEmailEnvConfigs();
 
 				$this->email->initialize($config);
                 
@@ -2518,16 +2461,8 @@ class Vagas extends CI_Controller {
                 $this -> load -> model('Usuarios_model');
 				$this -> load -> library('email');
 
-				$config['charset'] = $_SERVER['ENV_CHARSET'];
-                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+				$this->load->helper('emails');
+                $config = getEmailEnvConfigs();
 
 				$this->email->initialize($config);
 				
@@ -2576,16 +2511,8 @@ class Vagas extends CI_Controller {
                         
                         $this -> load -> library('email');
                         
-						$config['charset'] = $_SERVER['ENV_CHARSET'];
-                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+						$this->load->helper('emails');
+                        $config = getEmailEnvConfigs();
 
 						$this->email->initialize($config);
 						
@@ -2950,16 +2877,8 @@ class Vagas extends CI_Controller {
 
                         $dados_candidato = $this -> Candidatos_model -> get_candidatos($dados_candidatura[0] -> es_candidato);
 						
-						$config['charset'] = $_SERVER['ENV_CHARSET'];
-                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+						$this->load->helper('emails');
+                        $config = getEmailEnvConfigs();
 
 						$this->email->initialize($config);
 						
@@ -4013,16 +3932,8 @@ class Vagas extends CI_Controller {
                 
                 $this->load->library('email');
 
-                $config['charset'] = $_SERVER['ENV_CHARSET'];
-                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                $this->load->helper('emails');
+                $config = getEmailEnvConfigs();
 
                 $this->email->initialize($config);
 
@@ -4061,16 +3972,8 @@ class Vagas extends CI_Controller {
             
                 $this->load->library('email');
 
-                $config['charset'] = $_SERVER['ENV_CHARSET'];
-                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                $this->load->helper('emails');
+                $config = getEmailEnvConfigs();
 
                 $this->email->initialize($config);
 

@@ -790,16 +790,8 @@ class Candidatos extends CI_Controller {
                                         */
                                         
                                         // TODO PENCIL: Remover antes do merge pra master
-                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                        $this->load->helper('emails');
+                                        $config = getEmailEnvConfigs();
 
 					$this->email->initialize($config);
                                         $this -> email -> from($this -> config -> item('email'), $this -> config -> item('nome'));
@@ -1104,16 +1096,8 @@ class Candidatos extends CI_Controller {
                                                         $config['charset'] = 'UTF-8';
                                                         */
                                                         // TODO PENCIL: Remover antes do merge
-                                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                                        $this->load->helper('emails');
+                                                        $config = getEmailEnvConfigs();
 
                                                         $this->email->initialize($config);
                                                         $this -> email -> from($this -> config -> item('email'), $this -> config -> item('nome'));
@@ -1121,7 +1105,7 @@ class Candidatos extends CI_Controller {
                                                         $this -> email -> subject('['.$this -> config -> item('nome').'] Confirmação de cadastro');
                                                         //$msg="Olá {$dados_form['NomeCompleto']},\n\nSeu cadastro foi realizado no sistema do ".$this -> config -> item('nome').". Seus dados para acesso são:\n\nUsuário: {$dados_form['CPF']}\nSenha inicial: $senha\n\nAcesse o sistema por meio do link: ".base_url();
 
-                                                        $this->load->helper('emails');
+                                                        
                                                         $msg = loadCadastroHtml($this -> config -> item('tituloPlataforma'), $this -> config -> item('subTituloPlataforma'), $dados_form['NomeCompleto'], $senha, $dados_form['CPF']);
 
                                                         $this -> email -> message($msg);
@@ -1330,16 +1314,8 @@ class Candidatos extends CI_Controller {
 						$this -> Usuarios_model -> update_usuario('in_erros', '0', $usuario);
 						$this -> Usuarios_model -> update_usuario('bl_trocasenha', '1', $usuario);
 
-                                                $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                                $this->load->helper('emails');
+                                                $config = getEmailEnvConfigs();
 
 						$this->email->initialize($config);
 						
@@ -1789,16 +1765,8 @@ class Candidatos extends CI_Controller {
                         $this -> Usuarios_model -> update_usuario('vc_senha_temporaria', $password, $usuario);
                         $this -> Usuarios_model -> update_usuario('dt_alteracao', date('Y-m-d H:i:s'), $usuario);
 
-                        $config['charset'] = $_SERVER['ENV_CHARSET'];
-                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                        $this->load->helper('emails');
+                        $config = getEmailEnvConfigs();
 
                         $this->email->initialize($config);
 						

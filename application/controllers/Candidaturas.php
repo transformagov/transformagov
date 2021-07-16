@@ -383,16 +383,8 @@ class Candidaturas extends CI_Controller {
 
                                                         $this->load->library('email');
 
-                                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                                        $this->load->helper('emails');
+                                                        $config = getEmailEnvConfigs();
 
                                                         $this->email->initialize($config);
 
@@ -1765,16 +1757,8 @@ a[x-apple-data-detectors=true] {
 
                                                                 $this->load->library('email');
 
-                                                                $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                                                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                                                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                                                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                                                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                                                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                                                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                                                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                                                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                                                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                                                $this->load->helper('emails');
+                                                                $config = getEmailEnvConfigs();
 
                                                                 $this->email->initialize($config);
 
@@ -2056,16 +2040,8 @@ a[x-apple-data-detectors=true] {
 
                                                                 $this->load->library('email');
 
-                                                                $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                                                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                                                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                                                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                                                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                                                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                                                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                                                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                                                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                                                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                                                $this->load->helper('emails');
+                                                                $config = getEmailEnvConfigs();
 
                                                                 $this->email->initialize($config);
 
@@ -2619,16 +2595,8 @@ a[x-apple-data-detectors=true] {
 
                                                         $dados_candidato = $this -> Candidatos_model -> get_candidatos($candidatura[0] -> es_candidato);
 
-                                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                                        $this->load->helper('emails');
+                                                        $config = getEmailEnvConfigs();
 
                                                         $this->email->initialize($config);
 
@@ -3177,16 +3145,8 @@ a[x-apple-data-detectors=true] {
 
                                                         $dados_candidato = $this -> Candidatos_model -> get_candidatos($candidatura[0] -> es_candidato);
 
-                                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                                        $this->load->helper('emails');
+                                                        $config = getEmailEnvConfigs();
 
                                                         $this->email->initialize($config);
 
@@ -4325,16 +4285,8 @@ a[x-apple-data-detectors=true] {
 
                                                         $dados_candidato = $this -> Candidatos_model -> get_candidatos($candidatura[0] -> es_candidato);
 
-                                                        $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                                        $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                                        $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                                        $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                                        $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                                        $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                                        $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                                        $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                                        $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                                        $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                                        $this->load->helper('emails');
+                                                        $config = getEmailEnvConfigs();
 
                                                         $this->email->initialize($config);
 
@@ -4902,16 +4854,8 @@ a[x-apple-data-detectors=true] {
 
                                                 $dados_candidato = $this -> Candidatos_model -> get_candidatos($candidatura[0] -> es_candidato);
 
-                                                $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                                $this->load->helper('emails');
+                                                $config = getEmailEnvConfigs();
 
                                                 $this->email->initialize($config);
 
@@ -5710,16 +5654,8 @@ a[x-apple-data-detectors=true] {
 
                                 //alterado para aguardando decisão final após análise curricular, temporário
                                 //$this -> Candidaturas_model -> update_candidatura('es_status', 14,  $candidatura[0] -> pr_candidatura);
-                                                                $config['charset'] = $_SERVER['ENV_CHARSET'];
-                                                                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                                                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                                                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                                                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                                                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                                                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                                                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                                                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                                                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+                                                                $this->load->helper('emails');
+                                                                $config = getEmailEnvConfigs();
 
 								$this->email->initialize($config);
 
@@ -7277,16 +7213,8 @@ a[x-apple-data-detectors=true] {
 						$this -> load -> model('Anexos_model');
 						$this -> load -> library('email');
 						
-						$config['charset'] = $_SERVER['ENV_CHARSET'];
-                                                $config['wordwrap'] = $_SERVER['ENV_WORDWRAP'];
-                                                $config['mailtype'] = $_SERVER['ENV_MAILTYPE'];
-                                                $config['smtp_host'] = $_SERVER['ENV_SMTP_HOST'];
-                                                $config['smtp_port'] = $_SERVER['ENV_SMTP_PORT'];
-                                                $config['smtp_user'] = $_SERVER['ENV_SMTP_USER'];
-                                                $config['smtp_pass'] = $_SERVER['ENV_SMTP_PASS'];
-                                                $config['protocol'] = $_SERVER['ENV_PROTOCOL'];
-                                                $config['smtp_auth'] = $_SERVER['ENV_SMTP_AUTH'];
-                                                $config['smtp_crypto'] = $_SERVER['ENV_SMTP_CRYPTO'];
+						$this->load->helper('emails');
+                                                $config = getEmailEnvConfigs();
 
 						$this->email->initialize($config);
 
