@@ -1,6 +1,6 @@
 <?php
 
-define("TEMPLATES_PATH", APPPATH . "helpers/templates");
+define("TEMPLATES_PATH", APPPATH . "helpers/email_templates");
 
 
 function getEmailEnvConfigs()
