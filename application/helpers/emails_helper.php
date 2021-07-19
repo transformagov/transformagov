@@ -72,7 +72,7 @@ function loadAlteracaoDeSenhaHtml($titulo, $subTitulo, $nomeUsuario, $login, $se
         ":subTitulo" => $subTitulo,
         ":nomeUsuario" => $nomeUsuario,
         ":login" => $login,
-        ":cpf" => $senha,
+        ":senha" => $senha,
         ":urlBase" => base_url(""),
         ":urlContato" => base_url("Publico/contato")
     );
@@ -121,6 +121,23 @@ function loadCandidaturaHabilitadaCurriculoAvaliadoHtml($titulo, $subTitulo, $ge
         ":generoCheck" => $genero == 2 ? "Cara" : "Caro",
         ":nome" => $nome,
         ":vaga" => $vaga,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data);
+}
+
+function loadCandidaturaReprovadaHtml($titulo, $subTitulo, $genero, $nome, $vaga)
+{
+    $template = readTemplateFile("candidaturaReprovada.html");
+
+    $data = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":generoCheck" => $genero == 2 ? "Cara" : "Caro", // $candidato -> in_genero
+        ":nome" => $nome, // $candidato -> vc_nome
+        ":vaga" => $vaga, // $vaga[0] -> vc_vaga
         ":urlBase" => base_url(""),
         ":urlContato" => base_url("Publico/contato")
     );
