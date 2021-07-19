@@ -163,6 +163,33 @@ function loadReprovacaoHtml($titulo, $subTitulo, $genero, $nome)
     return strtr($template, $data);
 }
 
+
+function loadTestesAderenciaPerfilHBDIMotivaçãoServicoPublicoHtml(
+    $titulo,
+    $subTitulo,
+    $genero,
+    $nome,
+    $vaga,
+    $data,
+    $hora
+) {
+    $template = readTemplateFile("testesAderenciaPerfilHBDIMotivacaoServicoPublico.html");
+
+    $data_array = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":generoCheck" => $genero == 2 ? "Cara" : "Caro",
+        ":nome" => $nome,
+        ":vaga" => $vaga,
+        ":data" => $data,
+        ":hora" => $hora,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data_array);
+}
+
 function loadTestHtml()
 {
     $template = readTemplateFile("test.html");
