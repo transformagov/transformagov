@@ -21,7 +21,8 @@ function getEmailEnvConfigs()
     return $config;
 }
 
-function readTemplateFile(string $fileName) {
+function readTemplateFile(string $fileName)
+{
     $file_path = TEMPLATES_PATH . "/" . $fileName;
 
     $file = fopen($file_path, "r");
@@ -135,9 +136,9 @@ function loadCandidaturaReprovadaHtml($titulo, $subTitulo, $genero, $nome, $vaga
     $data = array(
         ":titulo" => $titulo,
         ":subTitulo" => $subTitulo,
-        ":generoCheck" => $genero == 2 ? "Cara" : "Caro", // $candidato -> in_genero
-        ":nome" => $nome, // $candidato -> vc_nome
-        ":vaga" => $vaga, // $vaga[0] -> vc_vaga
+        ":generoCheck" => $genero == 2 ? "Cara" : "Caro",
+        ":nome" => $nome,
+        ":vaga" => $vaga,
         ":urlBase" => base_url(""),
         ":urlContato" => base_url("Publico/contato")
     );
@@ -145,6 +146,22 @@ function loadCandidaturaReprovadaHtml($titulo, $subTitulo, $genero, $nome, $vaga
     return strtr($template, $data);
 }
 
+
+function loadReprovacaoHtml($titulo, $subTitulo, $genero, $nome)
+{
+    $template = readTemplateFile("reprovacao.html");
+
+    $data = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":generoCheck" => $genero == 2 ? "Cara" : "Caro",
+        ":nome" => $nome,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data);
+}
 
 function loadTestHtml()
 {
