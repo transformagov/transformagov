@@ -97,7 +97,7 @@ class Usuarios extends CI_Controller {
                                         $this -> email -> subject('['.$this -> config -> item('nome').'] Confirmação de cadastro');
                                         //$msg="Olá {$dados_form['NomeCompleto']},\n\nSeu cadastro foi realizado no sistema do ".$this -> config -> item('nome').". Seus dados para acesso são:\n\nUsuário: {$dados_form['CPF']}\nSenha inicial: $senha\n\nAcesse o sistema por meio do link: ".base_url();
                                         $this->load->helper('emails');
-                                        $msg = loadCadastroHtml($this -> config -> item('tituloPlataforma'), $this -> config -> item('subTituloPlataforma'), $dados_form['NomeCompleto'], $senha, $dados_form['CPF']);
+                                        $msg = loadCadastroHtml($this -> config -> item('nome'), $this -> config -> item('subTituloPlataforma'), $dados_form['NomeCompleto'], $senha, $dados_form['CPF']);
 
                                         $this -> email -> message($msg);
                                         if(!$this -> email -> send()){
@@ -232,7 +232,7 @@ class Usuarios extends CI_Controller {
                                 
                                 //$msg='Olá '.$dados['usuario'] -> vc_nome.',\n\nFoi solicitada uma nova senha do sistema do programa '.$this -> config -> item('nome').'. Seus dados para acesso são:\n\nUsuário: '.$dados['usuario'] -> vc_login."\nSenha inicial: $senha\n\nSe não foi você que solicitou essa recuperação de senha, não se preocupe pois sua senha antiga ainda funciona.\n\nAcesse o sistema por meio do link: ".base_url();
                                 $msg= loadAlteracaoDeSenhaHtml(
-                                        $this -> config -> item('tituloPlataforma'),
+                                        $this -> config -> item('nome'),
                                         $this -> config -> item('subTituloPlataforma'),
                                         $dados['usuario'] -> vc_nome,
                                         $dados['usuario'] -> vc_login,
@@ -286,6 +286,10 @@ class Usuarios extends CI_Controller {
                 else{
                         $usuario = $this -> uri -> segment(3);
                         $dados_usuario = $this -> Usuarios_model -> get_usuarios ($usuario);
+                        if(is_array($dados_usuario) && sizeof($dados_usuario) > 0) {
+                                $dados_usuario = $dados_usuario[0];
+                        }
+
                         $dados += (array) $dados_usuario;
                         //var_dump($usuario);
                         //var_dump($dados_usuario);
@@ -306,7 +310,7 @@ class Usuarios extends CI_Controller {
                                 echo "<script type=\"text/javascript\">alert('O usuário \'".$dados_usuario -> vc_nome."\' foi desativado com sucesso.');window.location='".base_url('Usuarios/index')."';</script>";
                         }
                 }
-                
+
                 //$this -> load -> view('usuarios', $dados);
         }
 	public function reactivate(){

@@ -128,7 +128,7 @@ class Publico extends CI_Controller {
                                 //$msg='Olá '.$row -> vc_nome.',\n\nFoi solicitada a recuperação de senha do sistema do programa '.$this -> config -> item('nome').'. Seus dados para acesso são:\n\nUsuário: '.$row -> vc_login."\nSenha inicial: $senha\n\nSe não foi você que solicitou essa recuperação de senha, não se preocupe pois sua senha antiga ainda funciona.\n\nAcesse o sistema por meio do link: ".base_url();
 
                                 $msg=loadAlteracaoDeSenhaHtml(
-                                        $this -> config -> item('tituloPlataforma'),
+                                        $this -> config -> item('nome'),
                                         $this -> config -> item('subTituloPlataforma'),
                                         $row -> vc_nome,
                                         $row -> vc_login,
@@ -180,11 +180,17 @@ class Publico extends CI_Controller {
                         $dados['erro']= validation_errors();
                 }
                 else{
+                        $this->load->helper('emails');
+                        $config = getEmailEnvConfigs();
+
+                        $this->email->initialize($config);
+
                         $dados_form = $this -> input -> post(null,true);
                         $this -> email -> from($dados_form['email'], $dados_form['nome']);
                         $this -> email -> to($this -> config -> item('email'));
                         $this -> email -> subject('['.$this -> config -> item('nome').'] Fale conosco: '.$dados_form['assunto']);
                         $this -> email -> message($dados_form['msg']);
+
                         if($this -> email -> send()){
                                 $dados['sucesso']='Mensagem enviada com sucesso.';
                                 $dados['erro']= '';

@@ -799,7 +799,7 @@ class Candidatos extends CI_Controller {
                                         $this -> email -> subject('['.$this -> config -> item('nome').'] Confirmação de cadastro');
                                         //$msg="Olá {$dados_form['NomeCompleto']},\n\nSeu cadastro foi realizado porém, infelizmente, você não cumpre com os requisitos mínimos para concorrer a alguma vaga. Em caso de dúvidas favor entrar em contato pelo fale conosco.";
                                         $msg= loadCadastroIndeferidoHtml(
-                                                $this -> config -> item('tituloPlataforma'),
+                                                $this -> config -> item('nome'),
                                                 $this -> config -> item('subTituloPlataforma'),
                                                 $dados_form['NomeCompleto']
                                         );
@@ -860,7 +860,7 @@ class Candidatos extends CI_Controller {
                                                         //$msg="Olá {$dados_form['NomeCompleto']},\n\nSeu cadastro foi realizado no sistema do ".$this -> config -> item('nome').". Seus dados para acesso são:\n\nUsuário: {$dados_form['CPF']}\nSenha inicial: $senha\n\nAcesse o sistema por meio do link: ".base_url();
 
                                                         
-                                                        $msg = loadCadastroHtml($this -> config -> item('tituloPlataforma'), $this -> config -> item('subTituloPlataforma'), $dados_form['NomeCompleto'], $senha, $dados_form['CPF']);
+                                                        $msg = loadCadastroHtml($this -> config -> item('nome'), $this -> config -> item('subTituloPlataforma'), $dados_form['NomeCompleto'], $senha, $dados_form['CPF']);
 
                                                         $this -> email -> message($msg);
                                                         if(!$this -> email -> send()){
@@ -1078,7 +1078,7 @@ class Candidatos extends CI_Controller {
                         $this -> email -> subject('['.$this -> config -> item('nome').'] Nova senha');
                         //$msg='Olá '.$dados['usuario'] -> vc_nome.',<br/><br/>Foi solicitada uma nova senha do sistema do programa '.$this -> config -> item('nome').'. Seus dados para acesso são:<br/><br/>Usuário: '.$dados['usuario'] -> vc_login."<br/>Senha inicial: $senha<br/><br/>Se não foi você que solicitou essa recuperação de senha, não se preocupe pois sua senha antiga ainda funciona.<br/><br/>Acesse o sistema por meio do link: ".base_url();
                         $msg=loadAlteracaoDeSenhaHtml(
-                                $this -> config -> item('tituloPlataforma'),
+                                $this -> config -> item('nome'),
                                 $this -> config -> item('subTituloPlataforma'),
                                 $dados['usuario'] -> vc_nome,
                                 $dados['usuario'] -> vc_login,

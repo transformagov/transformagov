@@ -743,7 +743,7 @@ class Vagas extends CI_Controller {
 										$this -> email -> subject('['.$this -> config -> item('nome').'] Teste de aderência');
 										//$msg='Olá '.$dados_candidato->vc_nome.',<br/><br/>O teste de aderência deve ser preenchido.<br/><br/>Em caso de dúvidas, verifique no sistema do '.$this -> config -> item('nome').' a situação deste agendamento. Acesse o sistema por meio do link: '.base_url();
 										
-                                        // $this -> config -> item('tituloPlataforma'),
+                                        // $this -> config -> item('nome'),
                                         // $this -> config -> item('subTituloPlataforma'),
                                         // $dados_candidato -> in_genero
                                         // $dados_candidato -> vc_nome
@@ -752,7 +752,7 @@ class Vagas extends CI_Controller {
                                         // $hora
 
                                         $msg= loadTestesAderenciaPerfilHBDIMotivaçãoServicoPublicoHtml(
-                                            $this -> config -> item('tituloPlataforma'),
+                                            $this -> config -> item('nome'),
                                             $this -> config -> item('subTituloPlataforma'),
                                             $dados_candidato -> in_genero,
                                             $dados_candidato -> vc_nome,
@@ -1037,7 +1037,7 @@ class Vagas extends CI_Controller {
                                 $this -> email -> to($candidato -> vc_email);
                                 $this -> email -> subject('['.$this -> config -> item('nome').'] Reprovação da candidatura na análise curricular');
                                 $msg=loadCandidaturaReprovadaHtml(
-                                    $this -> config -> item('tituloPlataforma'),
+                                    $this -> config -> item('nome'),
                                     $this -> config -> item('subTituloPlataforma'),
                                     $candidato -> in_genero,
                                     $candidato -> vc_nome,
@@ -1476,7 +1476,7 @@ class Vagas extends CI_Controller {
 
                 //$msg='Olá '.$dados_candidato->vc_nome.',<br/><br/>Sua candidatura foi eliminada na revisão dos requisitos.<br/><br/>Em caso de dúvidas, verifique no sistema do '.$this -> config -> item('nome').' a situação deste agendamento. Acesse o sistema por meio do link: '.base_url();
                 $msg=loadReprovacaoHtml(
-                    $this -> config -> item('tituloPlataforma'),
+                    $this -> config -> item('nome'),
                     $this -> config -> item('subTituloPlataforma'),
                     $dados_candidato -> in_genero,
                     $dados_candidato -> vc_nome
@@ -1557,7 +1557,7 @@ class Vagas extends CI_Controller {
                         //$msg='Olá '.$dados_candidato->vc_nome.',<br/><br/>Sua candidatura está esperando a decisão final.<br/><br/>Em caso de dúvidas, verifique no sistema do '.$this -> config -> item('nome').' a situação deste agendamento. Acesse o sistema por meio do link: '.base_url();
 
                         $msg=loadAguardandoDecisaoFinalHtml(
-                            $this -> config -> item('tituloPlataforma'),
+                            $this -> config -> item('nome'),
                             $this -> config -> item('subTituloPlataforma'),
                             $dados_candidato -> in_genero,
                             $dados_candidato->vc_nome

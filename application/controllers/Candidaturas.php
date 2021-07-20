@@ -4133,7 +4133,7 @@ class Candidaturas extends CI_Controller {
 										//$msg='Olá '.$candidato -> vc_nome.',\n\nObrigado por participar do Transforma Minas, mas foi reprovado na habilitação.\nEm caso de dúvidas, verifique no sistema do '.$this -> config -> item('nome').' a situação dessa candidatura. Acesse o sistema por meio do link: '.base_url();
 										$this->load->helper('emails');
                                                                                 $msg= loadCandidaturaHabilitadaCurriculoAvaliadoHtml(
-                                                                                        $this -> config -> item('tituloPlataforma'),
+                                                                                        $this -> config -> item('nome'),
                                                                                         $this -> config -> item('subTituloPlataforma'),
                                                                                         $candidato->in_genero,
                                                                                         $candidato->vc_nome,
@@ -4161,7 +4161,7 @@ class Candidaturas extends CI_Controller {
 										//$msg='Olá '.$candidato -> vc_nome.',\n\nObrigado por participar do Transforma Minas, mas foi reprovado na habilitação.\nEm caso de dúvidas, verifique no sistema do '.$this -> config -> item('nome').' a situação dessa candidatura. Acesse o sistema por meio do link: '.base_url();
                                                                                 $this->load->helper('emails');
                                                                                 $msg=loadCandidaturaReprovadaHtml(
-                                                                                        $this -> config -> item('tituloPlataforma'),
+                                                                                        $this -> config -> item('nome'),
                                                                                         $this -> config -> item('subTituloPlataforma'),
                                                                                         $candidato -> in_genero,
                                                                                         $candidato -> vc_nome,
