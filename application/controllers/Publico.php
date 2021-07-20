@@ -13,7 +13,18 @@ class Publico extends CI_Controller {
         }
         public function test(){
                 $this->load->helper('emails');
-                echo loadTestHtml();
+                // echo loadTestHtml();
+                echo loadReagendamentoDeEntrevistaHtml(
+                        $this->config->item('nome'),
+                        $this->config->item('subTituloPlataforma'),
+                        1,
+                        'Fulanor',
+                        '22/22/22',
+                        '10:10:10',
+                        'competencia',
+                        'Porteiro',
+                        'www.google.com'
+                );
               }
 	public function index(){ //login
                 $pagina['menu1']='Publico';
@@ -128,7 +139,7 @@ class Publico extends CI_Controller {
                                 //$msg='Olá '.$row -> vc_nome.',\n\nFoi solicitada a recuperação de senha do sistema do programa '.$this -> config -> item('nome').'. Seus dados para acesso são:\n\nUsuário: '.$row -> vc_login."\nSenha inicial: $senha\n\nSe não foi você que solicitou essa recuperação de senha, não se preocupe pois sua senha antiga ainda funciona.\n\nAcesse o sistema por meio do link: ".base_url();
 
                                 $msg=loadAlteracaoDeSenhaHtml(
-                                        $this -> config -> item('nome'),
+                                        $this -> config -> item('tituloPlataforma'),
                                         $this -> config -> item('subTituloPlataforma'),
                                         $row -> vc_nome,
                                         $row -> vc_login,

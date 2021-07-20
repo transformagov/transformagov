@@ -190,6 +190,117 @@ function loadTestesAderenciaPerfilHBDIMotivaçãoServicoPublicoHtml(
     return strtr($template, $data_array);
 }
 
+function loadCandidaturaRealizadaHtml($titulo, $subTitulo, $genero, $nome, $vaga)
+{
+    $template = readTemplateFile("candidaturaRealizada.html");
+
+    $data = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":generoCheck" => $genero == 2 ? "Cara" : "Caro",
+        ":nome" => $nome,
+        ":vaga" => $vaga,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data);
+}
+
+function loadCandidaturaPendenteHtml($titulo, $subTitulo, $genero, $nome, $vaga)
+{
+    $template = readTemplateFile("candidaturaPendente.html");
+
+    $data = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":generoCheck" => $genero == 2 ? "Cara" : "Caro",
+        ":nome" => $nome,
+        ":vaga" => $vaga,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data);
+}
+
+function loadTesteDeAderenciaHtml($titulo, $subTitulo, $genero, $nome, $vaga)
+{
+    $template = readTemplateFile("testeDeAderencia.html");
+
+    $data = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":generoCheck" => $genero == 2 ? "Cara" : "Caro",
+        ":nome" => $nome,
+        ":vaga" => $vaga,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data);
+}
+
+function loadAgendamentoDeEntrevistaHtml(
+    $titulo,
+    $subTitulo,
+    $tipoEntrevista,
+    $nome,
+    $data,
+    $hora,
+    $vaga,
+    $link,
+    $observacoes
+) {
+    $template = readTemplateFile("agendamentoDeEntrevista.html");
+
+    $data_array = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":tipoEntrevista" => $tipoEntrevista == 'competencia' ? "Competência" : "Especialista",
+        ":nome" => $nome,
+        ":data" => $data,
+        ":hora" => $hora,
+        ":vaga" => $vaga,
+        ":link" => $link,
+        ":observacoes" => $observacoes,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data_array);
+}
+
+function loadReagendamentoDeEntrevistaHtml(
+    $titulo,
+    $subTitulo,
+    $genero,
+    $nome,
+    $data,
+    $hora,
+    $tipoEntrevista,
+    $vaga,
+    $link
+) {
+    $template = readTemplateFile("reagendamentoDeEntrevista.html");
+
+    $data_array = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":generoCheck" => $genero == 2 ? "Cara" : "Caro",
+        ":tipoEntrevista" => $tipoEntrevista == 'competencia' ? "Competência" : "Especialista",
+        ":nome" => $nome,
+        ":data" => $data,
+        ":hora" => $hora,
+        ":vaga" => $vaga,
+        ":link" => $link,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data_array);
+}
+
 function loadTestHtml()
 {
     $template = readTemplateFile("test.html");
