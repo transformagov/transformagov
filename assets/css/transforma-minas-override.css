@@ -409,3 +409,8 @@ footer.sticky-footer {
 .dataTable button.dropdown-toggle {
 	font-size: 14px;
 }
+
+/* Vagas resultados, mantem input pesquisa fora do scroll */
+.dt-responsive.table-responsive > div.dataTables_wrapper div.row {
+	overflow-x: auto;
+}

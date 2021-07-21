@@ -468,15 +468,19 @@ else if($menu2 == 'duplicate'){
                                                                                 }
                                                                                 var se_escolhido = 0;
 
+                
                                                                                 ";
-                foreach($questoes_duplicadas as $questao_duplicada){
-                        $pagina['js'] .= "
-                                                                                if(form.elements['questao{$questao_duplicada -> es_questao_origem}'] && form.elements['questao{$questao_duplicada -> es_questao_origem}'].checked == true && form.elements['grupo'] && form.elements['grupo'].value == '".$questao_duplicada -> es_grupovaga_destino."'){
-                                                                                        se_repetido = 1;
-                                                                                                                                                         
-                                                                                }
-                                                                                
-                        ";
+                
+                if(is_array($questoes_duplicadas)) {
+                        foreach($questoes_duplicadas as $questao_duplicada){
+                                $pagina['js'] .= "
+                                                                                        if(form.elements['questao{$questao_duplicada -> es_questao_origem}'] && form.elements['questao{$questao_duplicada -> es_questao_origem}'].checked == true && form.elements['grupo'] && form.elements['grupo'].value == '".$questao_duplicada -> es_grupovaga_destino."'){
+                                                                                                se_repetido = 1;
+                                                                                                                                                                
+                                                                                        }
+                                                                                        
+                                ";
+                        }
                 }
                 foreach($questoes as $questao){
                         if($questao -> cont_respostas > 0 || $cont_vagas == 0){
@@ -654,49 +658,51 @@ else if($menu2 == 'historico_duplicate'){
                                                                         <tbody>
             ";
 
-        foreach($questoes_duplicadas as $questao_duplicada){
-                echo "
-                                                                                <tr> 
+        if(is_array($questoes_duplicadas)) {
+                foreach($questoes_duplicadas as $questao_duplicada){
+                        echo "
+                                                                                        <tr> 
 
-                                                                                        <td>
-                                                                                                ".$questao_duplicada -> es_etapa."ª Etapa
-                                                                                        </td>
-                                                                                        <td>
-                                                                                                {$questao_duplicada -> tx_questao}
-                                                                                        </td>
-                                                                                        <td>";
-                if($questao_duplicada -> in_tipo == 1){
-                        echo 'Customizadas';
+                                                                                                <td>
+                                                                                                        ".$questao_duplicada -> es_etapa."ª Etapa
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                        {$questao_duplicada -> tx_questao}
+                                                                                                </td>
+                                                                                                <td>";
+                        if($questao_duplicada -> in_tipo == 1){
+                                echo 'Customizadas';
+                        }
+                        else if($questao_duplicada -> in_tipo == 2){
+                                echo 'Aberta';
+                        }
+                        else if($questao_duplicada -> in_tipo == 3){
+                                echo 'Sim/Não (sim positivo)';
+                        }
+                        else if($questao_duplicada -> in_tipo == 4){
+                                echo 'Sim/Não (não positivo)';
+                        }
+                        else if($questao_duplicada -> in_tipo == 5){
+                                echo 'Nenhum/Básico/Intermediário/Avançado';
+                        }
+                        else if($questao_duplicada -> in_tipo == 6){
+                                echo 'Intervalo';
+                        }
+                        else if($questao_duplicada -> in_tipo == 7){
+                                echo 'Upload de arquivo';
+                        }                                                                                
+                        echo "</td>
+                                                                                                <td>
+                                                                                                        {$questao_duplicada -> in_peso}
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                        {$questao_duplicada -> grupo_destino}
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                        ".show_date($questao_duplicada -> dt_cadastro,true)."
+                                                                                                </td>
+                                                                                        </tr>";
                 }
-                else if($questao_duplicada -> in_tipo == 2){
-                        echo 'Aberta';
-                }
-                else if($questao_duplicada -> in_tipo == 3){
-                        echo 'Sim/Não (sim positivo)';
-                }
-                else if($questao_duplicada -> in_tipo == 4){
-                        echo 'Sim/Não (não positivo)';
-                }
-                else if($questao_duplicada -> in_tipo == 5){
-                        echo 'Nenhum/Básico/Intermediário/Avançado';
-                }
-                else if($questao_duplicada -> in_tipo == 6){
-                        echo 'Intervalo';
-                }
-                else if($questao_duplicada -> in_tipo == 7){
-                        echo 'Upload de arquivo';
-                }                                                                                
-                echo "</td>
-                                                                                        <td>
-                                                                                                {$questao_duplicada -> in_peso}
-                                                                                        </td>
-                                                                                        <td>
-                                                                                                {$questao_duplicada -> grupo_destino}
-                                                                                        </td>
-                                                                                        <td>
-                                                                                                ".show_date($questao_duplicada -> dt_cadastro,true)."
-                                                                                        </td>
-                                                                                </tr>";
         }
 
 
@@ -781,56 +787,56 @@ else if($menu2 == 'historico_duplicate_total'){
                                                                         </thead>
                                                                         <tbody>
             ";
-
-        foreach($questoes_duplicadas as $questao_duplicada){
-                echo "
-                                                                                <tr>
-                                                                                        <td>
-                                                                                                ".show_date($questao_duplicada -> dt_cadastro,true)."
-                                                                                        </td>
-                                                                                        <td>
-                                                                                                ".$questao_duplicada -> usuario."
-                                                                                        </td>
-                                                                                        <td>
-                                                                                                {$questao_duplicada -> tx_questao}
-                                                                                        </td>
-                                                                                        <td>
-                                                                                                ".$questao_duplicada -> es_etapa."ª Etapa
-                                                                                        </td>
-                                                                                        
-                                                                                        <td>";
-                if($questao_duplicada -> in_tipo == 1){
-                        echo 'Customizadas';
+        if(is_array($questoes_duplicadas)) {
+                foreach($questoes_duplicadas as $questao_duplicada){
+                        echo "
+                                                                                        <tr>
+                                                                                                <td>
+                                                                                                        ".show_date($questao_duplicada -> dt_cadastro,true)."
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                        ".$questao_duplicada -> usuario."
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                        {$questao_duplicada -> tx_questao}
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                        ".$questao_duplicada -> es_etapa."ª Etapa
+                                                                                                </td>
+                                                                                                
+                                                                                                <td>";
+                        if($questao_duplicada -> in_tipo == 1){
+                                echo 'Customizadas';
+                        }
+                        else if($questao_duplicada -> in_tipo == 2){
+                                echo 'Aberta';
+                        }
+                        else if($questao_duplicada -> in_tipo == 3){
+                                echo 'Sim/Não (sim positivo)';
+                        }
+                        else if($questao_duplicada -> in_tipo == 4){
+                                echo 'Sim/Não (não positivo)';
+                        }
+                        else if($questao_duplicada -> in_tipo == 5){
+                                echo 'Nenhum/Básico/Intermediário/Avançado';
+                        }
+                        else if($questao_duplicada -> in_tipo == 6){
+                                echo 'Intervalo';
+                        }
+                        else if($questao_duplicada -> in_tipo == 7){
+                                echo 'Upload de arquivo';
+                        }                                                                                
+                        echo "</td>
+                                                                                                <td>
+                                                                                                        {$questao_duplicada -> grupo_origem}
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                        {$questao_duplicada -> grupo_destino}
+                                                                                                </td>
+                                                                                                
+                                                                                        </tr>";
                 }
-                else if($questao_duplicada -> in_tipo == 2){
-                        echo 'Aberta';
-                }
-                else if($questao_duplicada -> in_tipo == 3){
-                        echo 'Sim/Não (sim positivo)';
-                }
-                else if($questao_duplicada -> in_tipo == 4){
-                        echo 'Sim/Não (não positivo)';
-                }
-                else if($questao_duplicada -> in_tipo == 5){
-                        echo 'Nenhum/Básico/Intermediário/Avançado';
-                }
-                else if($questao_duplicada -> in_tipo == 6){
-                        echo 'Intervalo';
-                }
-                else if($questao_duplicada -> in_tipo == 7){
-                        echo 'Upload de arquivo';
-                }                                                                                
-                echo "</td>
-                                                                                        <td>
-                                                                                                {$questao_duplicada -> grupo_origem}
-                                                                                        </td>
-                                                                                        <td>
-                                                                                                {$questao_duplicada -> grupo_destino}
-                                                                                        </td>
-                                                                                        
-                                                                                </tr>";
         }
-
 
         echo "
                                                                         </tbody>
@@ -912,49 +918,50 @@ else if($menu2 == 'historico_duplicate_quantitativo'){
                                                                         </thead>
                                                                         <tbody>
             ";
-
-        foreach($questoes_duplicadas as $questao_duplicada){
-                echo "
-                                                                                <tr>
-                                                                                        
-                                                                                        <td>
-                                                                                                {$questao_duplicada -> tx_questao}
-                                                                                        </td>
-                                                                                        <td>
-                                                                                                ".$questao_duplicada -> es_etapa."ª Etapa
-                                                                                        </td>
-                                                                                        
-                                                                                        <td>";
-                if($questao_duplicada -> in_tipo == 1){
-                        echo 'Customizadas';
+        if(is_array($questoes_duplicadas)) { 
+                foreach($questoes_duplicadas as $questao_duplicada){
+                        echo "
+                                                                                        <tr>
+                                                                                                
+                                                                                                <td>
+                                                                                                        {$questao_duplicada -> tx_questao}
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                        ".$questao_duplicada -> es_etapa."ª Etapa
+                                                                                                </td>
+                                                                                                
+                                                                                                <td>";
+                        if($questao_duplicada -> in_tipo == 1){
+                                echo 'Customizadas';
+                        }
+                        else if($questao_duplicada -> in_tipo == 2){
+                                echo 'Aberta';
+                        }
+                        else if($questao_duplicada -> in_tipo == 3){
+                                echo 'Sim/Não (sim positivo)';
+                        }
+                        else if($questao_duplicada -> in_tipo == 4){
+                                echo 'Sim/Não (não positivo)';
+                        }
+                        else if($questao_duplicada -> in_tipo == 5){
+                                echo 'Nenhum/Básico/Intermediário/Avançado';
+                        }
+                        else if($questao_duplicada -> in_tipo == 6){
+                                echo 'Intervalo';
+                        }
+                        else if($questao_duplicada -> in_tipo == 7){
+                                echo 'Upload de arquivo';
+                        }                                                                                
+                        echo "</td>
+                                                                                                <td>
+                                                                                                        {$questao_duplicada -> vc_grupovaga}
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                        {$questao_duplicada -> quantitativo}
+                                                                                                </td>
+                                                                                                
+                                                                                        </tr>";
                 }
-                else if($questao_duplicada -> in_tipo == 2){
-                        echo 'Aberta';
-                }
-                else if($questao_duplicada -> in_tipo == 3){
-                        echo 'Sim/Não (sim positivo)';
-                }
-                else if($questao_duplicada -> in_tipo == 4){
-                        echo 'Sim/Não (não positivo)';
-                }
-                else if($questao_duplicada -> in_tipo == 5){
-                        echo 'Nenhum/Básico/Intermediário/Avançado';
-                }
-                else if($questao_duplicada -> in_tipo == 6){
-                        echo 'Intervalo';
-                }
-                else if($questao_duplicada -> in_tipo == 7){
-                        echo 'Upload de arquivo';
-                }                                                                                
-                echo "</td>
-                                                                                        <td>
-                                                                                                {$questao_duplicada -> vc_grupovaga}
-                                                                                        </td>
-                                                                                        <td>
-                                                                                                {$questao_duplicada -> quantitativo}
-                                                                                        </td>
-                                                                                        
-                                                                                </tr>";
         }
 
 

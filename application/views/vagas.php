@@ -88,16 +88,16 @@ if($menu2 == 'resultado' && $vagas[0] -> bl_finalizado != '1'&&$this -> session 
         }
         
         echo "
-                                                                                <button type=\"button\" class=\"btn btn-primary\" onclick=\"window.location='".base_url('Vagas/recalcular_nota/'.$vagas[0] -> pr_vaga)."'\">Recalcular nota bruta</button>
-										<button type=\"button\" class=\"btn btn-primary\" onclick=\"window.location='".base_url('Vagas/resultado3/'.$vagas[0] -> pr_vaga)."'\">Reprovadas na Habilitação</button>
-                                                                                <button type=\"button\" class=\"btn btn-primary\" onclick=\"window.location='".base_url('Vagas/resultado2/'.$vagas[0] -> pr_vaga)."'\">Detalhamento por competência</button>
+                                                                                <button type=\"button\" class=\"btn btn-primary btn-square\" onclick=\"window.location='".base_url('Vagas/recalcular_nota/'.$vagas[0] -> pr_vaga)."'\">Recalcular nota bruta</button>
+										<button type=\"button\" class=\"btn btn-primary btn-square\" onclick=\"window.location='".base_url('Vagas/resultado3/'.$vagas[0] -> pr_vaga)."'\">Reprovadas na Habilitação</button>
+                                                                                <button type=\"button\" class=\"btn btn-primary btn-square\" onclick=\"window.location='".base_url('Vagas/resultado2/'.$vagas[0] -> pr_vaga)."'\">Detalhamento por competência</button>
 																			
                                                                     </div>";
 }
 if($menu2 == 'resultado2' || $menu2 == 'resultado3'){
         echo "
                                                                     <div class=\"col-lg-4 text-right\">
-                                                                            <button type=\"button\" class=\"btn btn-primary\" onclick=\"window.location='".base_url('Vagas/resultado/'.$vagas[0] -> pr_vaga)."'\">Voltar</button>
+                                                                            <button type=\"button\" class=\"btn btn-primary btn-square\" onclick=\"window.location='".base_url('Vagas/resultado/'.$vagas[0] -> pr_vaga)."'\">Voltar</button>
                                                                     </div>";
 }
 echo "

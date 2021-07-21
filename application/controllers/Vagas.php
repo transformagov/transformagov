@@ -1631,7 +1631,8 @@ class Vagas extends CI_Controller {
                 $candidato = $this -> Candidatos_model -> get_candidatos ($candidatura[0] -> es_candidato);
                 $titulo = array('agendamento_entrevista'=>'] Entrevista Marcada','reagendamento_candidato'=>'] Alteração de data/horário de entrevista');
                 
-                
+                $this->load->helper('emails');
+
                 if($modelo == 'agendamento_entrevista'){
                         $msg['agendamento_entrevista']= loadAgendamentoDeEntrevistaHtml(
                             $this->config->item('nome'),

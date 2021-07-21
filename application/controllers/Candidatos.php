@@ -1058,6 +1058,9 @@ class Candidatos extends CI_Controller {
                 $dados_candidato = $this -> Candidatos_model -> get_candidatos($candidato);
                 $usuario = $dados_candidato -> pr_usuario;
                 $dados['usuario'] = $this -> Usuarios_model -> get_usuarios($usuario);
+                if(is_array($dados['usuario']) && sizeof($dados['usuario']) > 0) {
+                        $dados['usuario'] = $dados['usuario'][0];
+                }
                 if($dados['usuario'] -> pr_usuario > 0){
                         $senha = random_string ('alnum', 8);
 						//$senha = "transforma";

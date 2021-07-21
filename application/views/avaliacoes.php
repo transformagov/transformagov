@@ -180,11 +180,11 @@ echo "                                                      <h3 style=\"font-wei
                         }
 						if($id_vaga>0){
 																echo "                                                                                
-                                                                                    <button type=\"reset\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Vagas/resultado/'.$id_vaga)."';\">< Interromper avaliação</button>";
+                                                                                    <button type=\"reset\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Vagas/resultado/'.$id_vaga)."';\">< Interromper avaliação</button>";
 						}
 						else{
 								echo "                                                                                
-                                                                                    <button type=\"reset\" class=\"btn btn-default\" onclick=\"window.location='".base_url('Candidaturas/ListaAvaliacao')."';\">< Interromper avaliação</button>";
+                                                                                    <button type=\"reset\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Candidaturas/ListaAvaliacao')."';\">< Interromper avaliação</button>";
 						}
 						echo "
                                                                             </div>";
