@@ -331,9 +331,64 @@ function loadAgendamentoDeEntrevistaEntrevistadorHtml(
     return strtr($template, $data_array);
 }
 
-function loadTestHtml()
-{
-    $template = readTemplateFile("test.html");
 
-    return $template;
+function loadReagendamentoDeEntrevistaEntrevistadorHtml(
+    $titulo,
+    $subTitulo,
+    $nomeEntrevistador, // $nome
+    $nomeCandidato, // $nome_candidato
+    $data,
+    $hora,
+    $tipoEntrevista,
+    $vaga,
+    $link
+) {
+    $template = readTemplateFile("reagendamentoDeEntrevistaEntrevistador.html");
+
+    $data_array = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":tipoEntrevista" => $tipoEntrevista == 'competencia' ? "Competência" : "Especialista",
+        ":nomeEntrevistador" => $nomeEntrevistador,
+        ":nomeCandidato" => $nomeCandidato,
+        ":data" => $data,
+        ":hora" => $hora,
+        ":vaga" => $vaga,
+        ":link" => $link,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data_array);
+}
+
+
+function loadParticipacaoEmEntrevistaCanceladaHtml(
+    $titulo,
+    $subTitulo,
+    $nomeEntrevistador, // $nome
+    $nomeCandidato, // $nome_candidato
+    $data,
+    $hora,
+    $tipoEntrevista,
+    $vaga,
+    $link
+) {
+    $template = readTemplateFile("participacaoEmEntrevistaCancelada.html");
+
+    $data_array = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":tipoEntrevista" => $tipoEntrevista == 'competencia' ? "Competência" : "Especialista",
+        ":nomeEntrevistador" => $nomeEntrevistador,
+        ":nomeCandidato" => $nomeCandidato,
+        ":data" => $data,
+        ":hora" => $hora,
+        ":vaga" => $vaga,
+        ":link" => $link,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data_array);
 }
