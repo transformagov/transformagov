@@ -86,7 +86,6 @@ class Usuarios extends CI_Controller {
 										// $config['smtp_user'] = 'pontodigital';
 										// $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
 
-                                                                                // TODO PENCIL: Remover antes do merge
                                                                                 $this->load->helper('emails');
                                                                                 $config = getEmailEnvConfigs();
 
@@ -220,7 +219,6 @@ class Usuarios extends CI_Controller {
                                 // $config['smtp_user'] = 'pontodigital';
                                 // $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
 
-                                // TODO PENCIL: Remover antes do merge
                                 $this->load->helper('emails');
                                 $config = getEmailEnvConfigs();
 
@@ -343,7 +341,6 @@ class Usuarios extends CI_Controller {
                                 $this -> Usuarios_model -> update_usuario('vc_senha_temporaria', $password, $usuario);
                                 $this -> Usuarios_model -> update_usuario('dt_alteracao', date('Y-m-d H:i:s'), $usuario);
 
-                                // TODO PENCIL: Remover antes do merge
                                 $this->load->helper('emails');
                                 $config = getEmailEnvConfigs();
 

@@ -113,7 +113,6 @@ class Publico extends CI_Controller {
                                 $password = $this -> encryption -> encrypt($senha);
                                 $this -> Usuarios_model -> update_usuario('vc_senha_temporaria', $password, $row -> pr_usuario);
 
-                                // TODO PENCIL: Remover antes do merge
                                 $this->load->helper('emails');
                                 $config = getEmailEnvConfigs();
 

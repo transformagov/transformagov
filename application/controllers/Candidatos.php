@@ -789,7 +789,6 @@ class Candidatos extends CI_Controller {
                                         $config['mailtype'] = 'html';
                                         */
                                         
-                                        // TODO PENCIL: Remover antes do merge pra master
                                         $this->load->helper('emails');
                                         $config = getEmailEnvConfigs();
 
@@ -849,7 +848,6 @@ class Candidatos extends CI_Controller {
                                                         $config['smtp_pass'] = 'fXso2ogUbw9PE8Aj';
                                                         $config['charset'] = 'UTF-8';
                                                         */
-                                                        // TODO PENCIL: Remover antes do merge
                                                         $this->load->helper('emails');
                                                         $config = getEmailEnvConfigs();
 
