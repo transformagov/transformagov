@@ -301,6 +301,36 @@ function loadReagendamentoDeEntrevistaHtml(
     return strtr($template, $data_array);
 }
 
+function loadAgendamentoDeEntrevistaEntrevistadorHtml(
+    $titulo,
+    $subTitulo,
+    $nomeEntrevistador, // $nome
+    $nomeCandidato, // $nome_candidato
+    $data,
+    $hora,
+    $tipoEntrevista,
+    $vaga,
+    $link
+) {
+    $template = readTemplateFile("agendamentoDeEntrevistaEntrevistador.html");
+
+    $data_array = array(
+        ":titulo" => $titulo,
+        ":subTitulo" => $subTitulo,
+        ":tipoEntrevista" => $tipoEntrevista == 'competencia' ? "Competência" : "Especialista",
+        ":nomeEntrevistador" => $nomeEntrevistador,
+        ":nomeCandidato" => $nomeCandidato,
+        ":data" => $data,
+        ":hora" => $hora,
+        ":vaga" => $vaga,
+        ":link" => $link,
+        ":urlBase" => base_url(""),
+        ":urlContato" => base_url("Publico/contato")
+    );
+
+    return strtr($template, $data_array);
+}
+
 function loadTestHtml()
 {
     $template = readTemplateFile("test.html");

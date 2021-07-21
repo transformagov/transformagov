@@ -14,11 +14,11 @@ class Publico extends CI_Controller {
         public function test(){
                 $this->load->helper('emails');
                 // echo loadTestHtml();
-                echo loadReagendamentoDeEntrevistaHtml(
+                echo loadAgendamentoDeEntrevistaEntrevistadorHtml(
                         $this->config->item('nome'),
                         $this->config->item('subTituloPlataforma'),
-                        1,
                         'Fulanor',
+                        'Ciclano',
                         '22/22/22',
                         '10:10:10',
                         'competencia',
