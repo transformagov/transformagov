@@ -78,6 +78,20 @@ O desenvolvedor precisa move-lo para `/etc/nginx/conf.d/`. Esse arquivo aponta p
 que provavelmente não irão existir no ambiente, logo, adaptações terão que ser feitas para que
 o nginx encontre os arquivos estáticos e scripts do php no ambiente.
 
+### Variáveis de ambiente
+
+É necessário a configuração de algumas variáveis de ambiente, essas estão listadas no arquivo ".env" na raiz do projeto. Sendo as mais importantes:
+
+Para o envio de e-mails
+- ENV_SMTP_HOST
+- ENV_SMTP_PORT
+- ENV_SMTP_USER
+- ENV_SMTP_PASS
+
+E-mail que receberá os dados do formulário de contato
+- ENV_CONTACT_EMAIL
+
+
 ### Banco de dados
 
 O desenvolvedor pode subir o banco mariadb, ou postgres/mysql, e apontar o servidor php para ele.
