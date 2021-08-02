@@ -1,0 +1,4 @@
+FROM nginx
+RUN apt update && apt install cron wget vim telnet certbot python-certbot-nginx rsyslog -y
+ADD nginx/nginx_confs/prod/nginx.conf /etc/nginx/
+ADD nginx/nginx_confs/prod/transforma.conf /etc/nginx/conf.d/

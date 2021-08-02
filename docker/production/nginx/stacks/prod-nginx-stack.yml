@@ -1,0 +1,19 @@
+version: "3.2"
+services:
+  nginx:
+    image: ${registry}/nginx_server:stable-prod
+    volumes:
+      - confs_prod:/etc/nginx/conf.d/prod/
+      - sites_prod:/etc/nginx/sites/prod/
+      - letsencrypt:/etc/letsencrypt
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - public
+volumes:
+  sites_prod:
+  confs_prod:
+  letsencrypt:
+networks:
+  public:

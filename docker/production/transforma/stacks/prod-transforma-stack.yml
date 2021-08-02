@@ -1,0 +1,25 @@
+version: "3.4"
+
+x-swarm-common: &swarm-common
+  networks:
+    - public
+
+services:
+  server:
+    <<: *swarm-common
+    image: ${registry}/transforma_server:bootstrap-sb-admin-2-prod
+    entrypoint: /tmp/run.sh
+  db:
+    <<: *swarm-common
+    image: mariadb:10.3
+    volumes:
+      - transforma-db:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=transforma
+      - MYSQL_ROOT_PASSWORD=root
+volumes:
+  transforma-db:
+networks:
+  public:
+    external:
+      name: "nginx_prod_public"
