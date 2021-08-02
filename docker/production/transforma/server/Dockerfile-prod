@@ -1,8 +1,8 @@
 FROM debian:stable
-ARG tag
+ARG branch
 RUN apt update && apt install php-fpm php-pgsql \
 	php-mbstring php-curl php7.3-mysql nginx sendmail git -y
-RUN git clone -b ${tag} https://gitlab+deploy-token-428856:grqJrkNb6AyRNwUqS6io@gitlab.com/pencillabs/transforma-minas.git
+RUN git clone -b ${branch} https://gitlab+deploy-token-428856:grqJrkNb6AyRNwUqS6io@gitlab.com/pencillabs/transforma-minas.git
 ADD transforma/nginx_confs/transforma.conf /etc/nginx/conf.d/
 WORKDIR transforma-minas
 RUN cp run.sh /tmp
