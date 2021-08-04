@@ -6,6 +6,5 @@ RUN git clone -b ${branch} https://gitlab+deploy-token-428856:grqJrkNb6AyRNwUqS6
 ADD transforma/nginx_confs/transforma.conf /etc/nginx/conf.d/
 WORKDIR transforma-minas
 RUN cp run.sh /tmp
-RUN sed -i "s#=> 'db'#=> 'transforma-minas_dev_db'#" application/config/database.php
 RUN sed -i "s#http://localhost:8080#https://transformaminas.pencillabs.com.br/#" application/config/config.php
 RUN chmod +x /tmp/run.sh

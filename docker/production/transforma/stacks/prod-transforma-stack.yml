@@ -11,7 +11,7 @@ services:
     entrypoint: /tmp/run.sh
     environment:
       - ENV_NAME_PLATFORM="Transforma Minas"
-      - ENV_SUB_TITLE_PLATFORM=""
+      - ENV_SUB_TITLE_PLATFORM="Transforma Minas"
       - ENV_SMTP_HOST='smtp.mailgun.org'
       - ENV_SMTP_PORT=587
       - ENV_SMTP_USER='transformaminas@pencillabs.com.br'
