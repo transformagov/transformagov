@@ -16,6 +16,8 @@ services:
       - ENV_SMTP_PORT=587
       - ENV_SMTP_USER='transformaminas@pencillabs.com.br'
       - ENV_SMTP_PASS='2d657985dbf03eb123040b63bcfb255f-28d78af2-3dbbfc4c'
+      - ENV_CONTACT_EMAIL=''
+      - ENV_ADMIN_EMAIL=''
   db:
     <<: *swarm-common
     image: mariadb:10.3
