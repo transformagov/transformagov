@@ -407,6 +407,9 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
                 foreach ($grupos as $linha){
                         $dados_grupos[$linha -> pr_grupovaga] = $linha -> vc_grupovaga;
                 }
+                if(!is_array($dados_grupos)) {
+                        $dados_grupos = array();
+                }
                 $dados_grupos=array(0 => '')+$dados_grupos;
                 if(!isset($es_grupoVaga) || (strlen($es_grupoVaga) == 0 && strlen(set_value('grupo')) > 0)){
                         $es_grupoVaga = set_value('grupo');
