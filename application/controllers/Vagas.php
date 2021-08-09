@@ -1565,19 +1565,19 @@ class Vagas extends CI_Controller {
                 
                 if(strtotime($fim) < $atual){
                         $candidaturas = $this -> Candidaturas_model -> get_candidaturas('', '', $this -> input -> post('codigo'));
-                        foreach($candidaturas as $candidatura){
-                                //echo $fim."".$candidatura -> dt_realizada."<br />";
-                                if((strtotime($candidatura -> dt_candidatura) > strtotime($fim) && $candidatura -> es_status < 7 && $candidatura -> es_status <> 5) || ($candidatura -> es_status >= 7 and strtotime($candidatura -> dt_realizada) > strtotime($fim))){
-                                        $this -> form_validation -> set_message('data_fim', 'A data de Término está menor que a de candidaturas pendentes.');
-                                        return false;
+                        if(is_array($candidaturas)) {
+                                foreach($candidaturas as $candidatura){
+                                        //echo $fim."".$candidatura -> dt_realizada."<br />";
+                                        if((strtotime($candidatura -> dt_candidatura) > strtotime($fim) && $candidatura -> es_status < 7 && $candidatura -> es_status <> 5) || ($candidatura -> es_status >= 7 and strtotime($candidatura -> dt_realizada) > strtotime($fim))){
+                                                $this -> form_validation -> set_message('data_fim', 'A data de Término está menor que a de candidaturas pendentes.');
+                                                return false;
+                                        }
                                 }
                         }
-
                 }
                 return true;
-
         }
-		
+
 
         function valida_unico3($data){
                 //return true;
