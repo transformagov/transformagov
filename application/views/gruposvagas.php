@@ -388,11 +388,10 @@ else if($menu2 == 'duplicate'){
                                                                                 </thead>
                                                                                 <tbody>
                                                                             ";
-                
                 foreach($questoes as $questao){
                         // &nbsp; <a href=\"".base_url('GruposVagas/historico_duplicate/'.$codigo)."\">Histórico de duplicações</a>
-                        if($questao -> cont_respostas > 0 || $cont_vagas == 0){
-                                echo "
+                        // if($questao -> cont_respostas > 0 || $cont_vagas == 0){
+                                echo "    
                                                                                         <tr>
                                                                                                 <td>";
                                 $attributes = array('id'=>'questao'.$questao -> pr_questao,'name' => 'questao'.$questao -> pr_questao, 'value' => '1');
@@ -437,7 +436,7 @@ else if($menu2 == 'duplicate'){
                                                                                                         {$questao -> in_peso}
                                                                                                 </td>
                                                                                         </tr>";
-                        }
+                        // }
                 }
                 
 
@@ -483,7 +482,7 @@ else if($menu2 == 'duplicate'){
                         }
                 }
                 foreach($questoes as $questao){
-                        if($questao -> cont_respostas > 0 || $cont_vagas == 0){
+                        // if($questao -> cont_respostas > 0 || $cont_vagas == 0){
                                 $pagina['js'] .= "
                                                                                 if(form.elements['questao{$questao -> pr_questao}'] && form.elements['questao{$questao -> pr_questao}'].checked == true){
                                                                                         se_escolhido = 1;
@@ -491,7 +490,7 @@ else if($menu2 == 'duplicate'){
                                                                                 }
                                                                                 
                                 ";
-                        }
+                        // }
                 }                                                                
                 $pagina['js'] .= "
                                                                                 if(se_escolhido==0){
