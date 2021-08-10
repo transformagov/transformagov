@@ -163,8 +163,8 @@ if($menu2 == 'index'){
 								echo "Vaga removida";
 						}
 						echo "</td>    
-                                                                                            <td class=\"text-center\" data-search=\"".show_date($linha -> dt_inicio)."\" data-order=\"$dt_inicio\">".show_date($linha -> dt_inicio)."</td>
-                                                                                            <td class=\"text-center\" data-search=\"".show_date($linha -> dt_fim)."\" data-order=\"$dt_fim\">".show_date($linha -> dt_fim)."</td>";
+                                                                                            <td class=\"text-center\" data-search=\"".show_date($linha -> dt_inicio)."\" data-order=\"$dt_inicio\">".show_date($linha -> dt_inicio, true)."</td>
+                                                                                            <td class=\"text-center\" data-search=\"".show_date($linha -> dt_fim)."\" data-order=\"$dt_fim\">".show_date($linha -> dt_fim, true)."</td>";
                         /*
                         echo "
                                                                                             <td class=\"text-center\">".$linha -> cont."</td>";
