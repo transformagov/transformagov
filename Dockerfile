@@ -7,3 +7,6 @@ COPY run.sh /tmp
 RUN chmod +x /tmp/run.sh
 COPY . /transforma-minas/
 WORKDIR transforma-minas
+
+# Use time zone configurated at .env
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
