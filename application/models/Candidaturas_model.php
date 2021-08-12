@@ -53,7 +53,7 @@ class Candidaturas_model extends CI_Model {
                 /*        $this -> db -> select('c.pr_candidatura, c.es_candidato, c.es_vaga, c.dt_candidatura, c.es_status, s.vc_status, v.vc_vaga, v.dt_fim, d.vc_nome, e.*, i.vc_sigla, i.vc_instituicao, c.en_aderencia, c.es_avaliador_competencia1, c.es_avaliador_competencia2');
                 }
                 else */if((strlen($avaliador) > 0 && $avaliador > 0) || (strlen($calendario) > 0 && $calendario > 0)){
-                        $this -> db -> select('c.dt_realizada,c.en_motivacao,c.en_hbdi,u.vc_nome as avaliador_competencia,c.pr_candidatura, c.es_candidato, c.es_vaga, c.dt_candidatura, c.es_status, s.vc_status, v.vc_vaga, v.dt_fim, d.vc_nome, e.*, i.vc_sigla, i.vc_instituicao, c.en_aderencia, c.dt_aderencia, c.es_avaliador_competencia1, c.es_avaliador_especialista');
+                        $this -> db -> select('c.dt_realizada,c.en_motivacao,c.en_hbdi,u.vc_nome as avaliador_competencia,c.pr_candidatura, c.es_candidato, c.es_vaga, c.dt_candidatura, c.es_status, s.vc_status, v.vc_vaga, v.dt_fim, d.vc_nome, e.*, i.vc_sigla, i.vc_instituicao, c.en_aderencia, c.dt_aderencia, c.es_avaliador_competencia1, c.es_avaliador_especialista, c.dt_cadastro');
                 }
                 else{
                         $this -> db -> select('c.dt_realizada,c.en_motivacao,c.en_hbdi,u.vc_nome as avaliador_competencia,c.pr_candidatura, c.es_candidato, c.es_vaga, c.dt_candidatura, c.es_status, s.vc_status, v.vc_vaga, v.dt_fim, d.vc_nome, i.vc_sigla, i.vc_instituicao, c.en_aderencia, c.dt_aderencia, c.es_avaliador_competencia1, c.es_avaliador_especialista, c.tx_expectativa_momento, c.tx_observacoes_momento, c.tx_pontos_fortes, c.tx_pontos_melhorias, c.tx_feedback, c.tx_comentarios, c.dt_cadastro');
