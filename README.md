@@ -108,6 +108,14 @@ Após instalar as dependências, realizar a configuração do banco e do nginx, 
 esse script para subir a aplicação. Lembrando que, subindo manualmente, a aplicação irá responder na porta 80.
 Isso pode ser alterado no arquivo de configuração do nginx.
 
+# Pasta de uploads
+
+De acordo com a [documentação do Codeigniter 3](https://codeigniter.com/userguide3/libraries/file_uploading.html#the-upload-directory), a pasta de uploads de arquivos precisa ter a sua permissão em 777.
+Então, estando na raiz do projeto execute o seguinte comando:
+```bash
+chmod 777 anexos
+```
+
 # Ambiente de desenvolvimento
 
 Para auxiliar no ambiente de desenvolvimento. O Makefile tem dois comandos, `make sampleusers` e `make sampledevdata`.
@@ -117,18 +125,18 @@ Para auxiliar no ambiente de desenvolvimento. O Makefile tem dois comandos, `mak
 
 Apos a execução do comando `make restore`, é possivel executar o comando `make sampleusers` ou executando apenas `make sampledevdata`. Serão inseridos no banco de dados 4 usuários, os valores do campos CPF, RG e CEP foram gerados usando uma ferramenta.
 
-Tipo: admin
-CPF: 771.194.760-76
-Senha: usuadmin123
+* Perfil: admin
+	- CPF: 771.194.760-76
+	- Senha: usuadmin123
 
-Tipo: candidato
-CPF 687.541.020-65
-Senha: usucandidato123
+* Perfil: candidato
+	- CPF 687.541.020-65
+	- Senha: usucandidato123
 
-Tipo: avaliador
-CPF: 211.013.760-66
-Senha: usuavaliador123
+* Perfil: avaliador
+	- CPF: 211.013.760-66
+	- Senha: usuavaliador123
 
-Tipo gestor:
-CPF: 058.636.740-32
-Senha: usugestor123
+* Perfil: gestor
+	- CPF: 058.636.740-32
+	- Senha: usugestor123
