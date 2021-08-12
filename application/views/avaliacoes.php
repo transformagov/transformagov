@@ -1701,7 +1701,13 @@ $pagina['js'] = "
                                                                           document.getElementById(link).style.display = \"block\";
                                                                           evt.currentTarget.className += \" active\";
                                                                         }
-                                                                    </script>    
+
+                                                                        // clica no menu Avaliação
+                                                                        document.addEventListener('DOMContentLoaded', function() {
+                                                                          var btn = document.querySelector('.tablinks.primeiro.active');
+                                                                          if(btn) btn.click();
+                                                                        });
+                                                                    </script>
                                                                     ";
 
 } 
