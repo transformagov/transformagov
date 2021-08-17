@@ -1,4 +1,4 @@
-FROM debian:stable
+FROM debian:buster
 ARG branch
 RUN apt update && apt install php-fpm php-pgsql \
 	php-mbstring php-curl php7.3-mysql nginx sendmail git -y
