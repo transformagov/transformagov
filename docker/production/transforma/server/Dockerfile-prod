@@ -7,4 +7,5 @@ ADD transforma/nginx_confs/transforma.conf /etc/nginx/conf.d/
 WORKDIR transforma-minas
 RUN cp run.sh /tmp
 RUN sed -i "s#http://localhost:8080#https://transformaminas.pencillabs.com.br/#" application/config/config.php
+RUN sed -i "s#'hostname' => 'db'#'hostname' => 'transforma_prod_db'#" application/config/config.php
 RUN chmod +x /tmp/run.sh
