@@ -80,17 +80,22 @@ o nginx encontre os arquivos estáticos e scripts do php no ambiente.
 
 ### Variáveis de ambiente
 
-É necessário a configuração de algumas variáveis de ambiente, essas estão listadas no arquivo ".env" na raiz do projeto. Sendo as mais importantes:
+É necessário a configuração de algumas variáveis de ambiente, essas estão listadas no arquivo ".env" na raiz do projeto.
 
-Para o envio de e-mails
-- ENV_SMTP_HOST
-- ENV_SMTP_PORT
-- ENV_SMTP_USER
-- ENV_SMTP_PASS
+#### Para o envio de e-mails
+- ENV_SMTP_HOST: Host que será utilizado para o envio de emails, exemplo: smtp.mailgun.org
+- ENV_SMTP_PORT: Porta utilizada para o envio de email, exemplo: 587
+- ENV_SMTP_USER: Usuário utilizado para o envio do email(depende do host escolhido)
+- ENV_SMTP_PASS: Senha do usuário em ENV_SMTP_USER
 
-E-mail que receberá os dados do formulário de contato
-- ENV_CONTACT_EMAIL
+#### Formulaŕio de contato do transforma
+O sistema precisa de um e-mail que irá receber os dados do formulário de contato.
+- ENV_CONTACT_EMAIL: E-Mail que irá receber os dados do formulário de contato.
 
+#### Para o correto funcionamento do horário do sistema e banco de dados:
+Para que os horários funcionem corretamente tanto no PHP quanto banco de dados, é necessário setar a variável de ambiente TZ e disponibilizar o acesso a essa tanto no PHP quando no banco de dados. Por padrão ela já vem setada como "America/Sao_Paulo" nos arquivos ".env"(php) e "docker-compose.yml"(mysql).
+
+- TZ: Time zone que será utilizada pelo sistema e pelo banco de dados, exemplo: America/Sao_Paulo
 
 ### Banco de dados
 
@@ -100,6 +105,8 @@ deve funcionar tanto para o postgresql, mysql e mariadb. Os arquivos sql com o s
 os dados iniciais estão na pasta `db`. Vale ressaltar que o php depende de um conector, para conseguir
 acessar o banco. No caso do mariadb estamos usando a dependência `php7.3-mysql`. Para outros bancos esse
 conector deverá ser adaptado.
+
+Lembre-se de setar o time zone do banco dados(TZ) como descrito na seção de Variáveis de ambiente, mesmo sem a utilização do docker, o banco precisa saber qual a time zone correta a ser utilizada. 
 
 ### Executando o php
 

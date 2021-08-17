@@ -2,20 +2,19 @@
 
 define("TEMPLATES_PATH", APPPATH . "helpers/email_templates");
 
-
 function getEmailEnvConfigs()
 {
     $config = array(
-        'charset' => $_SERVER['ENV_CHARSET'],
-        'wordwrap' => $_SERVER['ENV_WORDWRAP'],
-        'mailtype' => $_SERVER['ENV_MAILTYPE'],
+        'charset' => "UTF-8",
+        'wordwrap' => true,
+        'mailtype' => "html",
+        'protocol' => "smtp",
+        'smtp_auth' => true,
+        'smtp_crypto' => "tls",
         'smtp_host' => $_SERVER['ENV_SMTP_HOST'],
         'smtp_port' => $_SERVER['ENV_SMTP_PORT'],
         'smtp_user' => $_SERVER['ENV_SMTP_USER'],
         'smtp_pass' => $_SERVER['ENV_SMTP_PASS'],
-        'protocol' => $_SERVER['ENV_PROTOCOL'],
-        'smtp_auth' => $_SERVER['ENV_SMTP_AUTH'],
-        'smtp_crypto' => $_SERVER['ENV_SMTP_CRYPTO'],
     );
 
     return $config;
