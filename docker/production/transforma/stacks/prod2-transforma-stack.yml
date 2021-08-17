@@ -26,6 +26,7 @@ services:
       - ENV_MAILTYPE=html
       - ENV_CONTACT_EMAIL=transformaminas@pencillabs.com.br
       - ENV_ADMIN_EMAIL=transformaminas@pencillabs.com.br
+      - TZ=America/Sao_Paulo
   db:
     <<: *swarm-common
     image: mariadb:10.3
