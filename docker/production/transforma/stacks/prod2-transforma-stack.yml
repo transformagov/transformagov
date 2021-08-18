@@ -11,6 +11,8 @@ services:
     entrypoint: /tmp/run.sh
     env_file:
       - production/transforma/stacks/server-variables.env
+    volumes:
+      - anexos:/transforma-minas/anexos
   db:
     <<: *swarm-common
     image: mariadb:10.3
@@ -20,6 +22,7 @@ services:
       - production/transforma/stacks/db-variables.env
 volumes:
   transforma-db:
+  anexos:
 networks:
   public:
     external:

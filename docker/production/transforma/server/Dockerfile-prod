@@ -8,4 +8,5 @@ WORKDIR transforma-minas
 RUN cp run.sh /tmp
 RUN sed -i "s#http://localhost:8080#https://transformaminas.pencillabs.com.br/#" application/config/config.php
 RUN sed -i "s#'hostname' => 'db'#'hostname' => 'transforma_prod_db'#" application/config/database.php
+RUN chmod -R 777 anexos
 RUN chmod +x /tmp/run.sh
