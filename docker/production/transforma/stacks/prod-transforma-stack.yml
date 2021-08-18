@@ -22,7 +22,7 @@ services:
       - db-variables.env
 volumes:
   transforma-db:
-    anexos:
+  anexos:
 networks:
   public:
     external:
