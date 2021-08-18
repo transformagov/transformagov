@@ -126,7 +126,14 @@ echo "
 
 echo "
                                             </div>";
+?>
 
-        $this->load->view('templates/internaRodape', $pagina);
+<?php
+$dbtime = $this->db->select('NOW() as hora_banco')->get()->result()[0];
+?>
+<input id="hora_php" type="hidden" value="<?= date("Y-m-d H:i:s") ?>" />
+<input id="hora_banco" type="hidden" value="<?= $dbtime->hora_banco ?>" />
 
+<?php
+$this->load->view('templates/internaRodape', $pagina);
 ?>

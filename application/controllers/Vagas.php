@@ -166,11 +166,14 @@ class Vagas extends CI_Controller {
                 //var_dump($dados_vaga);
                 $dados['codigo'] = $vaga;
                 $dados += (array) $dados_vaga[0];
-				
-				if(!($dados['bl_brumadinho'] == 1)){
-						$dados['bl_brumadinho'] = '0';
-				}
-				
+
+                if(!isset($dados['bl_brumadinho'])) {
+                        $dados['bl_brumadinho'] = '0';
+                }
+                if(!($dados['bl_brumadinho'] == 1)){
+                        $dados['bl_brumadinho'] = '0';
+                }
+
                 //$dados += $this -> input -> post(null,true);
                 //var_dump($this -> input -> post(null,true));
 
