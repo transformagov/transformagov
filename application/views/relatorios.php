@@ -615,7 +615,6 @@ else if($menu2 == 'AvaliacaoCurricular'){
 														$nota += round((@intval($respostas[$linha -> pr_candidatura][$questao -> pr_questao] -> tx_resposta)/3) * intval($questao -> in_peso));
 														$valores=array(0=>"Nenhum",1=>"Básico",2=>"Intermediário",3=>"Avançado");
 														echo "
-																											<td>".$valores[$linha -> pr_candidatura][$questao -> pr_questao]."</td>
 																											<td>".$nota."</td>
 														";
 														$total+=$nota;
@@ -885,7 +884,6 @@ else if($menu2 == 'AvaliacaoCompetencia'){
 													$nota += round((@intval($respostas[$linha -> pr_candidatura][$questao -> pr_questao] -> tx_resposta)/3) * intval($questao -> in_peso));
 													$valores=array(0=>"Nenhum",1=>"Básico",2=>"Intermediário",3=>"Avançado");
 													echo "
-																						<td>".$valores[$linha -> pr_candidatura][$questao -> pr_questao]."</td>
 																						<td>".$nota."</td>
 													";
 													$total+=$nota;
@@ -1155,7 +1153,6 @@ else if($menu2 == 'TesteAderencia'){
 													$nota += round((@intval($respostas[$linha -> pr_candidatura][$questao -> pr_questao] -> tx_resposta)/3) * intval($questao -> in_peso));
 													$valores=array(0=>"Nenhum",1=>"Básico",2=>"Intermediário",3=>"Avançado");
 													echo "
-																					<td>".$valores[$linha -> pr_candidatura][$questao -> pr_questao]."</td>
 																					<td>".$nota."</td>
 													";
 													$total+=$nota;
@@ -1426,7 +1423,6 @@ else if($menu2 == 'TesteMotivacao'){
 													$nota += round((@intval($respostas[$linha -> pr_candidatura][$questao -> pr_questao] -> tx_resposta)/3) * intval($questao -> in_peso));
 													$valores=array(0=>"Nenhum",1=>"Básico",2=>"Intermediário",3=>"Avançado");
 													echo "
-																					<td>".$valores[$linha -> pr_candidatura][$questao -> pr_questao]."</td>
 																					<td>".$nota."</td>
 													";
 													$total+=$nota;
@@ -2570,7 +2566,6 @@ else if($menu2 == 'AvaliacaoEspecialista'){
 													$nota += round((@intval($respostas[$linha -> pr_candidatura][$questao -> pr_questao] -> tx_resposta)/3) * intval($questao -> in_peso));
 													$valores=array(0=>"Nenhum",1=>"Básico",2=>"Intermediário",3=>"Avançado");
 													echo "
-																						<td>".$valores[$linha -> pr_candidatura][$questao -> pr_questao]."</td>
 																						<td>".$nota."</td>
 													";
 													$total+=$nota;
