@@ -302,6 +302,11 @@ form#form_candidatura button.btn-primary {
 	color: #fff;
 }
 
+.background-warning {
+	background-color: #fe9365;
+	color: #fff;
+}
+
 .alert {
 	font-size: 15px;
 	margin-bottom: 2rem;
