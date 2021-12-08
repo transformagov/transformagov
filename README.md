@@ -1,4 +1,4 @@
-Bem vinda ao projeto TransformaGov. O TransformaGov é uma plataforma criada a partir 
+Bem vinda ao projeto TransformaGov. O TransformaGov é uma Plataforma criada a partir 
 do projeto [Transforma Minas](https://github.com/seplagmg/transforma_minas), 
 uma plataforma de recrutamento baseada no mérito.
 
