@@ -15,11 +15,11 @@ alguns dos passos e dependências utilizadas.
 Este comando irá realizar as seguintes operações:
 
 - Construir a imagem do servidor, instalando as dependências necessárias. Essa imagem utiliza como base o Debian estável;
-- Subir um container chamado `transforma-minas_server_1`, utilizando a imagem construida anteriormente.  
+- Subir um container chamado `transformagov_server_1`, utilizando a imagem construida anteriormente.  
 Esse container irá atuar como o servidor, e via nginx irá responder às requisições HTTP e servir os
 arquivos estáticos (js, css, imagens). Além de servir os arquivos estáticos, o nginx também será 
 responsável por servir os scripts PHP.
-- Subir um container chamado `transforma-minas_db_1`, utilizando a imagem mariadb:latest.  
+- Subir um container chamado `transformagov_db_1`, utilizando a imagem mariadb:latest.  
 Esse container será o banco de dados da aplicação.
 
 3. Restaure schema do banco utilizando o comando `make load-schema`;
@@ -46,7 +46,7 @@ Para alterar um usuário para administrador, o desenvolvedor pode fazer isso via
 
 1. acesse o banco
 
-				docker exec -it transforma-minas_db_1 bash
+				docker exec -it transformagov_db_1 bash
 				mysql --password=root --user=root transforma
 
 2. execute o script que altera um usuário para administrador
