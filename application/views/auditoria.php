@@ -1,13 +1,13 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 $pagina['menu1']=$menu1;
 $pagina['menu2']=$menu2;
 $pagina['url']=$url;
 $pagina['nome_pagina']=$nome_pagina;
 $pagina['icone']=$icone;
-if(isset($adicionais)){
-        $pagina['adicionais']=$adicionais;
+if (isset($adicionais)) {
+    $pagina['adicionais']=$adicionais;
 }
 
 $this->load->view('templates/internaCabecalho', $pagina);
@@ -40,35 +40,32 @@ echo "
                                                                             </thead>
                                                                             <tbody>";
         //var_dump($log);
-        if(isset($log)){
-                foreach ($log as $linha){
-                        $dt_log = mysql_to_unix($linha -> dt_log);
-                        echo "
+        if (isset($log)) {
+            foreach ($log as $linha) {
+                $dt_log = mysql_to_unix($linha -> dt_log);
+                echo "
                                                                                             <tr>
-                                                                                                    <td class=\"centralizado\" data-search=\"".show_date($linha -> dt_log,true)."\" data-order=\"$dt_log\">".show_date($linha -> dt_log,true)."</td>";
-                        if($linha -> en_tipo == 'sucesso'){
-                                echo "
+                                                                                                    <td class=\"centralizado\" data-search=\"".show_date($linha -> dt_log, true)."\" data-order=\"$dt_log\">".show_date($linha -> dt_log, true)."</td>";
+                if ($linha -> en_tipo == 'sucesso') {
+                    echo "
                                                                                                     <td class=\"text-center\"><span class=\"badge badge-success badge-lg\">Sucesso</span></td>";
-                        }
-                        else if($linha -> en_tipo == 'seguranca'){
-                                echo "
+                } elseif ($linha -> en_tipo == 'seguranca') {
+                    echo "
                                                                                                     <td class=\"text-center\"><span class=\"badge badge-danger badge-lg\">Violação de segurança</span></td>";
-                        }
-                        else if($linha -> en_tipo == 'erro'){
-                                echo "
+                } elseif ($linha -> en_tipo == 'erro') {
+                    echo "
                                                                                                     <td class=\"text-center\"><span class=\"badge badge-danger badge-lg\">Erro</span></td>";
-                        }
-                        else if($linha -> en_tipo == 'advertencia'){
-                                echo "
+                } elseif ($linha -> en_tipo == 'advertencia') {
+                    echo "
                                                                                                     <td class=\"text-center\"><span class=\"badge badge-warning badge-lg\">Advertência leve</span></td>";
-                        }
-                        echo "
+                }
+                echo "
                                                                                                     <td>".$linha -> vc_local."</td>
                                                                                                     <td>".$linha -> vc_ip."</td>
                                                                                                     <td>".$linha -> tx_texto."</td>
                                                                                                     </td>
                                                                                             </tr>";
-                }
+            }
         }
         echo "
                                                                                     </tbody>

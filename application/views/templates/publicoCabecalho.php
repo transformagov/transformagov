@@ -1,5 +1,6 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 echo "<!DOCTYPE html>
 <!--[if IE 8]> <html lang=\"ptbr\" class=\"ie8 no-js\"> <![endif]-->
 <!--[if IE 9]> <html lang=\"ptbr\" class=\"ie9 no-js\"> <![endif]-->
@@ -35,4 +36,3 @@ echo "<!DOCTYPE html>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->
     <body class=\"fix-menu\" style=\"background-image:url('".base_url('images/camg.png')."');background-repeat: no-repeat; background-size: cover;\">";
-?>

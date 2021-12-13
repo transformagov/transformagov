@@ -1,5 +1,6 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 $this -> load -> view('templates/publicoCabecalho');
 echo "
                                                         <div class=\"kt-login__signin\">
@@ -7,46 +8,45 @@ echo "
 									<h3 class=\"kt-login__title\">Recupere sua senha</h3>
 								</div>";
 
-if(strlen($erro)>0){
-        echo "
+if (strlen($erro)>0) {
+    echo "
                                                                 <div class=\"alert alert-danger\">
                                                                         <div class=\"alert-text\">
                                                                                 <strong>ERRO</strong>: $erro<br />
                                                                         </div>
                                                                 </div>";
-        $erro='';
+    $erro='';
 }
-if($sucesso=='1'){
-        echo "
+if ($sucesso=='1') {
+    echo "
                                                                 <div class=\"alert alert-success\">
                                                                         <div class=\"alert-text\">
                                                                                 <strong>Senha recuperada com sucesso. Favor verificar seu e-mail.<br />
                                                                         </div>
                                                                 </div>";
-}
-else{
-        echo "
+} else {
+    echo "
                                                                 ";
-        $attributes = array('class' => 'kt-form');
-        echo form_open($pagina, $attributes);
+    $attributes = array('class' => 'kt-form');
+    echo form_open($pagina, $attributes);
 
-        echo "
+    echo "
 									<div class=\"input-group\">
                                                                                 ";
-        $attributes = array('name' => 'cpf', 
-                            'id' => 'cpf', 
-                            'maxlength'=>'14', 
-                            'class' => 'form-control', 
+    $attributes = array('name' => 'cpf',
+                            'id' => 'cpf',
+                            'maxlength'=>'14',
+                            'class' => 'form-control',
                             'placeholder'=>'CPF');
-        echo form_input($attributes, set_value('cpf'));
+    echo form_input($attributes, set_value('cpf'));
 
-        echo "
+    echo "
                                                                         </div>
 									<div class=\"kt-login__actions\">
                                                                                 ";
-        $attributes = array('class' => 'btn btn-brand btn-elevate kt-login__btn-primary uppercase');
-        echo form_submit('enviado', 'Recuperar', $attributes);
-        echo "
+    $attributes = array('class' => 'btn btn-brand btn-elevate kt-login__btn-primary uppercase');
+    echo form_submit('enviado', 'Recuperar', $attributes);
+    echo "
                                                                         </div>
 									<div class=\"row kt-login__extra\">
                                                                                 <a href=\"".base_url()."\" id=\"forget-password\" class=\"forget-password\">Login</a>
@@ -74,4 +74,3 @@ else{
                 </script>";
 }
 $this -> load -> view('templates/publicoRodape');
-?>

@@ -1,15 +1,16 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 $pagina['menu1']=$menu1;
 $pagina['menu2']=$menu2;
 $pagina['url']=$url;
 $pagina['nome_pagina']=$nome_pagina;
 $pagina['icone']=$icone;
-if(isset($adicionais)){
-        $pagina['adicionais']=$adicionais;
+if (isset($adicionais)) {
+    $pagina['adicionais']=$adicionais;
 }
-        
+
 $this -> load -> view('templates/internaCabecalho', $pagina);
 //print_r($adicionais);
 
@@ -54,4 +55,3 @@ echo "
                         </div>";
 
 $this -> load -> view('templates/internaRodape', $pagina);
-?>

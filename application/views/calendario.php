@@ -1,12 +1,13 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 $pagina['menu1']=$menu1;
 $pagina['menu2']=$menu2;
 $pagina['url']=$url;
 $pagina['nome_pagina']=$nome_pagina;
 $pagina['icone']=$icone;
-if(isset($adicionais)){
+if (isset($adicionais)) {
     $pagina['adicionais']=$adicionais;
 }
 
@@ -63,145 +64,140 @@ $pagina['js'] = "
                     events: [";
 
 //feriados
-foreach ($feriados as $linha){
-        if($linha -> en_tipo =='nacional' && $pht[0] -> bl_feriados=='1'){
-                $data=explode('-', $linha -> dt_feriado );
-                //$data[1]--;
+foreach ($feriados as $linha) {
+    if ($linha -> en_tipo =='nacional' && $pht[0] -> bl_feriados=='1') {
+        $data=explode('-', $linha -> dt_feriado);
+        //$data[1]--;
+        $pagina['js'] .= "
+                        {
+                            title: '{$linha -> vc_descricao }',
+                            start: '{$linha -> dt_feriado}',
+                            backgroundColor: '#93BE52',
+                            textColor: '#fff'
+                        }, ";
+        if ($linha -> bl_repeticaoanual =='1') {
+            $pagina['js'] .= "
+                        {
+                            title: '{$linha -> vc_descricao }',
+                            start: '{$linha -> dt_feriado}',
+                            backgroundColor: '#93BE52',
+                            textColor: '#fff'
+                        }, ";
+            for ($i=1;$i<=3;$i++) {
                 $pagina['js'] .= "
-                        {
-                            title: '{$linha -> vc_descricao }',
-                            start: '{$linha -> dt_feriado}',
-                            backgroundColor: '#93BE52',
-                            textColor: '#fff'
-                        }, ";
-                if($linha -> bl_repeticaoanual =='1'){
-                        $pagina['js'] .= "
-                        {
-                            title: '{$linha -> vc_descricao }',
-                            start: '{$linha -> dt_feriado}',
-                            backgroundColor: '#93BE52',
-                            textColor: '#fff'
-                        }, ";
-                        for($i=1;$i<=3;$i++){
-                                $pagina['js'] .= "
                         {
                             title: '{$linha -> vc_descricao }',
                             start: '".($data[0]+$i)."-{$data[1]}-{$data[2]}',
                             backgroundColor: '#93BE52',
                             textColor: '#fff'
                         }, ";
-                        }
-                }
+            }
         }
-        else if($linha -> en_tipo =='municipal' && $pht[0] -> bl_feriados=='1' && $linha -> es_municipio_cep ==$this -> session -> municipio){
-                $data=explode('-', $linha -> dt_feriado );
-                $data[1]--;
+    } elseif ($linha -> en_tipo =='municipal' && $pht[0] -> bl_feriados=='1' && $linha -> es_municipio_cep ==$this -> session -> municipio) {
+        $data=explode('-', $linha -> dt_feriado);
+        $data[1]--;
+        $pagina['js'] .= "
+                        {
+                            title: '{$linha -> vc_descricao }',
+                            start: '{$linha -> dt_feriado}',
+                            backgroundColor: '#FFB64D',
+                            textColor: '#fff'
+                        }, ";
+        if ($linha -> bl_repeticaoanual =='1') {
+            $pagina['js'] .= "
+                        {
+                            title: '{$linha -> vc_descricao }',
+                            start: '{$linha -> dt_feriado}',
+                            backgroundColor: '#FFB64D',
+                            textColor: '#fff'
+                        }, ";
+            for ($i=1;$i<=3;$i++) {
                 $pagina['js'] .= "
-                        {
-                            title: '{$linha -> vc_descricao }',
-                            start: '{$linha -> dt_feriado}',
-                            backgroundColor: '#FFB64D',
-                            textColor: '#fff'
-                        }, ";
-                if($linha -> bl_repeticaoanual =='1'){
-                        $pagina['js'] .= "
-                        {
-                            title: '{$linha -> vc_descricao }',
-                            start: '{$linha -> dt_feriado}',
-                            backgroundColor: '#FFB64D',
-                            textColor: '#fff'
-                        }, ";
-                        for($i=1;$i<=3;$i++){
-                                $pagina['js'] .= "
                         {
                             title: '{$linha -> vc_descricao }',
                             start: '".($data[0]+$i)."-{$data[1]}-{$data[2]}',
                             backgroundColor: '#FFB64D',
                             textColor: '#fff'
                         }, ";
-                        }
-                }
+            }
         }
-        else if($linha -> en_tipo == 'facultativo' && $pht[0] -> bl_pfacultativo=='1'){
-                $data=explode('-', $linha -> dt_feriado );
-                $data[1]--;
-                $pagina['js'] .= "
+    } elseif ($linha -> en_tipo == 'facultativo' && $pht[0] -> bl_pfacultativo=='1') {
+        $data=explode('-', $linha -> dt_feriado);
+        $data[1]--;
+        $pagina['js'] .= "
                         {
                             title: '{$linha -> vc_descricao }',
                             start: '{$data[0]}-{$data[1]}-{$data[2]}',
                             backgroundColor: '#4680ff',
                             textColor: '#fff'
                         }, ";
-                if($linha -> bl_repeticaoanual =='1'){
-                        $pagina['js'] .= "
+        if ($linha -> bl_repeticaoanual =='1') {
+            $pagina['js'] .= "
                         {
                             title: '{$linha -> vc_descricao }',
                             start: '{$linha -> dt_feriado}',
                             backgroundColor: '#4680ff',
                             textColor: '#fff'
                         }, ";
-                        for($i=1;$i<=3;$i++){
-                                $pagina['js'] .= "
+            for ($i=1;$i<=3;$i++) {
+                $pagina['js'] .= "
                         {
                             title: '{$linha -> vc_descricao }',
                             start: '".($data[0]+$i)."-{$data[1]}-{$data[2]}',
                             backgroundColor: '#4680ff',
                             textColor: '#fff'
                         }, ";
-                        }
-                }
+            }
         }
-        else if($linha -> en_tipo =='facultativomunicipal' && $pht[0] -> bl_pfacultativo=='1' && $linha -> es_municipio_cep == $this -> session -> municipio){
-                $data=explode('-', $linha -> dt_feriado );
-                $data[1]--;
+    } elseif ($linha -> en_tipo =='facultativomunicipal' && $pht[0] -> bl_pfacultativo=='1' && $linha -> es_municipio_cep == $this -> session -> municipio) {
+        $data=explode('-', $linha -> dt_feriado);
+        $data[1]--;
+        $pagina['js'] .= "
+                        {
+                            title: '{$linha -> vc_descricao }',
+                            start: '{$linha -> dt_feriado}',
+                            backgroundColor: '#4680ff',
+                            textColor: '#fff'
+                        }, ";
+        if ($linha -> bl_repeticaoanual =='1') {
+            $pagina['js'] .= "
+                        {
+                            title: '{$linha -> vc_descricao }',
+                            start: '{$linha -> dt_feriado}',
+                            backgroundColor: '#4680ff',
+                            textColor: '#fff'
+                        }, ";
+            for ($i=1;$i<=3;$i++) {
                 $pagina['js'] .= "
-                        {
-                            title: '{$linha -> vc_descricao }',
-                            start: '{$linha -> dt_feriado}',
-                            backgroundColor: '#4680ff',
-                            textColor: '#fff'
-                        }, ";
-                if($linha -> bl_repeticaoanual =='1'){
-                        $pagina['js'] .= "
-                        {
-                            title: '{$linha -> vc_descricao }',
-                            start: '{$linha -> dt_feriado}',
-                            backgroundColor: '#4680ff',
-                            textColor: '#fff'
-                        }, ";
-                        for($i=1;$i<=3;$i++){
-                                $pagina['js'] .= "
                         {
                             title: '{$linha -> vc_descricao }',
                             start: '".($data[0]+$i)."-{$data[1]}-{$data[2]}',
                             backgroundColor: '#4680ff',
                             textColor: '#fff'
                         }, ";
-                        }
-                }
+            }
         }
-        else if($linha -> en_tipo =='rodizio'){
-                $data=explode('-', $linha -> dt_feriado );
-                $data[1]--;
-                $pagina['js'] .= "
+    } elseif ($linha -> en_tipo =='rodizio') {
+        $data=explode('-', $linha -> dt_feriado);
+        $data[1]--;
+        $pagina['js'] .= "
                         {
                             title: '{$linha -> vc_descricao }',
                             start: '{$linha -> dt_feriado}',
                             backgroundColor: '#FFB64D',
                             textColor: '#fff'
                         }, ";
-        }
+    }
 }
 
 //ausencias
-foreach ($ausencias as $linha){
-        if(strlen($linha -> dt_fim_alterado)>0){
-                $fim = $linha -> dt_fim_alterado;
-        }
-        else{
-                $fim = $linha -> dt_fim;
-        }
-        $pagina['js'] .= "
+foreach ($ausencias as $linha) {
+    if (strlen($linha -> dt_fim_alterado)>0) {
+        $fim = $linha -> dt_fim_alterado;
+    } else {
+        $fim = $linha -> dt_fim;
+    }
+    $pagina['js'] .= "
                         {
                             title: '{$linha -> vc_descricao }',
                             start: '{$linha -> dt_inicio}',
@@ -212,37 +208,35 @@ foreach ($ausencias as $linha){
 }
 
 //prazos de fechamento
-for($i=-3;$i<=3;$i++){
-        if($this -> session -> diafechamento == 31){ //padrão de fechamento no fim do mês
-                $fechamento1=dias_uteis(date('d/m/Y', mktime(0, 0, 0, date('m')+$i, 1, date('Y'))), '', $prazo1, false, $this -> session -> municipio);
-                //echo "$fechamento1=dias_uteis(".date('d/m/Y', mktime(0, 0, 0, date('m')+$i, 1, date('Y'))).", '', $prazo1, false, {$this -> session -> municipio});<br>";
-                $fechamento1+=2;
-                //echo "fechamento1: $fechamento1<br>";
-                $fechamento2=dias_uteis(date('d/m/Y', mktime(0, 0, 0, date('m')+$i, 1, date('Y'))), '', $prazo2, false, $this -> session -> municipio);
-                $fechamento2++;
-                $fechamento3=dias_uteis(date('d/m/Y', mktime(0, 0, 0, date('m')+$i, 1, date('Y'))), '', $prazo3, false, $this -> session -> municipio);
-                $fechamento3++;
+for ($i=-3;$i<=3;$i++) {
+    if ($this -> session -> diafechamento == 31) { //padrão de fechamento no fim do mês
+        $fechamento1=dias_uteis(date('d/m/Y', mktime(0, 0, 0, date('m')+$i, 1, date('Y'))), '', $prazo1, false, $this -> session -> municipio);
+        //echo "$fechamento1=dias_uteis(".date('d/m/Y', mktime(0, 0, 0, date('m')+$i, 1, date('Y'))).", '', $prazo1, false, {$this -> session -> municipio});<br>";
+        $fechamento1+=2;
+        //echo "fechamento1: $fechamento1<br>";
+        $fechamento2=dias_uteis(date('d/m/Y', mktime(0, 0, 0, date('m')+$i, 1, date('Y'))), '', $prazo2, false, $this -> session -> municipio);
+        $fechamento2++;
+        $fechamento3=dias_uteis(date('d/m/Y', mktime(0, 0, 0, date('m')+$i, 1, date('Y'))), '', $prazo3, false, $this -> session -> municipio);
+        $fechamento3++;
+    } else {
+        if ($this -> session -> situacaofuncional == 444 && $this -> session -> instituicao == 2011) { //estagiários do IPSEMG
+            $prazo1=1;
+            $prazo2=2;
+            $prazo3=3;
+        } elseif ($this -> session -> situacaofuncional == 444 && $this -> session -> instituicao == 1271) { //estagiários da SEC
+            $prazo1=2;
+            $prazo2=3;
+            $prazo3=4;
         }
-        else{
-                if($this -> session -> situacaofuncional == 444 && $this -> session -> instituicao == 2011){ //estagiários do IPSEMG
-                        $prazo1=1;
-                        $prazo2=2;
-                        $prazo3=3;
-                }
-                else if($this -> session -> situacaofuncional == 444 && $this -> session -> instituicao == 1271){ //estagiários da SEC
-                        $prazo1=2;
-                        $prazo2=3;
-                        $prazo3=4;
-                }
-                $fechamento1 = $this -> session -> diafechamento + dias_uteis(date('d/m/Y', mktime(0, 0, 0, date('m')+$i, $this -> session -> diafechamento+1, date('Y'))), '', $prazo1, false, $this -> session -> municipio);
-                $fechamento1++;
-                $fechamento2 = $this -> session -> diafechamento + dias_uteis(date('d/m/Y', mktime(0, 0, 0, date('m')+$i, $this -> session -> diafechamento+1, date('Y'))), '', $prazo2, false, $this -> session -> municipio);
-                $fechamento2++;
-                $fechamento3 = $this -> session -> diafechamento + dias_uteis(date('d/m/Y', mktime(0, 0, 0, date('m')+$i, $this -> session -> diafechamento+1, date('Y'))), '', $prazo3, false, $this -> session -> municipio);
-                $fechamento3++;
-        }
-        //echo "title: 'Fechamento do servidor $fechamento1', start: '".date('Y-m-d', mktime(0, 0, 0, date('m')-1+$i, $fechamento1, date('Y')))."',<br>";
-        $pagina['js'] .= " 
+        $fechamento1 = $this -> session -> diafechamento + dias_uteis(date('d/m/Y', mktime(0, 0, 0, date('m')+$i, $this -> session -> diafechamento+1, date('Y'))), '', $prazo1, false, $this -> session -> municipio);
+        $fechamento1++;
+        $fechamento2 = $this -> session -> diafechamento + dias_uteis(date('d/m/Y', mktime(0, 0, 0, date('m')+$i, $this -> session -> diafechamento+1, date('Y'))), '', $prazo2, false, $this -> session -> municipio);
+        $fechamento2++;
+        $fechamento3 = $this -> session -> diafechamento + dias_uteis(date('d/m/Y', mktime(0, 0, 0, date('m')+$i, $this -> session -> diafechamento+1, date('Y'))), '', $prazo3, false, $this -> session -> municipio);
+        $fechamento3++;
+    }
+    //echo "title: 'Fechamento do servidor $fechamento1', start: '".date('Y-m-d', mktime(0, 0, 0, date('m')-1+$i, $fechamento1, date('Y')))."',<br>";
+    $pagina['js'] .= " 
                         {
                             title: 'Fechamento do servidor',
                             start: '".date('Y-m-d', mktime(0, 0, 0, date('m')-1+$i, $fechamento1, date('Y')))."',
@@ -283,65 +277,65 @@ $pagina['js'] .= "
                         }, ";
 
 //fechamentos de folha
-foreach($fechamentos as $linha){
-        $data=explode('-', $linha -> dt_fechamento);
-        $data[1]=(int)$data[1];
-        $pagina['js'] .= " 
+foreach ($fechamentos as $linha) {
+    $data=explode('-', $linha -> dt_fechamento);
+    $data[1]=(int)$data[1];
+    $pagina['js'] .= " 
                         {
                             title: 'Prazo para remarc. férias',
                             start: '".date('Y-m-d', mktime(0, 0, 0, $data[1], ($data[2]-6), $data[0]))."',
                             backgroundColor: '#FC6180',
                             textColor: '#fff'
                         }, ";
-        if($this -> session -> administrador){
-                $pagina['js'] .= " 
+    if ($this -> session -> administrador) {
+        $pagina['js'] .= " 
                         {
                             title: 'Fechamento da taxação',
                             start: '".date('Y-m-d', mktime(0, 0, 0, $data[1], $data[2], $data[0]))."',
                             backgroundColor: '#FC6180',
                             textColor: '#fff'
                         }, ";
-                            $diasuteis=dias_uteis("01/{$data[1]}/{$data[0]}", "{$data[2]}/{$data[1]}/{$data[0]}");
-                            $diasuteis++;
-                            $data[2]= dias_uteis("01/{$data[1]}/{$data[0]}", '', $diasuteis);
-                            $pagina['js'] .= "
+        $diasuteis=dias_uteis("01/{$data[1]}/{$data[0]}", "{$data[2]}/{$data[1]}/{$data[0]}");
+        $diasuteis++;
+        $data[2]= dias_uteis("01/{$data[1]}/{$data[0]}", '', $diasuteis);
+        $pagina['js'] .= "
                         {
                             title: 'Acerto de atrasadas',
                             start: '".date('Y-m-d', mktime(0, 0, 0, $data[1], $data[2], $data[0]))."',
                             backgroundColor: '#FC6180',
                             textColor: '#fff'
                         }, ";
-                            $data[2]= 15+dias_uteis("15/{$data[1]}/{$data[0]}", '', 2);
-                            $pagina['js'] .= "
+        $data[2]= 15+dias_uteis("15/{$data[1]}/{$data[0]}", '', 2);
+        $pagina['js'] .= "
                         {
                             title: 'Revelia estag. IPSEMG',
                             start: '".date('Y-m-d', mktime(0, 0, 0, $data[1], $data[2], $data[0]))."',
                             backgroundColor: '#FC6180',
                             textColor: '#fff'
                         }, ";
-                            $data[2]= 20+dias_uteis("20/{$data[1]}/{$data[0]}", '', 8);
-                            $pagina['js'] .= "
+        $data[2]= 20+dias_uteis("20/{$data[1]}/{$data[0]}", '', 8);
+        $pagina['js'] .= "
                         {
                             title: 'Revelia estag. ESP',
                             start: '".date('Y-m-d', mktime(0, 0, 0, $data[1], $data[2], $data[0]))."',
                             backgroundColor: '#FC6180',
                             textColor: '#fff'
                         }, ";
-                            /*
-                            $data[2]= 31+dias_uteis("20/{$data[1]}/{$data[0]}", '', 8);
-                            $pagina['js'] .= "
+        /*
+        $data[2]= 31+dias_uteis("20/{$data[1]}/{$data[0]}", '', 8);
+        $pagina['js'] .= "
                         {
-                            title: 'Revelia estag. SEC',
-                            start: '".date('Y-m-d', mktime(0, 0, 0, $data[1], $data[2], $data[0]))."',
-                            backgroundColor: '#FC6180',
-                            textColor: '#fff'
+        title: 'Revelia estag. SEC',
+        start: '".date('Y-m-d', mktime(0, 0, 0, $data[1], $data[2], $data[0]))."',
+        backgroundColor: '#FC6180',
+        textColor: '#fff'
                         }, ";*/
-        }
+    }
 }
 
 //substituições de PHT
-foreach($substituicoes as $linha){
-        $pagina['js'] .= " 
+foreach ($substituicoes as $linha) {
+    $pagina['js'] .= " 
                         {
                             title: '{$linha -> vc_planotrabalho}',
                             start: '{$linha -> dt_data}',
@@ -426,5 +420,3 @@ $pagina['js'] .= "
         </script>";
 
 $this->load->view('templates/internaRodape', $pagina);
-
-?>
