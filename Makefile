@@ -17,3 +17,6 @@ create-users:
 sampledevdata:
 	docker cp db/transforma-devdata.sql  transformagov_db_1:/tmp
 	docker exec transformagov_db_1 /bin/bash -c 'mysql transforma < /tmp/transforma-devdata.sql --password=root'
+
+attach:
+	docker exec -it transformagov_server_1 bash
