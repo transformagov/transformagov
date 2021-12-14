@@ -21,9 +21,11 @@ sampledevdata:
 attach:
 	docker exec -it transformagov_server_1 bash
 
+# Essa task executa os testes sem GUI, util para o pipeline de CI/CD;
 test-cypress:
 	docker-compose up cypress-cli
 
+# Essa task disponibiliza o dashboard do cypress para implementação dos testes localmente;
 cypress-gui:
 	# https://www.mit.edu/~arosinol/2019/08/06/Docker_Display_GUI_with_X_server/
 	xhost +local:root; docker-compose up cypress-gui; xhost -local:root
