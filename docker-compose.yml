@@ -25,32 +25,16 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - TZ=America/Sao_Paulo
 
-  cypress-cli:
+  cypress-ci:
     image: cypress/included:9.0.0
     container_name: cypress-cli
     working_dir: /cypress
     volumes:
-      - ./application/cypress/cypress.json:/cypress/cypress.json
-      - ./application/cypress/integration:/cypress/cypress/integration
+      - ./tests/cypress/cypress.json:/cypress/cypress.json
+      - ./tests/cypress/integration:/cypress/cypress/integration
     depends_on:
       - server
     ports:
       - 8005:8005
-
-  cypress-gui:
-    image: cypress/included:9.0.0
-    container_name: cypress-gui
-    working_dir: /cypress
-    volumes:
-      - ./application/cypress/cypress.json:/cypress/cypress.json
-      - ./application/cypress/integration:/cypress/cypress/integration
-      - /tmp/.X11-unix:/tmp/.X11-unix
-    environment:
-      - DISPLAY
-    depends_on:
-      - server
-    ports:
-      - 8005:8005
-    entrypoint: ["npx", "cypress", "open", "-P", "/cypress"]
 volumes:
   transforma-db:

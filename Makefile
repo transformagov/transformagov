@@ -23,9 +23,11 @@ attach:
 
 # Essa task executa os testes sem GUI, util para o pipeline de CI/CD;
 test-cypress:
-	docker-compose up cypress-cli
+	docker-compose up cypress-ci
 
-# Essa task disponibiliza o dashboard do cypress para implementação dos testes localmente;
-cypress-gui:
-	# https://www.mit.edu/~arosinol/2019/08/06/Docker_Display_GUI_with_X_server/
-	xhost +local:root; docker-compose up cypress-gui; xhost -local:root
+cypress:
+	if [ -d "./node_modules" ]; then \
+		node_modules/cypress/bin/cypress open -P tests/cypress; \
+	else \
+		printf "\033[0;31mnode_modules not exists, please run 'npm i cypress --save-dev' to create it"; \
+	fi \

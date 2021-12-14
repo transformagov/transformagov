@@ -3,3 +3,4 @@ anexos/
 tools/
 composer.phar
 .php-cs-fixer.cache
+node_modules/
