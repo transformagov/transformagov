@@ -2,7 +2,7 @@ build:
 	docker-compose build --no-cache
 
 up:
-	docker-compose up
+	docker-compose up server db
 
 run: build up
 
@@ -20,3 +20,10 @@ sampledevdata:
 
 attach:
 	docker exec -it transformagov_server_1 bash
+
+test-cypress:
+	docker-compose up cypress-cli
+
+cypress-gui:
+	# https://www.mit.edu/~arosinol/2019/08/06/Docker_Display_GUI_with_X_server/
+	xhost +local:root; docker-compose up cypress-gui; xhost -local:root
