@@ -7,7 +7,7 @@ Utilizamos  a ferramenta Docker para automatizar parte do processo de  disponibi
 Essa documentação foi homologada em um ambiente Debian 10. Para outros ambientes o desenvolvedor irá precisar adaptar
 alguns dos passos e dependências utilizadas.
 
-# Subindo a plataforma via Docker
+## Subindo a plataforma via Docker
 
 1. Instale a ferramenta [docker-compose](https://docs.docker.com/compose/install/)
 2. Execute o comando `make run`
@@ -25,6 +25,12 @@ Esse container será o banco de dados da aplicação.
 3. Restaure schema do banco utilizando o comando `make load-schema`;
 4. Crie os usuários  `make create-users`;
 4. Acesse a plataforma em `http://localhost:8080` utilizando um dos usuários listados na sessão [Usuários](##usuários);
+
+
+## Testes
+
+Para rodar os testes de aceitação no ambiente local, execute o comando `make cypress`. Esse
+comando irá abrir o dashboard iterativo do cypress para escrita e execução dos testes de aceitação.
 
 ## SMTP
 
@@ -131,7 +137,7 @@ Para auxiliar no ambiente de desenvolvimento. O Makefile tem dois comandos, `mak
 
 ## Usuários
 
-Apos a execução do comando `make restore`, é possivel executar o comando `make sampleusers` ou executando apenas `make sampledevdata`. Serão inseridos no banco de dados 4 usuários, os valores do campos CPF, RG e CEP foram gerados usando uma ferramenta.
+Apos a execução do comando `make restore`, é possivel executar o comando `make create-users` ou executando apenas `make sampledevdata`. Serão inseridos no banco de dados 4 usuários, os valores do campos CPF, RG e CEP foram gerados usando uma ferramenta.
 
 * Perfil: admin
 	- CPF: 771.194.760-76
