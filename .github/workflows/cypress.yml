@@ -1,4 +1,4 @@
-name: TransformaGov Actions
+name: Testes de Aceitação
 on: 
   push:
     paths-ignore:
