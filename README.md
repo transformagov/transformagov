@@ -57,12 +57,12 @@ Para alterar um usuário para administrador, o desenvolvedor pode fazer isso via
 
 1. acesse o banco
 
-				docker exec -it transformagov_db_1 bash
-				mysql --password=root --user=root transforma
+	docker exec -it transformagov_db_1 bash
+	mysql --password=root --user=root transforma
 
 2. execute o script que altera um usuário para administrador
 
-				update tb_usuarios set en_perfil='administrador' where pr_usuario=<id_do_usuario_aqui>;
+	update tb_usuarios set en_perfil='administrador' where pr_usuario=<id_do_usuario_aqui>;
 
 ## Usuários
 
