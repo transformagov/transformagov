@@ -1,5 +1,8 @@
 name: TransformaGov Actions
-on: [push]
+on: 
+  push:
+    paths-ignore:
+      - 'README.md'
 jobs:
   transforma:
     runs-on: ubuntu-latest
