@@ -21,13 +21,9 @@ sampledevdata:
 attach:
 	docker exec -it transformagov_server_1 bash
 
-# Essa task executa os testes sem GUI, util para o pipeline de CI/CD;
-test-cypress:
-	docker-compose up cypress-ci
-
 cypress:
 	if [ -d "./node_modules" ]; then \
-		node_modules/cypress/bin/cypress open -P tests/cypress; \
+		node_modules/cypress/bin/cypress open -C tests/cypress/cypress.json; \
 	else \
 		printf "\033[0;31mnode_modules not exists, please run 'npm i cypress --save-dev' to create it"; \
 	fi \

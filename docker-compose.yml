@@ -24,17 +24,5 @@ services:
       - MYSQL_DATABASE=transforma
       - MYSQL_ROOT_PASSWORD=root
       - TZ=America/Sao_Paulo
-
-  cypress-ci:
-    image: cypress/included:9.0.0
-    container_name: cypress-cli
-    working_dir: /cypress
-    volumes:
-      - ./tests/cypress/cypress.json:/cypress/cypress.json
-      - ./tests/cypress/integration:/cypress/cypress/integration
-    depends_on:
-      - server
-    ports:
-      - 8005:8005
 volumes:
   transforma-db:
