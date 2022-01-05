@@ -7,6 +7,8 @@ Utilizamos  a ferramenta Docker para automatizar parte do processo de  disponibi
 Essa documentação foi homologada em um ambiente Debian 10. Para outros ambientes o desenvolvedor irá precisar adaptar
 alguns dos passos e dependências utilizadas.
 
+![Testes de Aceitação](https://github.com/transformagov/transformagov/actions/workflows/cypress/badge.svg)
+
 ## Subindo a plataforma via Docker
 
 1. Instale a ferramenta [docker-compose](https://docs.docker.com/compose/install/)
