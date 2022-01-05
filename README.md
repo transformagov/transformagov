@@ -4,11 +4,11 @@ uma plataforma de recrutamento baseada no mérito.
 
 A criação do projeto TransformaGov foi motivada pelos seguintes objetivos:
 
-	1. Levar o case de sucesso do projeto Transforma Minas para outros Estados e
+1. Levar o case de sucesso do projeto Transforma Minas para outros Estados e
 Municípios;
-	2. Criar uma marca que seja independente do Estado de Minas Gerais e de mandatos específicos. 
-	3. Construir uma comunidade de software livre ao redor do TransformaGov, que possa decidir email conjunto os rumos do projeto. 
-	4. Evoluir o código da plataforma priorizando qualidade, testabilidade e estabilidade;
+2. Criar uma marca que seja independente do Estado de Minas Gerais e de mandatos específicos. 
+3. Construir uma comunidade de software livre ao redor do TransformaGov, que possa decidir email conjunto os rumos do projeto. 
+4. Evoluir o código da plataforma priorizando qualidade, testabilidade e estabilidade;
 
 ![Testes de Aceitação](https://github.com/transformagov/transformagov/actions/workflows/cypress/badge.svg)
 
