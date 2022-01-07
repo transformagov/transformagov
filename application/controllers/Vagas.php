@@ -19,14 +19,15 @@ class Vagas extends CI_Controller
     {
         $this -> load -> helper('date');
         $this -> load -> model('Candidaturas_model');
+        $this -> load -> helper('menu');
 
         $pagina['menu1']='Vagas';
         $pagina['menu2']='index';
         $pagina['url']='Vagas/index';
         $pagina['nome_pagina']='Lista de vagas';
         $pagina['icone']='fa fa-thumbtack';
-
         $dados=$pagina;
+
         $dados['adicionais'] = array('datatables' => true);
         if ($inativo == '0') {
             if ($this -> session -> perfil == 'avaliador') {
@@ -41,6 +42,11 @@ class Vagas extends CI_Controller
                 $dados['vagas'] = $this -> Vagas_model -> get_vagas('', false, 'object');
             }
         }
+
+        $dados['menu_vc_vaga'] = menuVcVaga($pagina['menu2'], $dados['vagas']);
+        $dados['perfil_pode_adicionar_vaga'] = perfilPodeADicionarVaga('index', $this -> session -> perfil);
+        $dados['criar_ou_editar_vaga'] = criarOuEditarVaga($pagina['menu2'], 1);
+        $dados['perfil_pode_adicionar_vaga'] = perfilPodeADicionarVaga('index', $this -> session -> perfil);
 
 
         $candidaturas = $this -> Candidaturas_model -> get_candidaturas('', '', '', '');
@@ -75,6 +81,7 @@ class Vagas extends CI_Controller
         $this -> load -> model('Instituicoes_model');
         $this -> load -> model('GruposVagas_model');
         $this -> load -> library('MY_Form_Validation');
+        $this -> load -> helper('menu');
 
         $pagina['menu1']='Vagas';
         $pagina['menu2']='create';
@@ -128,6 +135,10 @@ class Vagas extends CI_Controller
                 $this -> Usuarios_model -> log('erro', 'Vagas/create', 'Erro de criação da vaga. Erro: '.$this -> db -> error('message'));
             }
         }
+
+        $dados['menu_vc_vaga'] = menuVcVaga($pagina['menu2'], []);
+        $dados['perfil_pode_adicionar_vaga'] = perfilPodeADicionarVaga($pagina['menu2'], $this -> session -> perfil);
+        $dados['criar_ou_editar_vaga'] = criarOuEditarVaga($pagina['menu2'], $dados['sucesso']);
         $dados['usuarios'] = $this -> Usuarios_model -> get_usuarios('', '', 2, '', true);
         $dados['instituicoes'] = $this -> Instituicoes_model -> get_instituicoes();
         $dados['grupos'] = $this -> GruposVagas_model -> get_grupos();

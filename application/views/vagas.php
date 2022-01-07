@@ -11,39 +11,40 @@ if (isset($adicionais)) {
     $pagina['adicionais']=$adicionais;
 }
 
-$this->load->view('templates/internaCabecalho', $pagina);
+$this->load->view('templates/internaCabecalho', $pagina); 
 
-echo "
-                        <div class=\"col-12\">
-                            <div class=\"tsm-inner-content\">
-                                <div class=\"main-body\">
-                                    <div class=\"page-wrapper\">
-                                        <div class=\"page-body\">
-                                            <div class=\"row\">
-                                                <div class=\"col-sm-12\">
-                                                    <div class=\"card\">
-                                                        <div class=\"card-block\">
-                                                            <div class=\"row sub-title\" style=\"letter-spacing:0px\">
-                                                                    <div class=\"col-lg-8\">
-                                                                        <h4><i class=\"$icone\" style=\"color:black\"></i> &nbsp; {$nome_pagina}";
-if ($menu2 == 'questoes' || $menu2 == 'resultado' || $menu2 == 'resultado2' || $menu2 == 'resultado3') {
-    echo ' - '.$vagas[0] -> vc_vaga;
-}
-echo "</h4>
-                                                                    </div>";
-if ($menu2 == 'index' && $this -> session -> perfil != 'avaliador') {
-    echo "
-                                                                    <div class=\"col-lg-4 text-right\">
-                                                                            <a href=\"".base_url('Vagas/create')."\" class=\"btn btn-primary btn-square\"> <i class=\"fa fa-plus-circle\"></i> Nova vaga </a>
-                                                                    </div>";
-}
-if ($menu2 != 'index' && strlen($sucesso) == 0 && ($menu2 == 'create' || $menu2 == 'edit')) {
-    echo "
-                                                                    <div class=\"col-lg-4 text-right\">
-                                                                            <button type=\"button\" class=\"btn btn-primary\" onclick=\"document.getElementById('form_vagas').submit();\"> Salvar </button>
-                                                                            <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Vagas/index')."'\">Cancelar</button>
-                                                                    </div>";
-}
+?>
+
+<div class=col-12>
+<div class="tsm-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row sub-title" style="letter-spacing:0px">
+                                        <div class="col-lg-8">
+                                        <h4>
+                                            <i class=<?php $icone ?> style="color:black"></i> 
+                                            &nbsp; <?php echo $nome_pagina ?>  <?php echo $menu_vc_vaga ?> 
+                                        </h4>
+                                </div> 
+                                <?php if ($perfil_pode_adicionar_vaga): ?>
+                                <div class="col-lg-4 text-right">
+                                <a href=<?php echo base_url('Vagas/create') ?> class="btn btn-primary btn-square"><i class="fa fa-plus-circle"></i> Nova vaga </a>
+                                </div>
+
+                                <?php endif; ?>
+                                <?php if ($criar_ou_editar_vaga): ?>
+                                    <div class="col-lg-4 text-right">
+                                            <button type="button" class="btn btn-primary" onclick="document.getElementById('form_vagas').submit();"> Salvar </button>
+                                            <button type="button" class="btn btn-outline-dark" onclick="window.location='<?php echo base_url('Vagas/index') ?>'" ?>>Cancelar</button>
+                                    </div>;
+                                <?php endif; ?>
+
+<?php
 if ($menu2 == 'resultado' && $vagas[0] -> bl_finalizado != '1'&&$this -> session -> perfil != 'avaliador') {
     $reprovado = false;
     $agendado = false;
@@ -2026,3 +2027,5 @@ echo "
                                                     </div>";
 
 $this->load->view('templates/internaRodape', $pagina);
+
+?>

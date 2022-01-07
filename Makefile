@@ -1,3 +1,4 @@
+.PHONY: cypress
 build:
 	docker-compose build --no-cache
 
