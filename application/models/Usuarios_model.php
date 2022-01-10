@@ -83,7 +83,7 @@ class Usuarios_model extends CI_Model
         $query = $this -> db -> get();
         if ($query -> num_rows() == 1) {
             $row = $query -> row();
-            if ($row -> in_erros > 3) {
+            if ($row -> in_erros > $this->config->item('max_login_retry')) {
                 $this -> session -> set_userdata('erro', 'Essa conta está bloqueada por muitas tentativas de acesso sem sucesso!');
                 return null;
             } elseif ($row -> bl_removido == '1') {

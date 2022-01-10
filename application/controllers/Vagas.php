@@ -46,7 +46,6 @@ class Vagas extends CI_Controller
         $dados['menu_vc_vaga'] = menuVcVaga($pagina['menu2'], $dados['vagas']);
         $dados['perfil_pode_adicionar_vaga'] = perfilPodeADicionarVaga('index', $this -> session -> perfil);
         $dados['criar_ou_editar_vaga'] = criarOuEditarVaga($pagina['menu2'], 1);
-        $dados['perfil_pode_adicionar_vaga'] = perfilPodeADicionarVaga('index', $this -> session -> perfil);
 
 
         $candidaturas = $this -> Candidaturas_model -> get_candidaturas('', '', '', '');
@@ -241,6 +240,8 @@ class Vagas extends CI_Controller
     public function resultado()
     {
         $this -> load -> model('Candidaturas_model');
+        $this -> load -> helper('menu');
+        $this -> load -> model('Resultado_model');
 
         $pagina['menu1']='Vagas';
         $pagina['menu2']='resultado';
@@ -356,8 +357,10 @@ class Vagas extends CI_Controller
                 $dados['candidaturas'][] = $candidatura;
             }
         }
-        //var_dump($dados['candidaturas']);
-
+        $dados['menu_vc_vaga'] = menuVcVaga($pagina['menu2'], $dados['vagas']);
+        $dados['perfil_pode_adicionar_vaga'] = perfilPodeADicionarVaga($pagina['menu2'], $this -> session -> perfil);
+        $dados['criar_ou_editar_vaga'] = criarOuEditarVaga($pagina['menu2'], 1);
+        list($dados['reprovado'], $dados['agendado'], $dados['finalizado'], $dados['aprovado']) = $this -> Resultado_model -> verifica_resultado_do_candidato($dados['menu2'], $dados['vagas'], $dados['candidaturas'], $this -> session -> perfil);
         $this -> load -> view('vagas', $dados);
     }
 

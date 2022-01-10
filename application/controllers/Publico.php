@@ -22,10 +22,6 @@ class Publico extends CI_Controller
         $pagina['url']='Publico/index';
         $pagina['nome_pagina']='Entre no sistema';
 
-        /*$this -> load -> library('encryption');
-        $password = $this -> encryption -> encrypt('teste123');
-        $this -> Usuarios_model -> update_usuario('vc_senha', $password, 2610);*/
-
         $this -> form_validation -> set_rules('cpf', "'CPF'", 'trim|required|verificaCPF', array('required' => 'O campo \'CPF\' é obrigatório.', 'verificaCPF' => 'O CPF inserido é inválido.'));
         $this -> form_validation -> set_rules('senha', "'Senha'", 'trim|required|min_length[8]');
 
@@ -54,15 +50,6 @@ class Publico extends CI_Controller
                             $this -> session -> set_userdata('erro', '');
 
                             $this -> Usuarios_model -> log('sucesso', 'Publico', 'Usuário '.$row -> pr_usuario.' logado com sucesso.', 'tb_usuarios', $row -> pr_usuario);
-                            /*
-                            if($row -> pr_usuario == 2610){
-                                    $this -> session -> set_userdata('uid', 3444);
-                                    $this -> session -> set_userdata('perfil', 'candidato');
-                                    $this -> session -> set_userdata('candidato', 3535);
-                                    $this -> session -> set_userdata('nome', 'Fernando Pereira Rodrigues');
-                                    $this -> session -> set_userdata('brumadinho', '1');
-                            }*/
-
                             $this -> Usuarios_model -> update_usuario('dt_ultimoacesso', date('Y-m-d H:i:s'), $row -> pr_usuario);
                             $this -> db -> set('es_usuario', $row -> pr_usuario);
                             $this -> db -> where('id', session_id());

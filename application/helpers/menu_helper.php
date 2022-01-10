@@ -18,3 +18,4 @@ function criarOuEditarVaga($menu2, $sucesso)
 {
     return $menu2 != 'index' && strlen($sucesso) == 0 && ($menu2 == 'create' || $menu2 == 'edit');
 }
+

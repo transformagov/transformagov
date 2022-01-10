@@ -43,54 +43,19 @@ $this->load->view('templates/internaCabecalho', $pagina);
                                             <button type="button" class="btn btn-outline-dark" onclick="window.location='<?php echo base_url('Vagas/index') ?>'" ?>>Cancelar</button>
                                     </div>;
                                 <?php endif; ?>
+                                <div class="col-lg-4 text-right">
+                                <?php if ($menu2 == 'resultado' && $vagas[0] -> bl_finalizado != '1' && $this -> session -> perfil != 'avaliador'): ?>
+                                    <?php if($aprovado): ?>
+                                        <button type="button" class="btn btn-danger" onclick="confirm_reprovacao2("<?php $vagas[0] -> pr_vaga?>");"> Finalizar vaga </button>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+
+                                <button type="button" class="btn btn-primary btn-square" onclick="window.location='<?php echo base_url('Vagas/recalcular_nota/'.$vagas[0] -> pr_vaga) ?>'" >Recalcular nota bruta</button>
+                                <button type="button" class="btn btn-primary btn-square" onclick="window.location='<?php echo base_url('Vagas/resultado3/'.$vagas[0] -> pr_vaga) ?>'" >Reprovadas na Habilitação</button>
+                                <button type="button" class="btn btn-primary btn-square" onclick="window.location='<?php base_url('Vagas/resultado2/'.$vagas[0] -> pr_vaga) ?>'" >Detalhamento por competência</button>
+                                    </div>
 
 <?php
-if ($menu2 == 'resultado' && $vagas[0] -> bl_finalizado != '1' && $this -> session -> perfil != 'avaliador') {
-    $reprovado = false;
-    $agendado = false;
-    $finalizado = false;
-    $aprovado = false;
-    if (isset($candidaturas)) {
-        foreach ($candidaturas as $linha) {
-            if ($linha -> es_status == 8) {
-                $reprovado = true;
-            }
-            $validacao_reprovado = ($linha ->es_status == 10 || $linha ->es_status == 11 || $linha ->es_status == 12 || $linha ->es_status == 14 || $linha ->es_status == 16);
-            if ($reprovado && $validacao_reprovado) {
-                $agendado = true;
-                $finalizado = true;
-            } elseif ($validacao_reprovado) {
-                $finalizado = true;
-            }
-        }
-        foreach ($candidaturas as $linha) {
-            if ($finalizado && $linha ->es_status == 19) {
-                $aprovado = true;
-            }
-            if ($aprovado) {
-                break;
-            }
-        }
-    }
-
-    echo "
-                                                                    <div class=\"col-lg-4 text-right\">";
-    /*if($agendado){
-            echo "
-                                                                            <button type=\"button\" class=\"btn btn-danger\" onclick=\"confirm_reprovacao(".$vagas[0] -> pr_vaga.");\"> Reprovar não agendados </button>";
-    }*/
-    if ($aprovado) {
-        echo "
-                                                                                <button type=\"button\" class=\"btn btn-danger\" onclick=\"confirm_reprovacao2(".$vagas[0] -> pr_vaga.");\"> Finalizar vaga </button>";
-    }
-
-    echo "
-                                                                                <button type=\"button\" class=\"btn btn-primary btn-square\" onclick=\"window.location='".base_url('Vagas/recalcular_nota/'.$vagas[0] -> pr_vaga)."'\">Recalcular nota bruta</button>
-										<button type=\"button\" class=\"btn btn-primary btn-square\" onclick=\"window.location='".base_url('Vagas/resultado3/'.$vagas[0] -> pr_vaga)."'\">Reprovadas na Habilitação</button>
-                                                                                <button type=\"button\" class=\"btn btn-primary btn-square\" onclick=\"window.location='".base_url('Vagas/resultado2/'.$vagas[0] -> pr_vaga)."'\">Detalhamento por competência</button>
-																			
-                                                                    </div>";
-}
 if ($menu2 == 'resultado2' || $menu2 == 'resultado3') {
     echo "
                                                                     <div class=\"col-lg-4 text-right\">
