@@ -32,11 +32,11 @@ $this->load->view('templates/internaCabecalho', $pagina);
                                         </h4>
                                 </div> 
                                 <?php if ($perfil_pode_adicionar_vaga): ?>
-                                <div class="col-lg-4 text-right">
-                                <a href=<?php echo base_url('Vagas/create') ?> class="btn btn-primary btn-square"><i class="fa fa-plus-circle"></i> Nova vaga </a>
+                                    <div class="col-lg-4 text-right">
+                                    <a href=<?php echo base_url('Vagas/create') ?> class="btn btn-primary btn-square"><i class="fa fa-plus-circle"></i> Nova vaga </a>
                                 </div>
-
                                 <?php endif; ?>
+
                                 <?php if ($criar_ou_editar_vaga): ?>
                                     <div class="col-lg-4 text-right">
                                             <button type="button" class="btn btn-primary" onclick="document.getElementById('form_vagas').submit();"> Salvar </button>
@@ -45,7 +45,7 @@ $this->load->view('templates/internaCabecalho', $pagina);
                                 <?php endif; ?>
 
 <?php
-if ($menu2 == 'resultado' && $vagas[0] -> bl_finalizado != '1'&&$this -> session -> perfil != 'avaliador') {
+if ($menu2 == 'resultado' && $vagas[0] -> bl_finalizado != '1' && $this -> session -> perfil != 'avaliador') {
     $reprovado = false;
     $agendado = false;
     $finalizado = false;
@@ -392,7 +392,7 @@ if ($menu2 == 'index') {
         foreach ($grupos as $linha) {
             $dados_grupos[$linha -> pr_grupovaga] = $linha -> vc_grupovaga;
         }
-        if (!is_array($dados_grupos)) {
+        if (!isset($dados_grupos)) {
             $dados_grupos = array();
         }
         $dados_grupos=array(0 => '')+$dados_grupos;

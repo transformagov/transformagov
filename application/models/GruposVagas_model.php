@@ -25,13 +25,7 @@ class GruposVagas_model extends CI_Model
         $this -> db -> join('tb_instituicoes2 i', 'g.es_instituicao=i.pr_instituicao', 'left');
         $this -> db -> order_by('g.vc_grupovaga', 'ASC');
         $query = $this -> db -> get();
-        //echo $this -> db -> last_query();
         if ($query -> num_rows() > 0) {
-            /*
-            $results = $query -> result_array();
-            $grupos = array_column($results, 'vc_grupovaga', 'pr_grupovaga');
-             */
-
             $resultado = $query -> result();
             foreach ($resultado as $linha) {
                 $this -> db -> from('tb_vagas');

@@ -36,7 +36,7 @@ class Usuarios_model extends CI_Model
         } elseif ($query -> num_rows() > 1) {
             return $query -> result();
         } else {
-            return null;
+            return array();
         }
     }
     public function create_usuario($dados)
