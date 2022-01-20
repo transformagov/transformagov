@@ -53,18 +53,11 @@ $this->load->view("templates/internaCabecalho", $pagina);
                                 	$this->session->perfil != "avaliador"
                                 ): ?>
                                     <?php if ($aprovado): ?>
-                                        <button type="button" class="btn btn-danger" onclick="confirm_reprovacao2("<?php $vagas[0]
-                                        	->pr_vaga; ?>");"> Finalizar vaga </button>
+                                        <button type="button" class="btn btn-danger" onclick="confirm_reprovacao2("<?php $vagas[0]->pr_vaga; ?>");"> Finalizar vaga </button>
                                     <?php endif; ?>
-                                <button type="button" class="btn btn-primary btn-square" onclick="window.location='<?php echo base_url(
-                                	"Vagas/recalcular_nota/" . $vagas[0]->pr_vaga
-                                ); ?>'" >Recalcular nota bruta</button>
-                                <button type="button" class="btn btn-primary btn-square" onclick="window.location='<?php echo base_url(
-                                	"Vagas/resultado3/" . $vagas[0]->pr_vaga
-                                ); ?>'" >Reprovadas na Habilitação</button>
-                                <button type="button" class="btn btn-primary btn-square" onclick="window.location='<?php base_url(
-                                	"Vagas/resultado2/" . $vagas[0]->pr_vaga
-                                ); ?>'" >Detalhamento por competência</button>
+                                <button type="button" class="btn btn-primary btn-square" onclick="window.location='<?php echo base_url("Vagas/recalcular_nota/" . $vagas[0]->pr_vaga); ?>'" >Recalcular nota bruta</button>
+                                <button type="button" class="btn btn-primary btn-square" onclick="window.location='<?php echo base_url("Vagas/resultado3/" . $vagas[0]->pr_vaga); ?>'" >Reprovadas na Habilitação</button>
+                                <button type="button" class="btn btn-primary btn-square" onclick="window.location='<?php base_url("Vagas/resultado2/" . $vagas[0]->pr_vaga); ?>'" >Detalhamento por competência</button>
                                 <?php endif; ?>
 
                                     </div>
