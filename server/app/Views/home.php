@@ -1,8 +1,3 @@
-<?php
-echo link_tag("sb-admin-2.min.css");
-echo link_tag("transforma-minas-override.css");
-?>
-
 <section class="login-block">
     <div class="container">
         <div class="row">
@@ -12,7 +7,7 @@ echo link_tag("transforma-minas-override.css");
                 echo form_open("Publico/index", $attributes);
                 ?>
                 <div class="text-center">
-                <?php echo img('images/logo.png'); ?>
+                    <?php echo img(['src' => 'images/logo.png', 'alt' => 'TransformaGov']) ?>
                 </div>
                 <div class="card col-lg-8 mt-3 p-3 mx-auto">
                     <div class="card-block">
@@ -88,7 +83,7 @@ echo link_tag("transforma-minas-override.css");
                         </div>
                     </div>
                 </div>
-            </form>
+            <?php form_close() ?>
         </div>
     </div>
                     <div class="text-center" style="margin-top: 10px">

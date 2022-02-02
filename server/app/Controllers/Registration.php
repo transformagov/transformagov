@@ -2,22 +2,23 @@
 
 namespace App\Controllers;
 
-class Home extends BaseController
+class Registration extends BaseController
 {
     public function index()
     {
         $data = [
             'erro' => '',
-            'sucesso' => ''
+            'sucesso' => '',
+            'url' => 'cadastro'
         ];
         helper('form');
         helper('html');
         echo view('generics/cabeçalho_publico', $data);
-        echo view('home', $data);
+        echo view('registration', $data);
         echo view('generics/rodape_publico', $data);
     }
 
-    public function login()
+    public function new()
     {
 
     }
