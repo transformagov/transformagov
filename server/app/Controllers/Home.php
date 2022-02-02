@@ -14,4 +14,9 @@ class Home extends BaseController
         helper('html');
         return view('home', $data);
     }
+
+    public function login()
+    {
+
+    }
 }
