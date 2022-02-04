@@ -31,11 +31,11 @@ class Database extends Config
      * @var array
      */
     public $default = [
+        'hostname' => 'db',
+	      'username' => 'root',
+	      'password' => 'root',
+	      'database' => 'transforma',
         'DSN'      => '',
-        'hostname' => 'localhost',
-        'username' => '',
-        'password' => '',
-        'database' => '',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,

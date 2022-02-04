@@ -10,7 +10,7 @@ services:
       - ./:/transformagov/
     entrypoint: ["php", "spark", "serve", "--host", "0.0.0.0", "--port", "8085"]
     environment:
-      - DB_HOST=transformagov_db_1
+      - DB_HOST=db
       - DB_DATABASE=transforma
       - DB_PASSWORD=root
       - DB_USERNAME=root

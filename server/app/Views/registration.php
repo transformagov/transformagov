@@ -396,13 +396,14 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <?php
-                                            $Estados = array(0 => '') + [];
+                                            $Estados = array(0 => '') + $Estados;
                                             $attributes = array('class' => 'control-label font-weight-bold');
                                             echo form_label('Estado <abbr title="Obrigatório" class="text-danger">*</abbr>', 'Estado', $attributes);
                                             if (strstr($erro, "'Estado'")) {
-                                                echo form_dropdown('Estado', [], set_value('Estado'), "class=\"form-control is-invalid\" id=\"Estado\"");
+                                                echo form_dropdown('Estado', $Estados, set_value('Estado'), "class=\"form-control is-invalid\" id=\"Estado\"");
                                             } else {
-                                                echo form_dropdown('Estado', [], set_value('Estado'), "class=\"form-control\" id=\"Estado\"");
+                                                echo form_dropdown('Estado', $Estados,
+                                                    set_value('Estado'), "class=\"form-control\" id=\"Estado\"");
                                             }
                                             ?>
                                         </div>
