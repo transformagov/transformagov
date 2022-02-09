@@ -2,6 +2,7 @@
 echo link_tag("sb-admin-2.min.css");
 echo link_tag("transforma-minas-override.css");
 echo link_tag("cabeçalho_publico.css");
+echo script_tag('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js');
 ?>
 
 <!DOCTYPE html>

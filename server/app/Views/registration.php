@@ -396,7 +396,6 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <?php
-                                            $Estados = array(0 => '') + $Estados;
                                             $attributes = array('class' => 'control-label font-weight-bold');
                                             echo form_label('Estado <abbr title="Obrigatório" class="text-danger">*</abbr>', 'Estado', $attributes);
                                             if (strstr($erro, "'Estado'")) {
@@ -666,158 +665,28 @@
                 </div>
 
 
-                <?php
-                                echo "<script type=\"text/javascript\" >";
-
-                                if (set_value('TransformaMinas') == '1') {
-                                    echo "document.getElementById('div_transformaminas').style.display='block';";
-                                }
-
-                                echo "
-                    function limpa_formulário_cep() {
-                            //Limpa valores do formulário de cep.
-                            document.getElementById('Logradouro').value=(\"\");
-                            document.getElementById('Bairro').value=(\"\");
-                            document.getElementById('Municipio').value=(\"\");
-                            document.getElementById('Estado').value=(\"\");
-                    }
-
-                    function meu_callback(conteudo) {
-                            if (!(\"erro\" in conteudo)) {
-                                    //Atualiza os campos com os valores.
-                                    document.getElementById('Logradouro').value=(conteudo.logradouro);
-                                    document.getElementById('Bairro').value=(conteudo.bairro);
-                                    //document.getElementById('Estado').value=(conteudo.uf);
-
-                                    var opts = document.getElementById('Estado').options;
-                                    for (var opt, j = 0; opt = opts[j]; j++) {
-                                            if (opt.text == conteudo.uf) {
-                                                    document.getElementById('Estado').selectedIndex = j;
-                                                    break;
-                                            }
-                                    }
-                                    $(document).ready(function(){
-                                            var estado = $('#Estado').val();
-                                            if(estado != ''){
-                                                    $.ajax({
-                                                            url:\"" . base_url() . "Candidatos/fetch_Municipios\",
-                                                            method:\"POST\",
-                                                            data:{estado:estado},
-                                                            success:function(data){
-                                                                    $('#Municipio').html(data);
-                                                                    $('#Municipio option').each(function () {
-                                                                            if ($(this).html() == conteudo.localidade.toUpperCase()) {
-                                                                                $(this).attr('selected', 'selected');
-                                                                                return;
-                                                                            }
-                                                                    });
-                                                            }
-                                                    })
-                                            }
-                                    });
-                                    //document.getElementById('Municipio').value=(conteudo.localidade);
-                                    document.getElementById('Numero').focus();
-                            }
-                            else {
-                                    //CEP não Encontrado.
-                                    limpa_formulário_cep();
-                                    alert(\"CEP não encontrado.\");
-                            }
-                    }
-
-                    function pesquisacep(valor) {
-
-                        //Nova variável \"cep\" somente com dígitos.
-                        var cep = valor.replace(/\D/g, '');
-
-                        //Verifica se campo cep possui valor informado.
-                        if (cep != '') {
-
-                            //Expressão regular para validar o CEP.
-                            var validacep = /^[0-9]{8}$/;
-
-                            //Valida o formato do CEP.
-                            if(validacep.test(cep)) {
-                                //Preenche os campos com \"...\" enquanto consulta webservice.
-                                document.getElementById('Logradouro').value=\"...\";
-                                document.getElementById('Bairro').value=\"...\";
-
-                                //Cria um elemento javascript.
-                                var script = document.createElement('script');
-
-                                //Sincroniza com o callback.
-                                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
-
-                                //Insere script no documento e carrega o conteúdo.
-                                document.body.appendChild(script);
-
-                            }
-                            else {
-                                //cep é inválido.
-                                limpa_formulário_cep();
-                                alert('Formato de CEP inválido.');
-                            }
-                        }
-                        else {
-                            //cep sem valor, limpa formulário.
-                            limpa_formulário_cep();
-                        }
-                    };
-                </script>";
-
-                                $pagina['js'] = "
-                <script type=\"text/javascript\">
-                    $(document).ready(function(){
-                            $('#CPF').inputmask('999.999.999-99');
-                            $('#DataNascimento').inputmask('99/99/9999');
-                            $('#CEP').inputmask('99999-999');
-                            $('#Telefone').inputmask('(99)99999-9999');
-                            $('#TelefoneOpcional').inputmask('(99)99999-9999');
-
-                            ";
-                                if (set_value('Nacionalidade') != 'Brasil' && strlen(set_value('Nacionalidade'))) {
-                                    $pagina['js'] .= "
-                                $('#div_cidadeestrangeira').show();";
-                                }
-                                $pagina['js'] .= "
-                            $('#IdentidadeGenero').change(function(){
-                                    if($(this).val()==4){
-                                        $('#IdentidadeGeneroOptativa').prop('disabled', false);
-                                    }
-                                    else{
-                                        $('#IdentidadeGeneroOptativa').prop('disabled', true);
-                                        $('#IdentidadeGeneroOptativa').val('');
-                                    }
-                            });
-                            if($('#IdentidadeGenero').val()==4){
-                                $('#IdentidadeGeneroOptativa').prop('disabled', false);
-                            }
-                            else{
-                                $('#IdentidadeGeneroOptativa').prop('disabled', true);
-                                $('#IdentidadeGeneroOptativa').val('');
-                            }
-                            $('#Estado').change(function(){
-                                    var estado = $('#Estado').val();
-                                    if(estado != ''){
-                                            $.ajax({
-                                                    url:\"" . base_url() . "Candidatos/fetch_Municipios\",
-                                                    method:\"POST\",
-                                                    data:{estado:estado},
-                                                    success:function(data){
-                                                            $('#Municipio').html(data);
-                                                    }
-                                            })
-                                    }
-                            });
-                            $('#Estado').trigger('change');
-                            $('#CEP').trigger('onblur');
-                    });
-                </script>";
-                ?>
-                    <div class="text-center" style="margin-top: 10px">
-                            <br/>SUGESP - SEPLAG
-                    </div>
+                <div class="text-center" style="margin-top: 10px">
+                        <br/>SUGESP - SEPLAG
                 </div>
             </div>
         </div>
+    </div>
 </section>
+
+
+<script>
+$(document).ready(function() {
+    $('#Estado').change(function(){
+            var estado = $('#Estado').val();
+            if(estado != ''){
+                    $.ajax({
+                            url: `/candidatos/recupera_municipios/${estado}`,
+                            method:"GET",
+                            success:function(data){
+                                    $('#Municipio').html(data);
+                            }
+                    })
+            }
+    });
+});
+</script>

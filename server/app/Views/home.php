@@ -72,7 +72,7 @@
                             ];
                             echo form_submit("logar_sistema", "Login", $attributes);
                             ?>
-                            <button type="button" name="cadastrar" class="btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase" style="width:60%" onclick="">Cadastre-se</button>
+                            <button type="button" name="cadastrar" class="btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase" style="width:60%"><a href="/cadastro">Cadastre-se</a></button>
                         </div>
                         <hr>
                         <div class="row m-t-25 text-center">

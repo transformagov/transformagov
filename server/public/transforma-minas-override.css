@@ -420,3 +420,7 @@ footer.sticky-footer {
 	overflow-x: auto;
 }
 
+a[href="/cadastro"] {
+	color: white;
+}
+
