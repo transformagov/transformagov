@@ -11,4 +11,11 @@ class Usuario extends BaseController
         echo view('usuario/interna');
         echo view('generics/rodape_usuario');
     }
+
+
+    public function logout() {
+        $session = session();
+        unset($session);
+        return redirect()->to('/');
+    }
 }

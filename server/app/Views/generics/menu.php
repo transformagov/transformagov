@@ -9,6 +9,8 @@ function isActive(bool $check)
     }
 }
 
+$session = session();
+$session->set(['perfil' => 'candidato']);
 ?>
 
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -31,7 +33,7 @@ function isActive(bool $check)
         </a>
     </li>
 
-    <?php if ($this->session->perfil == 'candidato') : ?>
+    <?php if ($session->perfil == 'candidato') : ?>
         <li class="nav-item <?= isActive($menu1 == 'Candidaturas' && $menu2 != 'AgendamentoEntrevista') ?>">
             <a class="nav-link" href="<?= base_url('Candidaturas/index') ?>">
                 <i class="fas fa-edit"></i>
@@ -40,8 +42,8 @@ function isActive(bool $check)
         </li>
     <?php endif ?>
 
-    <?php if ($this->session->perfil == 'avaliador' || $this->session->perfil == 'avaliador_curriculo' || $this->session->perfil == 'sugesp' || $this->session->perfil == 'orgaos' || $this->session->perfil == 'administrador') : ?>
-        <li class="nav-item <?= isActive(($this->session->perfil == 'avaliador' && $menu1 == 'Candidaturas' && $menu2 != 'AgendamentoEntrevista') || ($this->session->perfil != 'avaliador' && $menu1 == 'Candidaturas'  && $menu2 != 'AgendamentoEntrevista')) ?>">
+    <?php if ($session->perfil == 'avaliador' || $session->perfil == 'avaliador_curriculo' || $session->perfil == 'sugesp' || $session->perfil == 'orgaos' || $session->perfil == 'administrador') : ?>
+        <li class="nav-item <?= isActive(($session->perfil == 'avaliador' && $menu1 == 'Candidaturas' && $menu2 != 'AgendamentoEntrevista') || ($session->perfil != 'avaliador' && $menu1 == 'Candidaturas'  && $menu2 != 'AgendamentoEntrevista')) ?>">
             <a class="nav-link" href="<?= base_url('Candidaturas/ListaAvaliacao') ?>">
                 <i class="fas fa-edit"></i>
                 <span>Candidaturas</span>
@@ -49,7 +51,7 @@ function isActive(bool $check)
         </li>
     <?php endif ?>
 
-    <?php if ($this->session->perfil == 'candidato' || $this->session->perfil == 'avaliador' || $this->session->perfil == 'sugesp') : ?>
+    <?php if ($session->perfil == 'candidato' || $session->perfil == 'avaliador' || $session->perfil == 'sugesp') : ?>
         <li class="nav-item <?= isActive($menu1 == 'Candidaturas' && $menu2 == 'AgendamentoEntrevista') ?>">
             <a class="nav-link" href="<?= base_url('Candidaturas/AgendamentoEntrevista') ?>">
                 <i class="fas fa-calendar"></i>
@@ -58,7 +60,7 @@ function isActive(bool $check)
         </li>
     <?php endif ?>
 
-    <?php if ($this->session->perfil == 'sugesp' || $this->session->perfil == 'orgaos' || $this->session->perfil == 'administrador') : ?>
+    <?php if ($session->perfil == 'sugesp' || $session->perfil == 'orgaos' || $session->perfil == 'administrador') : ?>
         <li class="nav-item <?= isActive($menu1 == 'Candidatos') ?>">
             <a class="nav-link" href="<?= base_url('Candidatos/ListaCandidatos') ?>">
                 <i class="fas fa-users"></i>
@@ -86,7 +88,7 @@ function isActive(bool $check)
                 <span>Relatórios</span>
             </a>
         </li>
-    <?php elseif ($this->session->perfil == 'avaliador') : ?>
+    <?php elseif ($session->perfil == 'avaliador') : ?>
         <li class="nav-item <?= isActive($menu1 == 'Vagas') ?>">
             <a class="nav-link" href="<?= base_url('Vagas/index') ?>">
                 <i class="fas fa-thumbtack"></i>
@@ -95,7 +97,7 @@ function isActive(bool $check)
         </li>
     <?php endif ?>
 
-    <?php if ($this->session->perfil == 'administrador') : ?>
+    <?php if ($session->perfil == 'administrador') : ?>
         <li class="nav-item <?= isActive($menu1 == 'Interna' && $menu2 == 'auditoria') ?>">
             <a class="nav-link" href="<?= base_url('Interna/auditoria') ?>">
                 <i class="fas fa-cog"></i>
