@@ -43,10 +43,7 @@ class Candidato extends BaseController
 
     public function cadastrar()
     {
-        $db = \Config\Database::connect();
-        $db->reconnect();
-        $builder = $db->table("candidato");
-        $data = array(
+        $candidato_data = array(
             "nome" => $this->request->getPost("nome"),
             "cpf" => $this->request->getPost("cpf"),
             "rg" => $this->request->getPost("rg"),
@@ -68,8 +65,18 @@ class Candidato extends BaseController
             "aceito_termo" => $this->request->getPost("aceito_termo"),
             "data_cadastro" => date("Y-m-d H:i:s"),
         );
-        print_r($data);
-        $builder->insert($data);
-        echo "oi";
+        $db = \Config\Database::connect();
+        $db->table("candidato")->insert($candidato_data);
+        $candidato_id = $db->insertID();
+        $usuario_data = array(
+            "nome" => $this->request->getPost("nome"),
+            "cpf" => $this->request->getPost("cpf"),
+            "email" => $this->request->getPost("email"),
+            "telefone" => $this->request->getPost("telefone"),
+            "senha_temporaria" => '123456',
+            "candidato_id" => $candidato_id,
+            "data_cadastro"=> date("Y-m-d H:i:s"),
+        );
+        $db->table("usuario")->insert($usuario_data);
     }
 }
