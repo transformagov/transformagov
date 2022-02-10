@@ -19,14 +19,22 @@ class Publico extends BaseController
 
     public function realiza_login()
     {
-        helper('sessao_usuario');
-        $db = \Config\Database::connect();
-        $builder = $db->table("candidato");
+        helper('sessao');
         $session = session();
-        if(usuario_logado($session)) {
+        if(usuarioLogado($session)) {
             echo view('candidato/interna');
         } else {
-
+            $cpf = $this->request->getPost("cpf");
+            $senha = $this->request->getPost("senha");
+            $db = \Config\Database::connect();
+            $query = $db->table("usuario")->getWhere(['cpf' => $cpf, 'senha_temporaria' => $senha]);
+            $queryResult = $query->getResult();
+            if (count($queryResult)) {
+                $session->set(['usuario' => $cpf, 'loggedIn' => true]);
+                return redirect()->to('/usuario');
+            } else {
+                echo "USUARIO NÃO EXISTE";
+            }
         }
     }
 }

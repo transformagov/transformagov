@@ -4,7 +4,7 @@
             <div class="col-sm-12 d-flex justify-content-center">
                 <?php
                 $attributes = ["class" => "md-float-material form-material"];
-                echo form_open("Publico/index", $attributes);
+                echo form_open("Publico/realiza_login", $attributes);
                 ?>
                 <div class="text-center">
                     <?php echo img(['src' => 'images/logo.png', 'alt' => 'TransformaGov']) ?>
