@@ -8,7 +8,7 @@
                 ?>
 
                 <div class="text-center">
-                    <?php echo img(['src' => '/images/logo.png', 'alt' => 'TransformaGov']) ?>
+                    <?php echo img(['src' => 'images/logo.png', 'alt' => 'TransformaGov']) ?>
                 </div>
                 <div class="card" style="width:100% !important">
                     <div class="card-block p-3">
@@ -18,11 +18,13 @@
                             </div>
                         </div>
 
+                        <?php if (strlen($erro) > 0): ?>
                             <div class="alert alert-danger background-danger">
                                 <div class="alert-text">
                                     <strong>ERRO</strong>: <?= esc($erro) ?>
                                 </div>
                             </div>
+                        <?php endif ?>
 
                         <?php if (strlen($sucesso) > 0): ?>
                             <div class="alert background-success">
@@ -34,11 +36,6 @@
 
                         <div class="form-group form-primary">
                             <?php if (strlen($sucesso) == 0): ?>
-                                <?php
-                                $attributes = array('class' => 'kt-form');
-                                echo form_open($url, $attributes);
-                                ?>
-
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -48,15 +45,15 @@
                                             echo form_label('Nome completo <abbr title="Obrigatório" class="text-danger">*</abbr>', 'nome', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'NomeCompleto',
-                                                'id' => 'NomeCompleto',
+                                                'name' => 'nome',
+                                                'id' => 'nome',
                                                 'maxlength' => '250',
                                                 'class' => 'form-control text-box single-line'
                                             );
                                             if (strstr($erro, "'Nome completo'")) {
                                                 $attributes['class'] = 'form-control text-box single-line is-invalid';
                                             }
-                                            echo form_input($attributes, set_value('NomeCompleto'));
+                                            echo form_input($attributes, set_value('nome'));
                                             ?>
 
                                         </div>
@@ -68,12 +65,12 @@
                                             echo form_label('Nome social', 'nomesocial', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'NomeSocial',
+                                                'name' => 'nome_social',
                                                 'id' => 'NomeCompleto',
                                                 'maxlength' => '250',
                                                 'class' => 'form-control text-box single-line'
                                             );
-                                            echo form_input($attributes, set_value('NomeSocial'));
+                                            echo form_input($attributes, set_value('nome_social'));
                                             ?>
 
                                         </div>
@@ -85,7 +82,7 @@
                                             echo form_label('CPF <abbr title="Obrigatório" class="text-danger">*</abbr>', 'CPF', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'CPF',
+                                                'name' => 'cpf',
                                                 'id' => 'CPF',
                                                 'maxlength' => '14',
                                                 'type' => 'tel',
@@ -94,7 +91,7 @@
                                             if (strstr($erro, "'CPF'")) {
                                                 $attributes['class'] = 'form-control text-box single-line is-invalid';
                                             }
-                                            echo form_input($attributes, set_value('CPF'));
+                                            echo form_input($attributes, set_value('cpf'));
                                             ?>
 
                                         </div>
@@ -108,7 +105,7 @@
                                             echo form_label('RG <abbr title="Obrigatório" class="text-danger">*</abbr>', 'RG', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'RG',
+                                                'name' => 'rg',
                                                 'id' => 'RG',
                                                 'maxlength' => '15',
                                                 'class' => 'form-control text-box single-line'
@@ -116,7 +113,7 @@
                                             if (strstr($erro, "'RG'")) {
                                                 $attributes['class'] = 'form-control text-box single-line is-invalid';
                                             }
-                                            echo form_input($attributes, set_value('RG'));
+                                            echo form_input($attributes, set_value('rg'));
                                             ?>
 
                                         </div>
@@ -129,7 +126,7 @@
                                             echo form_label('Órgão Emissor <abbr title="Obrigatório" class="text-danger">*</abbr>', 'OrgaoEmissor', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'OrgaoEmissor',
+                                                'name' => 'orgao_emissor',
                                                 'id' => 'OrgaoEmissor',
                                                 'maxlength' => '15',
                                                 'class' => 'form-control text-box single-line'
@@ -137,7 +134,7 @@
                                             if (strstr($erro, "'Órgao Emissor'")) {
                                                 $attributes['class'] = 'form-control text-box single-line is-invalid';
                                             }
-                                            echo form_input($attributes, set_value('OrgaoEmissor'));
+                                            echo form_input($attributes, set_value('orgao_emissor'));
                                             ?>
 
                                         </div>
@@ -156,9 +153,9 @@
                                                 4 => 'Prefiro não declarar'
                                             );
                                             if (strstr($erro, "'Gênero'")) {
-                                                echo form_dropdown('IdentidadeGenero', $attributes, set_value('IdentidadeGenero'), "class=\"form-control is-invalid\" id=\"IdentidadeGenero\"");
+                                                echo form_dropdown('genero', $attributes, set_value('genero'), "class=\"form-control is-invalid\" id=\"IdentidadeGenero\"");
                                             } else {
-                                                echo form_dropdown('IdentidadeGenero', $attributes, set_value('IdentidadeGenero'), "class=\"form-control\" id=\"IdentidadeGenero\"");
+                                                echo form_dropdown('genero', $attributes, set_value('genero'), "class=\"form-control\" id=\"IdentidadeGenero\"");
                                             }
                                             ?>
 
@@ -184,9 +181,9 @@
                                                 7 => 'Prefiro não declarar',
                                             );
                                             if (strstr($erro, "'Raça'")) {
-                                                echo form_dropdown('Raca', $attributes, set_value('Raca'), "class=\"form-control is-invalid\" id=\"Raca\"");
+                                                echo form_dropdown('raca', $attributes, set_value('raca'), "class=\"form-control is-invalid\" id=\"Raca\"");
                                             } else {
-                                                echo form_dropdown('Raca', $attributes, set_value('Raca'), "class=\"form-control\" id=\"Raca\"");
+                                                echo form_dropdown('raca', $attributes, set_value('raca'), "class=\"form-control\" id=\"Raca\"");
                                             }
                                             ?>
 
@@ -199,7 +196,7 @@
                                             echo form_label('E-mail <abbr title="Obrigatório" class="text-danger">*</abbr>', 'Email', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'Email',
+                                                'name' => 'email',
                                                 'id' => 'Email',
                                                 'maxlength' => '250',
                                                 'class' => 'form-control text-box single-line'
@@ -207,7 +204,7 @@
                                             if (strstr($erro, "'E-mail'")) {
                                                 $attributes['class'] = 'form-control text-box single-line is-invalid';
                                             }
-                                            echo form_input($attributes, set_value('Email'));
+                                            echo form_input($attributes, set_value('email'));
                                             ?>
 
                                         </div>
@@ -219,7 +216,7 @@
                                             echo form_label('Telefone <abbr title="Obrigatório" class="text-danger">*</abbr>', 'Telefone', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'Telefone',
+                                                'name' => 'telefone',
                                                 'id' => 'Telefone',
                                                 'maxlength' => '15',
                                                 'class' => 'form-control text-box single-line'
@@ -227,7 +224,7 @@
                                             if (strstr($erro, "'Telefone'")) {
                                                 $attributes['class'] = 'form-control text-box single-line is-invalid';
                                             }
-                                            echo form_input($attributes, set_value('Telefone'));
+                                            echo form_input($attributes, set_value('telefone'));
                                             ?>
                                         </div>
                                     </div>
@@ -238,12 +235,12 @@
                                             echo form_label('Telefone opcional', 'TelefoneOpcional', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'TelefoneOpcional',
+                                                'name' => 'telefone_opcional',
                                                 'id' => 'TelefoneOpcional',
                                                 'maxlength' => '15',
                                                 'class' => 'form-control text-box single-line'
                                             );
-                                            echo form_input($attributes, set_value('TelefoneOpcional'));
+                                            echo form_input($attributes, set_value('telefone_opcional'));
                                             ?>
 
                                         </div>
@@ -257,15 +254,16 @@
                                             echo form_label('Data de nascimento <abbr title="Obrigatório" class="text-danger">*</abbr>', 'DataNascimento', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'DataNascimento',
+                                                'name' => 'data_nascimento',
                                                 'id' => 'DataNascimento',
                                                 'maxlength' => '15',
-                                                'class' => 'form-control text-box single-line'
+                                                'class' => 'form-control text-box single-line',
+                                                'type' => "date"
                                             );
                                             if (strstr($erro, 'Data de nascimento')) {
                                                 $attributes['class'] = 'form-control text-box single-line is-invalid';
                                             }
-                                            echo form_input($attributes, set_value('DataNascimento'));
+                                            echo form_input($attributes, set_value('data_nascimento'));
                                             ?>
 
                                         </div>
@@ -277,13 +275,13 @@
                                             echo form_label('LinkedIn', 'LinkedIn', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'LinkedIn',
+                                                'name' => 'linkedin',
                                                 'id' => 'LinkedIn',
                                                 'maxlength' => '250',
                                                 'class' => 'form-control text-box single-line',
                                                 'placeholder' => 'https://www.linkedin.com/in/'
                                             );
-                                            echo form_input($attributes, set_value('LinkedIn'));
+                                            echo form_input($attributes, set_value('linkedin'));
                                             ?>
 
                                         </div>
@@ -299,7 +297,7 @@
                                             echo form_label('CEP <abbr title="Obrigatório" class="text-danger">*</abbr>', 'CEP', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'CEP',
+                                                'name' => 'cep',
                                                 'id' => 'CEP',
                                                 'maxlength' => '9',
                                                 'class' => 'form-control text-box single-line'
@@ -307,7 +305,7 @@
                                             if (strstr($erro, "'CEP'")) {
                                                 $attributes['class'] = 'form-control text-box single-line is-invalid';
                                             }
-                                            echo form_input($attributes, set_value('CEP'), " onblur=\"pesquisacep(this.value);\"");
+                                            echo form_input($attributes, set_value('cep'), " onblur=\"pesquisacep(this.value);\"");
                                             ?>
 
                                         </div>
@@ -321,7 +319,7 @@
                                             echo form_label('Logradouro <abbr title="Obrigatório" class="text-danger">*</abbr>', 'Logradouro', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'Logradouro',
+                                                'name' => 'logradouro',
                                                 'id' => 'Logradouro',
                                                 'maxlength' => '250',
                                                 'class' => 'form-control text-box single-line'
@@ -329,7 +327,7 @@
                                             if (strstr($erro, "'Logradouro'")) {
                                                 $attributes['class'] = 'form-control text-box single-line is-invalid';
                                             }
-                                            echo form_input($attributes, set_value('Logradouro'));
+                                            echo form_input($attributes, set_value('logradouro'));
                                             ?>
 
                                         </div>
@@ -341,7 +339,7 @@
                                             echo form_label('Número <abbr title="Obrigatório" class="text-danger">*</abbr>', 'Numero', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'Numero',
+                                                'name' => 'numero',
                                                 'id' => 'Numero',
                                                 'maxlength' => '10',
                                                 'class' => 'form-control text-box single-line'
@@ -349,7 +347,7 @@
                                             if (strstr($erro, "'Número'")) {
                                                 $attributes['class'] = 'form-control text-box single-line is-invalid';
                                             }
-                                            echo form_input($attributes, set_value('Numero'));
+                                            echo form_input($attributes, set_value('numero'));
                                             ?>
 
                                         </div>
@@ -361,12 +359,12 @@
                                             echo form_label('Complemento', 'Complemento', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'Complemento',
+                                                'name' => 'complemento',
                                                 'id' => 'Complemento',
                                                 'maxlength' => '10',
                                                 'class' => 'form-control text-box single-line'
                                             );
-                                            echo form_input($attributes, set_value('Complemento'));
+                                            echo form_input($attributes, set_value('complemento'));
                                             ?>
 
                                         </div>
@@ -380,7 +378,7 @@
                                             echo form_label('Bairro', 'Bairro', $attributes);
 
                                             $attributes = array(
-                                                'name' => 'Bairro',
+                                                'name' => 'bairro',
                                                 'id' => 'Bairro',
                                                 'maxlength' => '150',
                                                 'class' => 'form-control text-box single-line'
@@ -388,7 +386,7 @@
                                             if (strstr($erro, "'Bairro'")) {
                                                 $attributes['class'] = 'form-control text-box single-line is-invalid';
                                             }
-                                            echo form_input($attributes, set_value('Bairro'));
+                                            echo form_input($attributes, set_value('bairro'));
                                             ?>
 
                                         </div>
@@ -399,10 +397,10 @@
                                             $attributes = array('class' => 'control-label font-weight-bold');
                                             echo form_label('Estado <abbr title="Obrigatório" class="text-danger">*</abbr>', 'Estado', $attributes);
                                             if (strstr($erro, "'Estado'")) {
-                                                echo form_dropdown('Estado', $Estados, set_value('Estado'), "class=\"form-control is-invalid\" id=\"Estado\"");
+                                                echo form_dropdown('estado', $Estados, set_value('estado'), "class=\"form-control is-invalid\" id=\"Estado\"");
                                             } else {
-                                                echo form_dropdown('Estado', $Estados,
-                                                    set_value('Estado'), "class=\"form-control\" id=\"Estado\"");
+                                                echo form_dropdown('estado', $Estados,
+                                                    set_value('estado'), "class=\"form-control\" id=\"Estado\"");
                                             }
                                             ?>
                                         </div>
@@ -412,10 +410,10 @@
                                             <?php
                                             $attributes = array('class' => 'control-label font-weight-bold');
                                             echo form_label('Município <abbr title="Obrigatório" class="text-danger">*</abbr>', 'Municipio', $attributes);
-                                            if (strstr($erro, "'Município'")) {
-                                                echo form_dropdown('Municipio', [], set_value('Municipio'), "class=\"form-control is-invalid\" id=\"Municipio\"");
+                                            if (strstr($erro, "'município'")) {
+                                                echo form_dropdown('municipio', [], set_value('municipio'), "class=\"form-control is-invalid\" id=\"Municipio\"");
                                             } else {
-                                                echo form_dropdown('Municipio', [], set_value('Municipio'), "class=\"form-control\" id=\"Municipio\"");
+                                                echo form_dropdown('municipio', [], set_value('municipio'), "class=\"form-control\" id=\"Municipio\"");
                                             }
                                             echo form_input(array('name' => 'TransformaMinas', 'type' => 'hidden', 'id' => 'TransformaMinas', 'value' => '1'));
                                             ?>
@@ -448,10 +446,10 @@
                                                             <div class="input-group-text">
                                                                 <?php
                                                                 $attributes = array(
-                                                                    'name' => 'Requisitos',
+                                                                    'name' => 'exigencias_comuns',
                                                                     'value' => '1'
                                                                 );
-                                                                echo form_radio($attributes, set_value('Requisitos'), (set_value('Requisitos') == '1' && strlen(set_value('Requisitos')) > 0));
+                                                                echo form_radio($attributes, set_value('exigencias_comuns'), (set_value('exigencias_comuns') == '1' && strlen(set_value('exigencias_comuns')) > 0));
                                                                 ?>
 
                                                             </div>
@@ -465,10 +463,10 @@
                                                             <div class="input-group-text">
                                                                 <?php
                                                                 $attributes = array(
-                                                                    'name' => 'Requisitos',
+                                                                    'name' => 'exigencias_comuns',
                                                                     'value' => '0'
                                                                 );
-                                                                echo form_radio($attributes, set_value('Requisitos'), (set_value('Requisitos') == '0' && strlen(set_value('Requisitos')) > 0));
+                                                                echo form_radio($attributes, set_value('exigencias_comuns'), (set_value('exigencias_comuns') == '0' && strlen(set_value('exigencias_comuns')) > 0));
                                                                 ?>
 
                                                             </div>
@@ -493,10 +491,10 @@
                                                             <div class="input-group-text">
                                                                 <?php
                                                                 $attributes = array(
-                                                                    'name' => 'Sentenciado',
+                                                                    'name' => 'sentenciado',
                                                                     'value' => '1'
                                                                 );
-                                                                echo form_radio($attributes, set_value('Sentenciado'), (set_value('Sentenciado') == '1' && strlen(set_value('Sentenciado')) > 0));
+                                                                echo form_radio($attributes, set_value('sentenciado'), (set_value('sentenciado') == '1' && strlen(set_value('sentenciado')) > 0));
                                                                 ?>
 
                                                             </div>
@@ -509,10 +507,10 @@
                                                             <div class="input-group-text">
                                                                 <?php
                                                                 $attributes = array(
-                                                                    'name' => 'Sentenciado',
+                                                                    'name' => 'sentenciado',
                                                                     'value' => '0'
                                                                 );
-                                                                echo form_radio($attributes, set_value('Sentenciado'), (set_value('Sentenciado') == '0' && strlen(set_value('Sentenciado')) > 0));
+                                                                echo form_radio($attributes, set_value('sentenciado'), (set_value('sentenciado') == '0' && strlen(set_value('sentenciado')) > 0));
                                                                 ?>
 
                                                             </div>
@@ -537,8 +535,7 @@
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text">
                                                                 <?php
-                                                                $attributes = array('name' => 'ProcessoDisciplinar', 'value' => '1');
-                                                                echo form_radio($attributes, set_value('ProcessoDisciplinar'), (set_value('ProcessoDisciplinar') == '1' && strlen(set_value('ProcessoDisciplinar')) > 0));
+                                                $attributes = array('name' => 'processo_disciplinar', 'value' => '1'); echo form_radio($attributes, set_value('processo_disciplinar'), (set_value('processo_disciplinar') == '1' && strlen(set_value('processo_disciplinar')) > 0));
                                                                 ?>
 
                                                             </div>
@@ -553,8 +550,8 @@
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text">
                                                                 <?php
-                                                                $attributes = array('name' => 'ProcessoDisciplinar', 'value' => '0');
-                                                                echo form_radio($attributes, set_value('ProcessoDisciplinar'), (set_value('ProcessoDisciplinar') == '0' && strlen(set_value('ProcessoDisciplinar')) > 0));
+                                                                $attributes = array('name' => 'processo_disciplinar', 'value' => '0');
+                                                                echo form_radio($attributes, set_value('processo_disciplinar'), (set_value('processo_disciplinar') == '0' && strlen(set_value('processo_disciplinar')) > 0));
                                                                 ?>
 
                                                             </div>
@@ -586,8 +583,8 @@
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text">
                                                                 <?php
-                                                                $attributes = array('name' => 'AjustamentoFuncionalPorDoenca', 'value' => '1');
-                                                                echo form_radio($attributes, set_value('AjustamentoFuncionalPorDoenca'), (set_value('AjustamentoFuncionalPorDoenca') == '1' && strlen(set_value('AjustamentoFuncionalPorDoenca')) > 0));
+                                                                $attributes = array('name' => 'ajustamento_funcional_por_doenca', 'value' => '1');
+                                                                echo form_radio($attributes, set_value('ajustamento_funcional_por_doenca'), (set_value('ajustamento_funcional_por_doenca') == '1' && strlen(set_value('ajustamento_funcional_por_doenca')) > 0));
                                                                 ?>
 
                                                             </div>
@@ -604,8 +601,8 @@
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text">
                                                                 <?php
-                                                                $attributes = array('name' => 'AjustamentoFuncionalPorDoenca', 'value' => '0');
-                                                                echo form_radio($attributes, set_value('AjustamentoFuncionalPorDoenca'), (set_value('AjustamentoFuncionalPorDoenca') == '0' && strlen(set_value('AjustamentoFuncionalPorDoenca')) > 0));
+                                                                $attributes = array('name' => 'ajustamento_funcional_por_doenca', 'value' => '0');
+                                                                echo form_radio($attributes, set_value('ajustamento_funcional_por_doenca'), (set_value('ajustamento_funcional_por_doenca') == '0' && strlen(set_value('ajustamento_funcional_por_doenca')) > 0));
                                                                 ?>
 
                                                             </div>
@@ -625,8 +622,8 @@
                                 <div class="row" style="margin-top: 20px; margin-bottom: 10px;">
                                     <div class="col-12">
                                         <?php
-                                        $attributes = array('name' => 'AceiteTermo', 'value' => '1');
-                                        echo form_checkbox($attributes, set_value('AceiteTermo'), (set_value('AceiteTermo') == '1' && strlen(set_value('AceiteTermo')) > 0));
+                                        $attributes = array('name' => 'aceito_termo', 'value' => '1');
+                                        echo form_checkbox($attributes, set_value('aceito_termo'), (set_value('aceito_termo') == '1' && strlen(set_value('aceito_termo')) > 0));
                                         ?>
 
                                         <span class="font-weight-bold">Li e estou de acordo com o <a href="<?= base_url('Publico/download_termo/responsabilidade') ?>" target="_blank"><u>termo de responsabilidade</u>.</a></span>
@@ -636,8 +633,8 @@
                                 <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
                                     <div class="col-12">
                                         <?php
-                                        $attributes = array('name' => 'AceitePrivacidade', 'value' => '1');
-                                        echo form_checkbox($attributes, set_value('AceitePrivacidade'), (set_value('AceitePrivacidade') == '1' && strlen(set_value('AceitePrivacidade')) > 0));
+                                        $attributes = array('name' => 'aceite_privacidade', 'value' => '1');
+                                        echo form_checkbox($attributes, set_value('aceite_privacidade'), (set_value('aceite_privacidade') == '1' && strlen(set_value('aceite_privacidade')) > 0));
                                         ?>
                                         <span class="font-weight-bold">Li e estou de acordo com a <a href="<?= base_url('Publico/download_termo/privacidade') ?>" target="_blank"><u>política de privacidade</u>.</a></span>
                                         <abbr title="Obrigatório" class="text-danger">*</abbr><br />
@@ -666,7 +663,7 @@
 
 
                 <div class="text-center" style="margin-top: 10px">
-                        <br/>SUGESP - SEPLAG
+                        <br/>SUGESP - Fundação Lemann - Pencillabs
                 </div>
             </div>
         </div>
@@ -680,7 +677,7 @@ $(document).ready(function() {
             var estado = $('#Estado').val();
             if(estado != ''){
                     $.ajax({
-                            url: `/candidatos/recupera_municipios/${estado}`,
+                            url: `/candidato/recupera_municipios/${estado}`,
                             method:"GET",
                             success:function(data){
                                     $('#Municipio').html(data);

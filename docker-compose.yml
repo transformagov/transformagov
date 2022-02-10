@@ -14,6 +14,7 @@ services:
       - DB_DATABASE=transforma
       - DB_PASSWORD=root
       - DB_USERNAME=root
+      - CI_DEBUG=true
       - CI_ENVIRONMENT=development
   db:
     image: mariadb:10.3
