@@ -76,7 +76,9 @@ class Candidato extends BaseController
             "senha_temporaria" => '123456',
             "candidato_id" => $candidato_id,
             "data_cadastro"=> date("Y-m-d H:i:s"),
+            "perfil" => "candidato"
         );
         $db->table("usuario")->insert($usuario_data);
+        redirect()->to("/");
     }
 }

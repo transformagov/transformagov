@@ -7,7 +7,10 @@ class Candidaturas extends BaseController
     public function index()
     {
         helper('html');
-        echo view('generics/cabecalho_usuario');
+        helper('sessao');
+        $session = session();
+        $data = array( 'sessao' => $session);
+        echo view('generics/cabecalho_usuario', $data);
         echo view('candidaturas/candidaturas');
         echo view('generics/rodape_usuario');
     }
@@ -15,7 +18,10 @@ class Candidaturas extends BaseController
     public function agendamentos()
     {
         helper('html');
-        echo view('generics/cabecalho_usuario');
+        helper('sessao');
+        $session = session();
+        $data = array( 'sessao' => $session);
+        echo view('generics/cabecalho_usuario', $data);
         echo view('candidaturas/agendamentos');
         echo view('generics/rodape_usuario');
     }

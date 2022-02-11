@@ -22,7 +22,7 @@ class Publico extends BaseController
         helper('sessao');
         $session = session();
         if(usuarioLogado($session)) {
-            echo view('candidato/interna');
+            return redirect()->to('/usuario');
         } else {
             $cpf = $this->request->getPost("cpf");
             $senha = $this->request->getPost("senha");
@@ -30,7 +30,8 @@ class Publico extends BaseController
             $query = $db->table("usuario")->getWhere(['cpf' => $cpf, 'senha_temporaria' => $senha]);
             $queryResult = $query->getResult();
             if (count($queryResult)) {
-                $session->set(['usuario' => $cpf, 'loggedIn' => true]);
+                $usuarioLogado = $queryResult[0];
+                atualizaSesssao($session, $usuarioLogado);
                 return redirect()->to('/usuario');
             } else {
                 echo "USUARIO NÃO EXISTE";

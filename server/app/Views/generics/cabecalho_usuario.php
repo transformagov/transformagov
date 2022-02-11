@@ -1,41 +1,19 @@
 <?php
 
-$primeironome = "";
-$ultimonome = "";
-if (strlen($session->nome) > 0) {
-    $nome = explode(' ', $session->nome);
-    $primeironome = $nome[0];
-    $ultimonome = $nome[count($nome) - 1];
-    if (strlen($primeironome) + strlen($ultimonome) > 30) {
-        $ultimonome = substr($ultimonome, 0, 1) . '.';
-    }
-}
 
-$perfilTypes = array(
-    'candidato' => 'Candidato',
-    'avaliador' => 'Avaliador',
-    'sugesp' => 'Gestor SEPLAG',
-    'orgaos' => 'Gestor Outros Órgãos',
-    'administrador' => 'Administrador'
-);
-$perfil = "";
-if (in_array($session->perfil, array_keys($perfilTypes))) {
-    $perfil = $perfilTypes[$session->perfil];
-}
-
-echo link_tag("sb-admin-2.min.css");
-echo link_tag("transforma-minas-override.css");
-echo link_tag("cabeçalho_publico.css");
-echo link_tag("all.min.css");
-echo link_tag("component.css");
-echo link_tag("https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i");
 echo script_tag('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js');
 echo script_tag('transforma-minas.js');
 echo script_tag("//cdn.jsdelivr.net/npm/sweetalert2@11");
+echo link_tag("sb-admin-2.min.css");
+echo link_tag("transforma-minas-override.css");
+echo link_tag("cabeçalho_publico.css");
+echo link_tag("component.css");
+echo link_tag("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
+echo link_tag("https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i");
 echo link_tag("sweetalert2.min.css");
 
 $session = session();
-$session->set(['perfil' => 'candidato']);
+$perfil = recuperaPerfilDoUsuario($session);
 ?>
 
 <!DOCTYPE html>
@@ -88,9 +66,7 @@ $session->set(['perfil' => 'candidato']);
     <div id="wrapper">
 
         <?php 
-            if ($session->perfil == 'candidato') {
-                echo view('candidato/menu');
-            }
+            echo view(menuDoPerfil($sessao));
         ?>
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
@@ -123,7 +99,7 @@ $session->set(['perfil' => 'candidato']);
                                 <span class="mr-2 d-none d-lg-inline small nav-username">
                                     <?= $primeironome . " " . $ultimonome ?>
                                 </span>
-                                <img class="img-profile rounded-circle" src="/usuario/avatar" alt="User Profile Image" />
+                                <?php echo img(['src' => 'images/nopic.jpg', 'alt' => 'Avatar', 'class' => "img-profile rounded-circle"]) ?>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <?php if ($session->perfil == "candidato"): ?>

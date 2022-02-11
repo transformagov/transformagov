@@ -653,7 +653,7 @@
                                 </div>
                                 <hr />
                                 <div class="text-center center-block">
-                                    <a href="<?= base_url('Publico/index') ?>" style="font-size: 1.3rem;color: #6c7293;display: inline-block;">Já possui cadastro na plataforma?</a>
+                                    <a href="/" style="font-size: 1.3rem;color: #6c7293;display: inline-block;">Já possui cadastro na plataforma?</a>
                                 </div>
                             </form>
                         <?php endif ?>
