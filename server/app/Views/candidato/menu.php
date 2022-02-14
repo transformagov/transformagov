@@ -15,7 +15,7 @@ $session->set(['perfil' => 'candidato']);
 
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-        <?php echo img(['src' => 'images/logo.png', 'alt' => 'TransformaGov', 'width' => '100px']) ?>
+        <?php echo img(['src' => 'images/logo.png', 'alt' => 'TransformaGov', 'class' => 'img-fluid menu-logo']) ?>
     </a>
     <a class="mobile-options">
         <i class="feather icon-more-horizontal"></i>

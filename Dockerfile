@@ -1,6 +1,6 @@
 FROM debian:stable
 RUN apt update && apt install php-fpm php-pgsql \
-	php-mbstring php-xml php-intl php-curl php7.4-mysql nginx sendmail git -y
+	php-mbstring php-xml php-intl php-curl php7.4-mysql nginx sendmail npm git -y
 COPY . /transformagov/
 WORKDIR transformagov
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -10,3 +10,5 @@ RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
 RUN php --ini
 WORKDIR server
+RUN npm i
+RUN npx webpack

@@ -6,23 +6,28 @@
 	--almost-black: #312f2f;
 	--almost-black-darker: #242222;
 	--normal-color: #353c4e;
+	--white: #fff;
+}
+
+.white {
+	color: var(--white);
 }
 
 .btn-primary {
-	color: #fff;
+	color: var(--white);
 	background-color: var(--primary);
 	border-color: var(--primary);
 }
 
 .btn-primary:hover {
-	color: #fff;
+	color: var(--white);
 	background-color: var(--primary-hover);
 	border-color: var(--primary-hover);
 }
 
 .btn-primary:focus,
 .btn-primary.focus {
-	color: #fff;
+	color: var(--white);
 	background-color: var(--primary-hover);
 	border-color: var(--primary-hover);
 	box-shadow: 0 0 0 0.2rem rgba(105, 136, 228, 0.5);
@@ -94,7 +99,7 @@ ul {
 }
 
 /*.alert-danger {
-	background-color: #fff;
+	background-color: var(--white);
 	border-color: #fe5d70;
 	color: #fe5d70;
 }*/
@@ -153,7 +158,7 @@ table.table.table-striped.table-bordered tbody tr td a:last-child {
 	border: 1px solid var(--primary);
 	padding-top: 0.75rem;
 	padding-bottom: 0.75rem;
-	color: #fff;
+	color: var(--white);
 }
 
 .btn-link {
@@ -233,7 +238,7 @@ table.table.table-striped.table-bordered tbody tr td a:last-child {
 .ui-datepicker-header {
 	border: 1px solid var(--primary);
 	background: var(--primary);
-	color: #fff;
+	color: var(--white);
 }
 
 .ui-state-active,
@@ -244,7 +249,7 @@ a.ui-button:active,
 .ui-button.ui-state-active:hover {
 	border: 1px solid var(--primary);
 	background-color: var(--primary);
-	color: #fff;
+	color: var(--white);
 }
 
 /* sweetalert2 */
@@ -277,12 +282,12 @@ form#form_candidatura button.btn-primary {
 }
 
 .avaliacao-tabs hr {
-	background-color: #ffffff;
+	background-color: var(--white)fff;
 }
 
 .avaliacao-tabs button.tablinks {
 	background-color: #5c5c5c;
-	color: #ffffff;
+	color: var(--white)fff;
 	border: none;
 	padding: 10px;
 	width: 100%;
@@ -294,17 +299,17 @@ form#form_candidatura button.btn-primary {
 
 .background-success {
 	background-color: #0ac282;
-	color: #fff;
+	color: var(--white);
 }
 
 .background-danger {
 	background-color: #fe5d70;
-	color: #fff;
+	color: var(--white);
 }
 
 .background-warning {
 	background-color: #fe9365;
-	color: #fff;
+	color: var(--white);
 }
 
 .alert {
@@ -344,7 +349,7 @@ form#form_candidatura button.btn-primary {
 }
 
 .sidebar-dark .nav-item .nav-link i {
-	color: #fff;
+	color: var(--white);
 }
 footer.bg-white {
 	background: #252323 !important;
@@ -390,7 +395,7 @@ footer.sticky-footer {
 
 .sidebar .nav-item.active .nav-link {
 	background: #c11a32;
-	color: #fff;
+	color: var(--white);
 	font-weight: 500;
 }
 
@@ -418,6 +423,14 @@ footer.sticky-footer {
 /* Vagas resultados, mantem input pesquisa fora do scroll */
 .dt-responsive.table-responsive > div.dataTables_wrapper div.row {
 	overflow-x: auto;
+}
+
+.organizations {
+	margin-top: 10px;
+}
+
+.menu-logo {
+	width: 150px;
 }
 
 a[href="/candidato"] {

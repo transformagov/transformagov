@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "inputmask": "^5.0.7"
+  },
+  "name": "server",
+  "description": "Para subir o ambiente, execute os comandos",
+  "version": "1.0.0",
+  "private": true,
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
