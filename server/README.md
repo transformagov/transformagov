@@ -10,6 +10,9 @@ Em seguida, rode as migrações do banco de dados
 	php spark migrate
 	php spark db:seed UnidadesFederativasSeeder
 
+Para habilitar o modo desenvolvimento, renomeie o arquivo `server/env` para `server/.env`. Isso irá habilitar o
+suporte para debug de erros no servidor, facilitando o desenvolvimento local.
+
 
 ## Dependências Javascript
 
