@@ -14,6 +14,7 @@ echo link_tag("sweetalert2.min.css");
 
 $session = session();
 $perfil = recuperaPerfilDoUsuario($session);
+$nomeDoUsuario = formataNomeDoUsuario($session);
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +67,7 @@ $perfil = recuperaPerfilDoUsuario($session);
     <div id="wrapper">
 
         <?php 
-            echo view(menuDoPerfil($sessao));
+            echo view(menuDoPerfil($session));
         ?>
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
@@ -97,7 +98,7 @@ $perfil = recuperaPerfilDoUsuario($session);
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline small nav-username">
-                                    <?= $primeironome . " " . $ultimonome ?>
+                                    <?= esc($nomeDoUsuario) ?>
                                 </span>
                                 <?php echo img(['src' => 'images/nopic.jpg', 'alt' => 'Avatar', 'class' => "img-profile rounded-circle"]) ?>
                             </a>

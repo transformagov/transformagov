@@ -26,11 +26,10 @@ class Publico extends BaseController
         } else {
             $cpf = $this->request->getPost("cpf");
             $senha = $this->request->getPost("senha");
-            $db = \Config\Database::connect();
-            $query = $db->table("usuario")->getWhere(['cpf' => $cpf, 'senha_temporaria' => $senha]);
-            $queryResult = $query->getResult();
-            if (count($queryResult)) {
-                $usuarioLogado = $queryResult[0];
+            $usuario = new \App\Models\Usuario();
+            $resultado = $usuario->where(['cpf' => $cpf, 'senha_temporaria' => $senha])->findAll();
+            if (count($resultado)) {
+                $usuarioLogado = $resultado[0];
                 atualizaSesssao($session, $usuarioLogado);
                 return redirect()->to('/usuario');
             } else {

@@ -10,12 +10,13 @@ class Candidato extends BaseController
         helper('html');
         $unidadeFederativa =  new \App\Models\UnidadeFederativa();
         $estados = $unidadeFederativa->recuperaEstados();
+        $candidato = new \App\Models\Candidato();
         $data = [
             'erro' => '',
             'sucesso' => '',
             'url' => '/candidato/cadastrar',
             'Estados' => $estados,
-            'candidato' => new \App\Models\Candidato()
+            'candidato' => $candidato,
         ];
         echo view('generics/cabeçalho_publico', $data);
         echo view('candidato/cadastro', $data);
@@ -31,7 +32,7 @@ class Candidato extends BaseController
 
     public function cadastrar()
     {
-        $candidato_data = array(
+        $dadosDoCandidato = array(
             "nome" => $this->request->getPost("nome"),
             "cpf" => $this->request->getPost("cpf"),
             "rg" => $this->request->getPost("rg"),
@@ -53,20 +54,8 @@ class Candidato extends BaseController
             "aceito_termo" => $this->request->getPost("aceito_termo"),
             "data_cadastro" => date("Y-m-d H:i:s"),
         );
-        $db = \Config\Database::connect();
-        $db->table("candidato")->insert($candidato_data);
-        $candidato_id = $db->insertID();
-        $usuario_data = array(
-            "nome" => $this->request->getPost("nome"),
-            "cpf" => $this->request->getPost("cpf"),
-            "email" => $this->request->getPost("email"),
-            "telefone" => $this->request->getPost("telefone"),
-            "senha_temporaria" => '123456',
-            "candidato_id" => $candidato_id,
-            "data_cadastro"=> date("Y-m-d H:i:s"),
-            "perfil" => "candidato"
-        );
-        $db->table("usuario")->insert($usuario_data);
-        redirect()->to("/");
+        $candidato = new \App\Models\Candidato();
+        $candidato->save($dadosDoCandidato);
+        return redirect()->to("/");
     }
 }

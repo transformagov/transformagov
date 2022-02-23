@@ -8,17 +8,16 @@ class Usuario extends BaseController
     {
         helper('html');
         helper('sessao');
-        $session = session();
-        $data = array( 'sessao' => $session);
-        echo view('generics/cabecalho_usuario', $data);
+        echo view('generics/cabecalho_usuario');
         echo view('usuario/interna');
         echo view('generics/rodape_usuario');
     }
 
 
     public function logout() {
+        helper('sessao');
         $session = session();
-        unset($session);
+        limpaSesssao($session);
         return redirect()->to('/');
     }
 }

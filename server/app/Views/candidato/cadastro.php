@@ -84,7 +84,7 @@
 
                                             $attributes = array(
                                                 'name' => 'cpf',
-                                                'id' => 'CPF',
+                                                'id' => 'cpf',
                                                 'maxlength' => '14',
                                                 'type' => 'tel',
                                                 'class' => 'form-control text-box single-line'
@@ -667,5 +667,8 @@ $(document).ready(function() {
                     })
             }
     });
+
+    var cpfElement = document.getElementById("cpf");
+    Inputmask('999.999.999-99').mask(cpfElement);
 });
 </script>

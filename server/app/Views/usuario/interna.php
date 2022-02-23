@@ -1,3 +1,7 @@
+<?php
+$session = session();
+?>
+
 <div class="col-12">
     <div class="tsm-inner-content">
         <div class="main-body">
@@ -17,7 +21,7 @@
                                                                 <div class="card">
                                                                     <div class="card-block">
                                                                         Bem vindo ao Sistema do TransformaGov.<br/><br/>
-                                                                        Verifique se o seu nome completo está correto: <span class="alert-danger"><?= $this->session->nome ?></span>.<br/>
+                                                                        Verifique se o seu nome completo está correto: <span class="alert-danger"><?php echo $session->nome ?></span>.<br/>
                                                                         Data e hora atual do sistema: <span class="alert-danger"><?= date(
                                                                             "d/m/Y - H:i:s"
                                                                         ) ?></span>.<br/><br/>

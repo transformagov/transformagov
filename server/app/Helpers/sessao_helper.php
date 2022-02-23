@@ -10,15 +10,21 @@ function usuarioLogado($session)
 function atualizaSesssao($session, $usuarioLogado)
 {
 	$session->set([
-		"cpf" => $usuarioLogado->cpf,
-		"nome" => $usuarioLogado->nome,
-		"perfil" => $usuarioLogado->perfil,
+		"cpf" => $usuarioLogado['cpf'],
+		"nome" => $usuarioLogado['nome'],
+		"perfil" => $usuarioLogado['perfil'],
 		"loggedIn" => true,
 	]);
 }
 
-function recuperaPerfilDoUsuario($session)
+function limpaSesssao($session)
 {
+		$session->remove('nome');
+		$session->remove('loggedIn');
+		$session->remove('cpf');
+}
+
+function formataNomeDoUsuario($session) {
 	$primeironome = "";
 	$ultimonome = "";
 	if (strlen($session->nome) > 0) {
@@ -29,14 +35,12 @@ function recuperaPerfilDoUsuario($session)
 			$ultimonome = substr($ultimonome, 0, 1) . ".";
 		}
 	}
+	return $primeironome . " " . $ultimonome;
+}
 
-	$tiposDePerfil = [
-		"candidato" => "Candidato",
-		"avaliador" => "Avaliador",
-		"sugesp" => "Gestor SEPLAG",
-		"orgaos" => "Gestor Outros Órgãos",
-		"administrador" => "Administrador",
-	];
+function recuperaPerfilDoUsuario($session)
+{
+  $tiposDePerfil = \App\Models\Usuario::PERFIS;
 	$perfil = "";
 	if (in_array($session->perfil, array_keys($tiposDePerfil))) {
 		$perfil = $tiposDePerfil[$session->perfil];
@@ -46,6 +50,10 @@ function recuperaPerfilDoUsuario($session)
 
 function menuDoPerfil($session)
 {
-	$tiposDeMenu = array('candidato' => 'candidato/menu');
-	return $tiposDeMenu[$session->perfil];
+  $tiposDeMenu = \App\Models\Usuario::MENUS;
+	try {
+		return $tiposDeMenu[$session->perfil];
+	} catch (Exception $e) {
+		return Null;
+	}
 }
