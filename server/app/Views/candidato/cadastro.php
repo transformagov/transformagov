@@ -1,4 +1,5 @@
 <section class="login-block pt-4 mb-5">
+
     <div class="container" style="width:100% !important">
         <div class="row">
             <div class="col-sm-12">
@@ -103,7 +104,6 @@
                                             <?php
                                             $attributes = array('class' => 'control-label font-weight-bold');
                                             echo form_label('RG <abbr title="Obrigatório" class="text-danger">*</abbr>', 'RG', $attributes);
-
                                             $attributes = array(
                                                 'name' => 'rg',
                                                 'id' => 'RG',
@@ -136,7 +136,6 @@
                                             }
                                             echo form_input($attributes, set_value('orgao_emissor'));
                                             ?>
-
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -145,17 +144,10 @@
                                             $attributes = array('class' => 'control-label font-weight-bold');
                                             echo form_label('Gênero <abbr title="Obrigatório" class="text-danger">*</abbr>', 'IdentidadeGenero', $attributes);
 
-                                            $attributes = array(
-                                                0 => '',
-                                                1 => 'Não informado',
-                                                2 => 'Masculino',
-                                                3 => 'Feminino',
-                                                4 => 'Prefiro não declarar'
-                                            );
                                             if (strstr($erro, "'Gênero'")) {
-                                                echo form_dropdown('genero', $attributes, set_value('genero'), "class=\"form-control is-invalid\" id=\"IdentidadeGenero\"");
+                                                echo form_dropdown('genero', $candidato->opcoesDeGenero(), set_value('genero'), "class=\"form-control is-invalid\" id=\"IdentidadeGenero\"");
                                             } else {
-                                                echo form_dropdown('genero', $attributes, set_value('genero'), "class=\"form-control\" id=\"IdentidadeGenero\"");
+                                                echo form_dropdown('genero', $candidato->opcoesDeGenero(), set_value('genero'), "class=\"form-control\" id=\"IdentidadeGenero\"");
                                             }
                                             ?>
 
@@ -170,20 +162,10 @@
                                             $attributes = array('class' => 'control-label font-weight-bold');
                                             echo form_label('Raça <abbr title="Obrigatório" class="text-danger">*</abbr>', 'Raca', $attributes);
 
-                                            $attributes = array(
-                                                0 => '',
-                                                1 => 'Não informado',
-                                                2 => 'Amarela',
-                                                3 => 'Branca',
-                                                4 => 'Indígena',
-                                                5 => 'Parda',
-                                                6 => 'Preta',
-                                                7 => 'Prefiro não declarar',
-                                            );
                                             if (strstr($erro, "'Raça'")) {
-                                                echo form_dropdown('raca', $attributes, set_value('raca'), "class=\"form-control is-invalid\" id=\"Raca\"");
+                                                echo form_dropdown('raca', $candidato->opcoesDeRaca(), set_value('raca'), "class=\"form-control is-invalid\" id=\"Raca\"");
                                             } else {
-                                                echo form_dropdown('raca', $attributes, set_value('raca'), "class=\"form-control\" id=\"Raca\"");
+                                                echo form_dropdown('raca', $candidato->opcoesDeRaca(), set_value('raca'), "class=\"form-control\" id=\"Raca\"");
                                             }
                                             ?>
 

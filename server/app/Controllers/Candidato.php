@@ -8,17 +8,14 @@ class Candidato extends BaseController
     {
         helper('form');
         helper('html');
-        $db = \Config\Database::connect();
-        $estados=[array(0 => '')];
-        $estados_query = $db->table('unidades_federativas')->get();
-        foreach ($estados_query->getResult() as $row) {
-            array_push($estados, $row->uf_nome);
-        }
+        $unidadeFederativa =  new \App\Models\UnidadeFederativa();
+        $estados = $unidadeFederativa->recuperaEstados();
         $data = [
             'erro' => '',
             'sucesso' => '',
             'url' => '/candidato/cadastrar',
             'Estados' => $estados,
+            'candidato' => new \App\Models\Candidato()
         ];
         echo view('generics/cabeçalho_publico', $data);
         echo view('candidato/cadastro', $data);
@@ -27,18 +24,9 @@ class Candidato extends BaseController
 
     public function recupera_municipios($uf_id)
     {
-        $municipios=[];
-        $db = \Config\Database::connect();
-        $query_builder = $db->table('municipios');
-        $query_builder->select('*');
-        $query_builder->join('unidades_federativas', "unidades_federativas.uf_id=municipios.municipio_uf");
-        $query_builder->where("unidades_federativas.uf_id=$uf_id");
-        $uf_municipios = $query_builder->get();
         echo '<option value=""></option>';
-        foreach ($uf_municipios->getResult() as $row) {
-            array_push($municipios, $row->municipio_nome);
-            echo '<option value="'.$row->municipio_id.'">'.$row->municipio_nome.'</option>';
-        }
+        $municipio = new \App\Models\Municipio();
+        return $municipio->recuperaMunicipios($uf_id);
     }
 
     public function cadastrar()
