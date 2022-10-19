@@ -56,7 +56,7 @@ if ($sucesso=='1') {
 						</div>
                                                 <div class=\"kt-login__account\">
                                                         <div class=\"col kt-align-center\">
-                                                                <br/>SUGESP - SEPLAG © Layout Metronic
+                                                                <br/>SUGESP - Fundação Lemann - Pencillabs© Layout Metronic
                                                         </div>
                                                </div>
 					</div>

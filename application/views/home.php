@@ -23,7 +23,7 @@ $attributes = array('class' => 'md-float-material form-material');
 echo form_open($url, $attributes);
 echo "
                                     <div class=\"text-center\">
-                                        <img src=\"".base_url('images/logo.png')."\" alt=\"".$this -> config -> item('nome')."\" />
+                                        <img src=\"".base_url('images/logo-tagline.png')."\" alt=\"".$this -> config -> item('nome')."\" />
                                     </div>
                                     <!--<div class=\"row\" style=\"margin-top: 10px\">";
 /*if($menu2 == 'index'){
@@ -35,7 +35,7 @@ echo "
 }*/
 echo "
                                     </div>-->
-                                    <div class=\"card col-lg-8 mt-3 p-3 mx-auto\">
+                                    <div class=\"card mt-3 p-3 mx-auto\">
                                         <div class=\"card-block\">
                                             <div class=\"row m-b-20\">
                                                 <div class=\"col-md-12\">
@@ -219,8 +219,8 @@ echo "
                     </div>
                     <!-- end of row -->
 
-                    <div class=\"text-center\" style=\"margin-top: 10px\">
-                            <br/>SUGESP - SEPLAG
+                    <div class=\"text-center text-white\" style=\"margin-top: 10px\">
+                            <br/>SUGESP - Fundação Lemann - Pencillabs
                     </div>
                 </div>
                 <!-- end of container-fluid -->
@@ -448,7 +448,7 @@ if($menu2 == 'index'){
 }
 echo "
                                                         <div class=\"col kt-align-center\">
-                                                                <br/>SUGESP - SEPLAG © Layout Metronic
+                                                                <br/>SUGESP - Fundação Lemann - Pencillabs© Layout Metronic
                                                         </div>
                                                 </div>
                     </div>

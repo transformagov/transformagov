@@ -92,7 +92,7 @@ if ($sucesso=='1') {
     echo "
                 </div>
                 <div class=\"copyright\">
-                         SUGESP - SEPLAG © Layout Metronic
+                         SUGESP - Fundação Lemann - Pencillabs© Layout Metronic
                 </div>";
 }
 
