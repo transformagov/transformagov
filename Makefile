@@ -1,5 +1,5 @@
 build:
-	docker-compose build --no-cache
+	docker-compose build
 
 up:
 	docker-compose up server db
