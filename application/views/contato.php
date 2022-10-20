@@ -92,7 +92,7 @@ if ($sucesso=='1') {
     echo "
                 </div>
                 <div class=\"copyright\">
-                        Desenvolvido pela SEPLAG/MG - Fundação Lemann - Pencillabs© Layout Metronic
+                        Desenvolvido pela SEPLAG/MG - Fundação Lemann - Pencillabs
                 </div>";
 }
 

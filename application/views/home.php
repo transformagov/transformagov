@@ -448,7 +448,7 @@ if($menu2 == 'index'){
 }
 echo "
                                                         <div class=\"col kt-align-center\">
-                                                                <br/>Desenvolvido pela SEPLAG/MG - Fundação Lemann - Pencillabs© Layout Metronic
+                                                                <br/>Desenvolvido pela SEPLAG/MG - Fundação Lemann - Pencillabs
                                                         </div>
                                                 </div>
                     </div>
