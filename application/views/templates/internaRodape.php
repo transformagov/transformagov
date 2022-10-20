@@ -10,7 +10,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Desenvolvido pela SUGESP - Fundação Lemann - Pencillabs</span>
+                        <span>Desenvolvido pela SEPLAG/MG - Fundação Lemann - Pencillabs</span>
                     </div>
                 </div>
             </footer>
