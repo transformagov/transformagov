@@ -1,13 +1,14 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 $pagina['menu1']=$menu1;
 $pagina['menu2']=$menu2;
 $pagina['url']=$url;
 $pagina['nome_pagina']=$nome_pagina;
 $pagina['icone']=$icone;
-if(isset($adicionais)){
-        $pagina['adicionais']=$adicionais;
+if (isset($adicionais)) {
+    $pagina['adicionais']=$adicionais;
 }
 
 $this->load->view('templates/internaCabecalho', $pagina);
@@ -26,8 +27,8 @@ echo "
                                                                     <div class=\"col-lg-8\">
                                                                         <h4><i class=\"$icone\" style=\"color:black\"></i> &nbsp; {$nome_pagina}</h4>
                                                                     </div>";
-if($menu2 == 'index'){
-        echo "
+if ($menu2 == 'index') {
+    echo "
                                                                     <div class=\"col-lg-4 text-right\">
                                                                             <a href=\"".base_url('GruposVagas/create')."\" class=\"btn btn-primary btn-square\"> <i class=\"fa fa-plus-circle\"></i> Novo grupo de vagas </a>
                                                                             <br />
@@ -35,8 +36,8 @@ if($menu2 == 'index'){
                                                                             <a href=\"".base_url('GruposVagas/historico_duplicate_quantitativo')."\" class=\"btn btn-danger btn-square\"> <i class=\"fa fa-lg mr-0 fa-sort-amount-down\"></i> Quantitativo de duplicações </a>
                                                                     </div>";
 }
-if($menu2 != 'index' && strlen($sucesso) == 0 && ($menu2 == 'create' || $menu2 == 'edit' || $menu2 == 'questoes')){
-        echo "
+if ($menu2 != 'index' && strlen($sucesso) == 0 && ($menu2 == 'create' || $menu2 == 'edit' || $menu2 == 'questoes')) {
+    echo "
                                                                     <div class=\"col-lg-4 text-right\">
                                                                             <button type=\"button\" class=\"btn btn-primary\" onclick=\"document.getElementById('form_gruposvagas').submit();\"> Salvar </button>
                                                                             <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('GruposVagas/index')."'\">Cancelar</button>
@@ -44,10 +45,10 @@ if($menu2 != 'index' && strlen($sucesso) == 0 && ($menu2 == 'create' || $menu2 =
 }
 echo "
                                                             </div>";
-if($menu2 == 'index'){
-        echo "
+if ($menu2 == 'index') {
+    echo "
                                                             <div class=\"dt-responsive table-responsive\">
-                                                                    <input type=\"checkbox\" id=\"inativo\" onclick=\"check_inativo()\" style=\"margin: 10px 10px 20px 0px; line-height:1.5em;\" ".($inativo == 1? "checked=\"checked\" ":"")." /><span style=\"position:relative; top:-2px; line-height:1.5em;\">Mostrar inativos</span>
+                                                                    <input type=\"checkbox\" id=\"inativo\" onclick=\"check_inativo()\" style=\"margin: 10px 10px 20px 0px; line-height:1.5em;\" ".($inativo == 1 ? "checked=\"checked\" " : "")." /><span style=\"position:relative; top:-2px; line-height:1.5em;\">Mostrar inativos</span>
                                                                     <table class=\"table table-striped table-bordered table-hover\" id=\"gruposvagas_table\">
                                                                             <thead>
                                                                                     <tr>
@@ -60,36 +61,35 @@ if($menu2 == 'index'){
                                                                                     </tr>
                                                                             </thead>
                                                                             <tbody>";
-        //var_dump($grupos);
-        if(isset($grupos)){
-                foreach ($grupos as $linha){
-                        echo "
+    //var_dump($grupos);
+    if (isset($grupos)) {
+        foreach ($grupos as $linha) {
+            echo "
                                                                                     <tr>
                                                                                             <td class=\"align-middle\">".$linha -> vc_grupovaga."</td>
                                                                                             <td class=\"align-middle text-center\">".$linha -> vc_sigla."</td>
                                                                                             <td class=\"align-middle text-center\">".$linha -> cont_vagas."</td>
                                                                                             <td class=\"align-middle text-center\">".$linha -> cont_questoes."</td>";
-                        if($linha -> bl_removido == '0'){
-                                echo "
+            if ($linha -> bl_removido == '0') {
+                echo "
                                                                                             <td class=\"align-middle text-center\"><span class=\"badge badge-success badge-lg\">Ativo</span></td>";
-                        }
-                        else{
-                                echo "
+            } else {
+                echo "
                                                                                             <td class=\"align-middle text-center\"><span class=\"badge badge-danger badge-lg\">Desativado</span></td>";
-                        }
-                        echo "
+            }
+            echo "
                                                                                             <td class=\"align-middle text-center\" style=\"white-space:nowrap\">";
-                        if($linha -> bl_removido == '0'){
-                                /*
-                                echo anchor('Questoes/index/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Definir questões</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Definir questões\"");
-                                echo anchor('GruposVagas/edit/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-edit">Editar</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Editar grupo\"");
-                                echo "<a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-danger\" title=\"Desativar grupo de vagas\" onclick=\"confirm_delete(".$linha -> pr_grupovaga.");\"><i class=\"fa fa-lg mr-0 fa-times-circle\">Desativar</i></a>";
-                                echo anchor('GruposVagas/duplicate/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Duplicar questões</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Duplicar questões\"");
-                                if($linha -> etapa7 == '0'){
-                                        echo anchor('GruposVagas/create_motivacao/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Criar questões do formulário de motivação</i>', " class=\"btn btn-sm btn-square btn-danger\" title=\"Criar questões do formulário de motivação\"");
-                                }
-                                */
-                                echo '
+            if ($linha -> bl_removido == '0') {
+                /*
+                echo anchor('Questoes/index/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Definir questões</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Definir questões\"");
+                echo anchor('GruposVagas/edit/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-edit">Editar</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Editar grupo\"");
+                echo "<a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-danger\" title=\"Desativar grupo de vagas\" onclick=\"confirm_delete(".$linha -> pr_grupovaga.");\"><i class=\"fa fa-lg mr-0 fa-times-circle\">Desativar</i></a>";
+                echo anchor('GruposVagas/duplicate/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Duplicar questões</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Duplicar questões\"");
+                if($linha -> etapa7 == '0'){
+                        echo anchor('GruposVagas/create_motivacao/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Criar questões do formulário de motivação</i>', " class=\"btn btn-sm btn-square btn-danger\" title=\"Criar questões do formulário de motivação\"");
+                }
+                */
+                echo '
                                 <div class="input-group-prepend">
                                         <button
                                                 class="btn btn-square btn-outline-secondary dropdown-toggle"
@@ -102,36 +102,35 @@ if($menu2 == 'index'){
                                         </button>
                                         <div class="dropdown-menu">
                                 ';
-                                                // Definir questões
-                                                echo anchor('Questoes/index/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Definir questões</i>', " class=\"btn btn-sm dropdown-item\" title=\"Definir questões\"");
-                                                // Editar
-                                                echo anchor('GruposVagas/edit/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-edit">Editar</i>', " class=\"btn btn-sm dropdown-item\" title=\"Editar grupo\"");
-                                                // Desativar
-                                                echo "<a href=\"javascript:/\" class=\"btn btn-sm dropdown-item\" title=\"Desativar grupo de vagas\" onclick=\"confirm_delete(".$linha -> pr_grupovaga.");\"><i class=\"fa fa-lg mr-0 fa-times-circle\">Desativar</i></a>";
-                                                // Duplicar questões
-                                                echo anchor('GruposVagas/duplicate/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Duplicar questões</i>', " class=\"btn btn-sm dropdown-item\" title=\"Duplicar questões\"");
-                                                if($linha -> etapa7 == '0'){
-                                                        // Criar questões do formulário de motivação
-                                                        echo anchor('GruposVagas/create_motivacao/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Criar questões do formulário de motivação</i>', " class=\"btn btn-sm dropdown-item\" title=\"Criar questões do formulário de motivação\"");
-                                                }
-                                echo    '</div>
+                // Definir questões
+                echo anchor('Questoes/index/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Definir questões</i>', " class=\"btn btn-sm dropdown-item\" title=\"Definir questões\"");
+                // Editar
+                echo anchor('GruposVagas/edit/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-edit">Editar</i>', " class=\"btn btn-sm dropdown-item\" title=\"Editar grupo\"");
+                // Desativar
+                echo "<a href=\"javascript:/\" class=\"btn btn-sm dropdown-item\" title=\"Desativar grupo de vagas\" onclick=\"confirm_delete(".$linha -> pr_grupovaga.");\"><i class=\"fa fa-lg mr-0 fa-times-circle\">Desativar</i></a>";
+                // Duplicar questões
+                echo anchor('GruposVagas/duplicate/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Duplicar questões</i>', " class=\"btn btn-sm dropdown-item\" title=\"Duplicar questões\"");
+                if ($linha -> etapa7 == '0') {
+                    // Criar questões do formulário de motivação
+                    echo anchor('GruposVagas/create_motivacao/'.$linha -> pr_grupovaga, '<i class="fa fa-lg mr-0 fa-check-square">Criar questões do formulário de motivação</i>', " class=\"btn btn-sm dropdown-item\" title=\"Criar questões do formulário de motivação\"");
+                }
+                echo    '</div>
                                 </div>';
-                        }
-                        else{
-                                echo "<a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-success\" title=\"Reativar grupo de vagas\" onclick=\"confirm_reactivate(".$linha -> pr_grupovaga.");\"><i class=\"fa fa-lg mr-0 fa-plus-circle\">Reativar</i></a>";
-                        }
-                        echo "
+            } else {
+                echo "<a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-success\" title=\"Reativar grupo de vagas\" onclick=\"confirm_reactivate(".$linha -> pr_grupovaga.");\"><i class=\"fa fa-lg mr-0 fa-plus-circle\">Reativar</i></a>";
+            }
+            echo "
                                                                                             </td>
                                                                                     </tr>";
-                }
         }
-        echo "
+    }
+    echo "
                                                                             </tbody>
                                                                     </table>
                                                             </div>
                                                     </div>";
 
-        $pagina['js'] = "
+    $pagina['js'] = "
                                             <script type=\"text/javascript\">
                                                     function check_inativo(){
                                                             if(document.getElementById('inativo').checked == true){
@@ -217,86 +216,82 @@ if($menu2 == 'index'){
                                                             }
                                                     });
                                             </script>";
-}
-else if($menu2 == 'create' || $menu2 == 'edit'){
-        if(strlen($erro)>0){
-                echo "
+} elseif ($menu2 == 'create' || $menu2 == 'edit') {
+    if (strlen($erro)>0) {
+        echo "
                                                             <div class=\"alert alert-danger background-danger\" role=\"alert\">
                                                                     <div class=\"alert-text\">
                                                                             <strong>ERRO</strong>:<br /> $erro
                                                                     </div>
                                                             </div>";
-        //$erro='';
-        }
-        else if(strlen($sucesso) > 0){
-                echo "
+    //$erro='';
+    } elseif (strlen($sucesso) > 0) {
+        echo "
                                                             <div class=\"alert alert-success background-success\" role=\"alert\">
                                                                     <div class=\"alert-text\">
                                                                             $sucesso
                                                                     </div>
                                                             </div>";
+    }
+    if (strlen($sucesso) == 0) {
+        $attributes = array('id' => 'form_gruposvagas');
+        if ($menu2 == 'edit' && isset($codigo) && $codigo > 0) {
+            echo form_open($url, $attributes, array('codigo' => $codigo));
+        } else {
+            echo form_open($url, $attributes);
         }
-        if(strlen($sucesso) == 0){
-                $attributes = array('id' => 'form_gruposvagas');
-                if($menu2 == 'edit' && isset($codigo) && $codigo > 0){
-                        echo form_open($url, $attributes, array('codigo' => $codigo));
-                }
-                else{
-                        echo form_open($url, $attributes);
-                }
-                echo "
+        echo "
                                                                     <div class=\"form-group row\">";
-                $attributes = array('class' => 'col-lg-3 col-form-label text-right');
-                echo form_label('Nome <abbr title="Obrigatório">*</abbr>', 'nome', $attributes);
-                echo "
+        $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+        echo form_label('Nome <abbr title="Obrigatório">*</abbr>', 'nome', $attributes);
+        echo "
                                                                             <div class=\"col-lg-6\">";
-                if(!isset($vc_grupovaga) || (strlen($vc_grupovaga) == 0 && strlen(set_value('nome')) > 0)){
-                        $vc_grupovaga = set_value('nome');
-                }
-                $attributes = array('name' => 'nome',
+        if (!isset($vc_grupovaga) || (strlen($vc_grupovaga) == 0 && strlen(set_value('nome')) > 0)) {
+            $vc_grupovaga = set_value('nome');
+        }
+        $attributes = array('name' => 'nome',
                                     'maxlength'=>'250',
                                     'class' => 'form-control');
-                if(strstr($erro, "'Nome'")){
-                        $attributes['class'] = 'form-control is-invalid';
-                }
-                echo form_input($attributes, $vc_grupovaga);
-                echo "
+        if (strstr($erro, "'Nome'")) {
+            $attributes['class'] = 'form-control is-invalid';
+        }
+        echo form_input($attributes, $vc_grupovaga);
+        echo "
                                                                             </div>
                                                                     </div>
                                                                     <div class=\"form-group row\">";
-                $attributes = array('class' => 'col-lg-3 col-form-label text-right');
-                echo form_label('Instituição <abbr title="Obrigatório">*</abbr>', 'instituicao', $attributes);
-                echo "
+        $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+        echo form_label('Instituição <abbr title="Obrigatório">*</abbr>', 'instituicao', $attributes);
+        echo "
                                                                             <div class=\"col-lg-6\">";
-                if(!isset($es_instituicao) || (strlen($es_instituicao) == 0 && strlen(set_value('instituicao')) > 0)){
-                        $es_instituicao = set_value('instituicao');
-                }
-                $vazio = array(""=>"");
-                $valores = $vazio + $instituicoes;
-                /*foreach($instituicoes as $opcao){
-                        $valores[] = $opcao;
-                }*/
-                if(strstr($erro, "'instituicao'")){
-                        echo form_dropdown('instituicao', $valores, $es_instituicao, "class=\"form-control is-invalid\" id=\"instituicao\"");
-                }
-                else{
-                        echo form_dropdown('instituicao', $valores, $es_instituicao, "class=\"form-control\" id=\"instituicao\"");
-                }
-                echo "
+        if (!isset($es_instituicao) || (strlen($es_instituicao) == 0 && strlen(set_value('instituicao')) > 0)) {
+            $es_instituicao = set_value('instituicao');
+        }
+        $vazio = array(""=>"");
+        $valores = $vazio + $instituicoes;
+        /*foreach($instituicoes as $opcao){
+                $valores[] = $opcao;
+        }*/
+        if (strstr($erro, "'instituicao'")) {
+            echo form_dropdown('instituicao', $valores, $es_instituicao, "class=\"form-control is-invalid\" id=\"instituicao\"");
+        } else {
+            echo form_dropdown('instituicao', $valores, $es_instituicao, "class=\"form-control\" id=\"instituicao\"");
+        }
+        echo "
                                                                             </div>
                                                                     </div>
                                                                     <div class=\"j-footer\">
                                                                             <div class=\"row\">
                                                                                     <div class=\"col-lg-12 text-center\">";
-                $attributes = array('class' => 'btn btn-primary');
-                echo form_submit('salvar_grupo', 'Salvar', $attributes);
-                echo "
+        $attributes = array('class' => 'btn btn-primary');
+        echo form_submit('salvar_grupo', 'Salvar', $attributes);
+        echo "
                                                                                             <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('GruposVagas/index')."'\">Cancelar</button>
                                                                                     </div>
                                                                             </div>
                                                                     </div>
                                                             </form>";
-                $pagina['js']="
+        $pagina['js']="
         <script type=\"text/javascript\">
             $('#inicio').datetimepicker({
                 language: 'pt-BR',
@@ -309,61 +304,58 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
                 format: 'dd/mm/yyyy hh:ii'
             });
         </script>";
-        }
-}
-else if($menu2 == 'duplicate'){
-        if(strlen($erro)>0){
-                echo "
+    }
+} elseif ($menu2 == 'duplicate') {
+    if (strlen($erro)>0) {
+        echo "
                                                             <div class=\"alert alert-danger background-danger\" role=\"alert\">
                                                                     <div class=\"alert-text\">
                                                                             <strong>ERRO</strong>:<br /> $erro
                                                                     </div>
                                                             </div>";
-        //$erro='';
-        }
-        else if(strlen($sucesso) > 0){
-                echo "
+    //$erro='';
+    } elseif (strlen($sucesso) > 0) {
+        echo "
                                                             <div class=\"alert alert-success background-success\" role=\"alert\">
                                                                     <div class=\"alert-text\">
                                                                             $sucesso
                                                                     </div>
                                                             </div>";
-        }
-        if(strlen($sucesso) == 0){
-                $attributes = array('id' => 'form_gruposvagas');
-                
-                echo form_open($url, $attributes, array('codigo' => $codigo));
-                
-                echo "
+    }
+    if (strlen($sucesso) == 0) {
+        $attributes = array('id' => 'form_gruposvagas');
+
+        echo form_open($url, $attributes, array('codigo' => $codigo));
+
+        echo "
                                                                 <div class=\"form-group row\">";
-                $attributes = array('class' => 'col-lg-1 col-form-label text-left');
-                echo form_label('Grupo de vaga de destino <abbr title="Obrigatório">*</abbr>', 'grupo', $attributes);
-                echo "
+        $attributes = array('class' => 'col-lg-1 col-form-label text-left');
+        echo form_label('Grupo de vaga de destino <abbr title="Obrigatório">*</abbr>', 'grupo', $attributes);
+        echo "
                                                                         <div class=\"col-lg-8\">";
-                $grupo = '';
-                if(strlen(set_value('grupo')) > 0){
-                        $grupo = set_value('grupo');
-                }
-                $array_grupos = array(''=>'');
-                foreach($grupos as $grupo){
-                        if($codigo != $grupo -> pr_grupovaga){
-                                $array_grupos[$grupo -> pr_grupovaga] = $grupo -> vc_grupovaga;
-                        }                     
-                }
-                if(strstr($erro, "'Grupo'")){
-                        echo form_dropdown('grupo', $array_grupos, $grupo, "class=\"form-control is-invalid\" id=\"grupo\"");
-                }
-                else{
-                        echo form_dropdown('grupo', $array_grupos, $grupo, "class=\"form-control\" id=\"grupo\"");
-                }
-                echo "
+        $grupo = '';
+        if (strlen(set_value('grupo')) > 0) {
+            $grupo = set_value('grupo');
+        }
+        $array_grupos = array(''=>'');
+        foreach ($grupos as $grupo) {
+            if ($codigo != $grupo -> pr_grupovaga) {
+                $array_grupos[$grupo -> pr_grupovaga] = $grupo -> vc_grupovaga;
+            }
+        }
+        if (strstr($erro, "'Grupo'")) {
+            echo form_dropdown('grupo', $array_grupos, $grupo, "class=\"form-control is-invalid\" id=\"grupo\"");
+        } else {
+            echo form_dropdown('grupo', $array_grupos, $grupo, "class=\"form-control\" id=\"grupo\"");
+        }
+        echo "
                                                                         </div>
                                                                         <div class=\"col-lg-3 text-right\">
                 ";
-                $attributes = array('class' => 'btn btn-primary','id'=>'salvar_grupo');
-                echo form_submit('salvar_grupo', 'Duplicar selecionadas', $attributes);
+        $attributes = array('class' => 'btn btn-primary','id'=>'salvar_grupo');
+        echo form_submit('salvar_grupo', 'Duplicar selecionadas', $attributes);
 
-                echo "
+        echo "
                                                                         </div>
                                                                 </div>
                                                                                                            
@@ -388,20 +380,20 @@ else if($menu2 == 'duplicate'){
                                                                                 </thead>
                                                                                 <tbody>
                                                                             ";
-                foreach($questoes as $questao){
-                        // &nbsp; <a href=\"".base_url('GruposVagas/historico_duplicate/'.$codigo)."\">Histórico de duplicações</a>
-                        // if($questao -> cont_respostas > 0 || $cont_vagas == 0){
-                                echo "    
+        foreach ($questoes as $questao) {
+            // &nbsp; <a href=\"".base_url('GruposVagas/historico_duplicate/'.$codigo)."\">Histórico de duplicações</a>
+            // if($questao -> cont_respostas > 0 || $cont_vagas == 0){
+            echo "    
                                                                                         <tr>
                                                                                                 <td>";
-                                $attributes = array('id'=>'questao'.$questao -> pr_questao,'name' => 'questao'.$questao -> pr_questao, 'value' => '1');
-                                
-                                        //$attributes['disabled'] = 'disabled';
-                                
-                                echo form_checkbox($attributes, set_value('questao'.$questao -> pr_questao), (set_value('questao'.$questao -> pr_questao)=='1' && strlen(set_value('questao'.$questao -> pr_questao))>0));
-                                echo "</td>
+            $attributes = array('id'=>'questao'.$questao -> pr_questao,'name' => 'questao'.$questao -> pr_questao, 'value' => '1');
+
+            //$attributes['disabled'] = 'disabled';
+
+            echo form_checkbox($attributes, set_value('questao'.$questao -> pr_questao), (set_value('questao'.$questao -> pr_questao)=='1' && strlen(set_value('questao'.$questao -> pr_questao))>0));
+            echo "</td>
                                                                                                 <td>
-                                                                                                        ".($questao -> bl_duplicado == '1'?"Sim":"Não")."
+                                                                                                        ".($questao -> bl_duplicado == '1' ? "Sim" : "Não")."
                                                                                                 </td>
                                                                                                 <td>
                                                                                                         ".$questao -> es_etapa."ª Etapa
@@ -410,45 +402,39 @@ else if($menu2 == 'duplicate'){
                                                                                                         {$questao -> tx_questao}
                                                                                                 </td>
                                                                                                 <td>";
-                                if($questao -> in_tipo == 1){
-                                        echo 'Customizadas';
-                                }
-                                else if($questao -> in_tipo == 2){
-                                        echo 'Aberta';
-                                }
-                                else if($questao -> in_tipo == 3){
-                                        echo 'Sim/Não (sim positivo)';
-                                }
-                                else if($questao -> in_tipo == 4){
-                                        echo 'Sim/Não (não positivo)';
-                                }
-                                else if($questao -> in_tipo == 5){
-                                        echo 'Nenhum/Básico/Intermediário/Avançado';
-                                }
-                                else if($questao -> in_tipo == 6){
-                                        echo 'Intervalo';
-                                }
-                                else if($questao -> in_tipo == 7){
-                                        echo 'Upload de arquivo';
-                                }                                                                                
-                                echo "</td>
+            if ($questao -> in_tipo == 1) {
+                echo 'Customizadas';
+            } elseif ($questao -> in_tipo == 2) {
+                echo 'Aberta';
+            } elseif ($questao -> in_tipo == 3) {
+                echo 'Sim/Não (sim positivo)';
+            } elseif ($questao -> in_tipo == 4) {
+                echo 'Sim/Não (não positivo)';
+            } elseif ($questao -> in_tipo == 5) {
+                echo 'Nenhum/Básico/Intermediário/Avançado';
+            } elseif ($questao -> in_tipo == 6) {
+                echo 'Intervalo';
+            } elseif ($questao -> in_tipo == 7) {
+                echo 'Upload de arquivo';
+            }
+            echo "</td>
                                                                                                 <td>
                                                                                                         {$questao -> in_peso}
                                                                                                 </td>
                                                                                         </tr>";
-                        // }
-                }
-                
+            // }
+        }
 
-                echo "
+
+        echo "
                                                                                 </tbody>
                                                                         </table>
                                                                             
                                                                 </div>
                                                                 
                                                             </form>";
-                                                            //paginação retirada pois impede a escolha de todas as questões "check_all"
-                $pagina['js'] = "
+        //paginação retirada pois impede a escolha de todas as questões "check_all"
+        $pagina['js'] = "
                                                             <script type=\"text/javascript\">
 
                                                                         function check_all(){
@@ -469,30 +455,30 @@ else if($menu2 == 'duplicate'){
 
                 
                                                                                 ";
-                
-                if(is_array($questoes_duplicadas)) {
-                        foreach($questoes_duplicadas as $questao_duplicada){
-                                $pagina['js'] .= "
+
+        if (is_array($questoes_duplicadas)) {
+            foreach ($questoes_duplicadas as $questao_duplicada) {
+                $pagina['js'] .= "
                                                                                         if(form.elements['questao{$questao_duplicada -> es_questao_origem}'] && form.elements['questao{$questao_duplicada -> es_questao_origem}'].checked == true && form.elements['grupo'] && form.elements['grupo'].value == '".$questao_duplicada -> es_grupovaga_destino."'){
                                                                                                 se_repetido = 1;
                                                                                                                                                                 
                                                                                         }
                                                                                         
                                 ";
-                        }
-                }
-                foreach($questoes as $questao){
-                        // if($questao -> cont_respostas > 0 || $cont_vagas == 0){
-                                $pagina['js'] .= "
+            }
+        }
+        foreach ($questoes as $questao) {
+            // if($questao -> cont_respostas > 0 || $cont_vagas == 0){
+            $pagina['js'] .= "
                                                                                 if(form.elements['questao{$questao -> pr_questao}'] && form.elements['questao{$questao -> pr_questao}'].checked == true){
                                                                                         se_escolhido = 1;
                                                                                                                                                          
                                                                                 }
                                                                                 
                                 ";
-                        // }
-                }                                                                
-                $pagina['js'] .= "
+            // }
+        }
+        $pagina['js'] .= "
                                                                                 if(se_escolhido==0){
                                                                                         event.preventDefault();
                                                                                         alert('Ao menos uma questão deve ser escolhida.');
@@ -612,9 +598,8 @@ else if($menu2 == 'duplicate'){
                                                                                                 
                                                                                                         // Read values
                                                                                                 ";
-                foreach($questoes as $questao){
-                        
-                        $pagina['js'] .= "
+        foreach ($questoes as $questao) {
+            $pagina['js'] .= "
                                                                                                         
                                                                                                         if(response[".$questao -> es_etapa."] == 1){
                                                                                                                 
@@ -625,8 +610,8 @@ else if($menu2 == 'duplicate'){
                                                                                                                 $('#questao".$questao -> pr_questao."').prop('disabled','');
                                                                                                         }
                         ";
-                }                                                                                
-                $pagina['js'] .= "
+        }
+        $pagina['js'] .= "
                                                                                         
                                                                                                 
                                                                                 
@@ -635,10 +620,9 @@ else if($menu2 == 'duplicate'){
                                                                         });
                                                                     });
                                                             </script>";
-        }
-}
-else if($menu2 == 'historico_duplicate'){
-        echo "
+    }
+} elseif ($menu2 == 'historico_duplicate') {
+    echo "
                                                         <div class=\"dt-responsive table-responsive\">
                                                                                                                         
                                                                 <table class=\"table table-striped table-bordered table-hover\" id=\"questoes_table\">
@@ -657,9 +641,9 @@ else if($menu2 == 'historico_duplicate'){
                                                                         <tbody>
             ";
 
-        if(is_array($questoes_duplicadas)) {
-                foreach($questoes_duplicadas as $questao_duplicada){
-                        echo "
+    if (is_array($questoes_duplicadas)) {
+        foreach ($questoes_duplicadas as $questao_duplicada) {
+            echo "
                                                                                         <tr> 
 
                                                                                                 <td>
@@ -669,28 +653,22 @@ else if($menu2 == 'historico_duplicate'){
                                                                                                         {$questao_duplicada -> tx_questao}
                                                                                                 </td>
                                                                                                 <td>";
-                        if($questao_duplicada -> in_tipo == 1){
-                                echo 'Customizadas';
-                        }
-                        else if($questao_duplicada -> in_tipo == 2){
-                                echo 'Aberta';
-                        }
-                        else if($questao_duplicada -> in_tipo == 3){
-                                echo 'Sim/Não (sim positivo)';
-                        }
-                        else if($questao_duplicada -> in_tipo == 4){
-                                echo 'Sim/Não (não positivo)';
-                        }
-                        else if($questao_duplicada -> in_tipo == 5){
-                                echo 'Nenhum/Básico/Intermediário/Avançado';
-                        }
-                        else if($questao_duplicada -> in_tipo == 6){
-                                echo 'Intervalo';
-                        }
-                        else if($questao_duplicada -> in_tipo == 7){
-                                echo 'Upload de arquivo';
-                        }                                                                                
-                        echo "</td>
+            if ($questao_duplicada -> in_tipo == 1) {
+                echo 'Customizadas';
+            } elseif ($questao_duplicada -> in_tipo == 2) {
+                echo 'Aberta';
+            } elseif ($questao_duplicada -> in_tipo == 3) {
+                echo 'Sim/Não (sim positivo)';
+            } elseif ($questao_duplicada -> in_tipo == 4) {
+                echo 'Sim/Não (não positivo)';
+            } elseif ($questao_duplicada -> in_tipo == 5) {
+                echo 'Nenhum/Básico/Intermediário/Avançado';
+            } elseif ($questao_duplicada -> in_tipo == 6) {
+                echo 'Intervalo';
+            } elseif ($questao_duplicada -> in_tipo == 7) {
+                echo 'Upload de arquivo';
+            }
+            echo "</td>
                                                                                                 <td>
                                                                                                         {$questao_duplicada -> in_peso}
                                                                                                 </td>
@@ -698,14 +676,14 @@ else if($menu2 == 'historico_duplicate'){
                                                                                                         {$questao_duplicada -> grupo_destino}
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                        ".show_date($questao_duplicada -> dt_cadastro,true)."
+                                                                                                        ".show_date($questao_duplicada -> dt_cadastro, true)."
                                                                                                 </td>
                                                                                         </tr>";
-                }
         }
+    }
 
 
-        echo "
+    echo "
                                                                         </tbody>
                                                                 </table>
                                                                 
@@ -720,7 +698,7 @@ else if($menu2 == 'historico_duplicate'){
                                                                 </div>
                                                         </div>
         ";
-        $pagina['js'] = "
+    $pagina['js'] = "
                                                             
                                                         <script type=\"text/javascript\">
                                                                 $('#questoes_table').DataTable({
@@ -765,9 +743,8 @@ else if($menu2 == 'historico_duplicate'){
                                                                         }
                                                                 });
                                                         </script>";
-}
-else if($menu2 == 'historico_duplicate_total'){
-        echo "
+} elseif ($menu2 == 'historico_duplicate_total') {
+    echo "
                                                         <div class=\"dt-responsive table-responsive\">
                                                                                                                         
                                                                 <table class=\"table table-striped table-bordered table-hover\" id=\"questoes_table\">
@@ -786,12 +763,12 @@ else if($menu2 == 'historico_duplicate_total'){
                                                                         </thead>
                                                                         <tbody>
             ";
-        if(is_array($questoes_duplicadas)) {
-                foreach($questoes_duplicadas as $questao_duplicada){
-                        echo "
+    if (is_array($questoes_duplicadas)) {
+        foreach ($questoes_duplicadas as $questao_duplicada) {
+            echo "
                                                                                         <tr>
                                                                                                 <td>
-                                                                                                        ".show_date($questao_duplicada -> dt_cadastro,true)."
+                                                                                                        ".show_date($questao_duplicada -> dt_cadastro, true)."
                                                                                                 </td>
                                                                                                 <td>
                                                                                                         ".$questao_duplicada -> usuario."
@@ -804,28 +781,22 @@ else if($menu2 == 'historico_duplicate_total'){
                                                                                                 </td>
                                                                                                 
                                                                                                 <td>";
-                        if($questao_duplicada -> in_tipo == 1){
-                                echo 'Customizadas';
-                        }
-                        else if($questao_duplicada -> in_tipo == 2){
-                                echo 'Aberta';
-                        }
-                        else if($questao_duplicada -> in_tipo == 3){
-                                echo 'Sim/Não (sim positivo)';
-                        }
-                        else if($questao_duplicada -> in_tipo == 4){
-                                echo 'Sim/Não (não positivo)';
-                        }
-                        else if($questao_duplicada -> in_tipo == 5){
-                                echo 'Nenhum/Básico/Intermediário/Avançado';
-                        }
-                        else if($questao_duplicada -> in_tipo == 6){
-                                echo 'Intervalo';
-                        }
-                        else if($questao_duplicada -> in_tipo == 7){
-                                echo 'Upload de arquivo';
-                        }                                                                                
-                        echo "</td>
+            if ($questao_duplicada -> in_tipo == 1) {
+                echo 'Customizadas';
+            } elseif ($questao_duplicada -> in_tipo == 2) {
+                echo 'Aberta';
+            } elseif ($questao_duplicada -> in_tipo == 3) {
+                echo 'Sim/Não (sim positivo)';
+            } elseif ($questao_duplicada -> in_tipo == 4) {
+                echo 'Sim/Não (não positivo)';
+            } elseif ($questao_duplicada -> in_tipo == 5) {
+                echo 'Nenhum/Básico/Intermediário/Avançado';
+            } elseif ($questao_duplicada -> in_tipo == 6) {
+                echo 'Intervalo';
+            } elseif ($questao_duplicada -> in_tipo == 7) {
+                echo 'Upload de arquivo';
+            }
+            echo "</td>
                                                                                                 <td>
                                                                                                         {$questao_duplicada -> grupo_origem}
                                                                                                 </td>
@@ -834,10 +805,10 @@ else if($menu2 == 'historico_duplicate_total'){
                                                                                                 </td>
                                                                                                 
                                                                                         </tr>";
-                }
         }
+    }
 
-        echo "
+    echo "
                                                                         </tbody>
                                                                 </table>
                                                                 
@@ -852,7 +823,7 @@ else if($menu2 == 'historico_duplicate_total'){
                                                                 </div>
                                                         </div>
         ";
-        $pagina['js'] = "
+    $pagina['js'] = "
                                                             
                                                         <script type=\"text/javascript\">
                                                                 $('#questoes_table').DataTable({
@@ -897,9 +868,8 @@ else if($menu2 == 'historico_duplicate_total'){
                                                                         }
                                                                 });
                                                         </script>";
-}
-else if($menu2 == 'historico_duplicate_quantitativo'){
-        echo "
+} elseif ($menu2 == 'historico_duplicate_quantitativo') {
+    echo "
                                                         <div class=\"dt-responsive table-responsive\">
                                                                                                                         
                                                                 <table class=\"table table-striped table-bordered table-hover\" id=\"questoes_table\">
@@ -917,9 +887,9 @@ else if($menu2 == 'historico_duplicate_quantitativo'){
                                                                         </thead>
                                                                         <tbody>
             ";
-        if(is_array($questoes_duplicadas)) { 
-                foreach($questoes_duplicadas as $questao_duplicada){
-                        echo "
+    if (is_array($questoes_duplicadas)) {
+        foreach ($questoes_duplicadas as $questao_duplicada) {
+            echo "
                                                                                         <tr>
                                                                                                 
                                                                                                 <td>
@@ -930,28 +900,22 @@ else if($menu2 == 'historico_duplicate_quantitativo'){
                                                                                                 </td>
                                                                                                 
                                                                                                 <td>";
-                        if($questao_duplicada -> in_tipo == 1){
-                                echo 'Customizadas';
-                        }
-                        else if($questao_duplicada -> in_tipo == 2){
-                                echo 'Aberta';
-                        }
-                        else if($questao_duplicada -> in_tipo == 3){
-                                echo 'Sim/Não (sim positivo)';
-                        }
-                        else if($questao_duplicada -> in_tipo == 4){
-                                echo 'Sim/Não (não positivo)';
-                        }
-                        else if($questao_duplicada -> in_tipo == 5){
-                                echo 'Nenhum/Básico/Intermediário/Avançado';
-                        }
-                        else if($questao_duplicada -> in_tipo == 6){
-                                echo 'Intervalo';
-                        }
-                        else if($questao_duplicada -> in_tipo == 7){
-                                echo 'Upload de arquivo';
-                        }                                                                                
-                        echo "</td>
+            if ($questao_duplicada -> in_tipo == 1) {
+                echo 'Customizadas';
+            } elseif ($questao_duplicada -> in_tipo == 2) {
+                echo 'Aberta';
+            } elseif ($questao_duplicada -> in_tipo == 3) {
+                echo 'Sim/Não (sim positivo)';
+            } elseif ($questao_duplicada -> in_tipo == 4) {
+                echo 'Sim/Não (não positivo)';
+            } elseif ($questao_duplicada -> in_tipo == 5) {
+                echo 'Nenhum/Básico/Intermediário/Avançado';
+            } elseif ($questao_duplicada -> in_tipo == 6) {
+                echo 'Intervalo';
+            } elseif ($questao_duplicada -> in_tipo == 7) {
+                echo 'Upload de arquivo';
+            }
+            echo "</td>
                                                                                                 <td>
                                                                                                         {$questao_duplicada -> vc_grupovaga}
                                                                                                 </td>
@@ -960,11 +924,11 @@ else if($menu2 == 'historico_duplicate_quantitativo'){
                                                                                                 </td>
                                                                                                 
                                                                                         </tr>";
-                }
         }
+    }
 
 
-        echo "
+    echo "
                                                                         </tbody>
                                                                 </table>
                                                                 
@@ -979,7 +943,7 @@ else if($menu2 == 'historico_duplicate_quantitativo'){
                                                                 </div>
                                                         </div>
         ";
-        $pagina['js'] = "
+    $pagina['js'] = "
                                                             
                                                         <script type=\"text/javascript\">
                                                                 $('#questoes_table').DataTable({
@@ -1024,25 +988,23 @@ else if($menu2 == 'historico_duplicate_quantitativo'){
                                                                         }
                                                                 });
                                                         </script>";
-}
-else if($menu2 == 'create_motivacao'){
-        if(strlen($erro)>0){
-                echo "
+} elseif ($menu2 == 'create_motivacao') {
+    if (strlen($erro)>0) {
+        echo "
                                                             <div class=\"alert alert-danger background-danger\" role=\"alert\">
                                                                     <div class=\"alert-text\">
                                                                             <strong>ERRO</strong>:<br /> $erro
                                                                     </div>
                                                             </div>";
-        //$erro='';
-        }
-        else if(strlen($sucesso) > 0){
-                echo "
+    //$erro='';
+    } elseif (strlen($sucesso) > 0) {
+        echo "
                                                             <div class=\"alert alert-success background-success\" role=\"alert\">
                                                                     <div class=\"alert-text\">
                                                                             $sucesso
                                                                     </div>
                                                             </div>";
-        }
+    }
 }
 /*
 else if($menu2 == 'questoes'){
@@ -1273,7 +1235,7 @@ else if($menu2 == 'questoes'){
                 $pagina['js'].= "<div class=\"form-group row\">";
                 $pagina['js'].= "<label for=\"obrigatorio2_' + valor_num + '\" class=\"col-lg-2 col-form-label text-right\">Obrigatória?</label>";
                 $pagina['js'].= "<div class=\"col-lg-9\"><input type=\"radio\" name=\"obrigatorio2_' + valor_num + '\" value=\"1\" /> Sim<br/><input type=\"radio\" name=\"obrigatorio2_' + valor_num + '\" value=\"0\" /> Não</div></div>";
-                
+
                 echo form_fieldset_close();
                 $pagina['js'].= "<div class=\"kt-separator kt-separator--border-dashed kt-separator--space-lg\"></div>";
                 $pagina['js'].="';
@@ -1283,29 +1245,26 @@ else if($menu2 == 'questoes'){
         </script>";
         }
 }*/
-else{ 
-        if(strlen($erro)>0){
-                echo "
+else {
+    if (strlen($erro)>0) {
+        echo "
                                                             <div class=\"alert alert-danger background-danger\" role=\"alert\">
                                                                     <div class=\"alert-text\">
                                                                             <strong>ERRO</strong>:<br /> $erro
                                                                     </div>
                                                             </div>";
-        //$erro='';
-        }
-        else if(strlen($sucesso) > 0){
-                echo "
+    //$erro='';
+    } elseif (strlen($sucesso) > 0) {
+        echo "
                                                             <div class=\"alert alert-success background-success\" role=\"alert\">
                                                                     <div class=\"alert-text\">
                                                                             $sucesso
                                                                     </div>
                                                             </div>";
-        }
+    }
 }
 echo "
                                                             </div>
                                                     </div>";
 
 $this->load->view('templates/internaRodape', $pagina);
-
-?>

@@ -124,7 +124,7 @@
     <!-- sweet alert js -->
     <script src="<?= base_url('bower_components/sweetalert2/dist/sweetalert2.min.js') ?>" type="text/javascript"></script>
 
-    <?php if(isset($adicionais['datatables'])): ?>
+    <?php if (isset($adicionais['datatables'])): ?>
         <!-- data-table js -->
         <script type=text/javascript src="<?= base_url('bower_components\datatables.net\js\jquery.dataTables.min.js') ?>"></script>
         <script type=text/javascript src="<?= base_url('bower_components\datatables.net-buttons\js\dataTables.buttons.min.js') ?>"></script>
@@ -138,7 +138,7 @@
         <script type=text/javascript src="<?= base_url('bower_components\datatables.net-responsive-bs4\js\responsive.bootstrap4.min.js') ?>"></script>
     <?php endif ?>
 
-    <?php if(isset($adicionais['inputmasks'])): ?>
+    <?php if (isset($adicionais['inputmasks'])): ?>
         <!-- Masking js -->
         <script src="<?= base_url('assets/pages/form-masking/inputmask.js') ?>"></script>
         <script src="<?= base_url('assets/pages/form-masking/jquery.inputmask.js') ?>"></script>
@@ -146,7 +146,7 @@
         <script src="<?= base_url('assets/pages/form-masking/form-mask.js') ?>"></script>
     <?php endif ?>
 
-    <?php if(isset($adicionais['pickers'])): ?>
+    <?php if (isset($adicionais['pickers'])): ?>
         <!-- datetimepicker js -->
         <script src="<?= base_url('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') ?>" type="text/javascript"></script>
         <script src="<?= base_url('bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js') ?>" type="text/javascript"></script>
@@ -159,23 +159,23 @@
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/transforma-minas-datetimepicker.css') ?>" />
     <?php endif ?>
 
-    <?php if(isset($adicionais['rangeslider'])): // Questoes/create ?>
+    <?php if (isset($adicionais['rangeslider'])): // Questoes/create?>
         <script type="text/javascript" src="<?= base_url('bower_components\seiyria-bootstrap-slider\js\bootstrap-slider.js') ?>"></script>
     <?php endif ?>
 
-    <?php if(isset($adicionais['wizard'])): ?>
+    <?php if (isset($adicionais['wizard'])): ?>
         <!--Forms - Wizard js-->
         <script src="<?= base_url('bower_components/jquery.cookie/js/jquery.cookie.js') ?>"></script>
         <script src="<?= base_url('bower_components/jquery.steps/js/jquery.steps.js') ?>"></script>
         <script src="<?= base_url('bower_components/jquery-validation/js/jquery.validate.js') ?>"></script>
     <?php endif ?>
 
-    <?php if(isset($adicionais['select2'])): ?>
+    <?php if (isset($adicionais['select2'])): ?>
         <!-- Select 2 js -->
         <script type="text/javascript" src="<?= base_url('bower_components\select2\js\select2.full.min.js') ?>"></script>
     <?php endif ?>
 
-    <?php if(isset($adicionais['calendar'])): ?>
+    <?php if (isset($adicionais['calendar'])): ?>
         <!-- calendar js -->
         <script type="text/javascript" src="<?= base_url('bower_components\fullcalendar\js\fullcalendar.min.js') ?>"></script>
     <?php endif ?>
@@ -199,7 +199,7 @@
     <?php endif ?>
 
     <?php
-        if(isset($js)) {
+        if (isset($js)) {
             echo $js;
         }
     ?>

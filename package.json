@@ -1,0 +1,25 @@
+{
+  "name": "transformagov",
+  "version": "1.0.0",
+  "description": "Bem vinda ao projeto TransformaGov. O TransformaGov é uma Plataforma criada a partir  do projeto [Transforma Minas](https://github.com/seplagmg/transforma_minas),  uma plataforma de recrutamento baseada no mérito.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/transformagov/transformagov.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/transformagov/transformagov/issues"
+  },
+  "homepage": "https://github.com/transformagov/transformagov#readme",
+  "devDependencies": {
+    "cypress": "^9.2.0"
+  }
+}

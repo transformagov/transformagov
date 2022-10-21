@@ -16,7 +16,7 @@ function getEmailEnvConfigs()
         'smtp_user' => $_SERVER['ENV_SMTP_USER'],
         'smtp_pass' => $_SERVER['ENV_SMTP_PASS'],
     );
-    
+
 
     return $config;
 }

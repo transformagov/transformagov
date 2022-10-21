@@ -1,0 +1,48 @@
+name: Testes de Aceitação
+on: 
+  push:
+    paths-ignore:
+      - 'README.md'
+jobs:
+  transforma:
+    runs-on: ubuntu-latest
+    services:
+      transformagov_db_1:
+        image: mariadb:10.3
+        env:
+          MYSQL_DATABASE: "transforma"
+          MYSQL_ROOT_PASSWORD: "root"
+          TZ: "America/Sao_Paulo"
+        ports:
+          - 3306:3306
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+      - name: restore database
+        run: |
+          sleep 15
+          mysql -h 127.0.0.1 -P 3306 -u root transforma < db/transforma.sql --password=root
+          mysql -h 127.0.0.1 -P 3306 -u root transforma < db/popula-usuarios.sql --password=root
+      - name: prepare transforma server
+        run: |
+          sudo apt update && sudo apt install php-fpm php-pgsql php-mbstring php-curl php7.4-mysql nginx sendmail git telnet -y
+          sudo cp transforma.conf /etc/nginx/conf.d/
+          sudo cp  www.conf /etc/php/7.4/fpm/pool.d/
+          chmod +x run.sh
+          sed -i 's#http://localhost:8080/#http://localhost:80/#' tests/cypress/cypress.json
+          sed -i 's#http://localhost:8080/#http://localhost:80/#' application/config/config.php
+          sudo sed -i 's#/transformagov/#/home/runner/work/transformagov/transformagov/#' /etc/nginx/conf.d/transforma.conf
+          sudo sed -i 's#php7.3-fpm.sock#php7.4-fpm.sock#' /etc/nginx/conf.d/transforma.conf
+          sudo sed -i 's#php7.3#php7.4#' /etc/php/7.4/fpm/pool.d/www.conf
+      - name: run transforma server
+        run: |
+          sudo ./run.sh &
+
+      - name: run tests with cypress
+        uses: cypress-io/github-action@v2
+        with:
+          config-file: tests/cypress/cypress.json
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

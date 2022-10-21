@@ -7,12 +7,12 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./:/transforma-minas/
+      - ./:/transformagov/
     env_file:
       - .env
     entrypoint: /tmp/run.sh
     environment:
-      - DB_HOST=transforma_minas_db_1
+      - DB_HOST=transformagov_db_1
       - DB_DATABASE=transforma
       - DB_PASSWORD=root
       - DB_USERNAME=root
