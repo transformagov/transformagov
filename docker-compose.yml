@@ -11,11 +11,7 @@ services:
     env_file:
       - .env
     entrypoint: /tmp/run.sh
-    environment:
-      - DB_HOST=transformagov_db_1
-      - DB_DATABASE=transforma
-      - DB_PASSWORD=root
-      - DB_USERNAME=root
+    
   db:
     image: mariadb:10.3
     volumes:
