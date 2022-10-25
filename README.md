@@ -35,7 +35,8 @@ Esse container será o banco de dados da aplicação.
 
 3. Restaure schema do banco utilizando o comando `make load-schema`;
 4. Crie os usuários  `make create-users`;
-4. Acesse a plataforma em `http://localhost:8080` utilizando um dos usuários listados na sessão [Usuários](##usuários);
+5. Acesse a plataforma em `http://localhost:8080` ou utilize outra porta. Para isto, altere a variável do ambiente local `base_url` no arquivo `.env` com a porta desejada;
+6. Realize login utilizando um dos usuários listados na sessão [Usuários](##usuários).
 
 ## SMTP
 
