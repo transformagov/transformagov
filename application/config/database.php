@@ -75,10 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => $_SERVER['DB_HOST'],
-	'username' => $_SERVER['DB_USERNAME'],
-	'password' => $_SERVER['DB_PASSWORD'],
-	'database' => $_SERVER['DB_DATABASE'],
+	'hostname' => isset($_SERVER['DB_HOST']) ? $_SERVER['DB_HOST'] : '127.0.0.1',
+	'username' => isset($_SERVER['DB_USERNAME']) ? $_SERVER['DB_USERNAME'] : 'root',
+	'password' => isset($_SERVER['DB_PASSWORD']) ? $_SERVER['DB_PASSWORD'] : 'root',
+	'database' => isset($_SERVER['DB_DATABASE']) ? $_SERVER['DB_DATABASE'] : 'transforma',
+	'port' => '3306',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

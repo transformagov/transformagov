@@ -1,13 +1,14 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 $pagina['menu1']=$menu1;
 $pagina['menu2']=$menu2;
 $pagina['url']=$url;
 $pagina['nome_pagina']=$nome_pagina;
 $pagina['icone']=$icone;
-if(isset($adicionais)){
-        $pagina['adicionais']=$adicionais;
+if (isset($adicionais)) {
+    $pagina['adicionais']=$adicionais;
 }
 
 $this->load->view('templates/internaCabecalho', $pagina);
@@ -25,53 +26,50 @@ echo "
                                                             <div class=\"row sub-title\" style=\"letter-spacing:0px\">
                                                                     <div class=\"col-lg-8\">
                                                                         <h4><i class=\"$icone\" style=\"color:black\"></i> &nbsp; {$nome_pagina}";
-if($menu2 == 'index' || $menu2 == 'create'){
-        echo ' - Grupo de vagas: '.$grupos[0] -> vc_grupovaga;
+if ($menu2 == 'index' || $menu2 == 'create') {
+    echo ' - Grupo de vagas: '.$grupos[0] -> vc_grupovaga;
 }
 echo "</h4>
                                                                     </div>";
-if($menu2 == 'index'){
-        $vigente = 1;
-        /*foreach($vagas as $vaga){
-                
-                if($vaga -> bl_liberado == '1'){
-                        $vigente = 1;
-                        break;
-                }
+if ($menu2 == 'index') {
+    $vigente = 1;
+    /*foreach($vagas as $vaga){
+
+            if($vaga -> bl_liberado == '1'){
+                    $vigente = 1;
+                    break;
+            }
+    }
+    if($vigente == 0){*/
+    $vigente_etapa = array();
+    $chaves = array_keys($etapas);
+    foreach ($chaves as $chave) {
+        $vigente_etapa[$chave]=0;
+    }
+    if (!is_array($questoes)) {
+        $questoes = array();
+    }
+    foreach ($questoes as $linha) {
+        if ($linha -> cont_respostas > 0) {
+            $vigente_etapa[$linha -> es_etapa] = 1;
         }
-        if($vigente == 0){*/
-        $vigente_etapa = array();
-        $chaves = array_keys($etapas);    
-        foreach($chaves as $chave){
-                $vigente_etapa[$chave]=0;
-                
+    }
+    foreach ($chaves as $chave) {
+        if ($vigente_etapa[$chave] == 0) {
+            $vigente = 0;
+            break;
         }
-        if(!is_array($questoes)) {
-                $questoes = array();
-        }
-        foreach ($questoes as $linha){
-                if($linha -> cont_respostas > 0){
-                       $vigente_etapa[$linha -> es_etapa] = 1; 
-                       
-                }   
-        }
-        foreach($chaves as $chave){
-        
-                if($vigente_etapa[$chave] == 0){
-                        $vigente = 0;
-                        break;
-                }
-        }
-        if($vigente == 0){    
-                echo "
+    }
+    if ($vigente == 0) {
+        echo "
                                                                     <div class=\"col-lg-4 text-right\">
                                                                             <a href=\"".base_url('Questoes/create/'.$grupo)."\" class=\"btn btn-primary btn-square\"> <i class=\"fa fa-plus-circle\"></i> Nova questão neste grupo </a>
                                                                     </div>";
-        }
-        //}
+    }
+    //}
 }
-if($menu2 != 'index' && strlen($sucesso) == 0 && ($menu2 == 'create' || $menu2 == 'edit' || $menu2 == 'questoes')){
-        echo "
+if ($menu2 != 'index' && strlen($sucesso) == 0 && ($menu2 == 'create' || $menu2 == 'edit' || $menu2 == 'questoes')) {
+    echo "
                                                                     <div class=\"col-lg-4 text-right\">
                                                                             <button type=\"button\" class=\"btn btn-primary\" onclick=\"document.getElementById('form_questoes').submit();\"> Salvar </button>
                                                                             <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Questoes/index/'.$grupo)."'\">Cancelar</button>
@@ -80,8 +78,8 @@ if($menu2 != 'index' && strlen($sucesso) == 0 && ($menu2 == 'create' || $menu2 =
 echo "
                                                             </div>";
 
-if($menu2 == 'index'){
-        echo "
+if ($menu2 == 'index') {
+    echo "
                                                             <div class=\"dt-responsive table-responsive\">
                                                                     <table class=\"table table-striped table-bordered table-hover\" id=\"questoes_table\">
                                                                             <thead>
@@ -97,87 +95,77 @@ if($menu2 == 'index'){
                                                                                     </tr>
                                                                             </thead>
                                                                             <tbody>";
-        //var_dump($questoes);
-        if(isset($questoes)){
-                foreach ($questoes as $linha){
-                        echo "
+    //var_dump($questoes);
+    if (isset($questoes)) {
+        foreach ($questoes as $linha) {
+            echo "
                                                                                     <tr>
                                                                                             <td>".$linha -> tx_questao."</td>
                                                                                             <td class=\"text-center\">".$linha -> vc_etapa."</td>
                                                                                             <td class=\"text-center\">";
-                        if($linha -> in_tipo == 1){
-                                echo 'Customizadas';
-                        }
-                        else if($linha -> in_tipo == 2){
-                                echo 'Aberta';
-                        }
-                        else if($linha -> in_tipo == 3){
-                                echo 'Sim/Não (sim positivo)';
-                        }
-                        else if($linha -> in_tipo == 4){
-                                echo 'Sim/Não (não positivo)';
-                        }
-                        else if($linha -> in_tipo == 5){
-                                echo 'Nenhum/Básico/Intermediário/Avançado';
-                        }
-						else if($linha -> in_tipo == 6){
-                                echo 'Intervalo';
-                        }
-						else if($linha -> in_tipo == 7){
-                                echo 'Upload de arquivo';
-                        }
-                        echo '</td>';
-                        if($linha -> bl_eliminatoria == '1'){
-                                echo "
+            if ($linha -> in_tipo == 1) {
+                echo 'Customizadas';
+            } elseif ($linha -> in_tipo == 2) {
+                echo 'Aberta';
+            } elseif ($linha -> in_tipo == 3) {
+                echo 'Sim/Não (sim positivo)';
+            } elseif ($linha -> in_tipo == 4) {
+                echo 'Sim/Não (não positivo)';
+            } elseif ($linha -> in_tipo == 5) {
+                echo 'Nenhum/Básico/Intermediário/Avançado';
+            } elseif ($linha -> in_tipo == 6) {
+                echo 'Intervalo';
+            } elseif ($linha -> in_tipo == 7) {
+                echo 'Upload de arquivo';
+            }
+            echo '</td>';
+            if ($linha -> bl_eliminatoria == '1') {
+                echo "
                                                                                             <td class=\"text-center\"><span class=\"badge badge-success badge-lg\">Sim";
-                        }
-                        else{
-                                echo "
+            } else {
+                echo "
                                                                                             <td class=\"text-center\"><span class=\"badge badge-danger badge-lg\">Não";
-                        }
-                        echo '</span></td>';
-                        if($linha -> bl_obrigatorio == '1'){
-                                echo "
+            }
+            echo '</span></td>';
+            if ($linha -> bl_obrigatorio == '1') {
+                echo "
                                                                                             <td class=\"text-center\"><span class=\"badge badge-success badge-lg\">Sim";
-                        }
-                        else{
-                                echo "
+            } else {
+                echo "
                                                                                             <td class=\"text-center\"><span class=\"badge badge-danger badge-lg\">Não";
-                        }
-                        echo "</span></td>
+            }
+            echo "</span></td>
                                                                                             <td class=\"text-center\">".$linha -> cont_respostas."</td>";
-                        if($linha -> bl_removido == '0'){
-                                echo "
+            if ($linha -> bl_removido == '0') {
+                echo "
                                                                                             <td class=\"text-center\"><span class=\"badge badge-success badge-lg\">Ativo</span></td>
                                                                                             <td class=\"text-center\" style=\"white-space:nowrap\">
                                                                                                             ";
-                                if($linha -> cont_respostas == 0){
-                                        echo anchor('Questoes/edit/'.$linha -> pr_questao."/$grupo", '<i class="fa fa-lg mr-0 fa-edit">Editar</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Editar\"");
-                                        echo "
+                if ($linha -> cont_respostas == 0) {
+                    echo anchor('Questoes/edit/'.$linha -> pr_questao."/$grupo", '<i class="fa fa-lg mr-0 fa-edit">Editar</i>', " class=\"btn btn-sm btn-square btn-warning\" title=\"Editar\"");
+                    echo "
                                                                                                     <a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-danger\" title=\"Desativar questão\" onclick=\"confirm_delete(".$linha -> pr_questao.", {$grupo});\"><i class=\"fa fa-lg mr-0 fa-times-circle\">Desativar questão</i></a>";
-                                }
-								else{
-										 echo anchor('Questoes/view/'.$linha -> pr_questao."/$grupo", '<i class="fa fa-lg mr-0 fa-edit">Visualizar</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Visualizar\"");
-								}
-                        }
-                        else{
-                                echo "
+                } else {
+                    echo anchor('Questoes/view/'.$linha -> pr_questao."/$grupo", '<i class="fa fa-lg mr-0 fa-edit">Visualizar</i>', " class=\"btn btn-sm btn-square btn-primary\" title=\"Visualizar\"");
+                }
+            } else {
+                echo "
                                                                                             <td class=\"text-center\"><span class=\"badge badge-danger badge-lg\">Desativado</span></td>
                                                                                             <td class=\"text-center\" style=\"white-space:nowrap\">
                                                                                                     <a href=\"javascript:/\" class=\"btn btn-sm btn-square btn-success\" title=\"Reativar questão\" onclick=\"confirm_reactivate(".$linha -> pr_questao.", {$grupo});\"><i class=\"fa fa-lg mr-0 fa-plus-circle\">Reativar</i></a>";
-                        }
-                        echo "
+            }
+            echo "
                                                                                             </td>
                                                                                     </tr>";
-                }
         }
-        echo "
+    }
+    echo "
                                                                             </tbody>
                                                                     </table>
                                                             </div>
                                                     </div>";
 
-        $pagina['js'] = "
+    $pagina['js'] = "
                                             <script type=\"text/javascript\">
                                                     function confirm_delete(id, id2){
                                                             $(document).ready(function(){
@@ -255,197 +243,192 @@ if($menu2 == 'index'){
                                                             }
                                                     });
                                             </script>";
-}
-else if($menu2 == 'create' || $menu2 == 'edit'){
-        if(strlen($erro)>0){
-                echo "
+} elseif ($menu2 == 'create' || $menu2 == 'edit') {
+    if (strlen($erro)>0) {
+        echo "
                                                             <div class=\"alert alert-danger background-danger\" role=\"alert\">
                                                                     <div class=\"alert-text\">
                                                                             <strong>ERRO</strong>:<br /> $erro
                                                                     </div>
                                                             </div>";
-        //$erro='';
-        }
-        else if(strlen($sucesso) > 0){
-                echo "
+    //$erro='';
+    } elseif (strlen($sucesso) > 0) {
+        echo "
                                                             <div class=\"alert alert-success background-success\" role=\"alert\">
                                                                     <div class=\"alert-text\">
                                                                             $sucesso
                                                                     </div>
                                                             </div>";
+    }
+    if (strlen($sucesso) == 0) {
+        $attributes = array('id' => 'form_questoes');
+        if ($menu2 == 'edit' && isset($codigo) && $codigo > 0) {
+            echo form_open($url, $attributes, array('codigo' => $codigo, 'grupo' => $grupo, 'num' => set_value('num')));
+        } else {
+            echo form_open($url, $attributes, array('grupo' => $grupo, 'num' => set_value('num')));
         }
-        if(strlen($sucesso) == 0){
-                $attributes = array('id' => 'form_questoes');
-                if($menu2 == 'edit' && isset($codigo) && $codigo > 0){
-                        echo form_open($url, $attributes, array('codigo' => $codigo, 'grupo' => $grupo, 'num' => set_value('num')));
-                }
-                else{
-                        echo form_open($url, $attributes, array('grupo' => $grupo, 'num' => set_value('num')));
-                }
-                echo "
+        echo "
                                                                     <div class=\"form-group row\">";
-                $attributes = array('class' => 'col-lg-3 col-form-label text-right');
-                echo form_label('Descrição <abbr title="Obrigatório">*</abbr>', 'descricao', $attributes);
-                echo "
+        $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+        echo form_label('Descrição <abbr title="Obrigatório">*</abbr>', 'descricao', $attributes);
+        echo "
                                                                             <div class=\"col-lg-6\">";
-                if(!isset($tx_questao) || (strlen($tx_questao) == 0 && strlen(set_value('descricao')) > 0)){
-                        $tx_questao = set_value('descricao');
-                }
-                $attributes = array('name' => 'descricao',
-                                    
+        if (!isset($tx_questao) || (strlen($tx_questao) == 0 && strlen(set_value('descricao')) > 0)) {
+            $tx_questao = set_value('descricao');
+        }
+        $attributes = array('name' => 'descricao',
+
                                     'rows'=>'3',
                                     'class' => 'form-control');
-                if(strstr($erro, "'Descrição'")){
-                        $attributes['class'] = 'form-control is-invalid';
-                }
-                echo form_textarea($attributes, $tx_questao);
-                echo "
+        if (strstr($erro, "'Descrição'")) {
+            $attributes['class'] = 'form-control is-invalid';
+        }
+        echo form_textarea($attributes, $tx_questao);
+        echo "
                                                                             </div>
                                                                     </div>
                                                                     
                                                                     <div class=\"form-group row\">";
-                $attributes = array('class' => 'col-lg-3 col-form-label text-right');
-                echo form_label('Etapa <abbr title="Obrigatório">*</abbr>', 'grupo', $attributes);
-                echo "
+        $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+        echo form_label('Etapa <abbr title="Obrigatório">*</abbr>', 'grupo', $attributes);
+        echo "
                                                                             <div class=\"col-lg-3\">";
-                //var_dump($etapas);
-                $etapas=array(0 => '')+$etapas;
-                //unset($etapas[2]);
-                if(!isset($es_etapa) || (strlen($es_etapa) == 0 && strlen(set_value('etapa')) > 0)){
-                        $es_etapa = set_value('etapa');
-                }
-                if(strstr($erro, "'Etapa'")){
-                        echo form_dropdown('etapa', $etapas, $es_etapa, "class=\"form-control is-invalid\"");
-                }
-                else{
-                        echo form_dropdown('etapa', $etapas, $es_etapa, "class=\"form-control\"");
-                }
-                echo "
+        //var_dump($etapas);
+        $etapas=array(0 => '')+$etapas;
+        //unset($etapas[2]);
+        if (!isset($es_etapa) || (strlen($es_etapa) == 0 && strlen(set_value('etapa')) > 0)) {
+            $es_etapa = set_value('etapa');
+        }
+        if (strstr($erro, "'Etapa'")) {
+            echo form_dropdown('etapa', $etapas, $es_etapa, "class=\"form-control is-invalid\"");
+        } else {
+            echo form_dropdown('etapa', $etapas, $es_etapa, "class=\"form-control\"");
+        }
+        echo "
                                                                             </div>
                                                                     </div>
                                                                     <div class=\"form-group row\">";
-                $attributes = array('class' => 'col-lg-3 col-form-label text-right');
-                echo form_label('Competência', 'grupo', $attributes);
-                echo "
+        $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+        echo form_label('Competência', 'grupo', $attributes);
+        echo "
                                                                             <div class=\"col-lg-3\">";
-                //var_dump($etapas);
-                $competencias=array(0 => '')+$competencias;
-                //unset($etapas[2]);
-                if(!isset($es_competencia) || (strlen($es_competencia) == 0 && strlen(set_value('competencia')) > 0)){
-                        $es_competencia = set_value('competencia');
-                }
-                
-                echo form_dropdown('competencia', $competencias, $es_competencia, "class=\"form-control\"");
-                
-                echo "
+        //var_dump($etapas);
+        $competencias=array(0 => '')+$competencias;
+        //unset($etapas[2]);
+        if (!isset($es_competencia) || (strlen($es_competencia) == 0 && strlen(set_value('competencia')) > 0)) {
+            $es_competencia = set_value('competencia');
+        }
+
+        echo form_dropdown('competencia', $competencias, $es_competencia, "class=\"form-control\"");
+
+        echo "
                                                                             </div>
                                                                     </div>
                                                                     <div class=\"form-group row\">";
-                $attributes = array('class' => 'col-lg-3 col-form-label text-right');
-                echo form_label('Obrigatória? <abbr title="Obrigatório">*</abbr>', 'obrigatorio', $attributes);
-                echo "
+        $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+        echo form_label('Obrigatória? <abbr title="Obrigatório">*</abbr>', 'obrigatorio', $attributes);
+        echo "
                                                                             <div class=\"col-lg-3\">";
-                if(!isset($bl_obrigatorio) || (strlen($bl_obrigatorio) == 0 && strlen(set_value('obrigatorio')) > 0)){
-                        $bl_obrigatorio = set_value('obrigatorio');
-                }
-                $attributes = array('name' => 'obrigatorio',
+        if (!isset($bl_obrigatorio) || (strlen($bl_obrigatorio) == 0 && strlen(set_value('obrigatorio')) > 0)) {
+            $bl_obrigatorio = set_value('obrigatorio');
+        }
+        $attributes = array('name' => 'obrigatorio',
                                     'value'=>'1');
-                echo form_radio($attributes, $bl_obrigatorio, (strlen($bl_obrigatorio)>0 && $bl_obrigatorio=='1'));
-                echo ' Sim<br/>';
-                $attributes = array('name' => 'obrigatorio',
+        echo form_radio($attributes, $bl_obrigatorio, (strlen($bl_obrigatorio)>0 && $bl_obrigatorio=='1'));
+        echo ' Sim<br/>';
+        $attributes = array('name' => 'obrigatorio',
                                     'value'=>'0');
-                echo form_radio($attributes, $bl_obrigatorio, (strlen($bl_obrigatorio)>0 && $bl_obrigatorio=='0'));
-                echo ' Não<br/>';
-                echo "
+        echo form_radio($attributes, $bl_obrigatorio, (strlen($bl_obrigatorio)>0 && $bl_obrigatorio=='0'));
+        echo ' Não<br/>';
+        echo "
                                                                             </div>
                                                                     </div>
                                                                     <div class=\"form-group row\">";
-                $attributes = array('class' => 'col-lg-3 col-form-label text-right');
-                echo form_label('Eliminatória? <abbr title="Obrigatório">*</abbr>', 'eliminatoria', $attributes);
-                echo "
+        $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+        echo form_label('Eliminatória? <abbr title="Obrigatório">*</abbr>', 'eliminatoria', $attributes);
+        echo "
                                                                             <div class=\"col-lg-3\">";
-                if(!isset($bl_eliminatoria) || (strlen($bl_eliminatoria) == 0 && strlen(set_value('eliminatoria')) > 0)){
-                        $bl_eliminatoria = set_value('eliminatoria');
-                }
-                $attributes = array('name' => 'eliminatoria',
+        if (!isset($bl_eliminatoria) || (strlen($bl_eliminatoria) == 0 && strlen(set_value('eliminatoria')) > 0)) {
+            $bl_eliminatoria = set_value('eliminatoria');
+        }
+        $attributes = array('name' => 'eliminatoria',
                                     'value'=>'1');
-                echo form_radio($attributes, $bl_eliminatoria, (strlen($bl_eliminatoria)>0 && $bl_eliminatoria=='1'));
-                echo ' Sim<br/>';
-                $attributes = array('name' => 'eliminatoria',
+        echo form_radio($attributes, $bl_eliminatoria, (strlen($bl_eliminatoria)>0 && $bl_eliminatoria=='1'));
+        echo ' Sim<br/>';
+        $attributes = array('name' => 'eliminatoria',
                                     'value'=>'0');
-                echo form_radio($attributes, $bl_eliminatoria, (strlen($bl_eliminatoria)>0 && $bl_eliminatoria=='0'));
-                echo ' Não<br/>';
-                echo "
+        echo form_radio($attributes, $bl_eliminatoria, (strlen($bl_eliminatoria)>0 && $bl_eliminatoria=='0'));
+        echo ' Não<br/>';
+        echo "
                                                                             </div>
                                                                     </div>
                                                                     <div class=\"form-group row\">";
-                $attributes = array('class' => 'col-lg-3 col-form-label text-right');
-                echo form_label('Peso (desconsiderar se for questão personalizada, já que a pontuação é feita na própria opção)', 'peso', $attributes);
-                echo "
+        $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+        echo form_label('Peso (desconsiderar se for questão personalizada, já que a pontuação é feita na própria opção)', 'peso', $attributes);
+        echo "
                                                                             <div class=\"col-lg-1\">";
-                if(!isset($in_peso) || (strlen($in_peso) == 0 && strlen(set_value('peso')) > 0)){
-                        $in_peso = set_value('peso');
-                }
-                $attributes = array('name' => 'peso',
+        if (!isset($in_peso) || (strlen($in_peso) == 0 && strlen(set_value('peso')) > 0)) {
+            $in_peso = set_value('peso');
+        }
+        $attributes = array('name' => 'peso',
                                     'id'=>'peso',
                                     'maxlength'=>'1',
                                     'class' => 'form-control',
-									'min' => '0',
-									'max' => '100',
-									'oninput' => "if(document.getElementById('peso').value>100){document.getElementById('peso').value=100;}else{if(document.getElementById('peso').value<0){document.getElementById('peso').value=0;}}",
+                                    'min' => '0',
+                                    'max' => '100',
+                                    'oninput' => "if(document.getElementById('peso').value>100){document.getElementById('peso').value=100;}else{if(document.getElementById('peso').value<0){document.getElementById('peso').value=0;}}",
                                     'type' => 'number');
-                echo form_input($attributes, $in_peso);
-                echo "
+        echo form_input($attributes, $in_peso);
+        echo "
                                                                             </div>
                                                                     </div>
                                                                     <div class=\"form-group row\">";
-                if(!isset($in_tipo) || (strlen($in_tipo) == 0 && strlen(set_value('tipo')) > 0)){
-                        $in_tipo = set_value('tipo');
-                }
-                $attributes = array('class' => 'col-lg-3 col-form-label text-right');
-                echo form_label('Tipo <abbr title="Obrigatório">*</abbr>', 'tipo', $attributes);
-                echo "
+        if (!isset($in_tipo) || (strlen($in_tipo) == 0 && strlen(set_value('tipo')) > 0)) {
+            $in_tipo = set_value('tipo');
+        }
+        $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+        echo form_label('Tipo <abbr title="Obrigatório">*</abbr>', 'tipo', $attributes);
+        echo "
                                                                             <div class=\"col-lg-4\">";
-                $attributes = array(
+        $attributes = array(
                             0 => '',
                             1 => 'Customizadas',
                             2 => 'Aberta',
                             3 => 'Sim/Não (sim positivo)',
                             4 => 'Sim/Não (não positivo)',
                             5 => 'Nenhum/Básico/Intermediário/Avançado',
-							6 => 'Intervalo (limite definido pelo peso)',
-							7 => 'Upload de arquivo'
+                            6 => 'Intervalo (limite definido pelo peso)',
+                            7 => 'Upload de arquivo'
                             );
-                if(strstr($erro, "'Tipo'")){
-                        echo form_dropdown('tipo', $attributes, $in_tipo, "class=\"form-control is-invalid\" id=\"tipo\"");
-                }
-                else{
-                        echo form_dropdown('tipo', $attributes, $in_tipo, "class=\"form-control\" id=\"tipo\"");
-                }
-                echo "
+        if (strstr($erro, "'Tipo'")) {
+            echo form_dropdown('tipo', $attributes, $in_tipo, "class=\"form-control is-invalid\" id=\"tipo\"");
+        } else {
+            echo form_dropdown('tipo', $attributes, $in_tipo, "class=\"form-control\" id=\"tipo\"");
+        }
+        echo "
                                                                             </div>
                                                                     </div>
                                                                     <div class=\"form-group row\">";
-                $attributes = array('class' => 'col-lg-3 col-form-label text-right');
-                echo form_label('Indicação da resposta aceita', 'respostaaceita', $attributes);
-                echo "
+        $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+        echo form_label('Indicação da resposta aceita', 'respostaaceita', $attributes);
+        echo "
                                                                             <div class=\"col-lg-6\">";
-                if(!isset($vc_respostaAceita) || (strlen($vc_respostaAceita) == 0 && strlen(set_value('respostaaceita')) > 0)){
-                        $vc_respostaAceita = set_value('respostaaceita');
-                }
-                $attributes = array('name' => 'respostaaceita',
+        if (!isset($vc_respostaAceita) || (strlen($vc_respostaAceita) == 0 && strlen(set_value('respostaaceita')) > 0)) {
+            $vc_respostaAceita = set_value('respostaaceita');
+        }
+        $attributes = array('name' => 'respostaaceita',
                                     'maxlength'=>'250',
                                     'class' => 'form-control');
-                echo form_input($attributes, $vc_respostaAceita);
-                echo "
+        echo form_input($attributes, $vc_respostaAceita);
+        echo "
                                                                             </div>
                                                                     </div>
                                                                     <div id=\"div_respostas\">";
-                //var_dump($opcoes);
-                if(isset($opcoes)){
-                        $c=1;
-                        foreach ($opcoes as $linha){
-                                echo "
+        //var_dump($opcoes);
+        if (isset($opcoes)) {
+            $c=1;
+            foreach ($opcoes as $linha) {
+                echo "
                                                                             <fieldset>
                                                                                     <legend>Resposta $c</legend>
                                                                                     <div class=\"form-group row\">
@@ -459,11 +442,11 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
                                                                                             </div>
                                                                                     </div>
                                                                             </fieldset>";
-                                $c++;
-                        }
-                }
-                for($i = 1 ; $i <= set_value('num'); $i++){
-                        echo "
+                $c++;
+            }
+        }
+        for ($i = 1 ; $i <= set_value('num'); $i++) {
+            echo "
                                                                             <fieldset>
                                                                                     <legend>Nova resposta $i</legend>
                                                                                     <div class=\"form-group row\">
@@ -477,24 +460,24 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
                                                                                             </div>
                                                                                     </div>
                                                                             </fieldset>";
-                }
-                echo "
+        }
+        echo "
                                                                             </div>
                                                                             <hr/>
                                                                             <div id=\"div_adicionar\" style=\"display:none\"><div class=\"j-footer\"><div class=\"row\"><div class=\"col-lg-12 text-center\"><button type=\"button\" id=\"adicionar_resposta\" class=\"btn btn-inverse\"><i class=\"fa fa-plus\"></i> Adicionar resposta</button><br/><br/></div></div></div></div>
                                                                             <div class=\"j-footer\">
                                                                                     <div class=\"row\">
                                                                                             <div class=\"col-lg-12 text-center\">";
-                $attributes = array('class' => 'btn btn-primary');
-                echo form_submit('salvar_questao', 'Salvar', $attributes);
-                echo "
+        $attributes = array('class' => 'btn btn-primary');
+        echo form_submit('salvar_questao', 'Salvar', $attributes);
+        echo "
                                                                                                     <button type=\"button\" class=\"btn btn-outline-dark\" onclick=\"window.location='".base_url('Questoes/index/'.$grupo)."'\">Cancelar</button>
                                                                                             </div>
                                                                                     </div>
                                                                             </div>
                                                                     </form>
                                                             </div>";
-                $pagina['js']="
+        $pagina['js']="
         <script type=\"text/javascript\">
                 $('#tipo').change(function() {
                         if($(this).val()=='1'){
@@ -516,172 +499,169 @@ else if($menu2 == 'create' || $menu2 == 'edit'){
                 
                 
                 ";
-                if(strlen($in_peso)==0){
-                        $in_peso=0;
-                }
-                $pagina['js'].="
+        if (strlen($in_peso)==0) {
+            $in_peso=0;
+        }
+        $pagina['js'].="
                 $('#tipo').trigger('change');
         </script>";
-        }
-}
-else if($menu2 == 'view'){
-		
-        
-		$attributes = array('id' => 'form_questoes');
-		
-		echo form_open($url, $attributes, array('codigo' => $codigo, 'grupo' => $grupo, 'num' => set_value('num')));
-		
-		
-		echo "
+    }
+} elseif ($menu2 == 'view') {
+    $attributes = array('id' => 'form_questoes');
+
+    echo form_open($url, $attributes, array('codigo' => $codigo, 'grupo' => $grupo, 'num' => set_value('num')));
+
+
+    echo "
                                                                     <div class=\"form-group row\">";
-		$attributes = array('class' => 'col-lg-3 col-form-label text-right');
-		echo form_label('Descrição', 'descricao', $attributes);
-		echo "
+    $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+    echo form_label('Descrição', 'descricao', $attributes);
+    echo "
                                                                             <div class=\"col-lg-6\">";
-                
-		$attributes = array('name' => 'descricao',
-							'rows'=>'3',
-							'class' => 'form-control',
-							'disabled' => 'disabled');
-                
-		echo form_textarea($attributes, $tx_questao);
-		echo "
+
+    $attributes = array('name' => 'descricao',
+                            'rows'=>'3',
+                            'class' => 'form-control',
+                            'disabled' => 'disabled');
+
+    echo form_textarea($attributes, $tx_questao);
+    echo "
                                                                             </div>
                                                                     </div>
                                                                     <div class=\"form-group row\">";
-		$attributes = array('class' => 'col-lg-3 col-form-label text-right');
-		echo form_label('Etapa', 'grupo', $attributes);
-		
-		$attributes = array('name' => 'etapa',
-							
-							'class' => 'form-control text-box single-line',
-							'disabled' => 'disabled');
-		
-		echo "        
+    $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+    echo form_label('Etapa', 'grupo', $attributes);
+
+    $attributes = array('name' => 'etapa',
+
+                            'class' => 'form-control text-box single-line',
+                            'disabled' => 'disabled');
+
+    echo "        
                                                                     <div class=\"col-lg-6\">";
-		//var_dump($etapas);
-		$etapas=array(0 => '')+$etapas;
-		
-		echo form_input($attributes, $etapas[$es_etapa]);
-		
-		echo "
-                                                                            </div>
-                                                                    </div>
-                                                                    <div class=\"form-group row\">";
-		$attributes = array('class' => 'col-lg-3 col-form-label text-right');
-		echo form_label('Competência', 'grupo', $attributes);
-		echo "
-                                                                            <div class=\"col-lg-6\">";
-		//var_dump($etapas);
-		$competencias=array('' => '')+$competencias;
-		
-		$attributes = array('name' => 'competencia',
-					
-					'class' => 'form-control text-box single-line',
-					'disabled' => 'disabled');
-		
-		echo form_input($attributes, $competencias[$es_competencia]);
-		
-		echo "
-                                                                            </div>
-                                                                    </div>
-                                                                    <div class=\"form-group row\">";
-		$attributes = array('class' => 'col-lg-3 col-form-label text-right');
-		echo form_label('Obrigatória?', 'obrigatorio', $attributes);
-		echo "
-                                                                            <div class=\"col-lg-6\">";
-        $obrigatorios=array(''=>'','0'=>'Não','1'=>'Sim');
+    //var_dump($etapas);
+    $etapas=array(0 => '')+$etapas;
 
-		$attributes = array('name' => 'obrigatorio',
-					
-					'class' => 'form-control text-box single-line',
-					'disabled' => 'disabled');	
-		echo form_input($attributes, $obrigatorios[$bl_obrigatorio]);			
-               
-		echo "
-                                                                            </div>
-                                                                    </div>
-                                                                    <div class=\"form-group row\">";
-		$attributes = array('class' => 'col-lg-3 col-form-label text-right');
-		echo form_label('Eliminatória?', 'eliminatoria', $attributes);
-		echo "
-                                                                            <div class=\"col-lg-6\">";
-        $eliminatorias=array(''=>'','0'=>'Não','1'=>'Sim');
+    echo form_input($attributes, $etapas[$es_etapa]);
 
-		$attributes = array('name' => 'eliminatoria',
-					
-					'class' => 'form-control text-box single-line',
-					'disabled' => 'disabled');	
-        echo form_input($attributes, $eliminatorias[$bl_eliminatoria]);        
-                
-		echo "
+    echo "
                                                                             </div>
                                                                     </div>
                                                                     <div class=\"form-group row\">";
-		$attributes = array('class' => 'col-lg-3 col-form-label text-right');
-		echo form_label('Peso', 'peso', $attributes);
-		echo "
+    $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+    echo form_label('Competência', 'grupo', $attributes);
+    echo "
                                                                             <div class=\"col-lg-6\">";
-                
-		$attributes = array('name' => 'peso',
-							'id'=>'peso',
-							'maxlength'=>'1',
-							'class' => 'form-control',
-							'min' => '0',
-							'max' => '100',
-							'disabled' => 'disabled',
-							'type' => 'number');
-		echo form_input($attributes, $in_peso);
-		echo "
+    //var_dump($etapas);
+    $competencias=array('' => '')+$competencias;
+
+    $attributes = array('name' => 'competencia',
+
+                    'class' => 'form-control text-box single-line',
+                    'disabled' => 'disabled');
+
+    echo form_input($attributes, $competencias[$es_competencia]);
+
+    echo "
                                                                             </div>
                                                                     </div>
                                                                     <div class=\"form-group row\">";
-                
-		$attributes = array('class' => 'col-lg-3 col-form-label text-right');
-		echo form_label('Tipo', 'tipo', $attributes);
-		echo "
+    $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+    echo form_label('Obrigatória?', 'obrigatorio', $attributes);
+    echo "
                                                                             <div class=\"col-lg-6\">";
-		$tipos = array(
-					0 => '',
-					1 => 'Customizadas',
-					2 => 'Aberta',
-					3 => 'Sim/Não (sim positivo)',
-					4 => 'Sim/Não (não positivo)',
-					5 => 'Nenhum/Básico/Intermediário/Avançado',
-					6 => 'Intervalo (limite definido pelo peso)',
-					7 => 'Upload de arquivo'
-					);
-					
-		$attributes = array('name' => 'tipo',
-					
-					'class' => 'form-control text-box single-line',
-					'disabled' => 'disabled');	
-        echo form_input($attributes, $tipos[$in_tipo]);  			
-                
-		echo "
+    $obrigatorios=array(''=>'','0'=>'Não','1'=>'Sim');
+
+    $attributes = array('name' => 'obrigatorio',
+
+                    'class' => 'form-control text-box single-line',
+                    'disabled' => 'disabled');
+    echo form_input($attributes, $obrigatorios[$bl_obrigatorio]);
+
+    echo "
                                                                             </div>
                                                                     </div>
                                                                     <div class=\"form-group row\">";
-		$attributes = array('class' => 'col-lg-3 col-form-label text-right');
-		echo form_label('Indicação da resposta aceita', 'respostaaceita', $attributes);
-		echo "
+    $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+    echo form_label('Eliminatória?', 'eliminatoria', $attributes);
+    echo "
                                                                             <div class=\"col-lg-6\">";
-		if(!isset($vc_respostaAceita) || (strlen($vc_respostaAceita) == 0 && strlen(set_value('respostaaceita')) > 0)){
-				$vc_respostaAceita = set_value('respostaaceita');
-		}
-		$attributes = array('name' => 'respostaaceita',
-							'disabled' => 'disabled',
-							'class' => 'form-control text-box single-line');
-		echo form_input($attributes, $vc_respostaAceita);
-		echo "
+    $eliminatorias=array(''=>'','0'=>'Não','1'=>'Sim');
+
+    $attributes = array('name' => 'eliminatoria',
+
+                    'class' => 'form-control text-box single-line',
+                    'disabled' => 'disabled');
+    echo form_input($attributes, $eliminatorias[$bl_eliminatoria]);
+
+    echo "
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class=\"form-group row\">";
+    $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+    echo form_label('Peso', 'peso', $attributes);
+    echo "
+                                                                            <div class=\"col-lg-6\">";
+
+    $attributes = array('name' => 'peso',
+                            'id'=>'peso',
+                            'maxlength'=>'1',
+                            'class' => 'form-control',
+                            'min' => '0',
+                            'max' => '100',
+                            'disabled' => 'disabled',
+                            'type' => 'number');
+    echo form_input($attributes, $in_peso);
+    echo "
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class=\"form-group row\">";
+
+    $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+    echo form_label('Tipo', 'tipo', $attributes);
+    echo "
+                                                                            <div class=\"col-lg-6\">";
+    $tipos = array(
+                    0 => '',
+                    1 => 'Customizadas',
+                    2 => 'Aberta',
+                    3 => 'Sim/Não (sim positivo)',
+                    4 => 'Sim/Não (não positivo)',
+                    5 => 'Nenhum/Básico/Intermediário/Avançado',
+                    6 => 'Intervalo (limite definido pelo peso)',
+                    7 => 'Upload de arquivo'
+                    );
+
+    $attributes = array('name' => 'tipo',
+
+                    'class' => 'form-control text-box single-line',
+                    'disabled' => 'disabled');
+    echo form_input($attributes, $tipos[$in_tipo]);
+
+    echo "
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class=\"form-group row\">";
+    $attributes = array('class' => 'col-lg-3 col-form-label text-right');
+    echo form_label('Indicação da resposta aceita', 'respostaaceita', $attributes);
+    echo "
+                                                                            <div class=\"col-lg-6\">";
+    if (!isset($vc_respostaAceita) || (strlen($vc_respostaAceita) == 0 && strlen(set_value('respostaaceita')) > 0)) {
+        $vc_respostaAceita = set_value('respostaaceita');
+    }
+    $attributes = array('name' => 'respostaaceita',
+                            'disabled' => 'disabled',
+                            'class' => 'form-control text-box single-line');
+    echo form_input($attributes, $vc_respostaAceita);
+    echo "
                                                                             </div>
                                                                     </div>
                                                                     <div id=\"div_respostas\">";
-                //var_dump($opcoes);
-                if(isset($opcoes)){
-                        $c=1;
-                        foreach ($opcoes as $linha){
-                                echo "
+    //var_dump($opcoes);
+    if (isset($opcoes)) {
+        $c=1;
+        foreach ($opcoes as $linha) {
+            echo "
                                                                             <fieldset>
                                                                                     <legend>Resposta $c</legend>
                                                                                     <div class=\"form-group row\">
@@ -695,11 +675,11 @@ else if($menu2 == 'view'){
                                                                                             </div>
                                                                                     </div>
                                                                             </fieldset>";
-                                $c++;
-                        }
-                }
-                
-                echo "
+            $c++;
+        }
+    }
+
+    echo "
                                                                             </div>
                                                                             <hr/>
                                                                             <div id=\"div_adicionar\" style=\"display:none\"><div class=\"j-footer\"><div class=\"row\"><div class=\"col-lg-12 text-center\"><button type=\"button\" id=\"adicionar_resposta\" class=\"btn btn-inverse\"><i class=\"fa fa-plus\"></i> Adicionar resposta</button><br/><br/></div></div></div></div>
@@ -712,8 +692,6 @@ else if($menu2 == 'view'){
                                                                             </div>
                                                                     </form>
                                                             </div>";
-                
-        
 }
 /*
 else if($menu2 == 'questoes'){
@@ -954,11 +932,11 @@ else if($menu2 == 'questoes'){
         </script>";
         }
 }*/
-else{
-        echo "
+else {
+    echo "
                                                                     <div class=\"kt-portlet__body\">";
-        if(strlen($erro)>0){
-                echo "
+    if (strlen($erro)>0) {
+        echo "
                                                                             <div class=\"alert alert-danger\" role=\"alert\">
                                                                                     <div class=\"alert-icon\">
                                                                                             <i class=\"fa fa-exclamation-triangle\"></i>
@@ -968,10 +946,9 @@ else{
                                                                                     </div>
                                                                             </div>
                                                                     </div>";
-        //$erro='';
-        }
-        else if(strlen($sucesso) > 0){
-                echo "
+    //$erro='';
+    } elseif (strlen($sucesso) > 0) {
+        echo "
                                                                             <div class=\"alert alert-success\" role=\"alert\">
                                                                                     <div class=\"alert-icon\">
                                                                                             <i class=\"fa fa-check-circle\"></i>
@@ -981,12 +958,10 @@ else{
                                                                                     </div>
                                                                             </div>
                                                                     </div>";
-        }
+    }
 }
 echo "
                                                             </div>
                                                     </div>";
 
 $this->load->view('templates/internaRodape', $pagina);
-
-?>

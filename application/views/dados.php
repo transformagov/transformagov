@@ -1,12 +1,13 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 $pagina['menu1']='Candidatos';
 $pagina['menu2']='index';
 $pagina['url']='Candidatos/index';
 $pagina['nome_pagina']='Seus dados';
-if(isset($adicionais)){
-        $pagina['adicionais']=$adicionais;
+if (isset($adicionais)) {
+    $pagina['adicionais']=$adicionais;
 }
 
 $this->load->view('templates/internaCabecalho', $pagina);
@@ -31,17 +32,16 @@ echo "
                                                                     </div>
                                                             </div>";
 
-if(strlen($erro)>0){
-        echo "
+if (strlen($erro)>0) {
+    echo "
                                                             <div class=\"alert alert-danger background-danger\" role=\"alert\">
                                                                     <div class=\"alert-text\">
                                                                             <strong>ERRO</strong>:<br /> $erro
                                                                     </div>
                                                             </div>";
 //$erro='';
-}
-else if(strlen($sucesso) > 0){
-        echo "
+} elseif (strlen($sucesso) > 0) {
+    echo "
                                                             <div class=\"alert alert-success background-success\" role=\"alert\">
                                                                     <div class=\"alert-text\">
                                                                             $sucesso
@@ -50,17 +50,17 @@ else if(strlen($sucesso) > 0){
 }
 //if(strlen($sucesso) == 0){
         /*if(strlen(set_value('num_formacao')) > 0){
-        
+
                 $num_formacao = set_value('num_formacao');
         }
         if(!($num_formacao>0)){
                 $num_formacao = 1;
         }
-		$navegar = 0;
+        $navegar = 0;
         if(strlen(set_value('num_experiencia')) > 0){
                 if(set_value('num_experiencia') > $num_experiencia){
-						$navegar = 1;
-				}
+                        $navegar = 1;
+                }
                 $num_experiencia = set_value('num_experiencia');
         }
         if(!($num_experiencia>0)){
@@ -157,17 +157,16 @@ else if(strlen($sucesso) > 0){
                             4 => 'Prefiro não declarar',
                             );
         //4 => 'Desejo informar'
-        if(strstr($erro, "'Gênero'")){
-                echo form_dropdown('IdentidadeGenero', $attributes, $in_genero, "class=\"form-control is-invalid\" id=\"IdentidadeGenero\"");
-        }
-        else{
-                echo form_dropdown('IdentidadeGenero', $attributes, $in_genero, "class=\"form-control\" id=\"IdentidadeGenero\"");
+        if (strstr($erro, "'Gênero'")) {
+            echo form_dropdown('IdentidadeGenero', $attributes, $in_genero, "class=\"form-control is-invalid\" id=\"IdentidadeGenero\"");
+        } else {
+            echo form_dropdown('IdentidadeGenero', $attributes, $in_genero, "class=\"form-control\" id=\"IdentidadeGenero\"");
         }
         echo "
                                                 </div>
                                         </div>
                                         ";
-                                        
+
         /*echo "
                                         <div class=\"col-md-3\">
                                                 <div class=\"form-group\">";
@@ -186,7 +185,7 @@ else if(strlen($sucesso) > 0){
         echo "
                                                 </div>
                                         </div>";*/
-                                        
+
         echo "
                                 </div>
                                 <div class=\"row\">
@@ -205,11 +204,10 @@ else if(strlen($sucesso) > 0){
                             6 => 'Preta',
                             7 => 'Prefiro não declarar',
                             );
-        if(strstr($erro, "'Raça'")){
-                echo form_dropdown('Raca', $attributes, $in_raca, "class=\"form-control is-invalid\" id=\"Raca\"");
-        }
-        else{
-                echo form_dropdown('Raca', $attributes, $in_raca, "class=\"form-control\" id=\"Raca\"");
+        if (strstr($erro, "'Raça'")) {
+            echo form_dropdown('Raca', $attributes, $in_raca, "class=\"form-control is-invalid\" id=\"Raca\"");
+        } else {
+            echo form_dropdown('Raca', $attributes, $in_raca, "class=\"form-control\" id=\"Raca\"");
         }
         echo "
                                                 </div>
@@ -223,8 +221,8 @@ else if(strlen($sucesso) > 0){
                             'id' => 'Email',
                             'maxlength'=>'250',
                             'class' => 'form-control text-box single-line');
-        if(strstr($erro, "'E-mail'")){
-                $attributes['class'] = 'form-control text-box single-line is-invalid';
+        if (strstr($erro, "'E-mail'")) {
+            $attributes['class'] = 'form-control text-box single-line is-invalid';
         }
         echo form_input($attributes, $vc_email);
         echo "
@@ -239,8 +237,8 @@ else if(strlen($sucesso) > 0){
                             'id' => 'Telefone',
                             'maxlength'=>'15',
                             'class' => 'form-control text-box single-line');
-        if(strstr($erro, "'Telefone'")){
-                $attributes['class'] = 'form-control text-box single-line is-invalid';
+        if (strstr($erro, "'Telefone'")) {
+            $attributes['class'] = 'form-control text-box single-line is-invalid';
         }
         echo form_input($attributes, $vc_telefone);
         echo "
@@ -269,10 +267,10 @@ else if(strlen($sucesso) > 0){
         $attributes = array('name' => 'DataNascimento',
                             'id' => 'DataNascimento',
                             'maxlength'=>'15',
-							
+
                             'class' => 'form-control text-box single-line');
-        if(strstr($erro, 'data de nascimento')){
-                $attributes['class'] = 'form-control text-box single-line is-invalid';
+        if (strstr($erro, 'data de nascimento')) {
+            $attributes['class'] = 'form-control text-box single-line is-invalid';
         }
         echo form_input($attributes, show_date($dt_nascimento));
         echo "
@@ -294,7 +292,7 @@ else if(strlen($sucesso) > 0){
                                         </div>
                                 </div>
                                 ";
-        /*                        
+        /*
         echo "
                                 <div class=\"row\">
                                         <div class=\"col-md-4\">
@@ -355,7 +353,7 @@ else if(strlen($sucesso) > 0){
                                                 </div>
                                         </div>
                                 </div>";
-        */                        
+        */
         echo "
                                 <div class=\"row\">
                                         <div class=\"col-md-2\">
@@ -367,8 +365,8 @@ else if(strlen($sucesso) > 0){
                             'id' => 'CEP',
                             'maxlength'=>'9',
                             'class' => 'form-control text-box single-line');
-        if(strstr($erro, "'CEP'")){
-                $attributes['class'] = 'form-control text-box single-line is-invalid';
+        if (strstr($erro, "'CEP'")) {
+            $attributes['class'] = 'form-control text-box single-line is-invalid';
         }
         echo form_input($attributes, $vc_cep, " onblur=\"pesquisacep(this.value);\"");
         echo "
@@ -385,8 +383,8 @@ else if(strlen($sucesso) > 0){
                             'id' => 'Logradouro',
                             'maxlength'=>'250',
                             'class' => 'form-control text-box single-line');
-        if(strstr($erro, "'Logradouro'")){
-                $attributes['class'] = 'form-control text-box single-line is-invalid';
+        if (strstr($erro, "'Logradouro'")) {
+            $attributes['class'] = 'form-control text-box single-line is-invalid';
         }
         echo form_input($attributes, $vc_logradouro);
         echo "
@@ -401,8 +399,8 @@ else if(strlen($sucesso) > 0){
                             'id' => 'Numero',
                             'maxlength'=>'10',
                             'class' => 'form-control text-box single-line');
-        if(strstr($erro, "'Número'")){
-                $attributes['class'] = 'form-control text-box single-line is-invalid';
+        if (strstr($erro, "'Número'")) {
+            $attributes['class'] = 'form-control text-box single-line is-invalid';
         }
         echo form_input($attributes, $vc_numero);
         echo "
@@ -432,8 +430,8 @@ else if(strlen($sucesso) > 0){
                             'id' => 'Bairro',
                             'maxlength'=>'150',
                             'class' => 'form-control text-box single-line');
-        if(strstr($erro, "'Bairro'")){
-                $attributes['class'] = 'form-control text-box single-line is-invalid';
+        if (strstr($erro, "'Bairro'")) {
+            $attributes['class'] = 'form-control text-box single-line is-invalid';
         }
         echo form_input($attributes, $vc_bairro);
         echo "
@@ -444,12 +442,11 @@ else if(strlen($sucesso) > 0){
         $Estados=array(0 => '')+$Estados;
         $attributes = array('class' => 'control-label');
         echo form_label('Estado <abbr title="Obrigatório">*</abbr>', 'Estado', $attributes);
-        
-        if(strstr($erro, "'Estado'")){
-                echo form_dropdown('Estado', $Estados, set_value('Estado'), "class=\"form-control is-invalid\" id=\"Estado\"");
-        }
-        else{
-                echo form_dropdown('Estado', $Estados, set_value('Estado'), "class=\"form-control\" id=\"Estado\"");
+
+        if (strstr($erro, "'Estado'")) {
+            echo form_dropdown('Estado', $Estados, set_value('Estado'), "class=\"form-control is-invalid\" id=\"Estado\"");
+        } else {
+            echo form_dropdown('Estado', $Estados, set_value('Estado'), "class=\"form-control\" id=\"Estado\"");
         }
         echo "
                                                 </div>
@@ -458,25 +455,24 @@ else if(strlen($sucesso) > 0){
                                                 <div class=\"form-group\">";
         $attributes = array('class' => 'control-label');
         echo form_label('Município <abbr title="Obrigatório">*</abbr>', 'Municipio', $attributes);
-        
-        if(strstr($erro, "'Município'")){
-                echo form_dropdown('Municipio', $Municipios, set_value('Municipio'), "class=\"form-control is-invalid\" id=\"Municipio\"");
-        }
-        else{
-                echo form_dropdown('Municipio', $Municipios, set_value('Municipio'), "class=\"form-control\" id=\"Municipio\"");
+
+        if (strstr($erro, "'Município'")) {
+            echo form_dropdown('Municipio', $Municipios, set_value('Municipio'), "class=\"form-control is-invalid\" id=\"Municipio\"");
+        } else {
+            echo form_dropdown('Municipio', $Municipios, set_value('Municipio'), "class=\"form-control\" id=\"Municipio\"");
         }
         echo "
                                                 </div>
                                         </div>
                                 </div>";
         /*echo "
-								<div class=\"alert alert-warning\">
-										ATENÇÃO<br />
-										As informações de Formação Acadêmica e Experiência Profissional registradas aqui servirão como currículo base na inscrição de qualquer vaga. O sistema incluirá uma cópia dos dados inseridos aqui no formulário de “Currículo” da vaga escolhida, para que o candidato não precise preencher todas essas informações e incluir todos os comprovantes toda vez que se inscrever a uma vaga.<br />
-										Os dados copiados para a vaga poderão ser alterados pelo candidato durante a inscrição, mas essas alterações NÃO serão refletidas no currículo base, ou seja, no formulário de Dados Pessoais.<br />
-										Após a escolha da vaga, qualquer alteração no currículo base (neste formulário de Dados Pessoais) NÃO será refletida no Currículo que aparece na vaga.
+                                <div class=\"alert alert-warning\">
+                                        ATENÇÃO<br />
+                                        As informações de Formação Acadêmica e Experiência Profissional registradas aqui servirão como currículo base na inscrição de qualquer vaga. O sistema incluirá uma cópia dos dados inseridos aqui no formulário de “Currículo” da vaga escolhida, para que o candidato não precise preencher todas essas informações e incluir todos os comprovantes toda vez que se inscrever a uma vaga.<br />
+                                        Os dados copiados para a vaga poderão ser alterados pelo candidato durante a inscrição, mas essas alterações NÃO serão refletidas no currículo base, ou seja, no formulário de Dados Pessoais.<br />
+                                        Após a escolha da vaga, qualquer alteração no currículo base (neste formulário de Dados Pessoais) NÃO será refletida no Currículo que aparece na vaga.
 
-								</div>
+                                </div>
                                 <div class=\"kt-wizard-v4__form\" id=\"div_formacao\">";
         for($i = 1; $i <= $num_formacao; $i++){
                 echo "
@@ -487,8 +483,8 @@ else if(strlen($sucesso) > 0){
                                                                     <div class=\"col-md-4 col-lg-2\">";
                 $attributes = array('class' => 'esquerdo control-label');
                 echo form_label('Tipo <abbr title="Obrigatório">*</abbr>', "tipo{$i}", $attributes);
-                
-                echo " 
+
+                echo "
                                                                     </div>
                                                                     <div class=\"col-md-8 col-lg-10\">";
                 //var_dump($etapas);
@@ -501,7 +497,7 @@ else if(strlen($sucesso) > 0){
                             'mestrado' => 'Mestrado',
                             'doutorado' => 'Doutorado',
                             'posdoc' => 'Pós-doutorado',
-							'seminario' => 'Curso/Seminário',
+                            'seminario' => 'Curso/Seminário',
                             );
                 if(!isset($en_tipo[$i]) || (strlen($en_tipo[$i]) == 0 && strlen(set_value("tipo{$i}")) > 0) || (strlen(set_value("tipo{$i}")) > 0 && $en_tipo != set_value("tipo{$i}"))){
                         $en_tipo[$i] = set_value("tipo{$i}");
@@ -520,7 +516,7 @@ else if(strlen($sucesso) > 0){
                                                                                                                                                     ";
                 $attributes = array('class' => 'esquerdo control-label');
                 echo form_label('Nome do curso <abbr title="Obrigatório">*</abbr>', "curso{$i}", $attributes);
-                echo " 
+                echo "
                                                                     </div>
                                                                     <div class=\"col-md-8 col-lg-10\">";
                 if(!isset($vc_curso[$i]) || (strlen($vc_curso[$i]) == 0 && strlen(set_value("curso{$i}")) > 0) || (strlen(set_value("curso{$i}")) > 0 && $vc_curso[$i] != set_value("curso{$i}"))){
@@ -542,7 +538,7 @@ else if(strlen($sucesso) > 0){
                                                                                                                                                     ";
                 $attributes = array('class' => 'esquerdo control-label');
                 echo form_label('Instituição de ensino <abbr title="Obrigatório">*</abbr>', "instituicao{$i}", $attributes);
-                echo " 
+                echo "
                                                                     </div>
                                                                     <div class=\"col-md-8 col-lg-10\">";
                 if(!isset($vc_instituicao[$i]) || (strlen($vc_instituicao[$i]) == 0 && strlen(set_value("instituicao{$i}")) > 0) || (strlen(set_value("instituicao{$i}")) > 0 && $vc_instituicao[$i] != set_value("instituicao{$i}"))){
@@ -559,13 +555,13 @@ else if(strlen($sucesso) > 0){
                 echo "
                                                                     </div>
                                                             </div>
-                                                            
-															<div class=\"form-group row\">
+
+                                                            <div class=\"form-group row\">
                                                                     <div class=\"col-md-4 col-lg-2\">
                                                                                                                                                     ";
                 $attributes = array('class' => 'esquerdo control-label');
                 echo form_label('Data de conclusão <abbr title="Obrigatório">*</abbr>', "conclusao{$i}", $attributes);
-                echo " 
+                echo "
                                                                     </div>
                                                                     <div class=\"col-md-8 col-lg-10\">";
                 if(!isset($dt_conclusao[$i]) || (strlen($dt_conclusao[$i]) == 0 && strlen(set_value("conclusao{$i}")) > 0) || (strlen(set_value("conclusao{$i}")) > 0 && $dt_conclusao[$i] != set_value("conclusao{$i}"))){
@@ -573,25 +569,25 @@ else if(strlen($sucesso) > 0){
                 }
                 $attributes = array('name' => "conclusao{$i}",
                                     'id' => "conclusao{$i}",
-                                    
+
                                     'type' => 'date',
                                     'class' => 'form-control');
                 if(strstr($erro, "data da conclusão da 'Formação acadêmica {$i}'")){
                         $attributes['class'] = 'form-control is-invalid';
                 }
-                
+
                 echo form_input($attributes, $dt_conclusao[$i]);
-               
+
                 echo "
                                                                     </div>
                                                             </div>
-                                                            
-															<div class=\"form-group row\" id=\"div_carga_horaria{$i}\">
+
+                                                            <div class=\"form-group row\" id=\"div_carga_horaria{$i}\">
                                                                     <div class=\"col-md-4 col-lg-2\">
                                                                                                                                                     ";
                 $attributes = array('class' => 'esquerdo control-label');
                 echo form_label('Carga Horária total (considerando 1 dia = 8h) <abbr title="Obrigatório no caso de ser \'Curso/Seminário\'">*</abbr>', "cargahoraria{$i}", $attributes);
-                echo " 
+                echo "
                                                                     </div>
                                                                     <div class=\"col-md-8 col-lg-10\">";
                 if(!isset($in_cargahoraria[$i]) || (strlen($in_cargahoraria[$i]) == 0 && strlen(set_value("cargahoraria{$i}")) > 0) || (strlen(set_value("cargahoraria{$i}")) > 0 && $in_cargahoraria[$i] != set_value("conclusao{$i}"))){
@@ -605,7 +601,7 @@ else if(strlen($sucesso) > 0){
                 if(strstr($erro, "carga horária da 'Formação acadêmica {$i}'")){
                         $attributes['class'] = 'form-control is-invalid';
                 }
-                
+
                 echo form_input($attributes, $in_cargahoraria[$i]);
                 if(!isset($pr_formacao[$i]) || (strlen($pr_formacao[$i]) == 0 && strlen(set_value("codigo_formacao{$i}")) > 0) || (strlen(set_value("codigo_formacao{$i}")) > 0 && $pr_formacao[$i] != set_value("codigo_formacao{$i}"))){
                         $pr_formacao[$i] = set_value("codigo_formacao{$i}");
@@ -620,7 +616,7 @@ else if(strlen($sucesso) > 0){
                                                                                                                                                     ";
                 $attributes = array('class' => 'esquerdo control-label');
                 echo form_label('Diploma / certificado <abbr title="Obrigatório">*</abbr>', "diploma{$i}", $attributes);
-                echo " 
+                echo "
                                                                     </div>
                                                                     <div class=\"col-md-8 col-lg-10\">";
                 $attributes = array('name' => "diploma{$i}",
@@ -628,16 +624,16 @@ else if(strlen($sucesso) > 0){
                 if(strstr($erro, "diploma / certificado da 'Formação acadêmica {$i}'")){
                         $attributes['class'] = 'form-control is-invalid';
                 }
-				if(isset($anexos_formacao[$i])){
-						$vc_anexo = $anexos_formacao[$i][0]->vc_arquivo;
-						$pr_arquivo = $anexos_formacao[$i][0]->pr_anexo;
-						echo "<a href=\"".site_url('Interna/download/'.$pr_arquivo)."\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-download\"></i> ".$vc_anexo."</button></a>";
-				}
-				else if(isset($anexos_formacao2[$i])){
-						$vc_anexo = $anexos_formacao2[$i][0]->vc_arquivo;
-						$pr_arquivo = $anexos_formacao2[$i][0]->pr_anexo;
-						echo "<a href=\"".site_url('Interna/download/'.$pr_arquivo)."\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-download\"></i> ".$vc_anexo."</button></a>";
-				}
+                if(isset($anexos_formacao[$i])){
+                        $vc_anexo = $anexos_formacao[$i][0]->vc_arquivo;
+                        $pr_arquivo = $anexos_formacao[$i][0]->pr_anexo;
+                        echo "<a href=\"".site_url('Interna/download/'.$pr_arquivo)."\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-download\"></i> ".$vc_anexo."</button></a>";
+                }
+                else if(isset($anexos_formacao2[$i])){
+                        $vc_anexo = $anexos_formacao2[$i][0]->vc_arquivo;
+                        $pr_arquivo = $anexos_formacao2[$i][0]->pr_anexo;
+                        echo "<a href=\"".site_url('Interna/download/'.$pr_arquivo)."\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-download\"></i> ".$vc_anexo."</button></a>";
+                }
                 echo form_upload($attributes, '', 'class="form-control"');
                 echo "
                                                                     </div>
@@ -655,7 +651,7 @@ else if(strlen($sucesso) > 0){
                                                         <button type=\"button\" id=\"remover_formacao\" class=\"btn btn-default\"><i class=\"fa fa-lg mr-0 fa-minus\"></i> Remover formação</button></div>
                                                 </div>
                                         </div>
-                                </div> 
+                                </div>
                                 <div class=\"kt-wizard-v4__form\" id=\"div_experiencia\">";
         for($i = 1; $i <= $num_experiencia; $i++){
                 if($i == 1){
@@ -663,22 +659,22 @@ else if(strlen($sucesso) > 0){
                                         <div id=\"row_experiencia{$i}\">
                                                 <fieldset>
                                                         <legend>Experiência profissional {$i}<abbr title=\"Prezado(a) candidato (a) atente-se ao preenchimento da experiência profissional, tal informação deve conter, necessariamente, não apenas os nomes das instituições nas quais você trabalhou, mas também o período (ano de início e término do vínculo), o tempo de experiência em determinada atividade, o tipo (se foi de liderança, coordenação, parte da equipe técnica etc), a atividade realizada e o número de liderados (se esta informação for requisito da vaga).\">?</abbr></legend>";
-                
-                } 
+
+                }
                 else{
                         echo "
                                         <div id=\"row_experiencia{$i}\">
                                                 <fieldset>
                                                         <legend>Experiência profissional {$i}</legend>";
-                
+
                 }
                 echo "
                                                         <div class=\"form-group row\">
                                                                 <div class=\"col-md-4 col-lg-2\">
-                                                                ";                                                            
+                                                                ";
                 $attributes = array('class' => 'esquerdo control-label');
                 echo form_label('Instituição / empresa <abbr title="Obrigatório">*</abbr>', "empresa{$i}", $attributes);
-                echo " 
+                echo "
                                                                 </div>
                                                                 <div class=\"col-md-8 col-lg-10\">";
                 if(!isset($vc_empresa[$i]) || (strlen($vc_empresa[$i]) == 0 && strlen(set_value("empresa{$i}")) > 0) || (strlen(set_value("empresa{$i}")) > 0 && $vc_empresa[$i] != set_value("empresa{$i}"))){
@@ -697,7 +693,7 @@ else if(strlen($sucesso) > 0){
                                                                 ";
                 $attributes = array('class' => 'esquerdo control-label');
                 echo form_label('Data de início <abbr title="Obrigatório">*</abbr>', "inicio{$i}", $attributes);
-                echo " 
+                echo "
                                                                 </div>
                                                                 <div class=\"col-md-8 col-lg-10\">";
                 if(!isset($dt_inicio[$i]) || (strlen($dt_inicio[$i]) == 0 && strlen(set_value("inicio{$i}")) > 0) || (strlen(set_value("inicio{$i}")) > 0 && $dt_inicio[$i] != set_value("inicio{$i}"))){
@@ -705,20 +701,20 @@ else if(strlen($sucesso) > 0){
                 }
                 $attributes = array('name' => "inicio{$i}",
                                     'id' => "inicio{$i}",
-                                    
+
                                     'type' => 'date',
                                     'class' => 'form-control');
                 echo form_input($attributes, $dt_inicio[$i]);
                 echo "
                                                                 </div>
                                                         </div>
-														
+
                                                         <div class=\"form-group row\">
                                                                 <div class=\"col-md-4 col-lg-2\">
                                                                 ";
                 $attributes = array('class' => 'esquerdo control-label');
                 echo form_label('Data de término', "fim{$i}", $attributes);
-                echo " 
+                echo "
                                                                 </div>
                                                                 <div class=\"col-md-8 col-lg-10\">";
                 if(!isset($dt_fim[$i]) || (strlen($dt_fim[$i]) == 0 && strlen(set_value("fim{$i}")) > 0) || (strlen(set_value("fim{$i}")) > 0 && $dt_fim[$i] != set_value("fim{$i}"))){
@@ -726,20 +722,20 @@ else if(strlen($sucesso) > 0){
                 }
                 $attributes = array('name' => "fim{$i}",
                                     'id' => "fim{$i}",
-                                    
+
                                     'type' => 'date',
                                     'class' => 'form-control');
                 echo form_input($attributes, $dt_fim[$i]);
                 echo "
                                                                 </div>
                                                         </div>
-														
+
                                                         <div class=\"form-group row\">
                                                                 <div class=\"col-md-4 col-lg-2\">
                                                                 ";
                 $attributes = array('class' => 'esquerdo control-label');
                 echo form_label('Principais atividades desenvolvidas <abbr title="Obrigatório">*</abbr>', "atividades{$i}", $attributes);
-                echo " 
+                echo "
                                                                 </div>
                                                                 <div class=\"col-md-8 col-lg-10\">";
                 if(!isset($tx_atividades[$i]) || (strlen($tx_atividades[$i]) == 0 && strlen(set_value("atividades{$i}")) > 0) || (strlen(set_value("fim{$i}")) > 0 && $tx_atividades[$i] != set_value("atividades{$i}"))){
@@ -758,38 +754,38 @@ else if(strlen($sucesso) > 0){
                 echo "
                                                                 </div>
                                                         </div>
-														<div class=\"form-group row\">
-																<div class=\"col-md-4 col-lg-2\">
-																		";
+                                                        <div class=\"form-group row\">
+                                                                <div class=\"col-md-4 col-lg-2\">
+                                                                        ";
                 $attributes = array('class' => 'esquerdo control-label');
                 echo form_label('Comprovante <abbr title="Obrigatório">*</abbr>', "comprovante{$i}", $attributes);
-                echo " 
-																</div>
-																<div class=\"col-md-8 col-lg-10\">";
+                echo "
+                                                                </div>
+                                                                <div class=\"col-md-8 col-lg-10\">";
                 $attributes = array('name' => "comprovante{$i}",
                                     'class' => 'form-control');
                 if(strstr($erro, "comprovante da 'Experiência profissional {$i}'")){
                         $attributes['class'] = 'form-control is-invalid';
                 }
-				if(isset($anexos_experiencia[$i])){
-						$vc_anexo = $anexos_experiencia[$i][0]->vc_arquivo;
-						$pr_arquivo = $anexos_experiencia[$i][0]->pr_anexo;
-						echo "<a href=\"".site_url('Interna/download/'.$pr_arquivo)."\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-download\"></i> ".$vc_anexo."</button></a>";
-				}
-				else if(isset($anexos_experiencia2[$i])){
-						$vc_anexo = $anexos_experiencia2[$i][0]->vc_arquivo;
-						$pr_arquivo = $anexos_experiencia2[$i][0]->pr_anexo;
-						echo "<a href=\"".site_url('Interna/download/'.$pr_arquivo)."\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-download\"></i> ".$vc_anexo."</button></a>";
-				}
+                if(isset($anexos_experiencia[$i])){
+                        $vc_anexo = $anexos_experiencia[$i][0]->vc_arquivo;
+                        $pr_arquivo = $anexos_experiencia[$i][0]->pr_anexo;
+                        echo "<a href=\"".site_url('Interna/download/'.$pr_arquivo)."\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-download\"></i> ".$vc_anexo."</button></a>";
+                }
+                else if(isset($anexos_experiencia2[$i])){
+                        $vc_anexo = $anexos_experiencia2[$i][0]->vc_arquivo;
+                        $pr_arquivo = $anexos_experiencia2[$i][0]->pr_anexo;
+                        echo "<a href=\"".site_url('Interna/download/'.$pr_arquivo)."\"><button type=\"button\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-download\"></i> ".$vc_anexo."</button></a>";
+                }
                 echo form_upload($attributes, '', 'class="form-control"');
                 echo "
-																</div>
-														</div>
+                                                                </div>
+                                                        </div>
                                                 </fieldset>
                                         </div>
                                                                         ";
         }
-        echo " 
+        echo "
                                 </div>
                                 <div class=\"j-footer\" id=\"botoes_experiencia\">
                                         <div class=\"kt-form__actions\">
@@ -925,7 +921,7 @@ else if(strlen($sucesso) > 0){
 
                                     $attributes = array('class' => 'col-lg-2 col-form-label');
                                     $pagina['js'] .= form_label('Tipo <abbr title="Obrigatório">*</abbr>', "tipo' + valor_num + '", $attributes);
-                                    $pagina['js'] .= "<div class=\"col-md-8 col-lg-10\"><select name=\"tipo' + valor_num + '\" class=\"form-control\" id=\"tipo' + valor_num + '\" onchange=\"mostra_carga_horaria('+valor_num+')\"><option value=\"\" selected=\"selected\"></option><option value=\"bacharelado\">Graduação - Bacharelado</option><option value=\"tecnologo\">Graduação - Tecnológo</option><option value=\"especializacao\">Pós-graduação - Especialização</option><option value=\"mba\">MBA</option><option value=\"mestrado\">Mestrado</option><option value=\"doutorado\">Doutorado</option><option value=\"posdoc\">Pós-doutorado</option><option value=\"seminario\">Curso/Seminário</option></select></div></div><div class=\"form-group row validated\">";                             
+                                    $pagina['js'] .= "<div class=\"col-md-8 col-lg-10\"><select name=\"tipo' + valor_num + '\" class=\"form-control\" id=\"tipo' + valor_num + '\" onchange=\"mostra_carga_horaria('+valor_num+')\"><option value=\"\" selected=\"selected\"></option><option value=\"bacharelado\">Graduação - Bacharelado</option><option value=\"tecnologo\">Graduação - Tecnológo</option><option value=\"especializacao\">Pós-graduação - Especialização</option><option value=\"mba\">MBA</option><option value=\"mestrado\">Mestrado</option><option value=\"doutorado\">Doutorado</option><option value=\"posdoc\">Pós-doutorado</option><option value=\"seminario\">Curso/Seminário</option></select></div></div><div class=\"form-group row validated\">";
                                     $attributes = array('class' => 'col-lg-2 col-form-label');
                                     $pagina['js'] .= form_label('Nome do curso <abbr title="Obrigatório">*</abbr>', "curso' + valor_num + '", $attributes);
                                     $pagina['js'] .= "<div class=\"col-md-8 col-lg-10\">";
@@ -934,18 +930,18 @@ else if(strlen($sucesso) > 0){
                                     $pagina['js'] .= form_label('Instituição de ensino <abbr title="Obrigatório">*</abbr>', "instituicao' + valor_num + '", $attributes);
                                     $pagina['js'] .= "<div class=\"col-md-8 col-lg-10\">";
                                     $pagina['js'] .= "<input type=\"text\" name=\"instituicao' + valor_num + '\" value=\"\" id=\"instituicao' + valor_num + '\" maxlength=\"100\" class=\"form-control\"  /></div></div><div class=\"form-group row validated\">";
-                                    
-									$attributes = array('class' => 'col-lg-2 col-form-label');
+
+                                    $attributes = array('class' => 'col-lg-2 col-form-label');
                                     $pagina['js'] .= form_label('Data de conclusão <abbr title="Obrigatório">*</abbr>', "conclusao' + valor_num + '", $attributes);
                                     $pagina['js'] .= "<div class=\"col-md-8 col-lg-10\">";
                                     $pagina['js'] .= "<input type=\"date\" name=\"conclusao' + valor_num + '\" value=\"\" id=\"conclusao' + valor_num + '\" class=\"form-control\"  /></div></div><div class=\"form-group row validated\" id=\"div_carga_horaria' + valor_num + '\">";
-                                    
-                                    
-									$attributes = array('class' => 'col-lg-2 col-form-label');
+
+
+                                    $attributes = array('class' => 'col-lg-2 col-form-label');
                                     $pagina['js'] .= form_label('Carga Horária total (considerando 1 dia = 8h) <abbr title="Obrigatório no caso de ser Curso/Seminário">*</abbr>', "conclusao' + valor_num + '", $attributes);
                                     $pagina['js'] .= "<div class=\"col-md-8 col-lg-10\">";
                                     $pagina['js'] .= "<input type=\"number\" name=\"cargahoraria' + valor_num + '\" value=\"\" id=\"cargahoraria' + valor_num + '\" maxlength=\"4\" class=\"form-control\"  /></div></div><div class=\"form-group row validated\">";
-									
+
                                     $attributes = array('class' => 'col-lg-2 col-form-label');
                                     $pagina['js'] .= form_label('Diploma / comprovante <abbr title="Obrigatório">*</abbr>', "diploma' + valor_num + '", $attributes);
                                     $pagina['js'] .= "<div class=\"col-md-8 col-lg-10\"><input type=\"file\" name=\"diploma' + valor_num + '\"  class=\"form-control\" /></div>";
@@ -953,7 +949,7 @@ else if(strlen($sucesso) > 0){
                                     $pagina['js'] .= "</div>';
                                     $( '#div_formacao' ).append( $(newElement) );
                                     $('input[name=num_formacao]').val(valor_num);
-                                    $('#div_carga_horaria'+valor_num).hide(); 
+                                    $('#div_carga_horaria'+valor_num).hide();
 
                             });
                             $( '#remover_formacao' ).click(function() {
@@ -962,27 +958,27 @@ else if(strlen($sucesso) > 0){
                                         $.get( \"/Candidatos/delete_formacao/\"+$('#codigo_formacao'+valor_num).val() );
                                     }
                                     $( '#row_formacao' + valor_num ).remove();
-                                    
+
                                     valor_num--;
-                                    
+
                                     $('input[name=num_formacao]').val(valor_num);
-                            });        
-                                    
+                            });
+
                             $( '#adicionar_experiencia' ).click(function() {
                                     var valor_num = $('input[name=num_experiencia]').val();
                                     valor_num++;
-                                    
+
                                     $('input[name=num_experiencia]').val(valor_num);
-									document.getElementById('form_dados').submit();
+                                    document.getElementById('form_dados').submit();
                             });
                             $( '#remover_experiencia' ).click(function() {
                                     var valor_num = $('input[name=num_experiencia]').val();
                                     if($('#codigo_experiencia'+valor_num).val()>0){
-                                        
+
                                         $.get( \"/Candidatos/delete_experiencia/\"+$('#codigo_experiencia'+valor_num).val() );
                                     }
                                     $( '#row_experiencia' + valor_num ).remove();
-                                    valor_num--;                                    
+                                    valor_num--;
                                     $('input[name=num_experiencia]').val(valor_num);
                             });";*/
         $pagina['js'].=" 
@@ -990,17 +986,17 @@ else if(strlen($sucesso) > 0){
                         <script type=\"text/javascript\">
                             $(document).ready(function(){
 									";
-		/*if($navegar == 1){
-				
-				$pagina['js'].="
-									$('html, body').animate({
-										scrollTop: $('#botoes_experiencia').offset().top
-									}, 'fast');";
-			
-		}
+        /*if($navegar == 1){
+
+                $pagina['js'].="
+                                    $('html, body').animate({
+                                        scrollTop: $('#botoes_experiencia').offset().top
+                                    }, 'fast');";
+
+        }
         for($i = 1; $i <= $num_formacao; $i++){
                 $pagina['js'].="
-                                    $('#div_carga_horaria{$i}').hide();  
+                                    $('#div_carga_horaria{$i}').hide();
                 ";
 
         $('#OutroPais').click(function(){
@@ -1008,9 +1004,9 @@ else if(strlen($sucesso) > 0){
         });
         $('#Pais').click(function(){
                 $('#div_cidadeestrangeira').hide();
-        });        
-        }*/					
-		$pagina['js'].="
+        });
+        }*/
+        $pagina['js'].="
                                     $('#CPF').inputmask('999.999.999-99');
                                     $('#DataNascimento').inputmask('99/99/9999');
 									
@@ -1022,8 +1018,8 @@ else if(strlen($sucesso) > 0){
                         <script type=\"text/javascript\">
                             $(document).ready(function(){
                                     ";
-        if(set_value('Nacionalidade')!='Brasil' && strlen(set_value('Nacionalidade'))){
-                $pagina['js'].="
+        if (set_value('Nacionalidade')!='Brasil' && strlen(set_value('Nacionalidade'))) {
+            $pagina['js'].="
                                     $('#div_cidadeestrangeira').show();";
         }
         $pagina['js'].="
@@ -1064,5 +1060,3 @@ else if(strlen($sucesso) > 0){
 echo "";
 
 $this->load->view('templates/internaRodape', $pagina);
-
-?>

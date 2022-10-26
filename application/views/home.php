@@ -1,12 +1,13 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 $pagina['menu1']=$menu1;
 $pagina['menu2']=$menu2;
 $pagina['url']=$url;
 $pagina['nome_pagina']=$nome_pagina;
-if(isset($adicionais)){
-        $pagina['adicionais']=$adicionais;
+if (isset($adicionais)) {
+    $pagina['adicionais']=$adicionais;
 }
 
 $this -> load -> view('templates/publicoCabecalho');
@@ -43,16 +44,16 @@ echo "
                                             </div>";
 
 
-if(strlen($erro)>0){
-        echo "
+if (strlen($erro)>0) {
+    echo "
                                             <div class=\"alert alert-danger background-danger\">
                                                     <div class=\"alert-text\">
                                                             <strong>ERRO</strong>: {$erro}
                                                     </div>
                                             </div>";
 }
-if(strlen($sucesso)>0){
-        echo "
+if (strlen($sucesso)>0) {
+    echo "
                                             <div class=\"alert background-success\">
                                                     <div class=\"alert-text\">
                                                             <strong>{$sucesso}</strong>
@@ -61,89 +62,89 @@ if(strlen($sucesso)>0){
 }
 echo "
                                             <div class=\"form-group form-primary\">";
-if($menu2 == 'index' || $menu2 == 'recuperar'){
-        $attributes = array('name' => 'cpf',
+if ($menu2 == 'index' || $menu2 == 'recuperar') {
+    $attributes = array('name' => 'cpf',
                             'id' => 'cpf',
                             'type' => 'tel',
                             'maxlength'=>'14',
                             'class' => 'form-control',
                             'autocomplete'=>'off',
                             'placeholder'=>'CPF');
-        if(strstr($erro, 'CPF')){
-                $attributes['class'] = 'form-control is-invalid';
-        }
-        echo form_input($attributes, set_value('cpf'));
-        echo "
+    if (strstr($erro, 'CPF')) {
+        $attributes['class'] = 'form-control is-invalid';
+    }
+    echo form_input($attributes, set_value('cpf'));
+    echo "
                                                 <span class=\"form-bar\"></span>
                                             </div>";
 }
-if($menu2 == 'index'){
-        echo "
+if ($menu2 == 'index') {
+    echo "
                                             <div class=\"form-group form-primary\">
                                                                                 ";
-        //$attributes = array('class' => 'control-label visible-ie8 visible-ie9');
-        //echo form_label('Senha', 'senha', $attributes);
+    //$attributes = array('class' => 'control-label visible-ie8 visible-ie9');
+    //echo form_label('Senha', 'senha', $attributes);
 
-        $attributes = array('name' => 'senha',
+    $attributes = array('name' => 'senha',
                             'id' => 'senha',
                             'class' => 'form-control',
                             'value'=>'',
                             'placeholder'=>'Senha');
-        if(strstr($erro, 'Senha')){
-                $attributes['class'] = 'form-control is-invalid';
-        }
-        echo form_password($attributes);
-        echo "
+    if (strstr($erro, 'Senha')) {
+        $attributes['class'] = 'form-control is-invalid';
+    }
+    echo form_password($attributes);
+    echo "
                                                  <span class=\"form-bar\"><input type=\"checkbox\" onclick=\"mostrarSenha()\" style=\"padding-left:10px; margin-top:10px; text-align:center;\"> Mostrar senha </span>
                                             </div>";
 }
-if($menu2 == 'contato'){
-        echo "
+if ($menu2 == 'contato') {
+    echo "
                                             <div class=\"form-group form-primary\">
                                                                                 ";
-        $attributes = array('name' => 'nome',
+    $attributes = array('name' => 'nome',
                             'id' => 'nome',
                             'maxlength'=>'100',
                             'class' => 'form-control',
                             'placeholder'=>'Nome completo');
-        echo form_input($attributes, set_value('nome'));
-        echo "
+    echo form_input($attributes, set_value('nome'));
+    echo "
                                             </div>
                                             <div class=\"form-group form-primary\">
                                                                                 ";
-        $attributes = array('name' => 'email',
+    $attributes = array('name' => 'email',
                             'id' => 'email',
                             'maxlength'=>'100',
                             'class' => 'form-control',
                             'placeholder'=>'E-mail');
-        echo form_input($attributes, set_value('email'));
-        echo "
+    echo form_input($attributes, set_value('email'));
+    echo "
                                             </div>
                                             <div class=\"form-group form-primary\">
                                                                                 ";
-        $attributes = array('name' => 'assunto',
+    $attributes = array('name' => 'assunto',
                             'id' => 'assunto',
                             'maxlength'=>'100',
                             'class' => 'form-control',
                             'placeholder'=>'Assunto');
-        echo form_input($attributes, set_value('assunto'));
-        echo "
+    echo form_input($attributes, set_value('assunto'));
+    echo "
                                             </div>
                                             <div class=\"form-group form-primary\">
                                                                                 ";
-        $attributes = array('name' => 'msg',
+    $attributes = array('name' => 'msg',
                             'id' => 'msg',
                             'rows'=>'3',
                             'class' => 'form-control',
                             'placeholder' => 'Mensagem',
                             'style' => 'height:100px');
-        echo form_textarea($attributes, set_value('msg'));
+    echo form_textarea($attributes, set_value('msg'));
 
-        echo '<div class="text-center center-block"><br />';
-        $attributes = array('class' => 'btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase',
+    echo '<div class="text-center center-block"><br />';
+    $attributes = array('class' => 'btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase',
                             'style'=>'width:60%');
-        echo form_submit('Publico/contato', 'Enviar', $attributes);
-        echo '
+    echo form_submit('Publico/contato', 'Enviar', $attributes);
+    echo '
         <hr />
         <a
         href="'.base_url("Publico/index").'"
@@ -151,18 +152,18 @@ if($menu2 == 'contato'){
           Voltar
         </a>
         ';
-        echo '</div>';
-        echo "
+    echo '</div>';
+    echo "
                                             </div>
                                         </div>";
 }
-if($menu2 == 'index'){
-        echo "
+if ($menu2 == 'index') {
+    echo "
                                             <div class=\"text-center center-block\">";
-        $attributes = array('class' => 'btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase',
+    $attributes = array('class' => 'btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase',
                             'style'=>'width:60%');
-        echo form_submit('logar_sistema', 'Login', $attributes);
-        echo "
+    echo form_submit('logar_sistema', 'Login', $attributes);
+    echo "
                                                     <button type=\"button\" name=\"cadastrar\" class=\"btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase\" style=\"width:60%\" onclick=\"window.location='".base_url('/Candidatos/cadastro')."'\">Cadastre-se</button>
                                             </div>
                                             <hr>
@@ -170,23 +171,22 @@ if($menu2 == 'index'){
                                                     <div class=\"col-12\">
                                                             <a href=\"".base_url('Publico/recuperar')."\">Esqueceu sua senha?</a><br/>";
 
-        echo "<a href=\"" . base_url('Publico/contato') . "\" class=\"kt-login__link\" alt=\"Fale conosco\">Fale conosco</a>";
-        /*echo "<a href=\"";
-        echo 'https://www.mg.gov.br/transforma-minas/fale-conosco';
-        echo "\" class=\"kt-login__link\" target=\"_blank\">Fale conosco</a>
-        */
-        /*
-        echo "<br/><a href=\"https://www.mg.gov.br/transforma-minas/faq\">Perguntas frequentes</a>*/
-        echo "                                            </div>
+    echo "<a href=\"" . base_url('Publico/contato') . "\" class=\"kt-login__link\" alt=\"Fale conosco\">Fale conosco</a>";
+    /*echo "<a href=\"";
+    echo 'https://www.mg.gov.br/transforma-minas/fale-conosco';
+    echo "\" class=\"kt-login__link\" target=\"_blank\">Fale conosco</a>
+    */
+    /*
+    echo "<br/><a href=\"https://www.mg.gov.br/transforma-minas/faq\">Perguntas frequentes</a>*/
+    echo "                                            </div>
                                             </div>";
-}
-else if($menu2 == 'recuperar'){
-        echo "
+} elseif ($menu2 == 'recuperar') {
+    echo "
                                             <div class=\"text-center center-block\">";
-        $attributes = array('class' => 'btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase',
+    $attributes = array('class' => 'btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase',
                             'style'=>'width:60%');
-        echo form_submit('enviado', 'Recuperar', $attributes);
-        echo "
+    echo form_submit('enviado', 'Recuperar', $attributes);
+    echo "
                                             </div>
                                             <hr>
                                             <div class=\"row m-t-25 text-center\">
@@ -194,14 +194,13 @@ else if($menu2 == 'recuperar'){
                                                             <a href=\"".base_url('Publico/index')."\">Login</a>
                                                     </div>
                                             </div>";
-}
-else if($menu2 == 'recuperar'){
-        echo "
+} elseif ($menu2 == 'recuperar') {
+    echo "
                                             <div class=\"text-center center-block\">";
-        $attributes = array('class' => 'btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase',
+    $attributes = array('class' => 'btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase',
                             'style'=>'width:60%');
-        echo form_submit('enviado', 'Enviar', $attributes);
-        echo "
+    echo form_submit('enviado', 'Enviar', $attributes);
+    echo "
                                             </div>
                                             <hr>
                                             <div class=\"row m-t-25 text-center\">
@@ -283,11 +282,11 @@ $pagina['js']="
                 </script>";
 /*
 echo "
-						<div class=\"kt-login__container\">
+                        <div class=\"kt-login__container\">
                                                         <div class=\"kt-login__signin\">
-								<div class=\"kt-login__head\">
+                                <div class=\"kt-login__head\">
                                                                         <h3 class=\"kt-login__title\">{$nome_pagina}</h3>
-								</div>";
+                                </div>";
 
 if(strlen($erro)>0){
         echo "
@@ -311,7 +310,7 @@ $attributes = array('class' => 'kt-form');
 echo form_open($url, $attributes);
 if($menu2 == 'index' || $menu2 == 'recuperar'){
         echo "
-									<div class=\"input-group\">
+                                    <div class=\"input-group\">
                                                                                 ";
         //$attributes = array('class' => 'control-label visible-ie8 visible-ie9');
         //echo form_label('CPF', 'cpf', $attributes);
@@ -327,7 +326,7 @@ if($menu2 == 'index' || $menu2 == 'recuperar'){
         }
         echo form_input($attributes, set_value('cpf'));
         echo "
-									</div>";
+                                    </div>";
 }
 if($menu2 == 'index'){
         echo "
@@ -390,16 +389,16 @@ if($menu2 == 'contato'){
                                                                         </div>";
 }
 echo "
-									<div class=\"kt-login__actions\">
+                                    <div class=\"kt-login__actions\">
                                                                                 ";
 if($menu2 == 'index'){
         $attributes = array('class' => 'btn btn-brand btn-elevate kt-login__btn-primary uppercase');
         echo form_submit('logar_sistema', 'Login', $attributes);
         echo "
                                                                                 <button type=\"button\" name=\"cadastrar\" class=\"btn btn-brand btn-elevate kt-login__btn-primary uppercase\" onclick=\"window.location='".base_url('/Candidatos/cadastro')."'\">Cadastre-se</button>
-									</div>
-									<div class=\"row kt-login__extra\">
-										<div class=\"col kt-align-center\">
+                                    </div>
+                                    <div class=\"row kt-login__extra\">
+                                        <div class=\"col kt-align-center\">
                                                                                         <a href=\"".base_url('Publico/recuperar')."\" id=\"kt_login_forgot\" class=\"kt-login__link\">Esqueceu sua senha?</a><br/>
                                                                                         <a href=\"";
         //echo base_url('Publico/contato');
@@ -407,34 +406,34 @@ if($menu2 == 'index'){
         echo "\" class=\"kt-login__link\" target=\"_blank\">Fale conosco</a><br/>
                                                                                         <a href=\"https://www.mg.gov.br/transforma-minas/faq\" class=\"kt-login__link\" target=\"_blank\">Perguntas frequentes</a>
                                                                                 </div>
-									</div>";
+                                    </div>";
 }
 else if($menu2 == 'recuperar'){
         $attributes = array('class' => 'btn btn-brand btn-elevate kt-login__btn-primary uppercase');
         echo form_submit('enviado', 'Recuperar', $attributes);
         echo "
-									</div>
-									<div class=\"row kt-login__extra\">
-										<div class=\"col kt-align-center\">
+                                    </div>
+                                    <div class=\"row kt-login__extra\">
+                                        <div class=\"col kt-align-center\">
                                                                                         <a href=\"".base_url('Publico/index')."\" id=\"kt_login_forgot\" class=\"kt-login__link\">Login</a>
                                                                                 </div>
-									</div>";
+                                    </div>";
 }
 else if($menu2 == 'contato'){
         $attributes = array('class' => 'btn btn-brand btn-elevate kt-login__btn-primary uppercase');
         echo form_submit('enviado', 'Enviar', $attributes);
         echo "
-									</div>
-									<div class=\"row kt-login__extra\">
-										<div class=\"col kt-align-center\">
+                                    </div>
+                                    <div class=\"row kt-login__extra\">
+                                        <div class=\"col kt-align-center\">
                                                                                         <a href=\"".base_url('Publico/index')."\" id=\"kt_login_forgot\" class=\"kt-login__link\">Login</a>
                                                                                 </div>
-									</div>";
+                                    </div>";
 }
 echo "
-								</form>
+                                </form>
                                                         </div>
-						</div>
+                        </div>
                                                 <div class=\"kt-login__account\">";
 if($menu2 == 'index'){
         echo "
@@ -452,10 +451,10 @@ echo "
                                                                 <br/>SUGESP - SEPLAG © Layout Metronic
                                                         </div>
                                                 </div>
-					</div>
-				</div>
-			</div>
-		</div>
+                    </div>
+                </div>
+            </div>
+        </div>
                 <script src=\"".base_url('assets_6.0.3/vendors/general/jquery/dist/jquery.js')."\" type=\"text/javascript\"></script>
                 <script src=\"".base_url('assets_6.0.3/vendors/general/bootstrap/dist/js/bootstrap.min.js')."\" type=\"text/javascript\"></script>
                 <script src=\"".base_url('assets_6.0.3/vendors/general/inputmask/dist/jquery.inputmask.bundle.js')."\" type=\"text/javascript\"></script>
@@ -464,9 +463,8 @@ echo "
                     $(document).ready(function(){
                             $('#cpf').inputmask('999.999.999-99');
                     });
-					
+
                 </script>";
 
  */
 $this -> load -> view('templates/publicoRodape', $pagina);
-?>
