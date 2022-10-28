@@ -8,7 +8,6 @@ mkdir -p application/logs
 chown www-data:www-data application/logs
 
 # php service
-#/etc/init.d/php7.4-fpm start
 mkdir /run/php/
 php-fpm -y /etc/php/7.4/fpm/pool.d/www.conf -D
 
