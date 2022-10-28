@@ -19,7 +19,7 @@ echo "<!DOCTYPE html>
             <!-- Style.css -->
             <link rel=\"stylesheet\" type=\"text/css\" href=\"" . base_url('assets/css/sb-admin-2.min.css') . "\" />
             <link rel=\"stylesheet\" type=\"text/css\" href=\"" . base_url('assets/css/transforma-minas-override.css') . "\" />
-            <link rel=\"shortcut icon\" href=\"" . base_url('images/favicon.ico') . "\" />
+            <link rel=\"shortcut icon\" href=\"" . base_url('images/icon.svg') . "\" />
             <!-- END THEME STYLES -->
 
             <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -35,4 +35,4 @@ echo "<!DOCTYPE html>
     </head>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->
-    <body class=\"fix-menu\" style=\"background-image:url('".base_url('images/camg.png')."');background-repeat: no-repeat; background-size: cover;\">";
+    <body class=\"fix-menu\" style=\"background-image:url('".base_url('images/background.png')."');background-repeat: no-repeat; background-size: cover;\">";

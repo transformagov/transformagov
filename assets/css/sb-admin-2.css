@@ -9466,6 +9466,10 @@ button.bg-dark:focus {
   text-align: center !important;
 }
 
+.text-white {
+  color: white;
+}
+
 @media (min-width: 576px) {
   .text-sm-left {
     text-align: left !important;
