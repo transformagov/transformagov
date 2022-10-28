@@ -25,7 +25,7 @@ $this->load->view('templates/publicoCabecalho');
                 ?>
 
                 <div class="text-center">
-                    <img src="<?= base_url('images/logo.png') ?>" alt="<?= $this->config->item('nome') ?>" />
+                    <img src="<?= base_url('images/logo-tagline.png') ?>" alt="<?= $this->config->item('nome') ?>" />
                 </div>
                 <div class="card" style="width:100% !important">
                     <div class="card-block p-3">
