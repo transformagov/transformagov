@@ -98,3 +98,11 @@ Todo commit que é enviado para o repositório passa pelo Github Actions, um pro
 construir *pipelines* de integração contínua e deploy contínuo. O Github Actions garente que todo
 commit que entre na `main` tenha os testes de aceitação executados.
 
+# Estrutura básica do php7.4-fpm
+
+![estrutura do php](assets/images/readme/Arquitetura_client_server_php.png)
+
+Nessa arquitetura o cliente vai fazer uma requisição http através de um navegador, sendo que essa requisição vai chegar primeiro em um servidor http (nesse caso o nginx), que vai tratar essa requisição e direcioná-la para um servidor web (php-fpm). O php-fpm será responsável por processar os arquivos php (regras de negócio, acesso ao banco de dados, etc) e montar um html personalizado que será retornado como resposta ao nginx usando o caminho reverso, processo conhecido como proxy reverso. Após isso o nginx vai retornar a resposta (html/images/js/…) para o cliente.
+
+### Nginx
+É um servidor http capaz de lidar com um grande volume de requisições (load balance) e também funciona como um servidor de proxy reverso. O nginx fornece uma camada a mais de segurança intermediando o acesso do cliente ao servidor web.
