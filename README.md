@@ -106,3 +106,40 @@ Nessa arquitetura o cliente vai fazer uma requisição http através de um naveg
 
 ### Nginx
 É um servidor http capaz de lidar com um grande volume de requisições (load balance) e também funciona como um servidor de proxy reverso. O nginx fornece uma camada a mais de segurança intermediando o acesso do cliente ao servidor web.
+
+# Deploy local de uma stack swarm
+* O que é o Swarm?
+É uma ferramenta do próprio Docker para fazer orquestração/administração de containers em diferentes hosts. O swarm permite configurar, conectar e executar múltiplos containers em múltiplas máquinas. Isso facilita o balanceamento de carga e o escalonamento.
+
+Alguns termos chave usados:
+1. Cluster: aglomerado de máquinas trabalhando juntas com um propósito.
+2. Node: é um host que executa uma Docker Engine. Existem dois tipos de nodes no swarm: Managers e Workers.
+3. Manager: é um tipo de node que faz o gerenciamento do cluster (configurações, balanceamento, disponibilidade, criação de serviços, etc). O manager também pode trabalhar como worker.
+4. Worker: é um tipo de node que recebe e executa tasks (containers em execução).
+
+![estrutura do php](assets/images/readme/ClusterSwarmMultipleNodes.drawio.png)
+
+Neste exemplo, o manager vai criar dois serviços, o mariadb e o php-fpm. Para o mariadb, será criada uma task (1 réplica), que será distribuída entre o node2 e o node3. Já para o php-fpm será criada duas tasks (2 réplicas), que também serão distribuídas entre os nós disponíveis.
+
+![estrutura do php](assets/images/readme/ClusterSwarmOneNode.png)
+
+Neste outro exemplo, existe apenas uma máquina, que funcionará como manager e como worker. Ou seja, essa máquina vai criar os serviços e também vai executar todos os containers definidos.
+
+* Como fazer o deploy de uma stack?
+Para fazer o deploy dos serviços será usado o arquivo docker-compose.yml, só foi preciso adicionar uma imagem para o server.
+
+1. Inicializar o docker swarm:
+```docker swarm init```
+2. Configurar um docker registry (para registrar uma imagem sem precisar subir para o Docker Hub, nesse caso é preciso pois o swarm não vai fazer o pre-build da imagem, gerando erros).
+```docker service create --name registry --publish published=5000,target=5000 registry:2```
+3. Subir a imagem do server e do db para o registry:
+```docker-compose push```
+4. Criar e fazer o deploy da stack:
+```docker stack deploy --compose-file docker-compose.yml transforma_stack```
+5. Para verificar os serviços:
+```docker stack services transforma_stack```
+
+Links úteis:
+* https://docs.docker.com/engine/swarm/key-concepts/
+* https://docs.docker.com/engine/swarm/stack-deploy/
+* https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/
