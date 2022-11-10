@@ -34,7 +34,7 @@ if (in_array($this->session->perfil, array_keys($perfilTypes))) {
 <html lang="en">
 
 <head>
-    <link rel="shortcut icon" href="<?= base_url('images/favicon.ico') ?>" />
+    <link rel="shortcut icon" href="<?= base_url('images/icon.svg') ?>" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -51,33 +51,31 @@ if (in_array($this->session->perfil, array_keys($perfilTypes))) {
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/vendor/jquery-ui/jquery-ui.min.css') ?>">
     
     <!-- Custom styles for this template-->
-
-    <link rel="stylesheet" type="text/css" href="<?= base_url('bower_components\bootstrap-v-5\css\bootstrap.min.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/sb-admin-2.min.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/transforma-minas-override.css') ?>">
 
     <!-- sweetalert2 style -->
     <link href="<?= base_url('bower_components/sweetalert2/dist/sweetalert2.css') ?>" rel="stylesheet" type="text/css">
 
-    <?php if(isset($adicionais['datatables'])): ?>
+    <?php if (isset($adicionais['datatables'])): ?>
         <!-- Data Table Css -->
         <link rel="stylesheet" type="text/css" href="<?= base_url('bower_components\datatables.net-bs4\css\dataTables.bootstrap4.min.css') ?>">
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets\pages\data-table\css\buttons.dataTables.min.css') ?>">
         <link rel="stylesheet" type="text/css" href="<?= base_url('bower_components\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css') ?>">
     <?php endif ?>
 
-    <?php if(isset($adicionais['wizard'])): ?>
+    <?php if (isset($adicionais['wizard'])): ?>
         <!--forms-wizard css-->
         <link rel="stylesheet" type="text/css" href="<?= base_url('bower_components\jquery.steps\css\jquery.steps.css') ?>">
     <?php endif ?>
 
-    <?php if(isset($adicionais['select2'])): ?>
+    <?php if (isset($adicionais['select2'])): ?>
         <!-- Select2 css -->
-        <link href="<?= base_url('assets/css/select2.min.css') ?>" rel="stylesheet" />
+        <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/transforma-minas-select2.css') ?>" />
     <?php endif ?>
 
-    <?php if(isset($adicionais['calendar'])): ?>
+    <?php if (isset($adicionais['calendar'])): ?>
         <!-- Calender css -->
         <link rel="stylesheet" type="text/css" href="<?= base_url('bower_components\fullcalendar\css\fullcalendar.css') ?>">
         <link rel="stylesheet" type="text/css" href="<?= base_url('bower_components\fullcalendar\css\fullcalendar.print.css') ?>" media='print'>
@@ -191,7 +189,7 @@ if (in_array($this->session->perfil, array_keys($perfilTypes))) {
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <?php if($this->session->perfil == "candidato"): //candidato?>
+                                <?php if ($this->session->perfil == "candidato"): //candidato?>
                                     <a class="dropdown-item" href="<?= base_url('Candidatos/index') ?>">
                                         <i class="fa fa-user"></i> Seus dados
                                     </a>
@@ -221,5 +219,5 @@ if (in_array($this->session->perfil, array_keys($perfilTypes))) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <div class="page-wrapper pt-2">
+                    <div class="page-wrapper p-2">
                         <div class="row">

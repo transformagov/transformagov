@@ -30,10 +30,10 @@ if ($sucesso=='1') {
     echo form_label('Nome completo', 'nome', $attributes);
 
     $attributes = array('name' => 'nome',
-                        'id' => 'nome',
-                        'maxlength'=>'100',
-                        'class' => 'form-control form-control-solid placeholder-no-fix',
-                        'placeholder'=>'Nome completo');
+                            'id' => 'nome',
+                            'maxlength'=>'100',
+                            'class' => 'form-control form-control-solid placeholder-no-fix',
+                            'placeholder'=>'Nome completo');
     echo form_input($attributes, set_value('nome'));
 
     echo "
@@ -44,10 +44,10 @@ if ($sucesso=='1') {
     echo form_label('E-mail', 'email', $attributes);
 
     $attributes = array('name' => 'email',
-                        'id' => 'email',
-                        'maxlength'=>'100',
-                        'class' => 'form-control form-control-solid placeholder-no-fix',
-                        'placeholder'=>'E-mail');
+                            'id' => 'email',
+                            'maxlength'=>'100',
+                            'class' => 'form-control form-control-solid placeholder-no-fix',
+                            'placeholder'=>'E-mail');
     echo form_input($attributes, set_value('email'));
 
     echo "
@@ -58,10 +58,10 @@ if ($sucesso=='1') {
     echo form_label('Assunto', 'assunto', $attributes);
 
     $attributes = array('name' => 'assunto',
-                        'id' => 'assunto',
-                        'maxlength'=>'100',
-                        'class' => 'form-control form-control-solid placeholder-no-fix',
-                        'placeholder'=>'Assunto');
+                            'id' => 'assunto',
+                            'maxlength'=>'100',
+                            'class' => 'form-control form-control-solid placeholder-no-fix',
+                            'placeholder'=>'Assunto');
     echo form_input($attributes, set_value('assunto'));
 
     echo "
@@ -72,11 +72,11 @@ if ($sucesso=='1') {
     echo form_label('Mensagem', 'msg', $attributes);
 
     $attributes = array('name' => 'msg',
-                        'id' => 'msg',
-                        'rows'=>'3',
-                        'class' => 'form-control form-control-solid placeholder-no-fix',
-                        'placeholder' => 'Mensagem',
-                        'style' => 'height:100px');
+                            'id' => 'msg',
+                            'rows'=>'3',
+                            'class' => 'form-control form-control-solid placeholder-no-fix',
+                            'placeholder' => 'Mensagem',
+                            'style' => 'height:100px');
     echo form_textarea($attributes, set_value('msg'));
     echo "
                                 </div>
@@ -92,7 +92,7 @@ if ($sucesso=='1') {
     echo "
                 </div>
                 <div class=\"copyright\">
-                         SUGESP - SEPLAG © Layout Metronic
+                        Desenvolvido pela SEPLAG/MG - Fundação Lemann - Pencillabs
                 </div>";
 }
 

@@ -34,10 +34,10 @@ if ($sucesso=='1') {
 									<div class=\"input-group\">
                                                                                 ";
     $attributes = array('name' => 'cpf',
-                        'id' => 'cpf',
-                        'maxlength'=>'14',
-                        'class' => 'form-control',
-                        'placeholder'=>'CPF');
+                            'id' => 'cpf',
+                            'maxlength'=>'14',
+                            'class' => 'form-control',
+                            'placeholder'=>'CPF');
     echo form_input($attributes, set_value('cpf'));
 
     echo "
@@ -56,7 +56,7 @@ if ($sucesso=='1') {
 						</div>
                                                 <div class=\"kt-login__account\">
                                                         <div class=\"col kt-align-center\">
-                                                                <br/>SUGESP - SEPLAG © Layout Metronic
+                                                                <br/>Desenvolvido pela SEPLAG/MG - Fundação Lemann - Pencillabs
                                                         </div>
                                                </div>
 					</div>

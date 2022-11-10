@@ -23,7 +23,7 @@ $attributes = array('class' => 'md-float-material form-material');
 echo form_open($url, $attributes);
 echo "
                                     <div class=\"text-center\">
-                                        <img src=\"".base_url('images/logo.png')."\" alt=\"".$this -> config -> item('nome')."\" />
+                                        <img src=\"".base_url('images/logo-tagline.png')."\" alt=\"".$this -> config -> item('nome')."\" />
                                     </div>
                                     <!--<div class=\"row\" style=\"margin-top: 10px\">";
 /*if($menu2 == 'index'){
@@ -35,7 +35,7 @@ echo "
 }*/
 echo "
                                     </div>-->
-                                    <div class=\"card col-lg-8 mt-3 p-3 mx-auto\">
+                                    <div class=\"card mt-3 p-3 mx-auto\">
                                         <div class=\"card-block\">
                                             <div class=\"row m-b-20\">
                                                 <div class=\"col-md-12\">
@@ -64,12 +64,12 @@ echo "
                                             <div class=\"form-group form-primary\">";
 if ($menu2 == 'index' || $menu2 == 'recuperar') {
     $attributes = array('name' => 'cpf',
-                        'id' => 'cpf',
-                        'type' => 'tel',
-                        'maxlength'=>'14',
-                        'class' => 'form-control',
-                        'autocomplete'=>'off',
-                        'placeholder'=>'CPF');
+                            'id' => 'cpf',
+                            'type' => 'tel',
+                            'maxlength'=>'14',
+                            'class' => 'form-control',
+                            'autocomplete'=>'off',
+                            'placeholder'=>'CPF');
     if (strstr($erro, 'CPF')) {
         $attributes['class'] = 'form-control is-invalid';
     }
@@ -86,10 +86,10 @@ if ($menu2 == 'index') {
     //echo form_label('Senha', 'senha', $attributes);
 
     $attributes = array('name' => 'senha',
-                        'id' => 'senha',
-                        'class' => 'form-control',
-                        'value'=>'',
-                        'placeholder'=>'Senha');
+                            'id' => 'senha',
+                            'class' => 'form-control',
+                            'value'=>'',
+                            'placeholder'=>'Senha');
     if (strstr($erro, 'Senha')) {
         $attributes['class'] = 'form-control is-invalid';
     }
@@ -103,46 +103,46 @@ if ($menu2 == 'contato') {
                                             <div class=\"form-group form-primary\">
                                                                                 ";
     $attributes = array('name' => 'nome',
-                        'id' => 'nome',
-                        'maxlength'=>'100',
-                        'class' => 'form-control',
-                        'placeholder'=>'Nome completo');
+                            'id' => 'nome',
+                            'maxlength'=>'100',
+                            'class' => 'form-control',
+                            'placeholder'=>'Nome completo');
     echo form_input($attributes, set_value('nome'));
     echo "
                                             </div>
                                             <div class=\"form-group form-primary\">
                                                                                 ";
     $attributes = array('name' => 'email',
-                        'id' => 'email',
-                        'maxlength'=>'100',
-                        'class' => 'form-control',
-                        'placeholder'=>'E-mail');
+                            'id' => 'email',
+                            'maxlength'=>'100',
+                            'class' => 'form-control',
+                            'placeholder'=>'E-mail');
     echo form_input($attributes, set_value('email'));
     echo "
                                             </div>
                                             <div class=\"form-group form-primary\">
                                                                                 ";
     $attributes = array('name' => 'assunto',
-                        'id' => 'assunto',
-                        'maxlength'=>'100',
-                        'class' => 'form-control',
-                        'placeholder'=>'Assunto');
+                            'id' => 'assunto',
+                            'maxlength'=>'100',
+                            'class' => 'form-control',
+                            'placeholder'=>'Assunto');
     echo form_input($attributes, set_value('assunto'));
     echo "
                                             </div>
                                             <div class=\"form-group form-primary\">
                                                                                 ";
     $attributes = array('name' => 'msg',
-                        'id' => 'msg',
-                        'rows'=>'3',
-                        'class' => 'form-control',
-                        'placeholder' => 'Mensagem',
-                        'style' => 'height:100px');
+                            'id' => 'msg',
+                            'rows'=>'3',
+                            'class' => 'form-control',
+                            'placeholder' => 'Mensagem',
+                            'style' => 'height:100px');
     echo form_textarea($attributes, set_value('msg'));
 
     echo '<div class="text-center center-block"><br />';
     $attributes = array('class' => 'btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase',
-                        'style'=>'width:60%');
+                            'style'=>'width:60%');
     echo form_submit('Publico/contato', 'Enviar', $attributes);
     echo '
         <hr />
@@ -161,7 +161,7 @@ if ($menu2 == 'index') {
     echo "
                                             <div class=\"text-center center-block\">";
     $attributes = array('class' => 'btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase',
-                        'style'=>'width:60%');
+                            'style'=>'width:60%');
     echo form_submit('logar_sistema', 'Login', $attributes);
     echo "
                                                     <button type=\"button\" name=\"cadastrar\" class=\"btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase\" style=\"width:60%\" onclick=\"window.location='".base_url('/Candidatos/cadastro')."'\">Cadastre-se</button>
@@ -171,8 +171,7 @@ if ($menu2 == 'index') {
                                                     <div class=\"col-12\">
                                                             <a href=\"".base_url('Publico/recuperar')."\">Esqueceu sua senha?</a><br/>";
 
-    echo "<a href=\"https://www.mg.gov.br/transforma-minas/fale-conosco\" class=\"kt-login__link\" alt=\"Fale conosco\">Fale conosco</a><br/>";
-    echo "<a href=\"". base_url('Publico/download_termo/geral')."\" target=\"_blank\">Termo de uso e política de privacidade</a>";
+    echo "<a href=\"" . base_url('Publico/contato') . "\" class=\"kt-login__link\" alt=\"Fale conosco\">Fale conosco</a>";
     /*echo "<a href=\"";
     echo 'https://www.mg.gov.br/transforma-minas/fale-conosco';
     echo "\" class=\"kt-login__link\" target=\"_blank\">Fale conosco</a>
@@ -185,7 +184,7 @@ if ($menu2 == 'index') {
     echo "
                                             <div class=\"text-center center-block\">";
     $attributes = array('class' => 'btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase',
-                        'style'=>'width:60%');
+                            'style'=>'width:60%');
     echo form_submit('enviado', 'Recuperar', $attributes);
     echo "
                                             </div>
@@ -199,7 +198,7 @@ if ($menu2 == 'index') {
     echo "
                                             <div class=\"text-center center-block\">";
     $attributes = array('class' => 'btn btn-primary btn-md btn-inline mt-2 waves-effect waves-light text-center text-uppercase',
-                        'style'=>'width:60%');
+                            'style'=>'width:60%');
     echo form_submit('enviado', 'Enviar', $attributes);
     echo "
                                             </div>
@@ -220,8 +219,8 @@ echo "
                     </div>
                     <!-- end of row -->
 
-                    <div class=\"text-center\" style=\"margin-top: 10px\">
-                            <br/>SUGESP - SEPLAG
+                    <div class=\"text-center text-white\" style=\"margin-top: 10px\">
+                            <br/>Desenvolvido pela SEPLAG/MG - Fundação Lemann - Pencillabs
                     </div>
                 </div>
                 <!-- end of container-fluid -->
@@ -449,7 +448,7 @@ if($menu2 == 'index'){
 }
 echo "
                                                         <div class=\"col kt-align-center\">
-                                                                <br/>SUGESP - SEPLAG © Layout Metronic
+                                                                <br/>Desenvolvido pela SEPLAG/MG - Fundação Lemann - Pencillabs
                                                         </div>
                                                 </div>
                     </div>
