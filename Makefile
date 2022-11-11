@@ -6,16 +6,9 @@ up:
 
 run: build up
 
-CONTAINER_NAME = $(docker service ps -f 'name=transforma_stack_db.1' transforma_stack_db -q --no-trunc | head -n1)
-
 load-schema:
 	docker cp db/transforma.sql  transformagov_db_1:/tmp
 	docker exec transformagov_db_1 /bin/bash -c 'mysql transforma < /tmp/transforma.sql --password=root'
-
-
-load-schema-swarm:
-	docker cp db/transforma.sql  transforma_stack_db.1.${CONTAINER_NAME}:/tmp
-	docker exec transforma_stack_db.1.${CONTAINER_NAME} /bin/bash -c 'mysql transforma < /tmp/transforma.sql --password=root'
 
 create-users:
 	docker cp db/popula-usuarios.sql  transformagov_db_1:/tmp

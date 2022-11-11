@@ -126,18 +126,21 @@ Neste exemplo, o manager vai criar dois serviços, o mariadb e o php-fpm. Para o
 Neste outro exemplo, existe apenas uma máquina, que funcionará como manager e como worker. Ou seja, essa máquina vai criar os serviços e também vai executar todos os containers definidos.
 
 * Como fazer o deploy de uma stack?
-Para fazer o deploy dos serviços será usado o arquivo docker-compose.yml, só foi preciso adicionar uma imagem para o server.
+Para fazer o deploy dos serviços será usado o arquivo docker-stack.yml, só foi preciso adicionar uma imagem para o server e mudar o DB_HOST para referenciar o serviço do banco de dados.
 
 1. Inicializar o docker swarm:
 ```docker swarm init```
-2. Configurar um docker registry (para registrar uma imagem sem precisar subir para o Docker Hub, nesse caso é preciso pois o swarm não vai fazer o pre-build da imagem, gerando erros).
-```docker service create --name registry --publish published=5000,target=5000 registry:2```
-3. Subir a imagem do server e do db para o registry:
-```docker-compose push```
+2. Subir as imagens:
+```docker-compose up -d```
+3. Remover os volumes:
+```docker-compose down --volumes```
 4. Criar e fazer o deploy da stack:
-```docker stack deploy --compose-file docker-compose.yml transforma_stack```
+```docker stack deploy -c docker-stack.yml transforma_stack```
 5. Para verificar os serviços:
 ```docker stack services transforma_stack```
+6. Fazer as migrações do BD. Para isso é necessário primeiro buscar o nome do container que roda o transforma_stack_db com o comando `docker ps`. Logo em seguida:
+```docker cp db/transforma.sql <DB_CONTAINER_NAME>:/tmp```
+```docker exec <DB_CONTAINER_NAME> /bin/bash -c 'mysql transforma < /tmp/transforma.sql --password=root'```
 
 Links úteis:
 * https://docs.docker.com/engine/swarm/key-concepts/
