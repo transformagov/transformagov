@@ -5,17 +5,13 @@ services:
     build:
       context: ./
     ports:
-      - "8080:80"
+      - "$PORT:80"
     volumes:
       - ./:/transformagov/
     env_file:
       - .env
     entrypoint: /tmp/run.sh
-    environment:
-      - DB_HOST=transformagov_db_1
-      - DB_DATABASE=transforma
-      - DB_PASSWORD=root
-      - DB_USERNAME=root
+    
   db:
     image: mariadb:10.3
     volumes:
