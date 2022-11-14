@@ -107,15 +107,16 @@ Nessa arquitetura o cliente vai fazer uma requisição http através de um naveg
 ### Nginx
 É um servidor http capaz de lidar com um grande volume de requisições (load balance) e também funciona como um servidor de proxy reverso. O nginx fornece uma camada a mais de segurança intermediando o acesso do cliente ao servidor web.
 
-# Deploy local de uma stack swarm
-* O que é o Swarm?
+# Deploy local de uma stack Swarm
+### O que é o Swarm?
+
 É uma ferramenta do próprio Docker para fazer orquestração/administração de containers em diferentes hosts. O swarm permite configurar, conectar e executar múltiplos containers em múltiplas máquinas. Isso facilita o balanceamento de carga e o escalonamento.
 
 Alguns termos chave usados:
-1. Cluster: aglomerado de máquinas trabalhando juntas com um propósito.
-2. Node: é um host que executa uma Docker Engine. Existem dois tipos de nodes no swarm: Managers e Workers.
-3. Manager: é um tipo de node que faz o gerenciamento do cluster (configurações, balanceamento, disponibilidade, criação de serviços, etc). O manager também pode trabalhar como worker.
-4. Worker: é um tipo de node que recebe e executa tasks (containers em execução).
+1. **Cluster**: aglomerado de máquinas trabalhando juntas com um propósito.
+2. **Node**: é um host que executa uma Docker Engine. Existem dois tipos de nodes no swarm: Managers e Workers.
+3. **Manager**: é um tipo de node que faz o gerenciamento do cluster (configurações, balanceamento, disponibilidade, criação de serviços, etc). O manager também pode trabalhar como worker.
+4. **Worker**: é um tipo de node que recebe e executa tasks (containers em execução).
 
 ![estrutura do php](assets/images/readme/ClusterSwarmMultipleNodes.drawio.png)
 
@@ -125,7 +126,8 @@ Neste exemplo, o manager vai criar dois serviços, o mariadb e o php-fpm. Para o
 
 Neste outro exemplo, existe apenas uma máquina, que funcionará como manager e como worker. Ou seja, essa máquina vai criar os serviços e também vai executar todos os containers definidos.
 
-* Como fazer o deploy de uma stack?
+### Como fazer o deploy de uma stack?
+
 Para fazer o deploy dos serviços será usado o arquivo docker-stack.yml, só foi preciso adicionar uma imagem para o server e mudar o DB_HOST para referenciar o serviço do banco de dados.
 
 1. Inicializar o docker swarm:
@@ -146,3 +148,4 @@ Links úteis:
 * https://docs.docker.com/engine/swarm/key-concepts/
 * https://docs.docker.com/engine/swarm/stack-deploy/
 * https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/
+* https://docs.docker.com/get-started/swarm-deploy/
