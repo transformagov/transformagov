@@ -7,10 +7,11 @@ services:
       context: ./
     ports:
       - "8080:80"
+      - "80:80"
     volumes:
       - ./:/transformagov/
     env_file:
-      - .env
+      - .env.prod
     entrypoint: /tmp/run.sh
     environment:
       - DB_HOST=transforma_stack_db

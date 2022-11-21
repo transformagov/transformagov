@@ -126,19 +126,17 @@ Neste exemplo, o manager vai criar dois serviços, o mariadb e o php-fpm. Para o
 
 Neste outro exemplo, existe apenas uma máquina, que funcionará como manager e como worker. Ou seja, essa máquina vai criar os serviços e também vai executar todos os containers definidos.
 
-### Como fazer o deploy de uma stack?
+### Como fazer o deploy local de uma stack?
 
 Para fazer o deploy dos serviços será usado o arquivo docker-stack.yml, só foi preciso adicionar uma imagem para o server e mudar o DB_HOST para referenciar o serviço do banco de dados.
 
 1. Inicializar o docker swarm:
 ```docker swarm init```
-2. Subir as imagens:
-```docker-compose up -d```
-3. Remover os volumes:
-```docker-compose down --volumes```
+2. Fazer o build da imagem usando o arquivo docker-stack.yml:
+```docker-compose -f docker-stack.yml build``
 4. Criar e fazer o deploy da stack:
 ```docker stack deploy -c docker-stack.yml transforma_stack```
-5. Para verificar os serviços:
+5. Para listar os serviços da stack:
 ```docker stack services transforma_stack```
 6. Fazer as migrações do BD. Para isso é necessário primeiro buscar o nome do container que roda o transforma_stack_db com o comando `docker ps`. Logo em seguida:
 ```docker cp db/transforma.sql <DB_CONTAINER_NAME>:/tmp```
@@ -149,3 +147,24 @@ Links úteis:
 * https://docs.docker.com/engine/swarm/stack-deploy/
 * https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/
 * https://docs.docker.com/get-started/swarm-deploy/
+
+
+### Deploy em produção de uma stack Swarm
+1. Copiar a pasta do projeto para a máquina remota.
+```scp -r transformagov/ admin@34.225.231.130:```
+2. Acessar a máquina.
+```ssh admin@34.225.231.130```
+3. Instalar o Docker e o Docker Compose na máquina.
+4. Inicializar o Docker.
+```systemctl start docker```
+```gpasswd -a $USER docker```
+5. Inicializar o Swarm.
+```docker swarm init```
+6. Fazer o build da imagem usando o arquivo docker-stack.yml.
+```docker-compose -f docker-stack.yml build```
+7. Criar e fazer o deploy da stack:
+```docker stack deploy -c docker-stack.yml transforma_stack```
+8. Para listar os serviços da stack:
+```docker stack services transforma_stack```
+9. Para remover os serviços da stack:
+```docker stack rm transforma_stack```
