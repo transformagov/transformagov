@@ -165,7 +165,16 @@ Links úteis:
 ```docker-compose -f docker-stack.yml build```
 7. Criar e fazer o deploy da stack:
 ```docker stack deploy -c docker-stack.yml transforma_stack```
-8. Para listar os serviços da stack:
+8. Fazer as migrações. Para fazer as migrações é necessário primeiro excluir o BD.
+```docker volume ls```
+```docker volume rm transforma_stack_transforma-db```
+9. Buscar o nome do container que roda o transforma_stack_db com o comando docker ps. Logo em seguida:
+```docker cp db/transforma.sql <DB_CONTAINER_NAME>:/tmp```
+```docker exec <DB_CONTAINER_NAME> /bin/bash -c 'mysql transforma < /tmp/transforma.sql --password=root'```
+10. Para fazer a migração dos usuários:
+```docker cp db/popula-usuarios.sql  <DB_CONTAINER_NAME>:/tmp```
+```docker exec <DB_CONTAINER_NAME> /bin/bash -c 'mysql transforma < /tmp/popula-usuarios.sql --password=root'```
+11. Para listar os serviços da stack:
 ```docker stack services transforma_stack```
-9. Para remover os serviços da stack:
+12. Para remover os serviços da stack:
 ```docker stack rm transforma_stack```
