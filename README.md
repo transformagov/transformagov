@@ -107,3 +107,74 @@ Nessa arquitetura o cliente vai fazer uma requisição http através de um naveg
 
 ### Nginx
 É um servidor http capaz de lidar com um grande volume de requisições (load balance) e também funciona como um servidor de proxy reverso. O nginx fornece uma camada a mais de segurança intermediando o acesso do cliente ao servidor web.
+
+# Deploy de uma stack Swarm
+### O que é o Swarm?
+
+É uma ferramenta do próprio Docker para fazer orquestração/administração de containers em diferentes hosts. O swarm permite configurar, conectar e executar múltiplos containers em múltiplas máquinas. Isso facilita o balanceamento de carga e o escalonamento.
+
+Alguns termos chave usados:
+1. **Cluster**: aglomerado de máquinas trabalhando juntas com um propósito.
+2. **Node**: é um host que executa uma Docker Engine. Existem dois tipos de nodes no swarm: Managers e Workers.
+3. **Manager**: é um tipo de node que faz o gerenciamento do cluster (configurações, balanceamento, disponibilidade, criação de serviços, etc). O manager também pode trabalhar como worker.
+4. **Worker**: é um tipo de node que recebe e executa tasks (containers em execução).
+
+![estrutura do php](assets/images/readme/ClusterSwarmMultipleNodes.png)
+
+Neste exemplo, o manager vai criar dois serviços, o mariadb e o php-fpm. Para o mariadb, será criada uma task (1 réplica), que será distribuída entre o node2 e o node3. Já para o php-fpm será criada duas tasks (2 réplicas), que também serão distribuídas entre os nós disponíveis.
+
+![estrutura do php](assets/images/readme/ClusterSwarmOneNode.png)
+
+Neste outro exemplo, existe apenas uma máquina, que funcionará como manager e como worker. Ou seja, essa máquina vai criar os serviços e também vai executar todos os containers definidos.
+
+### Como fazer o deploy local de uma stack?
+
+Para fazer o deploy dos serviços será usado o arquivo docker-stack.yml, só foi preciso adicionar uma imagem para o server e mudar o DB_HOST para referenciar o serviço do banco de dados.
+
+1. Inicializar o docker swarm:
+```docker swarm init```
+2. Fazer o build da imagem usando o arquivo docker-stack.yml:
+```docker-compose -f docker-stack.yml build``
+4. Criar e fazer o deploy da stack:
+```docker stack deploy -c docker-stack.yml transforma_stack```
+5. Para listar os serviços da stack:
+```docker stack services transforma_stack```
+6. Fazer as migrações do BD. Para isso é necessário primeiro buscar o nome do container que roda o transforma_stack_db com o comando `docker ps`. Logo em seguida:
+```docker cp db/transforma.sql <DB_CONTAINER_NAME>:/tmp```
+```docker exec <DB_CONTAINER_NAME> /bin/bash -c 'mysql transforma < /tmp/transforma.sql --password=root'```
+
+Links úteis:
+* https://docs.docker.com/engine/swarm/key-concepts/
+* https://docs.docker.com/engine/swarm/stack-deploy/
+* https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/
+* https://docs.docker.com/get-started/swarm-deploy/
+
+
+### Como fazer o deploy em produção de uma stack?
+1. Copiar a pasta do projeto para a máquina remota.
+```scp -r transformagov/ admin@34.225.231.130:```
+2. Acessar a máquina.
+```ssh admin@34.225.231.130```
+3. Instalar o Docker e o Docker Compose na máquina.
+4. Inicializar o Docker.
+```systemctl start docker```
+```gpasswd -a $USER docker```
+5. Inicializar o Swarm.
+```docker swarm init```
+6. Fazer o build da imagem usando o arquivo docker-stack.yml.
+```docker-compose -f docker-stack.yml build```
+7. Criar e fazer o deploy da stack:
+```docker stack deploy -c docker-stack.yml transforma_stack```
+8. Fazer as migrações. Para fazer as migrações é necessário primeiro excluir o BD.
+```docker volume ls```
+```docker volume rm transforma_stack_transforma-db```
+9. Buscar o nome do container que roda o transforma_stack_db com o comando docker ps. Logo em seguida:
+```docker cp db/transforma.sql <DB_CONTAINER_NAME>:/tmp```
+```docker exec <DB_CONTAINER_NAME> /bin/bash -c 'mysql transforma < /tmp/transforma.sql --password=root'```
+10. Para fazer a migração dos usuários:
+```docker cp db/popula-usuarios.sql  <DB_CONTAINER_NAME>:/tmp```
+```docker exec <DB_CONTAINER_NAME> /bin/bash -c 'mysql transforma < /tmp/popula-usuarios.sql --password=root'```
+11. Para listar os serviços da stack:
+```docker stack services transforma_stack```
+12. Para remover os serviços da stack:
+```docker stack rm transforma_stack```
