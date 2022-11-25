@@ -134,7 +134,7 @@ Para fazer o deploy dos serviços será usado o arquivo docker-stack.yml, só fo
 1. Inicializar o docker swarm:
 ```docker swarm init```
 2. Fazer o build da imagem usando o arquivo docker-stack.yml:
-```docker-compose -f docker-stack.yml build``
+```docker build -f docker/prod/Dockerfile -t 127.0.0.1:5000/transforma_stack .``
 4. Criar e fazer o deploy da stack:
 ```docker stack deploy -c docker-stack.yml transforma_stack```
 5. Para listar os serviços da stack:

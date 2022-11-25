@@ -3,8 +3,6 @@ version: "3.3"
 services:
   server:
     image: 127.0.0.1:5000/transforma_stack  #the address of the registry
-    build:
-      context: ./
     ports:
       - "8080:80"
       - "80:80"
