@@ -7,5 +7,7 @@ COPY docker/run.sh /tmp
 RUN chmod +x /tmp/run.sh
 COPY . /transformagov/
 WORKDIR /transformagov/
+RUN mkdir -p /transformagov/anexos/
+RUN chown -R www-data:www-data /transformagov/anexos
 # Use time zone configurated at .env
 #RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone

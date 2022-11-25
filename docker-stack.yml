@@ -7,7 +7,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      - ./:/transformagov/
       - letsencrypt:/etc/letsencrypt
+      - anexos:/transformagov/anexos
     env_file:
       - .env.prod
     entrypoint: /tmp/run.sh
@@ -28,4 +30,5 @@ services:
 volumes:
   transforma-db:
   letsencrypt:
+  anexos:
 
