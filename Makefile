@@ -4,6 +4,9 @@ build:
 up:
 	docker-compose up server db
 
+stop:
+	docker-compose stop
+
 run: build up
 
 load-schema:
