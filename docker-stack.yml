@@ -5,6 +5,7 @@ services:
     image: 127.0.0.1:5000/transforma_stack  #the address of the registry
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - letsencrypt:/etc/letsencrypt
     env_file:
