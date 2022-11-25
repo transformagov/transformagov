@@ -10,7 +10,7 @@ services:
     volumes:
       - ./:/transformagov/
       - anexos:/transformagov/anexos
-      env_file:
+    env_file:
       - .env
     entrypoint: /tmp/run.sh
     
