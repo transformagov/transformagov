@@ -6783,7 +6783,7 @@ ALTER TABLE `rl_gruposvagas_questoes_duplicadas`
 -- Constraints for table `rl_instituicoes_usuarios`
 --
 ALTER TABLE `rl_instituicoes_usuarios`
-  ADD CONSTRAINT `rl_instituicoes_usuarios_ibfk_1` FOREIGN KEY (`es_instituicao`) REFERENCES `tb_instituicoes3` (`pr_instituicao`),
+  ADD CONSTRAINT `rl_instituicoes_usuarios_ibfk_1` FOREIGN KEY (`es_instituicao`) REFERENCES `tb_instituicoes2` (`pr_instituicao`),
   ADD CONSTRAINT `rl_instituicoes_usuarios_ibfk_2` FOREIGN KEY (`es_usuario`) REFERENCES `tb_usuarios` (`pr_usuario`);
 
 --
@@ -6954,7 +6954,7 @@ ALTER TABLE `tb_sessoes`
 -- Constraints for table `tb_vagas`
 --
 ALTER TABLE `tb_vagas`
-  ADD CONSTRAINT `tb_vagas_ibfk_1` FOREIGN KEY (`es_instituicao2`) REFERENCES `tb_instituicoes3` (`pr_instituicao`),
+  ADD CONSTRAINT `tb_vagas_ibfk_1` FOREIGN KEY (`es_instituicao2`) REFERENCES `tb_instituicoes2` (`pr_instituicao`),
   ADD CONSTRAINT `tb_vagas_ibfk_2` FOREIGN KEY (`es_grupoVaga`) REFERENCES `tb_gruposvagas` (`pr_grupovaga`),
   ADD CONSTRAINT `tb_vagas_ibfk_3` FOREIGN KEY (`es_usuarioCadastro`) REFERENCES `tb_usuarios` (`pr_usuario`),
   ADD CONSTRAINT `tb_vagas_ibfk_4` FOREIGN KEY (`es_usuarioAlteracao`) REFERENCES `tb_usuarios` (`pr_usuario`),
