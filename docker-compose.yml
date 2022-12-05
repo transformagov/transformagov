@@ -9,6 +9,7 @@ services:
       - "$PORT:80"
     volumes:
       - ./:/transformagov/
+      - anexos:/transformagov/anexos
     env_file:
       - .env
     entrypoint: /tmp/run.sh
@@ -23,3 +24,4 @@ services:
       - TZ=America/Sao_Paulo
 volumes:
   transforma-db:
+  anexos:
