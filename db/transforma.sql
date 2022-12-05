@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: db
--- Generation Time: Apr 30, 2021 at 06:18 PM
--- Server version: 10.3.28-MariaDB-1:10.3.28+maria~focal
--- PHP Version: 7.4.16
+-- Host: 127.0.0.1:3306
+-- Generation Time: Nov 28, 2022 at 03:12 PM
+-- Server version: 5.7.36
+-- PHP Version: 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,9 +28,11 @@ SET time_zone = "+00:00";
 --
 
 DROP TABLE IF EXISTS `rl_experiencias_candidaturas`;
-CREATE TABLE `rl_experiencias_candidaturas` (
+CREATE TABLE IF NOT EXISTS `rl_experiencias_candidaturas` (
   `es_candidatura` int(10) UNSIGNED NOT NULL,
-  `es_experiencia` int(10) UNSIGNED NOT NULL
+  `es_experiencia` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`es_candidatura`,`es_experiencia`),
+  KEY `es_experiencia` (`es_experiencia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -40,9 +42,11 @@ CREATE TABLE `rl_experiencias_candidaturas` (
 --
 
 DROP TABLE IF EXISTS `rl_formacoes_candidaturas`;
-CREATE TABLE `rl_formacoes_candidaturas` (
+CREATE TABLE IF NOT EXISTS `rl_formacoes_candidaturas` (
   `es_candidatura` int(10) UNSIGNED NOT NULL,
-  `es_formacao` int(10) UNSIGNED NOT NULL
+  `es_formacao` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`es_candidatura`,`es_formacao`),
+  KEY `es_formacao` (`es_formacao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -52,10 +56,12 @@ CREATE TABLE `rl_formacoes_candidaturas` (
 --
 
 DROP TABLE IF EXISTS `rl_gruposvagas_questoes`;
-CREATE TABLE `rl_gruposvagas_questoes` (
+CREATE TABLE IF NOT EXISTS `rl_gruposvagas_questoes` (
   `es_grupovaga` int(10) UNSIGNED NOT NULL,
   `es_questao` int(10) UNSIGNED NOT NULL,
-  `in_ordem` tinyint(3) UNSIGNED NOT NULL
+  `in_ordem` tinyint(3) UNSIGNED NOT NULL,
+  PRIMARY KEY (`es_grupovaga`,`es_questao`),
+  KEY `es_questao` (`es_questao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -65,13 +71,15 @@ CREATE TABLE `rl_gruposvagas_questoes` (
 --
 
 DROP TABLE IF EXISTS `rl_gruposvagas_questoes_duplicadas`;
-CREATE TABLE `rl_gruposvagas_questoes_duplicadas` (
+CREATE TABLE IF NOT EXISTS `rl_gruposvagas_questoes_duplicadas` (
   `es_grupovaga_origem` int(10) UNSIGNED NOT NULL,
   `es_questao_origem` int(10) UNSIGNED NOT NULL,
   `es_grupovaga_destino` int(10) UNSIGNED NOT NULL,
   `es_questao_destino` int(10) UNSIGNED NOT NULL,
   `dt_cadastro` datetime NOT NULL,
-  `es_usuario` int(10) UNSIGNED NOT NULL
+  `es_usuario` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`es_grupovaga_origem`,`es_questao_origem`,`es_grupovaga_destino`,`es_questao_destino`,`dt_cadastro`),
+  KEY `es_usuario` (`es_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -81,10 +89,12 @@ CREATE TABLE `rl_gruposvagas_questoes_duplicadas` (
 --
 
 DROP TABLE IF EXISTS `rl_instituicoes_usuarios`;
-CREATE TABLE `rl_instituicoes_usuarios` (
+CREATE TABLE IF NOT EXISTS `rl_instituicoes_usuarios` (
   `es_instituicao` int(10) UNSIGNED NOT NULL,
   `es_usuario` int(10) UNSIGNED NOT NULL,
-  `bl_removido` enum('0','1') COLLATE utf8_bin DEFAULT NULL
+  `bl_removido` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`es_instituicao`,`es_usuario`),
+  KEY `es_usuario` (`es_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -94,11 +104,13 @@ CREATE TABLE `rl_instituicoes_usuarios` (
 --
 
 DROP TABLE IF EXISTS `rl_questoes_vagas`;
-CREATE TABLE `rl_questoes_vagas` (
+CREATE TABLE IF NOT EXISTS `rl_questoes_vagas` (
   `es_vaga` int(10) UNSIGNED NOT NULL,
   `es_questao` int(10) UNSIGNED NOT NULL,
   `in_ordem` tinyint(3) UNSIGNED DEFAULT NULL,
-  `bl_removido` enum('0','1') COLLATE utf8_bin DEFAULT NULL
+  `bl_removido` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`es_vaga`,`es_questao`),
+  KEY `es_questao` (`es_questao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -108,9 +120,29 @@ CREATE TABLE `rl_questoes_vagas` (
 --
 
 DROP TABLE IF EXISTS `rl_vagas_avaliadores`;
-CREATE TABLE `rl_vagas_avaliadores` (
+CREATE TABLE IF NOT EXISTS `rl_vagas_avaliadores` (
   `es_vaga` int(10) UNSIGNED NOT NULL,
-  `es_usuario` int(10) UNSIGNED NOT NULL
+  `es_usuario` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`es_vaga`,`es_usuario`),
+  KEY `es_usuario` (`es_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_alteracao_data`
+--
+
+DROP TABLE IF EXISTS `tb_alteracao_data`;
+CREATE TABLE IF NOT EXISTS `tb_alteracao_data` (
+  `pr_alteracao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `es_candidatura` int(10) UNSIGNED NOT NULL,
+  `es_usuario` int(10) UNSIGNED NOT NULL,
+  `dt_insercao` datetime NOT NULL,
+  `tx_justificativa` text NOT NULL,
+  PRIMARY KEY (`pr_alteracao`),
+  KEY `es_candidatura` (`es_candidatura`),
+  KEY `es_usuario` (`es_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -120,8 +152,8 @@ CREATE TABLE `rl_vagas_avaliadores` (
 --
 
 DROP TABLE IF EXISTS `tb_anexos`;
-CREATE TABLE `tb_anexos` (
-  `pr_anexo` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_anexos` (
+  `pr_anexo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `es_candidatura` int(10) UNSIGNED DEFAULT NULL,
   `es_questao` int(10) UNSIGNED DEFAULT NULL,
   `es_formacao` int(10) UNSIGNED DEFAULT NULL,
@@ -129,13 +161,21 @@ CREATE TABLE `tb_anexos` (
   `in_tipo` tinyint(3) UNSIGNED NOT NULL,
   `vc_mime` varchar(255) COLLATE utf8_bin NOT NULL,
   `vc_arquivo` varchar(255) COLLATE utf8_bin NOT NULL,
-  `bi_conteudo` mediumblob DEFAULT NULL,
+  `bi_conteudo` mediumblob,
   `in_tamanho` int(10) UNSIGNED NOT NULL,
   `es_usuarioCadastro` int(10) UNSIGNED NOT NULL,
   `dt_cadastro` datetime NOT NULL,
   `es_usuarioAlteracao` int(10) UNSIGNED DEFAULT NULL,
   `dt_alteracao` datetime DEFAULT NULL,
-  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0'
+  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pr_anexo`),
+  UNIQUE KEY `es_candidatura` (`es_candidatura`,`es_questao`) USING BTREE,
+  UNIQUE KEY `es_experiencia` (`es_experiencia`) USING BTREE,
+  UNIQUE KEY `es_formacao` (`es_formacao`) USING BTREE,
+  KEY `IDCandidatura` (`es_candidatura`),
+  KEY `IdUsuarioCadastrador` (`es_usuarioCadastro`),
+  KEY `IdUsuarioUltimoAlterador` (`es_usuarioAlteracao`),
+  KEY `es_questao` (`es_questao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -145,8 +185,8 @@ CREATE TABLE `tb_anexos` (
 --
 
 DROP TABLE IF EXISTS `tb_candidatos`;
-CREATE TABLE `tb_candidatos` (
-  `pr_candidato` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_candidatos` (
+  `pr_candidato` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `vc_nome` varchar(250) COLLATE utf8_bin NOT NULL,
   `vc_nomesocial` varchar(250) COLLATE utf8_bin DEFAULT NULL,
   `ch_cpf` char(14) COLLATE utf8_bin NOT NULL,
@@ -169,11 +209,11 @@ CREATE TABLE `tb_candidatos` (
   `vc_cep` varchar(10) COLLATE utf8_bin DEFAULT NULL,
   `es_municipio` bigint(20) DEFAULT NULL,
   `in_nivelAcademico` int(10) UNSIGNED DEFAULT NULL,
-  `tx_informacoesAcademicas` mediumtext COLLATE utf8_bin DEFAULT NULL,
-  `tx_experienciaSetorPublico` mediumtext COLLATE utf8_bin DEFAULT NULL,
-  `tx_experienciasProfissionais` mediumtext COLLATE utf8_bin DEFAULT NULL,
-  `tx_atividadesVoluntarias` mediumtext COLLATE utf8_bin DEFAULT NULL,
-  `tx_referenciasProfissionais` mediumtext COLLATE utf8_bin DEFAULT NULL,
+  `tx_informacoesAcademicas` mediumtext COLLATE utf8_bin,
+  `tx_experienciaSetorPublico` mediumtext COLLATE utf8_bin,
+  `tx_experienciasProfissionais` mediumtext COLLATE utf8_bin,
+  `tx_atividadesVoluntarias` mediumtext COLLATE utf8_bin,
+  `tx_referenciasProfissionais` mediumtext COLLATE utf8_bin,
   `in_exigenciasComuns` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
   `bl_sentenciado` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
   `bl_processoDisciplinar` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
@@ -187,7 +227,11 @@ CREATE TABLE `tb_candidatos` (
   `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
   `bl_aceiteTermo` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
   `bl_aceitePrivacidade` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
-  `bl_brumadinho` tinyint(1) DEFAULT NULL
+  `bl_brumadinho` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`pr_candidato`),
+  KEY `IdMunicipio` (`es_municipio`),
+  KEY `IdUsuarioCadastrador` (`es_usuarioCadastro`),
+  KEY `IdUsuarioUltimoAlterador` (`es_usuarioAlteracao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -197,8 +241,8 @@ CREATE TABLE `tb_candidatos` (
 --
 
 DROP TABLE IF EXISTS `tb_candidaturas`;
-CREATE TABLE `tb_candidaturas` (
-  `pr_candidatura` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_candidaturas` (
+  `pr_candidatura` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `es_candidato` int(10) UNSIGNED NOT NULL,
   `es_vaga` int(10) UNSIGNED NOT NULL,
   `es_status` tinyint(3) UNSIGNED NOT NULL,
@@ -213,16 +257,24 @@ CREATE TABLE `tb_candidaturas` (
   `es_avaliador_competencia1` int(10) UNSIGNED DEFAULT NULL,
   `es_avaliador_especialista` int(10) UNSIGNED DEFAULT NULL,
   `es_avaliador_curriculo` int(10) UNSIGNED DEFAULT NULL,
-  `tx_expectativa_momento` text COLLATE utf8_bin DEFAULT NULL,
-  `tx_observacoes_momento` text COLLATE utf8_bin DEFAULT NULL,
-  `tx_pontos_fortes` text COLLATE utf8_bin DEFAULT NULL,
-  `tx_pontos_melhorias` text COLLATE utf8_bin DEFAULT NULL,
-  `tx_feedback` text COLLATE utf8_bin DEFAULT NULL,
-  `tx_comentarios` text COLLATE utf8_bin DEFAULT NULL,
+  `tx_expectativa_momento` text COLLATE utf8_bin,
+  `tx_observacoes_momento` text COLLATE utf8_bin,
+  `tx_pontos_fortes` text COLLATE utf8_bin,
+  `tx_pontos_melhorias` text COLLATE utf8_bin,
+  `tx_feedback` text COLLATE utf8_bin,
+  `tx_comentarios` text COLLATE utf8_bin,
   `en_hbdi` enum('1','2') COLLATE utf8_bin DEFAULT NULL,
   `dt_hbdi` datetime DEFAULT NULL,
   `en_motivacao` enum('1','2') COLLATE utf8_bin DEFAULT NULL,
-  `dt_motivacao` datetime DEFAULT NULL
+  `dt_motivacao` datetime DEFAULT NULL,
+  `en_situacao_funcional` enum('0','1','2') COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`pr_candidatura`),
+  KEY `IdCandidato` (`es_candidato`),
+  KEY `IdVaga` (`es_vaga`),
+  KEY `es_status` (`es_status`),
+  KEY `es_avaliador_competencia1` (`es_avaliador_competencia1`),
+  KEY `es_avaliador_competencia2` (`es_avaliador_especialista`),
+  KEY `es_avaliador_curriculo` (`es_avaliador_curriculo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -232,25 +284,12 @@ CREATE TABLE `tb_candidaturas` (
 --
 
 DROP TABLE IF EXISTS `tb_competencias`;
-CREATE TABLE `tb_competencias` (
-  `pr_competencia` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_competencias` (
+  `pr_competencia` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `vc_competencia` varchar(200) NOT NULL,
-  `tx_descrição` text NOT NULL
+  `tx_descrição` text NOT NULL,
+  PRIMARY KEY (`pr_competencia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `tb_competencias`
---
-
-INSERT INTO `tb_competencias` (`pr_competencia`, `vc_competencia`, `tx_descrição`) VALUES
-(12, 'Capacidade de Comunicação', ''),
-(13, 'Gestão de Pessoas', ''),
-(14, 'Liderança e engajamento de pessoas', ''),
-(15, 'Orientação para Resultados e usuários', ''),
-(16, 'Visão Sistêmica', ''),
-(17, 'Desafia o status quo/Inovação', ''),
-(18, 'Resiliência', ''),
-(19, 'Resolução de conflitos', '');
 
 -- --------------------------------------------------------
 
@@ -259,14 +298,16 @@ INSERT INTO `tb_competencias` (`pr_competencia`, `vc_competencia`, `tx_descriç�
 --
 
 DROP TABLE IF EXISTS `tb_configuracao`;
-CREATE TABLE `tb_configuracao` (
+CREATE TABLE IF NOT EXISTS `tb_configuracao` (
   `co_conf` varchar(30) COLLATE utf8_bin NOT NULL,
   `vc_conf` varchar(255) COLLATE utf8_bin NOT NULL,
   `no_conf` varchar(100) COLLATE utf8_bin NOT NULL,
   `in_ordenacao` int(11) NOT NULL,
   `ch_tipo` char(1) COLLATE utf8_bin NOT NULL DEFAULT 'T',
   `ch_restricao` char(1) COLLATE utf8_bin DEFAULT NULL,
-  `in_tamanhomaximo` int(11) NOT NULL
+  `in_tamanhomaximo` int(11) NOT NULL,
+  PRIMARY KEY (`co_conf`),
+  KEY `in_ordenacao` (`in_ordenacao`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -276,8 +317,8 @@ CREATE TABLE `tb_configuracao` (
 --
 
 DROP TABLE IF EXISTS `tb_entrevistas`;
-CREATE TABLE `tb_entrevistas` (
-  `pr_entrevista` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_entrevistas` (
+  `pr_entrevista` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `es_candidatura` int(10) UNSIGNED NOT NULL,
   `es_avaliador1` int(10) UNSIGNED NOT NULL,
   `es_avaliador2` int(10) UNSIGNED DEFAULT NULL,
@@ -286,9 +327,15 @@ CREATE TABLE `tb_entrevistas` (
   `es_alterador` int(10) UNSIGNED NOT NULL,
   `dt_alteracao` date NOT NULL,
   `bl_tipo_entrevista` enum('competencia','especialista') DEFAULT NULL,
-  `vc_link` varchar(200) DEFAULT NULL,
-  `tx_observacoes` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `vc_link` varchar(600) CHARACTER SET utf8 DEFAULT NULL,
+  `tx_observacoes` text,
+  PRIMARY KEY (`pr_entrevista`),
+  UNIQUE KEY `es_candidatura` (`es_candidatura`,`bl_tipo_entrevista`) USING BTREE,
+  KEY `es_avaliador1` (`es_avaliador1`),
+  KEY `es_avaliador2` (`es_avaliador2`),
+  KEY `es_alterador` (`es_alterador`),
+  KEY `es_avaliador3` (`es_avaliador3`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -297,13 +344,14 @@ CREATE TABLE `tb_entrevistas` (
 --
 
 DROP TABLE IF EXISTS `tb_etapas`;
-CREATE TABLE `tb_etapas` (
-  `pr_etapa` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_etapas` (
+  `pr_etapa` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `vc_etapa` varchar(250) COLLATE utf8_bin NOT NULL,
   `in_ordem` tinyint(3) UNSIGNED DEFAULT NULL,
   `vc_texto` varchar(500) COLLATE utf8_bin DEFAULT NULL,
-  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pr_etapa`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `tb_etapas`
@@ -325,8 +373,8 @@ INSERT INTO `tb_etapas` (`pr_etapa`, `vc_etapa`, `in_ordem`, `vc_texto`, `bl_rem
 --
 
 DROP TABLE IF EXISTS `tb_experiencias`;
-CREATE TABLE `tb_experiencias` (
-  `pr_experienca` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_experiencias` (
+  `pr_experienca` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `es_experiencia_pai` int(11) UNSIGNED DEFAULT NULL,
   `es_candidato` int(10) UNSIGNED NOT NULL,
   `es_candidatura` int(10) UNSIGNED DEFAULT NULL,
@@ -339,7 +387,11 @@ CREATE TABLE `tb_experiencias` (
   `me_fim` int(2) DEFAULT NULL,
   `dt_fim` date DEFAULT NULL,
   `bl_emprego_atual` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
-  `tx_atividades` text COLLATE utf8_bin NOT NULL
+  `tx_atividades` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`pr_experienca`),
+  KEY `es_experiencia_pai` (`es_experiencia_pai`),
+  KEY `es_candidatura` (`es_candidatura`),
+  KEY `es_candidato` (`es_candidato`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -349,8 +401,8 @@ CREATE TABLE `tb_experiencias` (
 --
 
 DROP TABLE IF EXISTS `tb_formacao`;
-CREATE TABLE `tb_formacao` (
-  `pr_formacao` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_formacao` (
+  `pr_formacao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `es_formacao_pai` int(10) UNSIGNED DEFAULT NULL,
   `es_candidato` int(10) UNSIGNED NOT NULL,
   `es_candidatura` int(10) UNSIGNED DEFAULT NULL,
@@ -361,8 +413,55 @@ CREATE TABLE `tb_formacao` (
   `se_conclusao` int(2) DEFAULT NULL,
   `me_conclusao` int(2) DEFAULT NULL,
   `in_cargahoraria` int(10) UNSIGNED DEFAULT NULL,
-  `dt_conclusao` date DEFAULT NULL
+  `dt_conclusao` date DEFAULT NULL,
+  PRIMARY KEY (`pr_formacao`),
+  KEY `es_formacao_pai` (`es_formacao_pai`),
+  KEY `es_candidatura` (`es_candidatura`),
+  KEY `es_candidato` (`es_candidato`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_formulario_situacao_funcional`
+--
+
+DROP TABLE IF EXISTS `tb_formulario_situacao_funcional`;
+CREATE TABLE IF NOT EXISTS `tb_formulario_situacao_funcional` (
+  `pr_formulario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `es_candidatura` int(10) UNSIGNED NOT NULL,
+  `dt_situacao_funcional` date NOT NULL,
+  `bl_vinculo` enum('0','1') DEFAULT NULL,
+  `en_tipovinculo` enum('0','1','2','3','4','5') DEFAULT NULL,
+  `en_poder` enum('1','2','3') DEFAULT NULL,
+  `en_esfera` enum('1','2','3','4') DEFAULT NULL,
+  `es_instituicao` int(10) UNSIGNED DEFAULT NULL,
+  `vc_instituicao` varchar(200) DEFAULT NULL,
+  `vc_codCargo` varchar(200) DEFAULT NULL,
+  `in_masp` varchar(20) DEFAULT NULL,
+  `vc_comprovanteVinc` varchar(200) DEFAULT NULL,
+  `vc_mime` varchar(200) DEFAULT NULL,
+  `en_status` enum('salvo','entregue') DEFAULT NULL,
+  PRIMARY KEY (`pr_formulario`),
+  UNIQUE KEY `es_candidatura_2` (`es_candidatura`),
+  KEY `es_candidatura` (`es_candidatura`),
+  KEY `es_instituicao` (`es_instituicao`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_gruposatividades`
+--
+
+DROP TABLE IF EXISTS `tb_gruposatividades`;
+CREATE TABLE IF NOT EXISTS `tb_gruposatividades` (
+  `pr_grupoatividade` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `vc_grupoatividade` varchar(200) NOT NULL,
+  `es_instituicao` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`pr_grupoatividade`),
+  KEY `es_instituicao` (`es_instituicao`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -371,15 +470,19 @@ CREATE TABLE `tb_formacao` (
 --
 
 DROP TABLE IF EXISTS `tb_gruposvagas`;
-CREATE TABLE `tb_gruposvagas` (
-  `pr_grupovaga` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_gruposvagas` (
+  `pr_grupovaga` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `vc_grupovaga` varchar(250) COLLATE utf8_bin NOT NULL,
   `es_instituicao` int(10) UNSIGNED DEFAULT NULL,
   `es_usuarioCadastro` int(10) UNSIGNED DEFAULT NULL,
   `dt_cadastro` date DEFAULT NULL,
   `es_usuarioAlteracao` int(10) UNSIGNED DEFAULT NULL,
   `dt_alteracao` date DEFAULT NULL,
-  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0'
+  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pr_grupovaga`),
+  KEY `es_usuarioCadastro` (`es_usuarioCadastro`),
+  KEY `es_usuarioAlteracao` (`es_usuarioAlteracao`),
+  KEY `es_instituicao` (`es_instituicao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -389,8 +492,8 @@ CREATE TABLE `tb_gruposvagas` (
 --
 
 DROP TABLE IF EXISTS `tb_hbdi`;
-CREATE TABLE `tb_hbdi` (
-  `pr_hbdi` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_hbdi` (
+  `pr_hbdi` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `es_candidatura` int(10) UNSIGNED NOT NULL,
   `dt_hbdi` datetime NOT NULL,
   `bl_motivacao_trabalho1` tinyint(1) DEFAULT NULL,
@@ -540,7 +643,9 @@ CREATE TABLE `tb_hbdi` (
   `bl_frase9` tinyint(1) DEFAULT NULL,
   `bl_frase10` tinyint(1) DEFAULT NULL,
   `bl_frase11` tinyint(1) DEFAULT NULL,
-  `bl_frase12` tinyint(1) DEFAULT NULL
+  `bl_frase12` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`pr_hbdi`),
+  UNIQUE KEY `es_candidatura` (`es_candidatura`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -550,20 +655,26 @@ CREATE TABLE `tb_hbdi` (
 --
 
 DROP TABLE IF EXISTS `tb_historicocandidaturas`;
-CREATE TABLE `tb_historicocandidaturas` (
-  `pr_historico` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_historicocandidaturas` (
+  `pr_historico` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `es_candidatura` int(10) UNSIGNED NOT NULL,
   `es_etapa` int(10) UNSIGNED NOT NULL,
   `es_avaliador` int(10) UNSIGNED DEFAULT NULL,
   `dt_avaliacao` datetime NOT NULL,
   `bl_apto` enum('0','1') COLLATE utf8_bin NOT NULL,
   `in_nota` tinyint(3) UNSIGNED DEFAULT NULL,
-  `tx_observacao` mediumtext COLLATE utf8_bin DEFAULT NULL,
+  `tx_observacao` mediumtext COLLATE utf8_bin,
   `es_usuarioCadastro` int(10) UNSIGNED NOT NULL,
   `dt_cadastro` datetime NOT NULL,
   `es_usuarioAlteracao` int(10) UNSIGNED NOT NULL,
   `dt_alteracao` datetime NOT NULL,
-  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0'
+  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pr_historico`),
+  KEY `IdCandidatura` (`es_candidatura`),
+  KEY `IdEtapa` (`es_etapa`),
+  KEY `IdAvaliador` (`es_avaliador`),
+  KEY `IdUsuarioCadastrador` (`es_usuarioCadastro`),
+  KEY `IdUsuarioUltimoAlterador` (`es_usuarioAlteracao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -573,15 +684,17 @@ CREATE TABLE `tb_historicocandidaturas` (
 --
 
 DROP TABLE IF EXISTS `tb_instituicoes2`;
-CREATE TABLE `tb_instituicoes2` (
-  `pr_instituicao` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_instituicoes2` (
+  `pr_instituicao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `DDNRPESSOAFISJUR` int(10) UNSIGNED DEFAULT NULL,
   `vc_instituicao` varchar(255) NOT NULL,
-  `in_tipounidade` int(1) UNSIGNED NOT NULL DEFAULT 0,
+  `in_tipounidade` int(1) UNSIGNED NOT NULL DEFAULT '0',
   `vc_sigla` varchar(50) NOT NULL,
   `en_sexonome` enum('m','f') DEFAULT NULL,
-  `bl_extinto` enum('0','1') NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `bl_extinto` enum('0','1') NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pr_instituicao`),
+  UNIQUE KEY `DDNRPESSOAFISJUR` (`DDNRPESSOAFISJUR`)
+) ENGINE=InnoDB AUTO_INCREMENT=1260373 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_instituicoes2`
@@ -662,7 +775,7 @@ INSERT INTO `tb_instituicoes2` (`pr_instituicao`, `DDNRPESSOAFISJUR`, `vc_instit
 (2261, 1857448, 'Fundação Ezequiel Dias', 5, 'FUNED', 'f', '0'),
 (2271, 1857431, 'Fundação Hospitalar do Estado de Minas Gerais', 5, 'FHEMIG', 'f', '0'),
 (2281, 1858563, 'Fundação de Educação para o Trabalho de Minas Gerais', 5, 'UTRAMIG', 'f', '0'),
-(2301, 1857424, 'Departamento de Edificações e Estradas de Rodagem do Estado de Minas Gerais', 6, 'DEER', 'm', '0'),
+(2301, 1857424, 'Departamento de Edificações e Estradas de Rodagem do Estado de Minas Gerais', 6, 'DER', 'm', '0'),
 (2311, 1858562, 'Universidade Estadual de Montes Claros', 6, 'UNIMONTES', 'f', '0'),
 (2321, 1857439, 'Fundação Centro de Hematologia e Hemoterapia do Estado de Minas Gerais', 5, 'HEMOMINAS', 'f', '0'),
 (2331, 1857456, 'Instituto de Metrologia e Qualidade', 6, 'IPEM', 'm', '0'),
@@ -699,23 +812,8 @@ INSERT INTO `tb_instituicoes2` (`pr_instituicao`, `DDNRPESSOAFISJUR`, `vc_instit
 (1260367, NULL, 'Secretaria de Estado Extraordinária de Regularização Fundiária', 3, 'SEERF', 'f', '1'),
 (1260368, NULL, 'Conselho Estadual de Educação', 8, 'CEE', 'm', '0'),
 (1260370, NULL, 'INSTITUICAO C/ CODIGO DE UNIDADE NAO INFORMADO', 0, 'INVALIDO', 'm', '1'),
-(1260371, NULL, 'Conselho Nacional de Secretários de Estado da Administração', 0, 'CONSAD', 'm', '0');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tb_instituicoes3`
---
-
-DROP TABLE IF EXISTS `tb_instituicoes3`;
-CREATE TABLE `tb_instituicoes3` (
-  `pr_instituicao` int(10) UNSIGNED NOT NULL,
-  `vc_instituicao` varchar(250) COLLATE utf8_bin NOT NULL,
-  `vc_sigla` varchar(50) COLLATE utf8_bin DEFAULT NULL,
-  `in_codigo` int(10) UNSIGNED DEFAULT NULL,
-  `vc_cnpj` varchar(20) COLLATE utf8_bin DEFAULT NULL,
-  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+(1260371, NULL, 'Conselho Nacional de Secretários de Estado da Administração', 0, 'CONSAD', 'm', '0'),
+(1260372, NULL, 'Consultoria Técnico-Legislativa', 0, 'CTL', 'f', '0');
 
 -- --------------------------------------------------------
 
@@ -724,8 +822,8 @@ CREATE TABLE `tb_instituicoes3` (
 --
 
 DROP TABLE IF EXISTS `tb_log`;
-CREATE TABLE `tb_log` (
-  `pr_log` bigint(20) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_log` (
+  `pr_log` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `dt_log` datetime NOT NULL,
   `en_tipo` enum('erro','seguranca','sucesso','advertencia') COLLATE utf8_bin NOT NULL,
   `vc_local` varchar(100) COLLATE utf8_bin NOT NULL,
@@ -734,7 +832,9 @@ CREATE TABLE `tb_log` (
   `in_chave` int(10) UNSIGNED DEFAULT NULL,
   `tx_texto` mediumtext COLLATE utf8_bin NOT NULL,
   `vc_ip` varchar(15) COLLATE utf8_bin NOT NULL,
-  `vc_sessao` varchar(100) COLLATE utf8_bin DEFAULT NULL
+  `vc_sessao` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`pr_log`),
+  KEY `es_usuario` (`es_usuario`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -744,13 +844,15 @@ CREATE TABLE `tb_log` (
 --
 
 DROP TABLE IF EXISTS `tb_municipios`;
-CREATE TABLE `tb_municipios` (
-  `pr_municipio` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_municipios` (
+  `pr_municipio` bigint(20) NOT NULL AUTO_INCREMENT,
   `es_uf` int(10) UNSIGNED NOT NULL,
   `in_codigo` int(10) UNSIGNED NOT NULL,
   `vc_municipio` varchar(250) COLLATE utf8_bin NOT NULL,
-  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pr_municipio`),
+  KEY `es_uf` (`es_uf`)
+) ENGINE=InnoDB AUTO_INCREMENT=5566 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `tb_municipios`
@@ -5889,7 +5991,7 @@ INSERT INTO `tb_municipios` (`pr_municipio`, `es_uf`, `in_codigo`, `vc_municipio
 (5126, 26, 3530508, 'MOCOCA', '0'),
 (5127, 26, 3530607, 'MOGI DAS CRUZES', '0'),
 (5128, 26, 3530706, 'MOGI GUAÇU', '0'),
-(5129, 26, 3530805, 'MOJI MIRIM', '0'),
+(5129, 26, 3530805, 'MOGI MIRIM', '0'),
 (5130, 26, 3530904, 'MOMBUCA', '0'),
 (5131, 26, 3531001, 'MONÇÕES', '0'),
 (5132, 26, 3531100, 'MONGAGUÁ', '0'),
@@ -6334,13 +6436,19 @@ INSERT INTO `tb_municipios` (`pr_municipio`, `es_uf`, `in_codigo`, `vc_municipio
 --
 
 DROP TABLE IF EXISTS `tb_notas`;
-CREATE TABLE `tb_notas` (
-  `pr_nota` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_notas` (
+  `pr_nota` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `es_candidatura` int(10) UNSIGNED NOT NULL,
   `in_nota` int(10) UNSIGNED NOT NULL,
   `es_etapa` int(10) UNSIGNED NOT NULL,
   `es_competencia` int(10) UNSIGNED DEFAULT NULL,
-  `es_avaliador` int(10) UNSIGNED DEFAULT NULL
+  `es_avaliador` int(10) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`pr_nota`),
+  UNIQUE KEY `es_candidatura_2` (`es_candidatura`,`es_etapa`,`es_competencia`,`es_avaliador`),
+  KEY `es_candidatura` (`es_candidatura`),
+  KEY `es_etapa` (`es_etapa`),
+  KEY `es_competencia` (`es_competencia`),
+  KEY `es_avaliador` (`es_avaliador`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -6350,11 +6458,15 @@ CREATE TABLE `tb_notas` (
 --
 
 DROP TABLE IF EXISTS `tb_notas_totais`;
-CREATE TABLE `tb_notas_totais` (
-  `pr_nota_total` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_notas_totais` (
+  `pr_nota_total` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `es_vaga` int(10) UNSIGNED NOT NULL,
   `in_nota_total` int(10) UNSIGNED NOT NULL,
-  `es_etapa` int(10) UNSIGNED NOT NULL
+  `es_etapa` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`pr_nota_total`),
+  UNIQUE KEY `es_vaga_2` (`es_vaga`,`es_etapa`),
+  KEY `es_vaga` (`es_vaga`),
+  KEY `es_etapa` (`es_etapa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -6364,12 +6476,14 @@ CREATE TABLE `tb_notas_totais` (
 --
 
 DROP TABLE IF EXISTS `tb_opcoes`;
-CREATE TABLE `tb_opcoes` (
-  `pr_opcao` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_opcoes` (
+  `pr_opcao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `es_questao` int(10) UNSIGNED NOT NULL,
   `tx_opcao` mediumtext COLLATE utf8_bin NOT NULL,
   `in_valor` int(10) UNSIGNED DEFAULT NULL,
-  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0'
+  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pr_opcao`),
+  KEY `IDQuestao` (`es_questao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -6379,8 +6493,8 @@ CREATE TABLE `tb_opcoes` (
 --
 
 DROP TABLE IF EXISTS `tb_questoes`;
-CREATE TABLE `tb_questoes` (
-  `pr_questao` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_questoes` (
+  `pr_questao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `es_etapa` int(10) UNSIGNED NOT NULL,
   `tx_questao` mediumtext COLLATE utf8_bin NOT NULL,
   `vc_respostaAceita` varchar(500) COLLATE utf8_bin DEFAULT NULL,
@@ -6394,7 +6508,12 @@ CREATE TABLE `tb_questoes` (
   `dt_alteracao` datetime DEFAULT NULL,
   `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
   `es_competencia` int(10) UNSIGNED DEFAULT NULL,
-  `bl_duplicado` enum('0','1') COLLATE utf8_bin DEFAULT NULL
+  `bl_duplicado` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`pr_questao`),
+  KEY `IdEtapa` (`es_etapa`),
+  KEY `IdUsuarioCadastrador` (`es_usuarioCadastro`),
+  KEY `idUsuarioUltimoAlterador` (`es_usuarioAlteracao`),
+  KEY `es_competencia` (`es_competencia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -6404,8 +6523,8 @@ CREATE TABLE `tb_questoes` (
 --
 
 DROP TABLE IF EXISTS `tb_respostas`;
-CREATE TABLE `tb_respostas` (
-  `pr_resposta` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_respostas` (
+  `pr_resposta` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `es_candidatura` int(10) UNSIGNED NOT NULL,
   `es_questao` int(10) UNSIGNED NOT NULL,
   `es_opcao` int(10) UNSIGNED DEFAULT NULL,
@@ -6418,8 +6537,16 @@ CREATE TABLE `tb_respostas` (
   `dt_cadastro` datetime DEFAULT NULL,
   `es_usuarioAlteracao` int(10) UNSIGNED DEFAULT NULL,
   `dt_alteracao` datetime DEFAULT NULL,
-  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin KEY_BLOCK_SIZE=8 ROW_FORMAT=COMPRESSED;
+  `bl_removido` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pr_resposta`) KEY_BLOCK_SIZE=8,
+  UNIQUE KEY `es_candidatura` (`es_candidatura`,`es_questao`,`es_avaliador`) KEY_BLOCK_SIZE=8 USING BTREE,
+  KEY `IdCandidatura` (`es_candidatura`) KEY_BLOCK_SIZE=8,
+  KEY `IdQuestao` (`es_questao`) KEY_BLOCK_SIZE=8,
+  KEY `IdAvaliador` (`es_avaliador`) KEY_BLOCK_SIZE=8,
+  KEY `IdUsuarioCadastrador` (`es_usuarioCadastro`) KEY_BLOCK_SIZE=8,
+  KEY `IdUsuarioUltimoAlterador` (`es_usuarioAlteracao`) KEY_BLOCK_SIZE=8,
+  KEY `es_opcao` (`es_opcao`) KEY_BLOCK_SIZE=8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin KEY_BLOCK_SIZE=4 ROW_FORMAT=COMPRESSED;
 
 -- --------------------------------------------------------
 
@@ -6428,20 +6555,15 @@ CREATE TABLE `tb_respostas` (
 --
 
 DROP TABLE IF EXISTS `tb_sessoes`;
-CREATE TABLE `tb_sessoes` (
+CREATE TABLE IF NOT EXISTS `tb_sessoes` (
   `id` varchar(128) COLLATE utf8_bin NOT NULL,
   `ip_address` varchar(45) COLLATE utf8_bin NOT NULL,
-  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `data` blob NOT NULL,
-  `es_usuario` int(10) UNSIGNED DEFAULT NULL
+  `es_usuario` int(10) UNSIGNED DEFAULT NULL,
+  KEY `ci_sessions_timestamp` (`timestamp`),
+  KEY `es_usuario` (`es_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `tb_sessoes`
---
-
-INSERT INTO `tb_sessoes` (`id`, `ip_address`, `timestamp`, `data`, `es_usuario`) VALUES
-('ehufqp87dmak1mha2ukc6cpns6q3mf2h', '192.168.64.1', 1619806152, '', NULL);
 
 -- --------------------------------------------------------
 
@@ -6450,11 +6572,13 @@ INSERT INTO `tb_sessoes` (`id`, `ip_address`, `timestamp`, `data`, `es_usuario`)
 --
 
 DROP TABLE IF EXISTS `tb_status_candidaturas`;
-CREATE TABLE `tb_status_candidaturas` (
-  `pr_status` tinyint(3) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_status_candidaturas` (
+  `pr_status` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT,
   `in_status_legado` tinyint(3) UNSIGNED DEFAULT NULL,
-  `vc_status` varchar(50) COLLATE utf8_bin NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `vc_status` varchar(50) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`pr_status`),
+  UNIQUE KEY `in_status_legado` (`in_status_legado`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `tb_status_candidaturas`
@@ -6490,11 +6614,13 @@ INSERT INTO `tb_status_candidaturas` (`pr_status`, `in_status_legado`, `vc_statu
 --
 
 DROP TABLE IF EXISTS `tb_uf`;
-CREATE TABLE `tb_uf` (
-  `pr_uf` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_uf` (
+  `pr_uf` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `ch_sigla` char(2) COLLATE utf8_bin NOT NULL,
-  `vc_uf` varchar(20) COLLATE utf8_bin NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `vc_uf` varchar(20) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`pr_uf`),
+  UNIQUE KEY `ds_sigla` (`ch_sigla`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `tb_uf`
@@ -6536,8 +6662,8 @@ INSERT INTO `tb_uf` (`pr_uf`, `ch_sigla`, `vc_uf`) VALUES
 --
 
 DROP TABLE IF EXISTS `tb_usuarios`;
-CREATE TABLE `tb_usuarios` (
-  `pr_usuario` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_usuarios` (
+  `pr_usuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `es_candidato` int(10) UNSIGNED DEFAULT NULL,
   `en_perfil` enum('candidato','avaliador','sugesp','orgaos','administrador') COLLATE utf8_bin NOT NULL,
   `vc_nome` varchar(250) COLLATE utf8_bin DEFAULT NULL,
@@ -6550,34 +6676,18 @@ CREATE TABLE `tb_usuarios` (
   `dt_alteracao` date DEFAULT NULL,
   `dt_ultimoacesso` datetime DEFAULT NULL,
   `bl_trocasenha` enum('0','1') COLLATE utf8_bin DEFAULT '1',
-  `in_erros` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
-  `bl_removido` enum('0','1') COLLATE utf8_bin DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
+  `in_erros` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `bl_removido` enum('0','1') COLLATE utf8_bin DEFAULT '0',
+  PRIMARY KEY (`pr_usuario`),
+  KEY `IdCandidato` (`es_candidato`)
+) ENGINE=InnoDB AUTO_INCREMENT=9744 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Table structure for table `tb_usuarios_bak`
+-- Dumping data for table `tb_usuarios`
 --
 
-DROP TABLE IF EXISTS `tb_usuarios_bak`;
-CREATE TABLE `tb_usuarios_bak` (
-  `pr_usuario` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `es_candidato` int(10) UNSIGNED DEFAULT NULL,
-  `en_perfil` enum('candidato','avaliador','sugesp','orgaos','administrador') CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `vc_nome` varchar(250) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `vc_email` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `vc_telefone` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `vc_login` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `vc_senha` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `vc_senha_temporaria` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `dt_cadastro` date DEFAULT NULL,
-  `dt_alteracao` date DEFAULT NULL,
-  `dt_ultimoacesso` datetime DEFAULT NULL,
-  `bl_trocasenha` enum('0','1') CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '1',
-  `in_erros` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
-  `bl_removido` enum('0','1') CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `tb_usuarios` (`pr_usuario`, `es_candidato`, `en_perfil`, `vc_nome`, `vc_email`, `vc_telefone`, `vc_login`, `vc_senha`, `vc_senha_temporaria`, `dt_cadastro`, `dt_alteracao`, `dt_ultimoacesso`, `bl_trocasenha`, `in_erros`, `bl_removido`) VALUES
+(1, NULL, 'sugesp', 'Administrador', 'teste.teste.com.br', '', '000.000.000-00', 'd7a51abd6867796b69cdb40986ad35c5501e105b9dfd3c4cc5f241d19cb2b29785d2e5b95a4d30fd76cb6f5fb09ce15715471a5c8c414ef49782586401babb8d2FxyjT0ZQAx8lG/gfen7kf7Rfivt9PVsumgg6Q9Lf/o=', '7b151a0ee92d2bb75738efa5581656b37c0a8abd30bd59283518577b10e78568bc6acbfc61a2cb17f1e9799153e45e672744705dddb930c9dbe8a6a65c471bedWn/lLUFivPKPjomOhVxZSdaw4js9TtwMt8uMZ4XvWvU=', NULL, NULL, '2022-06-10 14:32:57', '0', 0, '0');
 
 -- --------------------------------------------------------
 
@@ -6586,10 +6696,10 @@ CREATE TABLE `tb_usuarios_bak` (
 --
 
 DROP TABLE IF EXISTS `tb_vagas`;
-CREATE TABLE `tb_vagas` (
-  `pr_vaga` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tb_vagas` (
+  `pr_vaga` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `vc_vaga` varchar(250) CHARACTER SET utf8 NOT NULL,
-  `tx_descricao` text CHARACTER SET utf8 DEFAULT NULL,
+  `tx_descricao` text CHARACTER SET utf8,
   `dt_inicio` datetime DEFAULT NULL,
   `dt_fim` datetime DEFAULT NULL,
   `vc_linkEntrevista` varchar(300) CHARACTER SET utf8 DEFAULT NULL,
@@ -6604,436 +6714,39 @@ CREATE TABLE `tb_vagas` (
   `bl_removido` enum('0','1') CHARACTER SET utf8 NOT NULL DEFAULT '0',
   `bl_liberado` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
   `bl_brumadinho` tinyint(1) DEFAULT NULL,
-  `bl_finalizado` enum('0','1') COLLATE utf8_bin DEFAULT NULL
+  `bl_finalizado` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `vc_remuneracao` varchar(200) COLLATE utf8_bin DEFAULT NULL,
+  `tx_documentacao` text COLLATE utf8_bin,
+  `en_atendimento` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_auditoria` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_compras` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_controladoria` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_desenvolvimento_eco` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_desenv_soc` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_dir_hum` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_educacao` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_financeiro` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_gest_contrat` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_gest_pessoa` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_gest_process` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_gest_proj` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_infraestrutura` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_logistica` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_meio_amb` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_pol_pub` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_rec_hum` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_saude` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `en_tic` enum('0','1') COLLATE utf8_bin DEFAULT NULL,
+  `es_grupoatividade` int(10) UNSIGNED DEFAULT NULL,
+  `tx_orientacoes` text COLLATE utf8_bin,
+  PRIMARY KEY (`pr_vaga`),
+  KEY `IdOrgao` (`es_instituicao2`),
+  KEY `IdGrupoVaga` (`es_grupoVaga`),
+  KEY `es_usuarioCadastro` (`es_usuarioCadastro`),
+  KEY `es_usuarioAlteracao` (`es_usuarioAlteracao`),
+  KEY `es_instituicao` (`es_instituicao`),
+  KEY `es_grupoatividade` (`es_grupoatividade`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `rl_experiencias_candidaturas`
---
-ALTER TABLE `rl_experiencias_candidaturas`
-  ADD PRIMARY KEY (`es_candidatura`,`es_experiencia`),
-  ADD KEY `es_experiencia` (`es_experiencia`);
-
---
--- Indexes for table `rl_formacoes_candidaturas`
---
-ALTER TABLE `rl_formacoes_candidaturas`
-  ADD PRIMARY KEY (`es_candidatura`,`es_formacao`),
-  ADD KEY `es_formacao` (`es_formacao`);
-
---
--- Indexes for table `rl_gruposvagas_questoes`
---
-ALTER TABLE `rl_gruposvagas_questoes`
-  ADD PRIMARY KEY (`es_grupovaga`,`es_questao`),
-  ADD KEY `es_questao` (`es_questao`);
-
---
--- Indexes for table `rl_gruposvagas_questoes_duplicadas`
---
-ALTER TABLE `rl_gruposvagas_questoes_duplicadas`
-  ADD PRIMARY KEY (`es_grupovaga_origem`,`es_questao_origem`,`es_grupovaga_destino`,`es_questao_destino`,`dt_cadastro`),
-  ADD KEY `es_usuario` (`es_usuario`);
-
---
--- Indexes for table `rl_instituicoes_usuarios`
---
-ALTER TABLE `rl_instituicoes_usuarios`
-  ADD PRIMARY KEY (`es_instituicao`,`es_usuario`),
-  ADD KEY `es_usuario` (`es_usuario`);
-
---
--- Indexes for table `rl_questoes_vagas`
---
-ALTER TABLE `rl_questoes_vagas`
-  ADD PRIMARY KEY (`es_vaga`,`es_questao`),
-  ADD KEY `es_questao` (`es_questao`);
-
---
--- Indexes for table `rl_vagas_avaliadores`
---
-ALTER TABLE `rl_vagas_avaliadores`
-  ADD PRIMARY KEY (`es_vaga`,`es_usuario`),
-  ADD KEY `es_usuario` (`es_usuario`);
-
---
--- Indexes for table `tb_anexos`
---
-ALTER TABLE `tb_anexos`
-  ADD PRIMARY KEY (`pr_anexo`),
-  ADD UNIQUE KEY `es_candidatura` (`es_candidatura`,`es_questao`) USING BTREE,
-  ADD UNIQUE KEY `es_experiencia` (`es_experiencia`) USING BTREE,
-  ADD UNIQUE KEY `es_formacao` (`es_formacao`) USING BTREE,
-  ADD KEY `IDCandidatura` (`es_candidatura`),
-  ADD KEY `IdUsuarioCadastrador` (`es_usuarioCadastro`),
-  ADD KEY `IdUsuarioUltimoAlterador` (`es_usuarioAlteracao`),
-  ADD KEY `es_questao` (`es_questao`);
-
---
--- Indexes for table `tb_candidatos`
---
-ALTER TABLE `tb_candidatos`
-  ADD PRIMARY KEY (`pr_candidato`),
-  ADD KEY `IdMunicipio` (`es_municipio`),
-  ADD KEY `IdUsuarioCadastrador` (`es_usuarioCadastro`),
-  ADD KEY `IdUsuarioUltimoAlterador` (`es_usuarioAlteracao`);
-
---
--- Indexes for table `tb_candidaturas`
---
-ALTER TABLE `tb_candidaturas`
-  ADD PRIMARY KEY (`pr_candidatura`),
-  ADD UNIQUE KEY `es_candidato` (`es_candidato`,`es_vaga`),
-  ADD KEY `IdCandidato` (`es_candidato`),
-  ADD KEY `IdVaga` (`es_vaga`),
-  ADD KEY `es_status` (`es_status`),
-  ADD KEY `es_avaliador_competencia1` (`es_avaliador_competencia1`),
-  ADD KEY `es_avaliador_competencia2` (`es_avaliador_especialista`),
-  ADD KEY `es_avaliador_curriculo` (`es_avaliador_curriculo`);
-
---
--- Indexes for table `tb_competencias`
---
-ALTER TABLE `tb_competencias`
-  ADD PRIMARY KEY (`pr_competencia`);
-
---
--- Indexes for table `tb_configuracao`
---
-ALTER TABLE `tb_configuracao`
-  ADD PRIMARY KEY (`co_conf`),
-  ADD KEY `in_ordenacao` (`in_ordenacao`) USING BTREE;
-
---
--- Indexes for table `tb_entrevistas`
---
-ALTER TABLE `tb_entrevistas`
-  ADD PRIMARY KEY (`pr_entrevista`),
-  ADD UNIQUE KEY `es_candidatura` (`es_candidatura`,`bl_tipo_entrevista`) USING BTREE,
-  ADD KEY `es_avaliador1` (`es_avaliador1`),
-  ADD KEY `es_avaliador2` (`es_avaliador2`),
-  ADD KEY `es_alterador` (`es_alterador`),
-  ADD KEY `es_avaliador3` (`es_avaliador3`);
-
---
--- Indexes for table `tb_etapas`
---
-ALTER TABLE `tb_etapas`
-  ADD PRIMARY KEY (`pr_etapa`);
-
---
--- Indexes for table `tb_experiencias`
---
-ALTER TABLE `tb_experiencias`
-  ADD PRIMARY KEY (`pr_experienca`),
-  ADD KEY `es_experiencia_pai` (`es_experiencia_pai`),
-  ADD KEY `es_candidatura` (`es_candidatura`),
-  ADD KEY `es_candidato` (`es_candidato`) USING BTREE;
-
---
--- Indexes for table `tb_formacao`
---
-ALTER TABLE `tb_formacao`
-  ADD PRIMARY KEY (`pr_formacao`),
-  ADD KEY `es_formacao_pai` (`es_formacao_pai`),
-  ADD KEY `es_candidatura` (`es_candidatura`),
-  ADD KEY `es_candidato` (`es_candidato`) USING BTREE;
-
---
--- Indexes for table `tb_gruposvagas`
---
-ALTER TABLE `tb_gruposvagas`
-  ADD PRIMARY KEY (`pr_grupovaga`),
-  ADD KEY `es_usuarioCadastro` (`es_usuarioCadastro`),
-  ADD KEY `es_usuarioAlteracao` (`es_usuarioAlteracao`),
-  ADD KEY `es_instituicao` (`es_instituicao`);
-
---
--- Indexes for table `tb_hbdi`
---
-ALTER TABLE `tb_hbdi`
-  ADD PRIMARY KEY (`pr_hbdi`),
-  ADD UNIQUE KEY `es_candidatura` (`es_candidatura`);
-
---
--- Indexes for table `tb_historicocandidaturas`
---
-ALTER TABLE `tb_historicocandidaturas`
-  ADD PRIMARY KEY (`pr_historico`),
-  ADD KEY `IdCandidatura` (`es_candidatura`),
-  ADD KEY `IdEtapa` (`es_etapa`),
-  ADD KEY `IdAvaliador` (`es_avaliador`),
-  ADD KEY `IdUsuarioCadastrador` (`es_usuarioCadastro`),
-  ADD KEY `IdUsuarioUltimoAlterador` (`es_usuarioAlteracao`);
-
---
--- Indexes for table `tb_instituicoes2`
---
-ALTER TABLE `tb_instituicoes2`
-  ADD PRIMARY KEY (`pr_instituicao`),
-  ADD UNIQUE KEY `DDNRPESSOAFISJUR` (`DDNRPESSOAFISJUR`);
-
---
--- Indexes for table `tb_instituicoes3`
---
-ALTER TABLE `tb_instituicoes3`
-  ADD PRIMARY KEY (`pr_instituicao`),
-  ADD UNIQUE KEY `in_codigo` (`in_codigo`);
-
---
--- Indexes for table `tb_log`
---
-ALTER TABLE `tb_log`
-  ADD PRIMARY KEY (`pr_log`),
-  ADD KEY `es_usuario` (`es_usuario`) USING BTREE;
-
---
--- Indexes for table `tb_municipios`
---
-ALTER TABLE `tb_municipios`
-  ADD PRIMARY KEY (`pr_municipio`),
-  ADD KEY `es_uf` (`es_uf`);
-
---
--- Indexes for table `tb_notas`
---
-ALTER TABLE `tb_notas`
-  ADD PRIMARY KEY (`pr_nota`),
-  ADD UNIQUE KEY `es_candidatura_2` (`es_candidatura`,`es_etapa`,`es_competencia`,`es_avaliador`),
-  ADD KEY `es_candidatura` (`es_candidatura`),
-  ADD KEY `es_etapa` (`es_etapa`),
-  ADD KEY `es_competencia` (`es_competencia`),
-  ADD KEY `es_avaliador` (`es_avaliador`);
-
---
--- Indexes for table `tb_notas_totais`
---
-ALTER TABLE `tb_notas_totais`
-  ADD PRIMARY KEY (`pr_nota_total`),
-  ADD UNIQUE KEY `es_vaga_2` (`es_vaga`,`es_etapa`),
-  ADD KEY `es_vaga` (`es_vaga`),
-  ADD KEY `es_etapa` (`es_etapa`);
-
---
--- Indexes for table `tb_opcoes`
---
-ALTER TABLE `tb_opcoes`
-  ADD PRIMARY KEY (`pr_opcao`),
-  ADD KEY `IDQuestao` (`es_questao`);
-
---
--- Indexes for table `tb_questoes`
---
-ALTER TABLE `tb_questoes`
-  ADD PRIMARY KEY (`pr_questao`),
-  ADD KEY `IdEtapa` (`es_etapa`),
-  ADD KEY `IdUsuarioCadastrador` (`es_usuarioCadastro`),
-  ADD KEY `idUsuarioUltimoAlterador` (`es_usuarioAlteracao`),
-  ADD KEY `es_competencia` (`es_competencia`);
-
---
--- Indexes for table `tb_respostas`
---
-ALTER TABLE `tb_respostas`
-  ADD PRIMARY KEY (`pr_resposta`),
-  ADD UNIQUE KEY `es_candidatura` (`es_candidatura`,`es_questao`,`es_avaliador`) USING BTREE,
-  ADD KEY `IdCandidatura` (`es_candidatura`),
-  ADD KEY `IdQuestao` (`es_questao`),
-  ADD KEY `IdAvaliador` (`es_avaliador`),
-  ADD KEY `IdUsuarioCadastrador` (`es_usuarioCadastro`),
-  ADD KEY `IdUsuarioUltimoAlterador` (`es_usuarioAlteracao`),
-  ADD KEY `es_opcao` (`es_opcao`);
-
---
--- Indexes for table `tb_sessoes`
---
-ALTER TABLE `tb_sessoes`
-  ADD KEY `ci_sessions_timestamp` (`timestamp`),
-  ADD KEY `es_usuario` (`es_usuario`);
-
---
--- Indexes for table `tb_status_candidaturas`
---
-ALTER TABLE `tb_status_candidaturas`
-  ADD PRIMARY KEY (`pr_status`),
-  ADD UNIQUE KEY `in_status_legado` (`in_status_legado`);
-
---
--- Indexes for table `tb_uf`
---
-ALTER TABLE `tb_uf`
-  ADD PRIMARY KEY (`pr_uf`),
-  ADD UNIQUE KEY `ds_sigla` (`ch_sigla`) USING BTREE;
-
---
--- Indexes for table `tb_usuarios`
---
-ALTER TABLE `tb_usuarios`
-  ADD PRIMARY KEY (`pr_usuario`),
-  ADD KEY `IdCandidato` (`es_candidato`);
-
---
--- Indexes for table `tb_vagas`
---
-ALTER TABLE `tb_vagas`
-  ADD PRIMARY KEY (`pr_vaga`),
-  ADD KEY `IdOrgao` (`es_instituicao2`),
-  ADD KEY `IdGrupoVaga` (`es_grupoVaga`),
-  ADD KEY `es_usuarioCadastro` (`es_usuarioCadastro`),
-  ADD KEY `es_usuarioAlteracao` (`es_usuarioAlteracao`),
-  ADD KEY `es_instituicao` (`es_instituicao`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tb_anexos`
---
-ALTER TABLE `tb_anexos`
-  MODIFY `pr_anexo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26159;
-
---
--- AUTO_INCREMENT for table `tb_candidatos`
---
-ALTER TABLE `tb_candidatos`
-  MODIFY `pr_candidato` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6815;
-
---
--- AUTO_INCREMENT for table `tb_candidaturas`
---
-ALTER TABLE `tb_candidaturas`
-  MODIFY `pr_candidatura` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6473;
-
---
--- AUTO_INCREMENT for table `tb_competencias`
---
-ALTER TABLE `tb_competencias`
-  MODIFY `pr_competencia` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- AUTO_INCREMENT for table `tb_entrevistas`
---
-ALTER TABLE `tb_entrevistas`
-  MODIFY `pr_entrevista` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=416;
-
---
--- AUTO_INCREMENT for table `tb_etapas`
---
-ALTER TABLE `tb_etapas`
-  MODIFY `pr_etapa` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `tb_experiencias`
---
-ALTER TABLE `tb_experiencias`
-  MODIFY `pr_experienca` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9515;
-
---
--- AUTO_INCREMENT for table `tb_formacao`
---
-ALTER TABLE `tb_formacao`
-  MODIFY `pr_formacao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9861;
-
---
--- AUTO_INCREMENT for table `tb_gruposvagas`
---
-ALTER TABLE `tb_gruposvagas`
-  MODIFY `pr_grupovaga` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
-
---
--- AUTO_INCREMENT for table `tb_hbdi`
---
-ALTER TABLE `tb_hbdi`
-  MODIFY `pr_hbdi` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
-
---
--- AUTO_INCREMENT for table `tb_historicocandidaturas`
---
-ALTER TABLE `tb_historicocandidaturas`
-  MODIFY `pr_historico` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tb_instituicoes2`
---
-ALTER TABLE `tb_instituicoes2`
-  MODIFY `pr_instituicao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1260372;
-
---
--- AUTO_INCREMENT for table `tb_instituicoes3`
---
-ALTER TABLE `tb_instituicoes3`
-  MODIFY `pr_instituicao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
-
---
--- AUTO_INCREMENT for table `tb_log`
---
-ALTER TABLE `tb_log`
-  MODIFY `pr_log` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=342417;
-
---
--- AUTO_INCREMENT for table `tb_municipios`
---
-ALTER TABLE `tb_municipios`
-  MODIFY `pr_municipio` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5566;
-
---
--- AUTO_INCREMENT for table `tb_notas`
---
-ALTER TABLE `tb_notas`
-  MODIFY `pr_nota` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2812;
-
---
--- AUTO_INCREMENT for table `tb_notas_totais`
---
-ALTER TABLE `tb_notas_totais`
-  MODIFY `pr_nota_total` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
-
---
--- AUTO_INCREMENT for table `tb_opcoes`
---
-ALTER TABLE `tb_opcoes`
-  MODIFY `pr_opcao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8513;
-
---
--- AUTO_INCREMENT for table `tb_questoes`
---
-ALTER TABLE `tb_questoes`
-  MODIFY `pr_questao` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3615;
-
---
--- AUTO_INCREMENT for table `tb_respostas`
---
-ALTER TABLE `tb_respostas`
-  MODIFY `pr_resposta` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93897;
-
---
--- AUTO_INCREMENT for table `tb_status_candidaturas`
---
-ALTER TABLE `tb_status_candidaturas`
-  MODIFY `pr_status` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
---
--- AUTO_INCREMENT for table `tb_uf`
---
-ALTER TABLE `tb_uf`
-  MODIFY `pr_uf` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
---
--- AUTO_INCREMENT for table `tb_usuarios`
---
-ALTER TABLE `tb_usuarios`
-  MODIFY `pr_usuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6649;
-
---
--- AUTO_INCREMENT for table `tb_vagas`
---
-ALTER TABLE `tb_vagas`
-  MODIFY `pr_vaga` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
 
 --
 -- Constraints for dumped tables
@@ -7140,6 +6853,19 @@ ALTER TABLE `tb_formacao`
   ADD CONSTRAINT `tb_formacao_ibfk_1` FOREIGN KEY (`es_candidato`) REFERENCES `tb_candidatos` (`pr_candidato`),
   ADD CONSTRAINT `tb_formacao_ibfk_2` FOREIGN KEY (`es_formacao_pai`) REFERENCES `tb_formacao` (`pr_formacao`),
   ADD CONSTRAINT `tb_formacao_ibfk_3` FOREIGN KEY (`es_candidatura`) REFERENCES `tb_candidaturas` (`pr_candidatura`);
+
+--
+-- Constraints for table `tb_formulario_situacao_funcional`
+--
+ALTER TABLE `tb_formulario_situacao_funcional`
+  ADD CONSTRAINT `tb_formulario_situacao_funcional_ibfk_1` FOREIGN KEY (`es_candidatura`) REFERENCES `tb_candidaturas` (`pr_candidatura`),
+  ADD CONSTRAINT `tb_formulario_situacao_funcional_ibfk_2` FOREIGN KEY (`es_instituicao`) REFERENCES `tb_instituicoes2` (`pr_instituicao`);
+
+--
+-- Constraints for table `tb_gruposatividades`
+--
+ALTER TABLE `tb_gruposatividades`
+  ADD CONSTRAINT `tb_gruposatividades_ibfk_1` FOREIGN KEY (`es_instituicao`) REFERENCES `tb_instituicoes2` (`pr_instituicao`);
 
 --
 -- Constraints for table `tb_gruposvagas`
