@@ -193,7 +193,7 @@ class Vagas extends CI_Controller
         $this -> form_validation -> set_rules('descricao', "'Descrição'", 'required');
         $this -> form_validation -> set_rules('documentacao', "'Documentação necessária'", 'required');
         $this -> form_validation -> set_rules('atendimento', "'Área de interesse'", 'callback_verficaopcoes');
-        $this -> form_validation -> set_rules('grupoatividade', "'Grupo de Atividade'", 'required|maior_que_zero', array('maior_que_zero' => 'O campo \'Grupo de Atividade\' é obrigatório.'));
+        $this -> form_validation -> set_rules('grupoatividade', "'Grupo de Atividade'", '', array('maior_que_zero' => 'O campo \'Grupo de Atividade\' é obrigatório.'));
 
         /*$dados['usuarios'] = $this -> Usuarios_model -> get_usuarios ('', '', 2,'',true);
         $usuarios = $dados['usuarios'];*/
