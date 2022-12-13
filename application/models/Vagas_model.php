@@ -149,6 +149,9 @@ class Vagas_model extends CI_Model
         if (!isset($dados['saude'])) {
             $dados['saude'] = null;
         }
+        if (!isset($dados['tic'])) {
+            $dados['tic'] = null;
+        }
         $data=array(
                 'vc_vaga' => $dados['nome'],
                 'tx_descricao' => $dados['descricao'],
