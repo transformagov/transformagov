@@ -1,8 +1,4 @@
 #!/bin/sh
-# env
-echo print env
-env
-
 # php logs folder
 mkdir -p application/logs
 chown www-data:www-data application/logs

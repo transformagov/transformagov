@@ -1,11 +1,12 @@
+COMPOSE_FILE=docker/local/docker-compose.yml
 build:
-	docker-compose build --no-cache
+	docker-compose -f ${COMPOSE_FILE} build --no-cache
 
 up:
-	docker-compose up server db
+	docker-compose -f ${COMPOSE_FILE} up server db
 
 stop:
-	docker-compose stop
+	docker-compose -f ${COMPOSE_FILE} stop
 
 run: build up
 

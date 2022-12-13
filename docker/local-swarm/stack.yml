@@ -2,18 +2,16 @@ version: "3.3"
 
 services:
   server:
-    image: 127.0.0.1:5000/transforma_stack  #the address of the registry
+    image: 127.0.0.1:5000/transformagovrj_local_server
     ports:
-      - "80:80"
-      - "443:443"
+      - "8081:80"
     volumes:
-      - letsencrypt:/etc/letsencrypt
       - anexos:/transformagov/anexos
     env_file:
-      - .env.prod
+      - .env.local-swarm
     entrypoint: /tmp/run.sh
     environment:
-      - DB_HOST=transforma_stack_db
+      - DB_HOST=transformagovrj_local_db
       - DB_DATABASE=transforma
       - DB_PASSWORD=root
       - DB_USERNAME=root
@@ -28,6 +26,5 @@ services:
 
 volumes:
   transforma-db:
-  letsencrypt:
   anexos:
 

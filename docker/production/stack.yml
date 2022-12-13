@@ -1,0 +1,33 @@
+version: "3.3"
+
+services:
+  server:
+    image: 127.0.0.1:5000/transformagovrj_server
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - letsencrypt:/etc/letsencrypt
+      - anexos:/transformagov/anexos
+    env_file:
+      - .env.prod
+    entrypoint: /tmp/run.sh
+    environment:
+      - DB_HOST=transforma_stack_db
+      - DB_DATABASE=transforma
+      - DB_PASSWORD=root
+      - DB_USERNAME=root
+  db:
+    image: mariadb:10.3
+    volumes:
+      - transforma-db:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=transforma
+      - MYSQL_ROOT_PASSWORD=root
+      - TZ=America/Sao_Paulo
+
+volumes:
+  transforma-db:
+  letsencrypt:
+  anexos:
+
