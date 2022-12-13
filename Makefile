@@ -2,7 +2,7 @@ build:
 	docker-compose build --no-cache
 
 up:
-	docker-compose up server db
+	docker-compose up server db nginx
 
 stop:
 	docker-compose stop

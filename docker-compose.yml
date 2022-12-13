@@ -12,7 +12,8 @@ services:
       - anexos:/transformagov/anexos
     env_file:
       - .env
-    entrypoint: /tmp/run.sh
+    networks:
+      - nginx_server
     
   db:
     image: mariadb:10.3
@@ -22,6 +23,21 @@ services:
       - MYSQL_DATABASE=transforma
       - MYSQL_ROOT_PASSWORD=root
       - TZ=America/Sao_Paulo
+    networks:
+      - nginx_server
+  nginx:
+    image: nginx:latest
+    container_name: transformagov_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/local/transforma.conf:/etc/nginx/conf.d/default.conf
+      - ./:/transformagov/
+    networks:
+      - nginx_server
 volumes:
   transforma-db:
   anexos:
+
+networks:
+  nginx_server:
