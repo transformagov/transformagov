@@ -12,6 +12,8 @@ run: build up
 load-schema:
 	docker cp db/transforma.sql  transformagov_db_1:/tmp
 	docker exec transformagov_db_1 /bin/bash -c 'mysql transforma < /tmp/transforma.sql --password=root'
+	docker cp db/function.sql  transformagov_db_1:/tmp
+	docker exec transformagov_db_1 /bin/bash -c 'mysql transforma < /tmp/function.sql --password=root'
 
 create-users:
 	docker cp db/popula-usuarios.sql  transformagov_db_1:/tmp
