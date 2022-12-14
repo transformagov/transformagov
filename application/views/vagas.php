@@ -527,7 +527,7 @@ if ($menu2 == 'index') {
                                 <?php
         $attributes = array('name' => 'auditoria', 'class' => 'form-check-input');
         $en_auditoria = (!isset($en_auditoria) ? '0' : $en_auditoria);
-        echo form_checkbox($attributes, '1', ($en_auditoria == '1'));
+        echo form_checkbox($attributes, '1',  ($en_auditoria == '1'));
         ?>
                                 <span>Auditoria</span>
                         </div>
@@ -537,7 +537,7 @@ if ($menu2 == 'index') {
                                 <?php
         $attributes = array('name' => 'compras', 'class' => 'form-check-input');
         $en_compras = (!isset($en_compras) ? '0' : $en_compras);
-        echo form_checkbox($attributes, '1', ($en_compras == '1'));
+        echo form_checkbox($attributes, '1',  ($en_compras == '1'));
         ?>
                                 <span>Compras</span>
                         </div>
@@ -547,7 +547,7 @@ if ($menu2 == 'index') {
                                 <?php
         $attributes = array('name' => 'controladoria', 'class' => 'form-check-input');
         $en_controladoria = (!isset($en_controladoria) ? '0' : $en_controladoria);
-        echo form_checkbox($attributes, '1', ($en_controladoria == '1'));
+        echo form_checkbox($attributes, '1',  ($en_controladoria == '1'));
         ?>
                                 <span>Controladoria</span>
                         </div>
@@ -559,7 +559,7 @@ if ($menu2 == 'index') {
                                 <?php
         $en_desenvolvimento_eco = (!isset($en_desenvolvimento_eco) ? '0' : $en_desenvolvimento_eco);
         $attributes = array('name' => 'desenvolvimentoEco', 'class' => 'form-check-input');
-        echo form_checkbox($attributes, '1', ($en_desenvolvimento_eco == '1'));
+        echo form_checkbox($attributes, '1',  ($en_desenvolvimento_eco == '1'));
         ?>
                                 <span>Desenvolvimento econômico</span>
                         </div>
@@ -569,7 +569,7 @@ if ($menu2 == 'index') {
                                 <?php
         $en_desenv_soc = (!isset($en_desenv_soc) ? '0' : $en_desenv_soc);
         $attributes = array('name' => 'desenvSoc', 'class' => 'form-check-input');
-        echo form_checkbox($attributes, '1', ($en_desenv_soc == '1'));
+        echo form_checkbox($attributes, '1',  ($en_desenv_soc == '1'));
         ?>
                                 <span>Desenvolvimento social</span>
                         </div>
@@ -579,7 +579,7 @@ if ($menu2 == 'index') {
                                 <?php
         $en_dir_hum = (!isset($en_dir_hum) ? '0' : $en_dir_hum);
         $attributes = array('name' => 'dirHum', 'class' => 'form-check-input');
-        echo form_checkbox($attributes, '1', ($en_dir_hum == '1'));
+        echo form_checkbox($attributes, '1',  ($en_dir_hum == '1'));
         ?>
                                 <span>Direitos Humanos</span>
                         </div>
@@ -589,7 +589,7 @@ if ($menu2 == 'index') {
                                 <?php
         $en_educacao = (!isset($en_educacao) ? '0' : $en_educacao);
         $attributes = array('name' => 'educacao', 'class' => 'form-check-input');
-        echo form_checkbox($attributes, '1', ($en_educacao == '1'));
+        echo form_checkbox($attributes, '1',  ($en_educacao == '1'));
         ?>
                                 <span>Educação</span>
                         </div>
@@ -601,7 +601,7 @@ if ($menu2 == 'index') {
                                 <?php
         $en_financeiro = (!isset($en_financeiro) ? '0' : $en_financeiro);
         $attributes = array('name' => 'financeiro', 'class' => 'form-check-input');
-        echo form_checkbox($attributes, '1', ($en_financeiro == '1'));
+        echo form_checkbox($attributes, '1',  ($en_financeiro == '1'));
         ?>
                                 <span>Financeiro</span>
                         </div>
@@ -611,7 +611,7 @@ if ($menu2 == 'index') {
                                 <?php
         $en_gest_contrat = (!isset($en_gest_contrat) ? '0' : $en_gest_contrat);
         $attributes = array('name' => 'gestContrat', 'class' => 'form-check-input');
-        echo form_checkbox($attributes, '1', ($en_gest_contrat == '1'));
+        echo form_checkbox($attributes, '1',  ($en_gest_contrat == '1'));
         ?>
                                 <span>Gestão de contratos</span>
                         </div>
