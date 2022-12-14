@@ -727,7 +727,7 @@ if ($menu2 == 'index') {
                 <div class="col">
                         <?php
                         $attributes = array('class' => 'form-label');
-        echo form_label('Defina o grupo de atividades/órgão de interesse em que a vaga se encaixa: <abbr title="Obrigatório">*</abbr>', 'grupoatividade', $attributes);
+        echo form_label('Defina o grupo de atividades/órgão de interesse em que a vaga se encaixa:', 'grupoatividade', $attributes);
         $gruposatividades = array_merge(array(0 => ''), $gruposatividades);
         if (!isset($es_grupoatividade) || (strlen($es_grupoatividade) == 0 && strlen(set_value('grupoatividade')) > 0)) {
             $es_grupoatividade = set_value('grupoatividade');
