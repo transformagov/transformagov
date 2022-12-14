@@ -90,6 +90,7 @@ class Vagas_model extends CI_Model
         $this -> db -> update('tb_vagas');
         return $this -> db -> affected_rows();
     }
+
     public function create_vaga($dados)
     {
         if (!isset($dados['atendimento'])) {
@@ -148,6 +149,9 @@ class Vagas_model extends CI_Model
         }
         if (!isset($dados['saude'])) {
             $dados['saude'] = null;
+        }
+        if (!isset($dados['tic'])) {
+            $dados['tic'] = null;
         }
         $data=array(
                 'vc_vaga' => $dados['nome'],
@@ -257,6 +261,24 @@ class Vagas_model extends CI_Model
         }
         $this -> db -> where('es_vaga', $id);
         $this -> db -> delete('rl_vagas_avaliadores');
+        return $this -> db -> affected_rows();
+    }
+    public function update_areas_interesse($form, $form_field, $field, $primaria)
+    {
+        if (strlen($primaria)==0) {
+            return false;
+        }
+        if (strlen($field)==0) {
+            return false;
+        }
+
+        $value = (!isset($form[$form_field]) ? '0' : $form[$form_field]);
+
+        $this -> db -> set($field, $value);
+        $this -> db -> set('es_usuarioAlteracao', $this -> session -> uid);
+        $this -> db -> set('dt_alteracao', date('Y-m-d H:i:s'));
+        $this -> db -> where('pr_vaga', $primaria);
+        $this -> db -> update('tb_vagas');
         return $this -> db -> affected_rows();
     }
 }

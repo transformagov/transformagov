@@ -66,6 +66,7 @@ class Vagas extends CI_Controller
         //$candidaturas = $this -> Candidaturas_model -> get_candidaturas('', '','','','7');
         $this -> load -> view('vagas', $dados);
     }
+
     public function create()
     {
         if ($this -> session -> perfil != 'sugesp' && $this -> session -> perfil != 'orgaos' && $this -> session -> perfil != 'administrador') {
@@ -96,7 +97,7 @@ class Vagas extends CI_Controller
         $this -> form_validation -> set_rules('descricao', "'Atribuições e competências da vaga'", 'required');
         $this -> form_validation -> set_rules('documentacao', "'Documentação necessária'", 'required');
         $this -> form_validation -> set_rules('atendimento', "'Área de interesse'", 'callback_verficaopcoes');
-        $this -> form_validation -> set_rules('grupoatividade', "'Grupo de Atividade'", 'required|maior_que_zero', array('maior_que_zero' => 'O campo \'Grupo de Atividade\' é obrigatório.'));
+        $this -> form_validation -> set_rules('grupoatividade', "'Grupo de Atividade'", '', array('maior_que_zero' => 'O campo \'Grupo de Atividade\' é obrigatório.'));
 
 
         /*$dados['usuarios'] = $this -> Usuarios_model -> get_usuarios ('', '', 2);
@@ -192,7 +193,7 @@ class Vagas extends CI_Controller
         $this -> form_validation -> set_rules('descricao', "'Descrição'", 'required');
         $this -> form_validation -> set_rules('documentacao', "'Documentação necessária'", 'required');
         $this -> form_validation -> set_rules('atendimento', "'Área de interesse'", 'callback_verficaopcoes');
-        $this -> form_validation -> set_rules('grupoatividade', "'Grupo de Atividade'", 'required|maior_que_zero', array('maior_que_zero' => 'O campo \'Grupo de Atividade\' é obrigatório.'));
+        $this -> form_validation -> set_rules('grupoatividade', "'Grupo de Atividade'", '', array('maior_que_zero' => 'O campo \'Grupo de Atividade\' é obrigatório.'));
 
         /*$dados['usuarios'] = $this -> Usuarios_model -> get_usuarios ('', '', 2,'',true);
         $usuarios = $dados['usuarios'];*/
@@ -214,26 +215,26 @@ class Vagas extends CI_Controller
             $this -> Vagas_model -> update_vaga('vc_remuneracao', $dados_form['remuneracao'], $vaga);
             $this -> Vagas_model -> update_vaga('tx_descricao', $dados_form['descricao'], $vaga);
             $this -> Vagas_model -> update_vaga('tx_documentacao', $dados_form['documentacao'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_atendimento', $dados_form['atendimento'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_auditoria', $dados_form['auditoria'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_compras', $dados_form['compras'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_controladoria', $dados_form['controladoria'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_desenvolvimento_eco', $dados_form['desenvolvimentoEco'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_desenv_soc', $dados_form['desenvSoc'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_dir_hum', $dados_form['dirHum'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_educacao', $dados_form['educacao'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_financeiro', $dados_form['financeiro'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_gest_contrat', $dados_form['gestContrat'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_gest_pessoa', $dados_form['gestPessoa'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_gest_process', $dados_form['gestProcess'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_gest_proj', $dados_form['gestProj'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_infraestrutura', $dados_form['infraestrutura'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_logistica', $dados_form['logistica'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_meio_amb', $dados_form['meioAmb'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_pol_pub', $dados_form['polPub'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_rec_hum', $dados_form['recHum'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_tic', $dados_form['tic'], $vaga);
-            $this -> Vagas_model -> update_vaga('en_saude', $dados_form['saude'], $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'atendimento', 'en_atendimento', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'auditoria', 'en_auditoria', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'compras', 'en_compras', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'controladoria', 'en_controladoria', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'desenvolvimentoEco', 'en_desenvolvimento_eco', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'desenvSoc', 'en_desenv_soc', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'dirHum', 'en_dir_hum', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'educacao', 'en_educacao', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'financeiro', 'en_financeiro', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'gestContrat', 'en_gest_contrat', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'gestPessoa', 'en_gest_pessoa', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'gestProcess', 'en_gest_process', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'gestProj', 'en_gest_proj', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'infraestrutura', 'en_infraestrutura', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'logistica', 'en_logistica', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'meioAmb', 'en_meio_amb', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'polPub', 'en_pol_pub', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'recHum', 'en_rec_hum', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'tic', 'en_tic', $vaga);
+            $this -> Vagas_model -> update_areas_interesse($dados_form, 'saude', 'en_saude', $vaga);
             $this -> Vagas_model -> update_vaga('es_grupoatividade', $dados_form['grupoatividade'], $vaga);
             $this -> Vagas_model -> update_vaga('tx_orientacoes', $dados_form['orientacoes'], $vaga);
             /*
