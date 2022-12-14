@@ -514,11 +514,9 @@ if ($menu2 == 'index') {
         <div class="row">
                 <div class="col-sm-12 col-md-3">
                         <div class="form-check my-2">
-                                <?php
-                $attributes = array('name' => 'atendimento', 'class' => 'form-check-input');
-        if (strlen(set_value('atendimento')) > 0) {
-            $en_atendimento = set_value('atendimento');
-        }
+        <?php
+        $attributes = array('name' => 'atendimento', 'class' => 'form-check-input');
+        $en_atendimento = (!isset($en_atendimento) ? '0' : $en_atendimento);
         echo form_checkbox($attributes, '1', ($en_atendimento == '1'));
         ?>
                                 <span>Atendimento</span>
@@ -528,10 +526,8 @@ if ($menu2 == 'index') {
                         <div class="form-check my-2">
                                 <?php
         $attributes = array('name' => 'auditoria', 'class' => 'form-check-input');
-        if (strlen(set_value('auditoria')) > 0) {
-            $en_auditoria = set_value('auditoria');
-        }
-        echo form_checkbox($attributes, '1', ($en_auditoria == '1'));
+        $en_auditoria = (!isset($en_auditoria) ? '0' : $en_auditoria);
+        echo form_checkbox($attributes, '1',  ($en_auditoria == '1'));
         ?>
                                 <span>Auditoria</span>
                         </div>
@@ -540,10 +536,8 @@ if ($menu2 == 'index') {
                         <div class="form-check my-2">
                                 <?php
         $attributes = array('name' => 'compras', 'class' => 'form-check-input');
-        if (strlen(set_value('compras')) > 0) {
-            $en_compras = set_value('compras');
-        }
-        echo form_checkbox($attributes, '1', ($en_compras == '1'));
+        $en_compras = (!isset($en_compras) ? '0' : $en_compras);
+        echo form_checkbox($attributes, '1',  ($en_compras == '1'));
         ?>
                                 <span>Compras</span>
                         </div>
@@ -552,10 +546,8 @@ if ($menu2 == 'index') {
                         <div class="form-check my-2">
                                 <?php
         $attributes = array('name' => 'controladoria', 'class' => 'form-check-input');
-        if (strlen(set_value('controladoria')) > 0) {
-            $en_controladoria = set_value('controladoria');
-        }
-        echo form_checkbox($attributes, '1', ($en_controladoria == '1'));
+        $en_controladoria = (!isset($en_controladoria) ? '0' : $en_controladoria);
+        echo form_checkbox($attributes, '1',  ($en_controladoria == '1'));
         ?>
                                 <span>Controladoria</span>
                         </div>
@@ -565,12 +557,9 @@ if ($menu2 == 'index') {
                 <div class="col-sm-12 col-md-3">
                         <div class="form-check my-2">
                                 <?php
-        if (strlen(set_value('desenvolvimentoEco')) > 0) {
-            $en_desenvolvimento_eco = set_value('desenvolvimentoEco');
-        }
-
+        $en_desenvolvimento_eco = (!isset($en_desenvolvimento_eco) ? '0' : $en_desenvolvimento_eco);
         $attributes = array('name' => 'desenvolvimentoEco', 'class' => 'form-check-input');
-        echo form_checkbox($attributes, '1', ($en_desenvolvimento_eco == '1'));
+        echo form_checkbox($attributes, '1',  ($en_desenvolvimento_eco == '1'));
         ?>
                                 <span>Desenvolvimento econômico</span>
                         </div>
@@ -578,12 +567,9 @@ if ($menu2 == 'index') {
                 <div class="col-sm-12 col-md-3">
                         <div class="form-check my-2">
                                 <?php
-        if (strlen(set_value('desenvSoc')) > 0) {
-            $en_desenv_soc = set_value('desenvSoc');
-        }
-
+        $en_desenv_soc = (!isset($en_desenv_soc) ? '0' : $en_desenv_soc);
         $attributes = array('name' => 'desenvSoc', 'class' => 'form-check-input');
-        echo form_checkbox($attributes, '1', ($en_desenv_soc == '1'));
+        echo form_checkbox($attributes, '1',  ($en_desenv_soc == '1'));
         ?>
                                 <span>Desenvolvimento social</span>
                         </div>
@@ -591,12 +577,9 @@ if ($menu2 == 'index') {
                 <div class="col-sm-12 col-md-3">
                         <div class="form-check my-2">
                                 <?php
-        if (strlen(set_value('dirHum')) > 0) {
-            $en_dir_hum = set_value('dirHum');
-        }
-
+        $en_dir_hum = (!isset($en_dir_hum) ? '0' : $en_dir_hum);
         $attributes = array('name' => 'dirHum', 'class' => 'form-check-input');
-        echo form_checkbox($attributes, '1', ($en_dir_hum == '1'));
+        echo form_checkbox($attributes, '1',  ($en_dir_hum == '1'));
         ?>
                                 <span>Direitos Humanos</span>
                         </div>
@@ -604,12 +587,9 @@ if ($menu2 == 'index') {
                 <div class="col-sm-12 col-md-3">
                         <div class="form-check my-2">
                                 <?php
-        if (strlen(set_value('controladoria')) > 0) {
-            $en_educacao = set_value('controladoria');
-        }
-
+        $en_educacao = (!isset($en_educacao) ? '0' : $en_educacao);
         $attributes = array('name' => 'educacao', 'class' => 'form-check-input');
-        echo form_checkbox($attributes, '1', ($en_educacao == '1'));
+        echo form_checkbox($attributes, '1',  ($en_educacao == '1'));
         ?>
                                 <span>Educação</span>
                         </div>
@@ -619,11 +599,9 @@ if ($menu2 == 'index') {
                 <div class="col-sm-12 col-md-3">
                         <div class="form-check my-2">
                                 <?php
-        if (strlen(set_value('financeiro')) > 0) {
-            $en_financeiro = set_value('financeiro');
-        }
+        $en_financeiro = (!isset($en_financeiro) ? '0' : $en_financeiro);
         $attributes = array('name' => 'financeiro', 'class' => 'form-check-input');
-        echo form_checkbox($attributes, '1', ($en_financeiro == '1'));
+        echo form_checkbox($attributes, '1',  ($en_financeiro == '1'));
         ?>
                                 <span>Financeiro</span>
                         </div>
@@ -631,12 +609,9 @@ if ($menu2 == 'index') {
                 <div class="col-sm-12 col-md-3">
                         <div class="form-check my-2">
                                 <?php
-        if (strlen(set_value('gestContrat')) > 0) {
-            $en_gest_contrat = set_value('gestContrat');
-        }
-
+        $en_gest_contrat = (!isset($en_gest_contrat) ? '0' : $en_gest_contrat);
         $attributes = array('name' => 'gestContrat', 'class' => 'form-check-input');
-        echo form_checkbox($attributes, '1', ($en_gest_contrat == '1'));
+        echo form_checkbox($attributes, '1',  ($en_gest_contrat == '1'));
         ?>
                                 <span>Gestão de contratos</span>
                         </div>
@@ -644,10 +619,7 @@ if ($menu2 == 'index') {
                 <div class="col-sm-12 col-md-3">
                         <div class="form-check my-2">
                                 <?php
-        if (strlen(set_value('gestPessoa')) > 0) {
-            $en_gest_pessoa = set_value('gestPessoa');
-        }
-
+        $en_gest_pessoa = (!isset($en_gest_pessoa) ? '0' : $en_gest_pessoa);
         $attributes = array('name' => 'gestPessoa', 'class' => 'form-check-input');
         echo form_checkbox($attributes, '1', ($en_gest_pessoa == '1'));
         ?>
@@ -658,9 +630,7 @@ if ($menu2 == 'index') {
                         <div class="form-check my-2">
                                 <?php
         $attributes = array('name' => 'gestProcess', 'class' => 'form-check-input');
-        if (strlen(set_value('gestProcess')) > 0) {
-            $en_gest_process = set_value('gestProcess');
-        }
+        $en_gest_process = (!isset($en_gest_process) ? '0' : $en_gest_process);
         echo form_checkbox($attributes, '1', ($en_gest_process == '1'));
         ?>
                                 <span>Gestão de processos</span>
@@ -671,9 +641,7 @@ if ($menu2 == 'index') {
                 <div class="col-sm-12 col-md-3">
                         <div class="form-check my-2">
                                 <?php
-        if (strlen(set_value('gestProj')) > 0) {
-            $en_gest_proj = set_value('gestProj');
-        }
+        $en_gest_proj = (!isset($en_gest_proj) ? '0' : $en_gest_proj);
         $attributes = array('name' => 'gestProj', 'class' => 'form-check-input');
         echo form_checkbox($attributes, '1', ($en_gest_proj == '1'));
         ?>
@@ -684,9 +652,7 @@ if ($menu2 == 'index') {
                         <div class="form-check my-2">
                                 <?php
         $attributes = array('name' => 'infraestrutura', 'class' => 'form-check-input');
-        if (strlen(set_value('infraestrutura')) > 0) {
-            $en_infraestrutura = set_value('infraestrutura');
-        }
+        $en_infraestrutura = (!isset($en_infraestrutura) ? '0' : $en_infraestrutura);
         echo form_checkbox($attributes, '1', ($en_infraestrutura == '1'));
         ?>
                                 <span>Infraestrutura</span>
@@ -696,9 +662,7 @@ if ($menu2 == 'index') {
                         <div class="form-check my-2">
                                 <?php
         $attributes = array('name' => 'logistica', 'class' => 'form-check-input');
-        if (strlen(set_value('logistica')) > 0) {
-            $en_logistica = set_value('logistica');
-        }
+        $en_logistica = (!isset($en_logistica) ? '0' : $en_logistica);
         echo form_checkbox($attributes, '1', ($en_logistica == '1'));
         ?>
                                 <span>Logística</span>
@@ -708,9 +672,7 @@ if ($menu2 == 'index') {
                         <div class="form-check my-2">
                                 <?php
         $attributes = array('name' => 'meioAmb', 'class' => 'form-check-input');
-        if (strlen(set_value('meioAmb')) > 0) {
-            $en_meio_amb = set_value('meioAmb');
-        }
+        $en_meio_amb = (!isset($en_meio_amb) ? '0' : $en_meio_amb);
         echo form_checkbox($attributes, '1', ($en_meio_amb == '1'));
         ?>
                                 <span>Meio Ambiente</span>
@@ -722,9 +684,7 @@ if ($menu2 == 'index') {
                         <div class="form-check my-2">
                                 <?php
         $attributes = array('name' => 'polPub', 'class' => 'form-check-input');
-        if (strlen(set_value('polPub')) > 0) {
-            $en_pol_pub = set_value('polPub');
-        }
+        $en_pol_pub = (!isset($en_pol_pub) ? '0' : $en_pol_pub);
         echo form_checkbox($attributes, '1', ($en_pol_pub == '1'));
         ?>
                                 <span>Políticas Públicas</span>
@@ -734,9 +694,7 @@ if ($menu2 == 'index') {
                         <div class="form-check my-2">
                                 <?php
         $attributes = array('name' => 'recHum', 'class' => 'form-check-input');
-        if (strlen(set_value('recHum')) > 0) {
-            $en_rec_hum = set_value('recHum');
-        }
+        $en_rec_hum = (!isset($en_rec_hum) ? '0' : $en_rec_hum);
         echo form_checkbox($attributes, '1', ($en_rec_hum == '1'));
         ?>
                                 <span>Recursos Humanos</span>
@@ -746,9 +704,7 @@ if ($menu2 == 'index') {
                         <div class="form-check my-2">
                                 <?php
         $attributes = array('name' => 'saude', 'class' => 'form-check-input');
-        if (strlen(set_value('saude')) > 0) {
-            $en_saude = set_value('saude');
-        }
+        $en_saude = (!isset($en_saude) ? '0' : $en_saude);
         echo form_checkbox($attributes, '1', ($en_saude == '1'));
         ?>
                                 <span>Saúde</span>
@@ -757,10 +713,9 @@ if ($menu2 == 'index') {
                 <div class="col-sm-12 col-md-3 mb-3">
                         <div class="form-check my-2">
                                 <?php
+
         $attributes = array('name' => 'tic', 'class' => 'form-check-input');
-        if (strlen(set_value('tic')) > 0) {
-            $en_tic = set_value('tic');
-        }
+        $en_tic = (!isset($en_tic) ? '0' : $en_tic);
         echo form_checkbox($attributes, '1', ($en_tic == '1'));
         ?>
                                 <span>Tecnologia da informação</span>
@@ -772,7 +727,7 @@ if ($menu2 == 'index') {
                 <div class="col">
                         <?php
                         $attributes = array('class' => 'form-label');
-        echo form_label('Defina o grupo de atividades/órgão de interesse em que a vaga se encaixa: <abbr title="Obrigatório">*</abbr>', 'grupoatividade', $attributes);
+        echo form_label('Defina o grupo de atividades/órgão de interesse em que a vaga se encaixa:', 'grupoatividade', $attributes);
         $gruposatividades = array_merge(array(0 => ''), $gruposatividades);
         if (!isset($es_grupoatividade) || (strlen($es_grupoatividade) == 0 && strlen(set_value('grupoatividade')) > 0)) {
             $es_grupoatividade = set_value('grupoatividade');
