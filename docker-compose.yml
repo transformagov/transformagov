@@ -4,7 +4,7 @@ services:
   server:
     build:
       context: ./
-      dockerfile: docker/local/Dockerfile
+      dockerfile: docker/local/server/Dockerfile
     ports:
       - "$PORT:80"
     volumes:
@@ -12,8 +12,7 @@ services:
       - anexos:/transformagov/anexos
     entrypoint: /tmp/run.sh
     env_file:
-      - .env
-    
+      - .env    
   db:
     image: mariadb:10.3
     volumes:
@@ -25,14 +24,14 @@ services:
   nginx:
     build:
       context: ./
-      dockerfile: docker/local/Dockerfile-nginx
+      dockerfile: docker/local/reverse_proxy/Dockerfile
     container_name: transformagov_nginx
     ports:
       - "80:80"
     depends_on:
       - server
     volumes:
-      - ./docker/local/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/local/reverse_proxy/default.conf:/etc/nginx/conf.d/default.conf
 
 volumes:
   transforma-db:
