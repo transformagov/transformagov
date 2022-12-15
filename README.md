@@ -21,7 +21,8 @@ Essa documentação foi homologada em um ambiente Debian 10.
 Para outros ambientes o desenvolvedor irá precisar adaptar alguns dos passos e dependências utilizadas.
 
 1. Instale a ferramenta [docker-compose](https://docs.docker.com/compose/install/)
-2. Execute o comando `make run`
+2. Altere o arquivo `/etc/hosts` para conter a seguinte linha: `127.0.0.1	local.transformagov.com` 
+3. Execute o comando `make run`
 
 Este comando irá realizar as seguintes operações:
 
@@ -33,10 +34,10 @@ responsável por servir os scripts PHP.
 - Subir um container chamado `transformagov_db_1`, utilizando a imagem mariadb:latest.  
 Esse container será o banco de dados da aplicação.
 
-3. Restaure schema do banco utilizando o comando `make load-schema`;
-4. Crie os usuários  `make create-users`;
-5. Acesse a plataforma em `http://localhost:8080` ou utilize outra porta. Para isto, altere a variável do ambiente local `PORT` no arquivo `.env` com a porta desejada. Em caso de mudança da variável `PORT`, é necessário executar o comando `make up` novamente;
-6. Realize login utilizando um dos usuários listados na sessão [Usuários](##usuários).
+4. Restaure schema do banco utilizando o comando `make load-schema`;
+5. Crie os usuários  `make create-users`;
+6. Acesse a plataforma em `http://local.transformagov.com`. Para alterar a porta de acesso, troque a variável do ambiente local `PORT` no arquivo `.env` com a porta desejada. Em caso de mudança da variável `PORT`, é necessário executar o comando `make up` novamente;
+7. Realize login utilizando um dos usuários listados na sessão [Usuários](##usuários).
 
 ## SMTP
 
@@ -133,48 +134,49 @@ Para fazer o deploy dos serviços será usado o arquivo docker-stack.yml, só fo
 
 1. Inicializar o docker swarm:
 ```docker swarm init```
-2. Fazer o build da imagem usando o arquivo docker-stack.yml:
-```docker build -f docker/prod/Dockerfile -t 127.0.0.1:5000/transforma_stack .``
-4. Criar e fazer o deploy da stack:
+2. Fazer o build das imagens usadas no arquivo docker-stack.yml:
+```docker build -f docker/prod/reverse_proxy/Dockerfile -t 127.0.0.1:5000/transforma_stack_nginx .```
+```docker build -f docker/prod/server/Dockerfile -t 127.0.0.1:5000/transforma_stack_server .```
+3. Fazer o deploy da stack:
 ```docker stack deploy -c docker-stack.yml transforma_stack```
-5. Para listar os serviços da stack:
-```docker stack services transforma_stack```
-6. Fazer as migrações do BD. Para isso é necessário primeiro buscar o nome do container que roda o transforma_stack_db com o comando `docker ps`. Logo em seguida:
+4. Fazer as migrações do BD. Para isso é necessário primeiro buscar o nome do container que roda o transforma_stack_db com o comando `docker ps`. Logo em seguida:
 ```docker cp db/transforma.sql <DB_CONTAINER_NAME>:/tmp```
 ```docker exec <DB_CONTAINER_NAME> /bin/bash -c 'mysql transforma < /tmp/transforma.sql --password=root'```
-
-Links úteis:
-* https://docs.docker.com/engine/swarm/key-concepts/
-* https://docs.docker.com/engine/swarm/stack-deploy/
-* https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/
-* https://docs.docker.com/get-started/swarm-deploy/
-
+5. Altere o arquivo `/etc/hosts` para conter a seguinte linha: `127.0.0.1	local.transformagov.com` 
+6. Acesse a plataforma em `http://local.transformagov.com`.
 
 ### Como fazer o deploy em produção de uma stack?
 1. Copiar a pasta do projeto para a máquina remota.
 ```scp -r transformagov/ admin@34.225.231.130:```
 2. Acessar a máquina.
 ```ssh admin@34.225.231.130```
-3. Instalar o Docker e o Docker Compose na máquina.
-4. Inicializar o Docker.
-```systemctl start docker```
-```gpasswd -a $USER docker```
-5. Inicializar o Swarm.
+3. Inicializar o Swarm.
 ```docker swarm init```
-6. Fazer o build da imagem usando o arquivo docker-stack.yml.
-```docker-compose -f docker-stack.yml build```
-7. Criar e fazer o deploy da stack:
+4. Fazer o build das imagens usadas no arquivo docker-stack.yml:
+```docker build -f docker/prod/reverse_proxy/Dockerfile -t 127.0.0.1:5000/transforma_stack_nginx .```
+```docker build -f docker/prod/server/Dockerfile -t 127.0.0.1:5000/transforma_stack_server .```
+6. Fazer o deploy da stack:
 ```docker stack deploy -c docker-stack.yml transforma_stack```
-8. Fazer as migrações. Para fazer as migrações é necessário primeiro excluir o BD.
-```docker volume ls```
-```docker volume rm transforma_stack_transforma-db```
-9. Buscar o nome do container que roda o transforma_stack_db com o comando docker ps. Logo em seguida:
+7. Buscar o nome do container que roda o transforma_stack_db com o comando docker ps. Logo em seguida:
 ```docker cp db/transforma.sql <DB_CONTAINER_NAME>:/tmp```
 ```docker exec <DB_CONTAINER_NAME> /bin/bash -c 'mysql transforma < /tmp/transforma.sql --password=root'```
-10. Para fazer a migração dos usuários:
+8. Para fazer a migração dos usuários:
 ```docker cp db/popula-usuarios.sql  <DB_CONTAINER_NAME>:/tmp```
 ```docker exec <DB_CONTAINER_NAME> /bin/bash -c 'mysql transforma < /tmp/popula-usuarios.sql --password=root'```
-11. Para listar os serviços da stack:
+9. Acesse a plataforma em `https://transformagovapp.pencillabs.com.br`.
+
+
+Comandos úteis:
+1. Para listar os serviços da stack:
 ```docker stack services transforma_stack```
-12. Para remover os serviços da stack:
+2. Para remover os serviços da stack, caso necessário:
 ```docker stack rm transforma_stack```
+3. Listar e remover um volume:
+```docker volume ls```
+```docker volume rm transforma_stack_transforma-db```
+
+Links úteis:
+* https://docs.docker.com/engine/swarm/key-concepts/
+* https://docs.docker.com/engine/swarm/stack-deploy/
+* https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/
+* https://docs.docker.com/get-started/swarm-deploy/
