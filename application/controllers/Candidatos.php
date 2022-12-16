@@ -355,7 +355,9 @@ class Candidatos extends CI_Controller
 
             $dados_formacao = $this -> Candidaturas_model -> get_formacao(null, $this -> session -> candidato);
             $i=0;
-            if (count($dados_formacao)>0) {
+
+            $numero_dados_formacao = is_countable( $dados_formacao ) ? count( $dados_formacao ) : 0;
+            if ($numero_dados_formacao > 0) {
                 foreach ($dados_formacao as $formacao) {
                     ++$i;
                     $dados['en_tipo'][$i]=$formacao->en_tipo;
@@ -368,11 +370,13 @@ class Candidatos extends CI_Controller
                     $dados["anexos_formacao"][$i] = $this -> Anexos_model -> get_anexo('', $formacao->pr_formacao);
                 }
             }
+
             $dados['num_formacao']=$i;
             $dados_experiencia = $this -> Candidaturas_model -> get_experiencia(null, $this -> session -> candidato);
 
             $i=0;
-            if (count($dados_experiencia)>0) {
+            $numero_dados_experiencia = is_countable( $dados_experiencia ) ? count( $dados_experiencia ) : 0;
+            if ($numero_dados_experiencia > 0) {
                 foreach ($dados_experiencia as $experiencia) {
                     ++$i;
                     $dados['vc_cargo'][$i]=$experiencia->vc_cargo;
@@ -386,6 +390,7 @@ class Candidatos extends CI_Controller
                     //$dados["anexos_experiencia"][$i] = $this -> Anexos_model -> get_anexo('','','','',$experiencia->pr_experienca);
                 }
             }
+        
             $dados['num_experiencia']=$i;
 
             $dados['adicionais'] = array('inputmasks' => true);
