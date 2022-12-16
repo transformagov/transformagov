@@ -365,26 +365,33 @@ if ($menu2 == 'index') {
                         <?php
         $attributes = array('class' => 'form-label');
         echo form_label('Grupo de questões da vaga: <abbr title="Obrigatório">*</abbr>', 'grupo', $attributes);
-
-        foreach ($grupos as $linha) {
-            $dados_grupos[$linha -> pr_grupovaga] = $linha -> vc_grupovaga;
+        if ($grupos){
+                foreach ($grupos as $linha) {
+                        $dados_grupos[$linha -> pr_grupovaga] = $linha -> vc_grupovaga;
+                }
+                if (!is_array($dados_grupos)) {
+                        $dados_grupos = array();
+                }
+                $dados_grupos=array(0 => '')+$dados_grupos;
+                if (!isset($es_grupoVaga) || (strlen($es_grupoVaga) == 0 && strlen(set_value('grupo')) > 0)) {
+                        $es_grupoVaga = set_value('grupo');
+                }
+                if ($bl_liberado == '1' && $atual > $inicio) {
+                        echo form_dropdown('grupo', $dados_grupos, $es_grupoVaga, "class=\"form-select form-control\"  onchange=\"this.value = '{$es_grupoVaga}';alert('Não é possível modificar o grupo de questões de uma vaga já liberada para inscrições!')\"");
+                    } else {
+                        if (strstr($erro, "'Grupo da vaga'")) {
+                            echo form_dropdown('grupo', $dados_grupos, $es_grupoVaga, "class=\"form-select form-control is-invalid\"");
+                        } else {
+                            echo form_dropdown('grupo', $dados_grupos, $es_grupoVaga, "class=\"form-select form-control\"");
+                        }
+                }
         }
-        if (!is_array($dados_grupos)) {
-            $dados_grupos = array();
-        }
-        $dados_grupos=array(0 => '')+$dados_grupos;
-        if (!isset($es_grupoVaga) || (strlen($es_grupoVaga) == 0 && strlen(set_value('grupo')) > 0)) {
-            $es_grupoVaga = set_value('grupo');
-        }
-
-        if ($bl_liberado == '1' && $atual > $inicio) {
-            echo form_dropdown('grupo', $dados_grupos, $es_grupoVaga, "class=\"form-select form-control\"  onchange=\"this.value = '{$es_grupoVaga}';alert('Não é possível modificar o grupo de questões de uma vaga já liberada para inscrições!')\"");
-        } else {
-            if (strstr($erro, "'Grupo da vaga'")) {
-                echo form_dropdown('grupo', $dados_grupos, $es_grupoVaga, "class=\"form-select form-control is-invalid\"");
-            } else {
-                echo form_dropdown('grupo', $dados_grupos, $es_grupoVaga, "class=\"form-select form-control\"");
-            }
+        else {
+                echo "
+                        <div class=\"alert warning-text background-warning\">
+                                O campo grupo de vagas é necessário para a criação de uma nova vaga.
+                        </div>
+                ";
         }
         ?>
                 </div>
