@@ -14,29 +14,28 @@ Municípios;
 
 
 # Subindo a plataforma via Docker no ambiente local
-
-Aqui Você encontrará as instruções para subir o sistema em um ambiente local.
 Utilizamos  a ferramenta Docker para automatizar parte do processo de  disponibilização do ambiente de desenvolvimento.
 Essa documentação foi homologada em um ambiente Debian 10. 
 Para outros ambientes o desenvolvedor irá precisar adaptar alguns dos passos e dependências utilizadas.
 
 1. Instale a ferramenta [docker-compose](https://docs.docker.com/compose/install/)
-2. Execute o comando `make run`
+2. Altere o arquivo `/etc/hosts` para conter a seguinte linha: `127.0.0.1	local.transformagov.org` 
+3. Execute o comando `make run`
 
 Este comando irá realizar as seguintes operações:
 
-- Construir a imagem do servidor, instalando as dependências necessárias. Essa imagem utiliza como base o Debian estável;
-- Subir um container chamado `transformagov_server_1`, utilizando a imagem construida anteriormente.  
+- Construir a imagem do servidor, instalando as dependências necessárias.
+- Subir um container chamado `transformagov_server`, utilizando a imagem construida anteriormente.  
 Esse container irá atuar como o servidor, e via nginx irá responder às requisições HTTP e servir os
 arquivos estáticos (js, css, imagens). Além de servir os arquivos estáticos, o nginx também será 
 responsável por servir os scripts PHP.
-- Subir um container chamado `transformagov_db_1`, utilizando a imagem mariadb:latest.  
+- Subir um container chamado `transformagov_db`, utilizando a imagem mariadb:latest.  
 Esse container será o banco de dados da aplicação.
 
-3. Restaure schema do banco utilizando o comando `make load-schema`;
-4. Crie os usuários  `make create-users`;
-5. Acesse a plataforma em `http://localhost:8080` ou utilize outra porta. Para isto, altere a variável do ambiente local `PORT` no arquivo `.env` com a porta desejada. Em caso de mudança da variável `PORT`, é necessário executar o comando `make up` novamente;
-6. Realize login utilizando um dos usuários listados na sessão [Usuários](##usuários).
+4. Restaure schema do banco utilizando o comando `make load-schema`;
+5. Crie os usuários  `make create-users`;
+6. Acesse a plataforma em `http://local.transformagov.org:8080`. Para alterar a porta de acesso, troque a variável do ambiente local `PORT` no arquivo `.env` dentro da pasta `docker/local` com a porta desejada. Em caso de mudança da variável `PORT`, é necessário executar o comando `make up` novamente;
+7. Realize login utilizando um dos usuários listados na sessão [Usuários](##usuários).
 
 ## SMTP
 
@@ -58,7 +57,7 @@ Para alterar um usuário para administrador, o desenvolvedor pode fazer isso via
 
 1. acesse o banco
 
-	docker exec -it transformagov_db_1 bash
+	docker exec -it transformagov_db bash
 	mysql --password=root --user=root transforma
 
 2. execute o script que altera um usuário para administrador

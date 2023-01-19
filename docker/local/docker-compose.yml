@@ -1,0 +1,31 @@
+version: "3.3"
+
+services:
+  server:
+    build:
+      context: ../../
+      dockerfile: docker/local/Dockerfile
+    ports:
+      - "${PORT}:80"
+    volumes:
+      - ../../:/transformagov/
+      - anexos:/transformagov/anexos
+    env_file:
+      - .env
+    entrypoint: /tmp/run.sh
+    container_name: transformagov_server
+    environment:
+      SERVER_NAME: local.transformagov.org
+    
+  db:
+    image: mariadb:10.3
+    volumes:
+      - transforma-db:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=transforma
+      - MYSQL_ROOT_PASSWORD=root
+      - TZ=America/Sao_Paulo
+    container_name: transformagov_db
+volumes:
+  transforma-db:
+  anexos:

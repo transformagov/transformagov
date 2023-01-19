@@ -1,8 +1,12 @@
+COMPOSE_PATH="docker/local/docker-compose.yml"
 build:
-	docker-compose build --no-cache
+	docker-compose -f ${COMPOSE_PATH} build --no-cache
 
 up:
-	docker-compose up server db
+	docker-compose -f ${COMPOSE_PATH} up server db
+
+down:
+	docker-compose -f ${COMPOSE_PATH} down
 
 stop:
 	docker-compose stop
@@ -10,21 +14,21 @@ stop:
 run: build up
 
 load-schema:
-	docker cp db/transforma.sql  transformagov_db_1:/tmp
-	docker exec transformagov_db_1 /bin/bash -c 'mysql transforma < /tmp/transforma.sql --password=root'
-	docker cp db/function.sql  transformagov_db_1:/tmp
-	docker exec transformagov_db_1 /bin/bash -c 'mysql transforma < /tmp/function.sql --password=root'
+	docker cp db/transforma.sql  transformagov_db:/tmp
+	docker exec transformagov_db /bin/bash -c 'mysql transforma < /tmp/transforma.sql --password=root'
+	docker cp db/function.sql  transformagov_db:/tmp
+	docker exec transformagov_db /bin/bash -c 'mysql transforma < /tmp/function.sql --password=root'
 
 create-users:
-	docker cp db/popula-usuarios.sql  transformagov_db_1:/tmp
-	docker exec transformagov_db_1 /bin/bash -c 'mysql transforma < /tmp/popula-usuarios.sql --password=root'
+	docker cp db/popula-usuarios.sql  transformagov_db:/tmp
+	docker exec transformagov_db /bin/bash -c 'mysql transforma < /tmp/popula-usuarios.sql --password=root'
 
 sampledevdata:
-	docker cp db/transforma-devdata.sql  transformagov_db_1:/tmp
-	docker exec transformagov_db_1 /bin/bash -c 'mysql transforma < /tmp/transforma-devdata.sql --password=root'
+	docker cp db/transforma-devdata.sql  transformagov_db:/tmp
+	docker exec transformagov_db /bin/bash -c 'mysql transforma < /tmp/transforma-devdata.sql --password=root'
 
 attach:
-	docker exec -it transformagov_server_1 bash
+	docker exec -it transformagov_server bash
 
 cypress:
 	if [ -d "./node_modules" ]; then \
