@@ -37,6 +37,9 @@ Esse container será o banco de dados da aplicação.
 6. Acesse a plataforma em `http://local.transformagov.org:8080`. Para alterar a porta de acesso, troque a variável do ambiente local `PORT` no arquivo `.env` dentro da pasta `docker/local` com a porta desejada. Em caso de mudança da variável `PORT`, é necessário executar o comando `make up` novamente;
 7. Realize login utilizando um dos usuários listados na sessão [Usuários](##usuários).
 
+# Deploy
+Para instruções de como fazer deploy do projeto em produção/homologação, acesse o arquivo [DEPLOY.md](./DEPLOY.md)
+
 ## SMTP
 
 Tanto o cadastro de usuário, quanto a recuperação de senha dependem de disparos de email.
