@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   server:
-    image: 127.0.0.1:5000/transforma_stack  #the address of the registry
+    image: 127.0.0.1:5000/transforma_stack_prod
     ports:
       - "80:80"
       - "443:443"
